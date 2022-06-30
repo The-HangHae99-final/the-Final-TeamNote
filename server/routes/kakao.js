@@ -1,9 +1,12 @@
+const dotenv = require('dotenv').config();
+
 var express = require('express');
 var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const grant_type = 'authorization_code';
 const client_id = process.env.client_id;
-const redirect_uri = 'http://localhost:3000/oauth/callback/kakao';
+console.log(client_id);
+const redirect_uri = 'http://52.78.168.151:3000//oauth/callback/kakao';
 
 router.get('/oauth/callback/kakao', function (req, res, next) {
   let code = req.query.code;
