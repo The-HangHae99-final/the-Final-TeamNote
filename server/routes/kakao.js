@@ -46,6 +46,12 @@ router.get('/oauth/callback/kakao', function (req, res, next) {
   }
 });
 
+router.post('/kakao/information', function (req, res, next) {
+  const data = req.body;
+  console.log(data);
+  res.send(data);
+});
+
 // 리다이렉트될 화면
 
 // const React = require('react');
