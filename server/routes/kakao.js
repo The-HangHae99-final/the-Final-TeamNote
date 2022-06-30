@@ -52,6 +52,12 @@ router.post('/kakao/information', function (req, res, next) {
   res.send(data);
 });
 
+router.post('/google/information', function (req, res, next) {
+  const data = req.body;
+  console.log(data);
+  res.send(data);
+});
+
 // 리다이렉트될 화면
 
 // const React = require('react');
