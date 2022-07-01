@@ -47,9 +47,9 @@ app.use('/auth', [G_authRouter]);
 
 app.use('/', kakaoRouter);
 
-app.get('/', (req, res) => {
-  res.send('헬로 월드');
-});
+// app.get('/', (req, res) => {
+//   res.send('헬로 월드');
+// });
 
 app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/chat.html');
