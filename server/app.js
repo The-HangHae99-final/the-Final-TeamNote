@@ -58,10 +58,8 @@ app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 // });
 
 app.get('/api', (req, res) => {
-  {
-    'Access-Control-Allow-Origin', '*';
-  }
-  res.send('hi');
+  res.header('Access-Control-Allow-Origin', '*');
+  // res.send('hi');
 });
 
 app.get('/', (req, res) => {
