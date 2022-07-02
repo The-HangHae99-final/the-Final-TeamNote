@@ -48,10 +48,15 @@ app.use('/api', [usersRouter, postsRouter, mypageRouter, communityRouter]);
 app.use('/auth', [G_authRouter]);
 
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
-
-// app.get('/', (req, res) => {
-//   res.send('헬로 월드');
-// });
+app.use('/', (req,res)=> {
+	currentPut().then((response) => {
+		res.setHeader("Access-Control-Allow-Origin","*");
+		res.json(response.data.response.body);
+	});
+});
+app.get('/', (req, res) => {
+  res.send('서비스 드려요');
+ });
 
 app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/chat.html');
