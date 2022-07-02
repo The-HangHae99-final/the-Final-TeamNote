@@ -6,3 +6,5 @@ router.post('/auth/login/callback/', function (req, res, next) {
   console.log('data:', data);
   res.send(data);
 });
+
+module.exports = router;
