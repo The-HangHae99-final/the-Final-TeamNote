@@ -51,24 +51,24 @@ const axios = require('axios');
 //     res.send(e);
 //   }
 // });
-  try {
-    console.log('access_token222222:', access_token); //access정보를 가지고 또 요청해야 정보를 가져올 수 있음.
-    user = await axios({
-      method: 'get',
-      url: 'https://kapi.kakao.com/v2/user/me',
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      }, //헤더에 내용을 보고 보내주겠다.
-    });
-    // console.log(access_token);
-  } catch (e) {
-    res.json(e.data);
-  }
-  console.log('user:', user);
+//   try {
+//     console.log('access_token222222:', access_token); //access정보를 가지고 또 요청해야 정보를 가져올 수 있음.
+//     user = await axios({
+//       method: 'get',
+//       url: 'https://kapi.kakao.com/v2/user/me',
+//       headers: {
+//         Authorization: `Bearer ${access_token}`,
+//       }, //헤더에 내용을 보고 보내주겠다.
+//     });
+//     // console.log(access_token);
+//   } catch (e) {
+//     res.json(e.data);
+//   }
+//   console.log('user:', user);
 
-  // req.session.kakao = user.data;
-  //req.session = {['kakao'] : user.data};
-});
+//   // req.session.kakao = user.data;
+//   //req.session = {['kakao'] : user.data};
+// });
 
 router.get('/kakao/information', function (req, res, next) {
   console.log(access_token);
@@ -77,12 +77,6 @@ router.get('/kakao/information', function (req, res, next) {
 
 router.post('/google/information', function (req, res, next) {
   res.send('hi');
-});
-
-router.post('/naver/information', function (req, res, next) {
-  const data = req.body;
-  console.log('data:', data);
-  res.send(data);
 });
 
 module.exports = router;

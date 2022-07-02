@@ -20,6 +20,7 @@ const Msg = require('./schemas/messages');
 const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./routes/kakao');
 const dayRouter = require('./routes/day');
+const naverRouter = require('./routes/naver');
 
 connect();
 
@@ -46,7 +47,7 @@ app.use(passport.session());
 app.use('/api', [usersRouter, postsRouter, mypageRouter, communityRouter]);
 app.use('/auth', [G_authRouter]);
 
-app.use('/', kakaoRouter, dayRouter);
+app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 
 // app.get('/', (req, res) => {
 //   res.send('헬로 월드');
