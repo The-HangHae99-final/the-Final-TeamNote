@@ -69,7 +69,7 @@ router.get('/oauth/callback/kakao', async function (req, res, next) {
 //   // req.session.kakao = user.data;
 //   //req.session = {['kakao'] : user.data};
 // });
-
+//
 router.get('/kakao/information', function (req, res, next) {
   console.log(access_token);
   res.send(access_token);
