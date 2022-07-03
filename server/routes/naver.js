@@ -2,6 +2,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 var axios = require('axios');
 var request = require('request');
+
+var socialUser = require('../schemas/social_user');
 // router.get('/callback', (req, res) => {
 //   const data = req.query.code;
 //   console.log(data);
@@ -82,6 +84,9 @@ router.post('/parsing', function (req, res) {
   const userid = user_info.user_id;
   const email = user_info.user_email;
   const nickname = user_info.user_name;
+
+  const social = new socialUser({ userid, email, nickname });
+  social.save();
 });
 
 module.exports = router;
