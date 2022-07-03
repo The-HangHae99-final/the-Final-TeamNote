@@ -65,8 +65,6 @@ router.post('/member', function (req, res) {
     if (!error && response.statusCode == 200) {
       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
       res.end(body);
-      console.log(body);
-      console.log(body.response);
     } else {
       console.log('error');
       if (response != null) {
@@ -79,8 +77,8 @@ router.post('/member', function (req, res) {
 
 router.post('/parsing', function (req, res) {
   const user_info = req.body;
-  console.log(user_info);
-  console.log(user_info.user_name);
+  // console.log(user_info);
+  // console.log(user_info.user_name);
   const userid = user_info.user_id;
   const email = user_info.user_email;
   const nickname = user_info.user_name;
