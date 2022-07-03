@@ -75,4 +75,9 @@ router.post('/member', function (req, res) {
   });
 });
 
+router.post('/parsing', function (req, res) {
+  const user_info = req.body;
+  console.log(user_info);
+});
+
 module.exports = router;
