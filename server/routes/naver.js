@@ -37,7 +37,7 @@ router.post('/naver', function (req, res) {
       'X-Naver-Client-Secret': client_secret,
     },
   };
-  axios.get(api_url, options, function (error, response, body) {
+  request.get(api_url, options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
       res.end(body);
