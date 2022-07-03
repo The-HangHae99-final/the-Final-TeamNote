@@ -39,9 +39,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.set('view engine', 'ejs');
-app.use(
-  session({ secret: 'MySecret', resave: false, saveUninitialized: true })
-);
+// app.use(
+//   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
+// );
 
 // Passport setting
 app.use(passport.initialize());

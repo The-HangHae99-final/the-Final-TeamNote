@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/callback', function (req, res, next) {
+router.get('/callback', (req, res) => {
   const data = req.body;
-  console.log('data:', data);
+  console.log(data);
   res.send(data);
 });
 

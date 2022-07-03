@@ -75,7 +75,7 @@ router.get('/kakao/information', function (req, res, next) {
   res.send(access_token);
 });
 
-router.post('/google/information', function (req, res, next) {
+router.get('/google/information', function (req, res, next) {
   res.send('hi');
 });
 
