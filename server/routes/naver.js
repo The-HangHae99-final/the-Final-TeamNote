@@ -1,10 +1,68 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const router = express.Router();
+const app = express();
 
-router.get('/callback', (req, res) => {
-  const data = req.query.code;
-  console.log(data);
-  res.send(data);
+// router.get('/callback', (req, res) => {
+//   const data = req.query.code;
+//   console.log(data);
+//   res.send(data);
+// });
+
+var client_id = process.env.YOUR_CLIENT_ID;
+var client_secret = process.env.YOUR_CLIENT_SECRET;
+var state = 'teamnote';
+var redirectURI = encodeURI('http://52.78.168.151/auth/login/callback/');
+var api_url = '';
+var code = '';
+app.get('/naverlogin', function (req, res) {
+  api_url =
+    'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' +
+    client_id +
+    '&redirect_uri=' +
+    redirectURI +
+    '&state=' +
+    state;
+  res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' });
+  res.end(
+    "<a href='" +
+      api_url +
+      "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>"
+  );
+});
+app.get('/callback', function (req, res) {
+  code = req.query.code;
+  state = req.query.state;
+  api_url =
+    'https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=' +
+    client_id +
+    '&client_secret=' +
+    client_secret +
+    '&redirect_uri=' +
+    redirectURI +
+    '&code=' +
+    code +
+    '&state=' +
+    state;
+  var request = require('request');
+  var options = {
+    url: api_url,
+    headers: {
+      'X-Naver-Client-Id': client_id,
+      'X-Naver-Client-Secret': client_secret,
+    },
+  };
+  request.get(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
+      res.end(body);
+    } else {
+      res.status(response.statusCode).end();
+      console.log('error = ' + response.statusCode);
+    }
+  });
 });
 
 module.exports = router;
