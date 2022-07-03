@@ -63,7 +63,8 @@ router.post('/member', function (req, res) {
     if (!error && response.statusCode == 200) {
       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
       res.end(body);
-      console.log(body.response.email);
+      console.log(body);
+      console.log(body.email);
     } else {
       console.log('error');
       if (response != null) {
