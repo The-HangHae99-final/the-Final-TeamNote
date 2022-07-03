@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const socialSchema = new mongoose.Schema({
   userid: {
     type: String,
-    unique: true,
   },
   email: {
     type: String,
