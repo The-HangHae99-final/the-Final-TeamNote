@@ -75,7 +75,7 @@ router.post('/member', function (req, res) {
   });
 });
 
-router.post('/parsing', function (req, res) {
+router.post('/parsing', async function (req, res) {
   const user_info = req.body;
   // console.log(user_info);
   // console.log(user_info.user_name);
@@ -83,8 +83,17 @@ router.post('/parsing', function (req, res) {
   const email = user_info.user_email;
   const nickname = user_info.user_name;
 
-  const social = new socialUser({ userid, email, nickname });
-  social.save();
+  const double = await socialUser.find({ email });
+
+  if (!double) {
+    const social = new socialUser({ userid, email, nickname });
+    social.save();
+    res.send('저장에 성공하였습니다.');
+  } else {
+    res.send('이미 있는 유저입니다.');
+  }
+
+  // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
 });
 
 module.exports = router;
