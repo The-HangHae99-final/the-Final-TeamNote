@@ -64,7 +64,7 @@ router.post('/member', function (req, res) {
       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
       res.end(body);
       console.log(body);
-      console.log(body.email);
+      console.log(body.response);
     } else {
       console.log('error');
       if (response != null) {
