@@ -7,13 +7,6 @@ dotenv.config();
 //   res.send(data);
 // });
 
-var client_id = process.env.YOUR_CLIENT_ID;
-var client_secret = process.env.YOUR_CLIENT_SECRET;
-var state = 'teamnote';
-var redirectURI = encodeURI('http://52.78.168.151/auth/login/callback/');
-var api_url = '';
-var code = '';
-
 var express = require('express');
 var app = express();
 var router = express.Router();
@@ -25,7 +18,9 @@ var api_url = 'http://52.78.168.151';
 
 router.post('/naver', function (req, res) {
   var code = req.body.code;
-  var state = req.body.state;
+  console.log('code:', code);
+  var state = 'teamnote';
+  console.log('state:', state);
   api_url =
     'https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=' +
     client_id +
