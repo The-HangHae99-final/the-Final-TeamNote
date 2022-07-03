@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 var axios = require('axios');
+var request = require('request');
 // router.get('/callback', (req, res) => {
 //   const data = req.query.code;
 //   console.log(data);
@@ -32,12 +33,13 @@ router.post('/naver', function (req, res) {
     state;
   // var request = require('request');
   var options = {
+    url: api_url,
     headers: {
       'X-Naver-Client-Id': client_id,
       'X-Naver-Client-Secret': client_secret,
     },
   };
-  request.get(api_url, options, function (error, response, body) {
+  request.get(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
       res.end(body);
