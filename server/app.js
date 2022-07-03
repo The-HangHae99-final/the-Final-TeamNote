@@ -37,11 +37,9 @@ app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-
-app.set('view engine', 'ejs');
-// app.use(
-//   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
-// );
+app.use(
+  session({ secret: 'MySecret', resave: false, saveUninitialized: true })
+);
 
 // Passport setting
 app.use(passport.initialize());
@@ -56,6 +54,7 @@ app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 // 		res.json(response.data.response.body);
 // 	});
 // });
+app.set('view engine', 'ejs');
 
 app.get('/api', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
