@@ -15,7 +15,7 @@ var client_id = process.env.YOUR_CLIENT_ID;
 var client_secret = process.env.YOUR_CLIENT_SECRET;
 var state = 'teamnote';
 var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
-var api_url = 'http://52.78.168.151:3000';
+// var server_url = 'http://52.78.168.151:3000';
 
 router.post('/naver', function (req, res) {
   var code = req.body.code;
@@ -31,9 +31,9 @@ router.post('/naver', function (req, res) {
     code +
     '&state=' +
     state;
-  var request = require('request');
+  // var request = require('request');
   var options = {
-    url: api_url,
+    url,
     headers: {
       'X-Naver-Client-Id': client_id,
       'X-Naver-Client-Secret': client_secret,
