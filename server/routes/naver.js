@@ -80,11 +80,8 @@ router.post('/parsing', function (req, res) {
   console.log(user_info);
   console.log(user_info.user_name);
   const userid = user_info.user_id;
-  console.log('userid: ', userid);
   const email = user_info.user_email;
-  console.log('email: ', email);
   const nickname = user_info.user_name;
-  console.log('nickname: ', nickname);
 });
 
 module.exports = router;
