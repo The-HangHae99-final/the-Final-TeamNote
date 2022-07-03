@@ -1,6 +1,7 @@
+const { default: axios } = require('axios');
 const dotenv = require('dotenv');
 dotenv.config();
-
+var axios = require('axios');
 // router.get('/callback', (req, res) => {
 //   const data = req.query.code;
 //   console.log(data);
