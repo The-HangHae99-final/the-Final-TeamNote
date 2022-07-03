@@ -33,7 +33,7 @@ router.post('/naver', function (req, res) {
     state;
   // var request = require('request');
   var options = {
-    url,
+    api_url,
     headers: {
       'X-Naver-Client-Id': client_id,
       'X-Naver-Client-Secret': client_secret,
