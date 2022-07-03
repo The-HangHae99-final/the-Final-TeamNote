@@ -70,10 +70,10 @@ global.user = user;
 //   //req.session = {['kakao'] : user.data};
 // });
 
-router.get('/kakao/information', function (req, res, next) {
-  console.log(access_token);
-  res.send(access_token);
-});
+// router.get('/kakao/information', function (req, res, next) {
+//   console.log(access_token);
+//   res.send(access_token);
+// });
 
 router.get('/google/information', function (req, res, next) {
   res.send('hi');
