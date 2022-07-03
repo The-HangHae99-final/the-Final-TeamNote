@@ -85,7 +85,7 @@ router.post('/parsing', function (req, res) {
   const email = user_info.user_email;
   const nickname = user_info.user_name;
 
-  const social = socialUser.create({ userid, email, nickname });
+  const social = new socialUser({ userid, email, nickname });
   social.save();
 });
 
