@@ -41,6 +41,7 @@ router.post('/naver', function (req, res) {
     if (!error && response.statusCode == 200) {
       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
       res.end(body);
+      console.log(res);
     } else {
       res.status(response.statusCode).end();
       console.log('error = ' + response.statusCode);
