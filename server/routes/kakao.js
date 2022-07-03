@@ -8,9 +8,9 @@ const client_id = process.env.client_id;
 const redirect_uri = 'http://localhost:3000/oauth/callback/kakao';
 const axios = require('axios');
 
-global.access_token = access_token;
-var user;
-global.user = user;
+// global.access_token = access_token;
+// var user;
+// global.user = user;
 
 // router.get('/oauth/callback/kakao', async function (req, res, next) {
 //   let code = req.query.code;
