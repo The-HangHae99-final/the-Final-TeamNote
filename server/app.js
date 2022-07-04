@@ -31,7 +31,7 @@ moment.tz.setDefault('Asia/seoul');
 const createdAt = moment().format('HH:mm');
 console.log('현재 시각은 ' + createdAt + ' 입니다.');
 
-app.use(morgan('tiny'));
+app.use(morgan('combined'));
 app.use(cors());
 app.use(express.static('static'));
 app.use(express.json());
