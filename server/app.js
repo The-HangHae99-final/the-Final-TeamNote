@@ -19,22 +19,24 @@ const server = http.createServer(app);
 const Msg = require('./schemas/messages');
 const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./routes/kakao');
+const dayRouter = require('./routes/day');
+const naverRouter = require('./routes/naver');
 
 connect();
 
 const moment = require('moment');
+const { application } = require('express');
 require('moment-timezone');
 moment.tz.setDefault('Asia/seoul');
 const createdAt = moment().format('HH:mm');
 console.log('현재 시각은 ' + createdAt + ' 입니다.');
 
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use(cors());
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.set('view engine', 'ejs');
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
@@ -45,20 +47,32 @@ app.use(passport.session());
 app.use('/api', [usersRouter, postsRouter, mypageRouter, communityRouter]);
 app.use('/auth', [G_authRouter]);
 
-app.use('/', kakaoRouter);
-
-// app.get('/', (req, res) => {
-//   res.send('헬로 월드');
+app.use('/', [kakaoRouter, dayRouter, naverRouter]);
+// app.use('/', (req,res)=> {
+// 	currentPut().then((response) => {
+// 		res.setHeader("Access-Control-Allow-Origin","*");
+// 		res.json(response.data.response.body);
+// 	});
 // });
+app.set('view engine', 'ejs');
+
+app.get('/api', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  // res.send('hi');
+});
+
+app.get('/', (req, res) => {
+  res.send('서비스 드려요');
+});
 
 app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/chat.html');
 });
 
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+// const corsOptions = {
+//   origin: '*',
+// };
+// app.use(cors(corsOptions));
 
 //실시간 채팅
 const io = new Server(server, {
