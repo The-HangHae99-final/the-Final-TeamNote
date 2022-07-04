@@ -118,13 +118,16 @@ router.post('/kakao/parsing', async function (req, res) {
   const user_info = req.body;
   console.log('user_info = ' + user_info);
   const userid = user_info.user_id;
+  console.log('userid: ', userid);
   const email = user_info.user_email;
+  console.log('email: ', email);
   const nickname = user_info.user_name;
+  console.log('nickname: ', nickname);
 
-  const double = await socialUser.find({ email });
+  const double = await socialUser.findOne({ email });
+  console.log('double: ', double);
 
   if (!double) {
-    console.log(userid, email, nickname);
     const social = new socialUser({ userid, email, nickname });
     social.save();
     res.send('저장에 성공하였습니다.');
