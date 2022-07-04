@@ -15,7 +15,7 @@ const KAKAO_GRANT_TYPE = 'authorization_code';
 const KAKAO_CLIENT_id = process.env.kakao_client_id;
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 
-router.get('/oauth/callback/kakao', function (req, res, next) {
+router.post('/oauth/callback/kakao', function (req, res, next) {
   let code = req.body.code;
   try {
     axios
