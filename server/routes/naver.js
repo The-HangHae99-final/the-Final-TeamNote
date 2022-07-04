@@ -52,7 +52,7 @@ router.post('/naver', function (req, res) {
   });
 });
 
-router.post('naver/member', function (req, res) {
+router.post('/member', function (req, res) {
   var api_url = 'https://openapi.naver.com/v1/nid/me';
   var request = require('request');
   var token = req.body.token;
@@ -75,7 +75,7 @@ router.post('naver/member', function (req, res) {
   });
 });
 
-router.post('naver/parsing', async function (req, res) {
+router.post('/parsing', async function (req, res) {
   const user_info = req.body;
   // console.log(user_info);
   // console.log(user_info.user_name);
