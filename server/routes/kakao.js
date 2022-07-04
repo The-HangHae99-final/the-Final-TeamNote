@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
+var socialUser = require('../schemas/social_user');
 
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
