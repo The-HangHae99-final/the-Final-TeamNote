@@ -4,11 +4,12 @@ var express = require('express');
 var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const grant_type = 'authorization_code';
-const client_id = process.env.client_id;
-const redirect_uri = 'http://localhost:3000/oauth/callback/kakao';
+const client_id = process.env.kakao_client_id;
+const redirect_uri = 'http://localhost:3000/auth/login/kakao/callback';
 const axios = require('axios');
 const { request } = require('express');
 
+// Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 
 // 프론트에게서 인가코드를 받는다 post_1
@@ -26,13 +27,13 @@ const { request } = require('express');
 let access_token = '';
 
 router.post('/oauth/callback/kakao', async function (req, res, next) {
-  let code = req.query.code;
+  let code = req.body.code;
   console.log('code: ', code);
   // console.log('redirect_uri: ', redirect_uri);
   // console.log('client_id: ', client_id);
   // console.log('grant_type: ', grant_type);
   // console.log(KAKAO_OAUTH_TOKEN_API_URL);
-  var header = 'Bearer ' + token;
+  // var header = 'Bearer ' + token;
   var api_url = `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${redirect_uri}&code=${code}`;
   var options = {
     url: api_url,
