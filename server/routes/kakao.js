@@ -91,7 +91,9 @@ router.post('/kakao/member', function (req, res) {
   var api_url = 'https://kapi.kakao.com/v2/user/me';
   var request = require('request');
   var token = req.body.token;
+  console.log(token);
   var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
+  console.log(header);
   var options = {
     url: api_url,
     headers: { Authorization: header },
