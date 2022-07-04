@@ -116,8 +116,7 @@ router.post('/kakao/member', function (req, res) {
 
 router.post('kakao/parsing', async function (req, res) {
   const user_info = req.body;
-  // console.log(user_info);
-  // console.log(user_info.user_name);
+  console.log('user_info = ' + user_info);
   const userid = user_info.user_id;
   const email = user_info.user_email;
   const nickname = user_info.user_name;
