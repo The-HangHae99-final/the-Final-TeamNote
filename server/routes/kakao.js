@@ -93,7 +93,7 @@ router.post('/kakao/member', function (req, res) {
   var token = req.body.token;
   console.log(token);
   var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
-  console.log(header);
+  console.log('header: ' + header);
   var options = {
     url: api_url,
     headers: { Authorization: header },
