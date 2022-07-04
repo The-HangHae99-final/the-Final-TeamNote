@@ -27,7 +27,7 @@ const { request } = require('express');
 let access_token = '';
 
 router.post('/oauth/callback/kakao', async function (req, res, next) {
-  let code = req.body.code;
+  let code = req;
   console.log('code: ', code);
   // console.log('redirect_uri: ', redirect_uri);
   // console.log('client_id: ', client_id);
