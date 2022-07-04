@@ -12,7 +12,7 @@ var express = require('express');
 var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
-const KAKAO_CLIENT_id = process.env.kakao_client_id;
+const client_id = process.env.kakao_client_id;
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 
 router.post('/oauth/callback/kakao', function (req, res, next) {
@@ -20,7 +20,7 @@ router.post('/oauth/callback/kakao', function (req, res, next) {
   try {
     axios
       .post(
-        `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${redirect_uri}&code=${code}`,
+        `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=authorization_code&client_id=${client_id}&redirect_uri=${KAKAO_REDIRECT_URL}&code=${code}`,
         {
           headers: {
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
