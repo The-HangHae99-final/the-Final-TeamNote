@@ -58,6 +58,7 @@ module.exports = (req, res, next) => {
       });
     }
   } catch (err) {
+    console.log('에러받아라-------------------------' + err);
     res.send({
       errorMessage: err + ' : 로그인이 필요합니다. -----------그외-----------',
     });
