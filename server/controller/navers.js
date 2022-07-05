@@ -99,7 +99,7 @@ async function naver_parsing(req, res) {
     const email = user_info.user_email;
     const nickname = user_info.user_name;
 
-    const double = await socialUser.find({ email });
+    const double = await socialUser.findOne({ email });
 
     if (!double) {
       const social = new socialUser({ userid, email, nickname });
