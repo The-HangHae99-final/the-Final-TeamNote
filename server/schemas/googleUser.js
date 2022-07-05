@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const GuserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -18,4 +18,4 @@ const GuserSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('GUser', GuserSchema);
+module.exports = mongoose.model("GUser", GuserSchema);

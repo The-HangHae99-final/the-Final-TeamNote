@@ -1,7 +1,4 @@
 const dotenv = require('dotenv').config();
-// const Acess_ = require('../schemas/access_token');
-var express = require('express');
-var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 var socialUser = require('../schemas/social_user');
@@ -24,117 +21,16 @@ const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.kakao_client_id;
 console.log('client_id: ' + client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
+const kakaoController = require('../controller/kakaos');
 
-router.post('/auth/login/kakao/callback', function (req, res, next) {
-  let code = req.body.code;
-  try {
-    axios
-      .post(
-        `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${KAKAO_GRANT_TYPE}&client_id=${client_id}&redirect_uri=${KAKAO_REDIRECT_URL}&code=${code}`,
-        {
-          headers: {
-            'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-          },
-        }
-      )
-      .then((result) => {
-        console.log(result.data['access_token']);
-        res.send(result.data['access_token']);
-        // 토큰을 활용한 로직을 적어주면된다.
-      })
-      .catch((e) => {
-        console.log(e);
-        res.send(e);
-      });
-  } catch (e) {
-    console.log(e);
-    res.send(e);
-  }
-});
+router.post('/auth/login/kakao/callback', kakaoController.kakao_callback);
 
 // /naver =>/oauth/callback/kakao 인가코드 넘기는 url
 // kakao/member token 넘기는 url
 
-// let access_token = '';
+router.post('/kakao/member', kakaoController.kakao_member);
 
-// router.post('/oauth/callback/kakao', async function (req, res, next) {
-//   let code = req.body.code;
-//   console.log('code: ', code);
-//   // console.log('redirect_uri: ', redirect_uri);
-//   // console.log('client_id: ', client_id);
-//   // console.log('grant_type: ', grant_type);
-//   // console.log(KAKAO_OAUTH_TOKEN_API_URL);
-//   // var header = 'Bearer ' + token;
-//   var api_url = `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${redirect_uri}&code=${code}`;
-//   var options = {
-//     url: api_url,
-
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-//       'Content-Type': 'application / json',
-//     },
-//   };
-//   request.get(options, function (error, response, body) {
-//     if (!error && response.statusCode == 200) {
-//       res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
-//       res.end(body);
-//     } else {
-//       console.log('error');
-//       if (response != null) {
-//         res.status(response.statusCode).end();
-//         console.log('error = ' + response.statusCode);
-//       }
-//     }
-//   });
-// });
-router.post('/kakao/member', function (req, res) {
-  var api_url = 'https://kapi.kakao.com/v2/user/me';
-  var request = require('request');
-  var token = req.body.token;
-  console.log(token);
-  var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
-  console.log('header: ' + header);
-  var options = {
-    url: api_url,
-    headers: { Authorization: header },
-  };
-  request.get(options, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
-      res.end(body);
-      console.log(body);
-    } else {
-      console.log('error');
-      if (response != null) {
-        res.status(response.statusCode).end();
-        console.log('error = ' + response.statusCode);
-      }
-    }
-  });
-});
-
-router.post('/kakao/parsing', async function (req, res) {
-  const user_info = req.body;
-  console.log('user_info = ' + user_info);
-  const userid = user_info.user_id;
-  console.log('userid: ', userid);
-  const email = user_info.user_email;
-  console.log('email: ', email);
-  const nickname = user_info.user_name;
-  console.log('nickname: ', nickname);
-
-  const double = await socialUser.findOne({ email });
-  console.log('double: ', double);
-
-  if (!double) {
-    const social = new socialUser({ userid, email, nickname });
-    social.save();
-    res.send('저장에 성공하였습니다.');
-  } else {
-    res.send('이미 있는 유저입니다.');
-  }
-
-  // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
-});
+router.post('/kakao/parsing', kakaoController.kakao_parsing);
+// 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
 
 module.exports = router;

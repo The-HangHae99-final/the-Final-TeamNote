@@ -1,5 +1,5 @@
-const Mypage = require('../schemas/mypage');
-const Post = require('../schemas/post');
+const Mypage = require("../schemas/mypage");
+const Post = require("../schemas/post");
 
 async function bookmark(req, res) {
   try {
@@ -7,7 +7,7 @@ async function bookmark(req, res) {
 
     const { user } = res.locals;
     const userid = user[0].userid;
-    console.log('userid: ', userid);
+    console.log("userid: ", userid);
 
     const [markList] = await Post.find(
       { postingid },
@@ -37,16 +37,16 @@ async function bookmark(req, res) {
     }
     if (temp === 1) {
       await Mypage.deleteOne({ postingid: Number(postingid) });
-      res.send('북마크 off');
+      res.send("북마크 off");
     } else {
       await Mypage.create({
         userid,
         markList,
       });
-      res.send('북마크 on');
+      res.send("북마크 on");
     }
   } catch (err) {
-    res.status(400).send('마크 오류');
+    res.status(400).send("마크 오류");
   }
 }
 
@@ -60,7 +60,7 @@ async function mypage(req, res) {
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: '마이페이지 조회 오류',
+      errorMessage: "마이페이지 조회 오류",
     });
   }
 }
