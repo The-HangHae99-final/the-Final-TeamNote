@@ -25,4 +25,4 @@ const router = express.Router();
 //   res.redirect('/main');
 // }
 
-// module.exports = router;
+module.exports = router;
