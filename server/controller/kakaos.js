@@ -8,12 +8,13 @@ var socialUser = require('../schemas/social_user');
 
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
-
-var express = require('express');
-var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
+<<<<<<< HEAD
+=======
+console.log('client_id:', client_id);
+>>>>>>> e87a85883055f6224afbf63d03a29abfa5e5ad77
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 
 // router.post(
@@ -97,18 +98,16 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const userid = user_info.user_id;
-    console.log('userid: ', userid);
+    const _user = user_info.user_id;
+    console.log('_user: ', _user);
     const email = user_info.user_email;
     console.log('email: ', email);
-    const nickname = user_info.user_name;
-    console.log('nickname: ', nickname);
-
+    const userId = user_info.user_name;
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
 
     if (!double) {
-      const social = new socialUser({ userid, email, nickname, site });
+      const social = new socialUser({ userId, email, _user, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {

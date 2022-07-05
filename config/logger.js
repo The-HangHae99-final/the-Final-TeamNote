@@ -1,6 +1,6 @@
-const winston = require("winston");
-require("winston-daily-rotate-file");
-const logDir = "../logs";
+const winston = require('winston');
+require('winston-daily-rotate-file');
+const logDir = '../logs';
 
 const levels = {
   error: 0,
@@ -11,23 +11,23 @@ const levels = {
 };
 
 const level = () => {
-  const env = process.env.NODE_ENV || "development";
-  const isDevelopment = env === "development";
-  return isDevelopment ? "debug" : "warn";
+  const env = process.env.NODE_ENV || 'development';
+  const isDevelopment = env === 'development';
+  return isDevelopment ? 'debug' : 'warn';
 };
 
 const colors = {
-  error: "red",
-  warn: "yellow",
-  info: "green",
-  http: "magenta",
-  debug: "blue",
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  http: 'magenta',
+  debug: 'blue',
 };
 
 winston.addColors(colors);
 
 const format = winston.format.combine(
-  winston.format.timestamp({ format: " YYYY-MM-DD HH:MM:SS ||" }),
+  winston.format.timestamp({ format: ' YYYY-MM-DD HH:MM:SS ||' }),
   winston.format.colorize({ all: true }),
   winston.format.printf(
     (info) => `${info.timestamp} [ ${info.level} ] ▶ ${info.message}`
@@ -39,8 +39,8 @@ const logger = winston.createLogger({
   level: level(),
   transports: [
     new winston.transports.DailyRotateFile({
-      level: "info",
-      datePattern: "YYYY-MM-DD",
+      level: 'info',
+      datePattern: 'YYYY-MM-DD',
       dirname: logDir,
       filename: `%DATE%.log`,
       zippedArchive: true,
@@ -48,9 +48,9 @@ const logger = winston.createLogger({
       maxFiles: 30,
     }),
     new winston.transports.DailyRotateFile({
-      level: "error",
-      datePattern: "YYYY-MM-DD",
-      dirname: logDir + "/error",
+      level: 'error',
+      datePattern: 'YYYY-MM-DD',
+      dirname: logDir + '/error',
       filename: `%DATE%.error.log`,
       zippedArchive: true,
       maxFiles: 30,

@@ -1,5 +1,5 @@
-const morgan = require("morgan");
-const Logger = require("../config/logger");
+const morgan = require('morgan');
+const Logger = require('../config/logger');
 
 // 참고 : https://levelup.gitconnected.com/better-logs-for-expressjs-using-winston-and-morgan-with-typescript-1c31c1ab9342
 
@@ -13,32 +13,32 @@ const stream = {
 };
 
 const skip = () => {
-  const env = process.env.NODE_ENV || "development";
-  return env !== "development";
+  const env = process.env.NODE_ENV || 'development';
+  return env !== 'development';
 };
 
 // https://jeonghwan-kim.github.io/morgan-helper/
-morgan.token("status", function (req, res) {
+morgan.token('status', function (req, res) {
   let color;
 
-  if (res.statusCode < 300) color = "\x1B[32m"; //green
-  else if (res.statusCode < 400) color = "\x1B[36m"; //cyan
-  else if (res.statusCode < 500) color = "\x1B[33m"; //yellow
-  else if (res.statusCode < 600) color = "\x1B[31m"; //red
-  else color = "\033[0m"; /*글자색 초기화*/
+  if (res.statusCode < 300) color = '\x1B[32m'; //green
+  else if (res.statusCode < 400) color = '\x1B[36m'; //cyan
+  else if (res.statusCode < 500) color = '\x1B[33m'; //yellow
+  else if (res.statusCode < 600) color = '\x1B[31m'; //red
+  else color = '\033[0m'; /*글자색 초기화*/
 
-  return color + res.statusCode + "\033[35m" /*보라색*/;
+  return color + res.statusCode + '\033[35m' /*보라색*/;
 });
 
 // https://jeonghwan-kim.github.io/morgan-helper/
-morgan.token("request", function (req, res) {
-  return "Request_" + JSON.stringify(req.body);
+morgan.token('request', function (req, res) {
+  return 'Request_' + JSON.stringify(req.body);
 });
-morgan.token("makeLine", function () {
+morgan.token('makeLine', function () {
   let line =
     "-----------------------------------------------*(੭*ˊᵕˋ)੭* 응답 결과 ╰(*'v'*)╯-----------------------------------------------";
-  let blank = "                                   ";
-  return line + "\n" + blank;
+  let blank = '                                   ';
+  return line + '\n' + blank;
 });
 
 // Build the morgan middleware
