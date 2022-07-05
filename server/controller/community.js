@@ -1,4 +1,4 @@
-const Message = require('../schemas/messages');
+const Message = require("../schemas/messages");
 
 async function communitypage(req, res) {
   try {
@@ -7,7 +7,7 @@ async function communitypage(req, res) {
     const profileimage = user[0].profileimage;
     res.json({ username, profileimage });
   } catch (err) {
-    res.status(400).send('정보 전달 오류');
+    res.status(400).send("정보 전달 오류");
   }
 }
 
@@ -16,7 +16,7 @@ async function getchat(req, res) {
     const message = await Message.find();
     res.send(message);
   } catch (err) {
-    res.status(400).send('대화내용 조회 오류');
+    res.status(400).send("대화내용 조회 오류");
   }
 }
 

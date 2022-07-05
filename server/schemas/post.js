@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
   // 채용정보 게시글 번호
@@ -19,4 +19,4 @@ const PostSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model("Post", PostSchema);

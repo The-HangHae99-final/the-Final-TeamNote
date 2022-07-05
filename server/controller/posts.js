@@ -1,4 +1,4 @@
-const Post = require('../schemas/post');
+const Post = require("../schemas/post");
 
 //채용정보 등록
 async function recruitpost(req, res) {
@@ -14,7 +14,7 @@ async function recruitpost(req, res) {
     let status = true;
 
     // postingid 자동으로 생성되게 설정
-    const maxpostingid = await Post.findOne().sort('-postingid');
+    const maxpostingid = await Post.findOne().sort("-postingid");
     let postingid = 1;
     if (maxpostingid) {
       postingid = maxpostingid.postingid + 1;
@@ -40,10 +40,10 @@ async function recruitpost(req, res) {
     });
     res.status(200).send({
       success: true,
-      msg: '등록이 완료되었습니다.',
+      msg: "등록이 완료되었습니다.",
     });
   } catch (err) {
-    res.status(400).send('채용정보 작성 오류');
+    res.status(400).send("채용정보 작성 오류");
   }
 }
 
@@ -61,10 +61,10 @@ async function recruitfixment(req, res) {
       await Post.updateOne({ postingid }, { $set: req.body });
       res.status(201).send({ success: true });
     } else {
-      res.status(403).send('수정 권한이 없습니다.');
+      res.status(403).send("수정 권한이 없습니다.");
     }
   } catch {
-    res.status(400).send('채용정보 수정 오류');
+    res.status(400).send("채용정보 수정 오류");
   }
 }
 //채용정보삭제
@@ -78,10 +78,10 @@ async function recruitdelete(req, res) {
       await Post.deleteOne({ postingid: Number(postingid) });
       res.status(200).send({ success: true });
     } else {
-      res.status(403).send('삭제 권한이 없습니다.');
+      res.status(403).send("삭제 권한이 없습니다.");
     }
   } catch {
-    res.status(400).send('채용정보 삭제 오류');
+    res.status(400).send("채용정보 삭제 오류");
   }
 }
 //채용정보상태수정
@@ -97,10 +97,10 @@ async function recruitstatusfixment(req, res) {
       await Post.updateOne({ postingid }, { $set: req.body });
       res.status(201).send({ success: true });
     } else {
-      res.status(403).send('상태 수정 권한이 없습니다.');
+      res.status(403).send("상태 수정 권한이 없습니다.");
     }
   } catch {
-    res.status(400).send('채용정보 수정 오류');
+    res.status(400).send("채용정보 수정 오류");
   }
 }
 //채용정보조회
@@ -123,7 +123,7 @@ async function recruitget(req, res) {
     info.companyinfo = companyinfo;
     res.send(info);
   } catch (err) {
-    res.status(400).send('채용정보 조회 오류');
+    res.status(400).send("채용정보 조회 오류");
   }
 }
 
