@@ -59,9 +59,6 @@ function kakao_callback(req, res, next) {
 // 클라이언트가 받고 데이터를 파싱해서 다시 보낸다.post_3  // 데이터 파싱문제!!
 // 백엔드가 받아서 DB에 저장한다.
 
-// /naver =>/oauth/callback/kakao 인가코드 넘기는 url
-// kakao/member token 넘기는 url
-
 // router.post('/kakao/member',
 function kakao_member(req, res) {
   try {
@@ -97,6 +94,7 @@ function kakao_member(req, res) {
 // router.post('/kakao/parsing',
 async function kakao_parsing(req, res) {
   try {
+    const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
     const userid = user_info.user_id;
@@ -110,7 +108,7 @@ async function kakao_parsing(req, res) {
     console.log('double: ', double);
 
     if (!double) {
-      const social = new socialUser({ userid, email, nickname });
+      const social = new socialUser({ userid, email, nickname, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {

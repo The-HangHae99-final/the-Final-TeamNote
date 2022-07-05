@@ -92,6 +92,7 @@ function naver_member(req, res) {
 // router.post('/parsing',
 async function naver_parsing(req, res) {
   try {
+    const site = 2; //naver
     const user_info = req.body;
     // console.log(user_info);
     // console.log(user_info.user_name);
@@ -102,7 +103,7 @@ async function naver_parsing(req, res) {
     const double = await socialUser.findOne({ email });
 
     if (!double) {
-      const social = new socialUser({ userid, email, nickname });
+      const social = new socialUser({ userid, email, nickname, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {
