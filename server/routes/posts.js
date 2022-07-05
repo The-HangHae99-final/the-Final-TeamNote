@@ -1,34 +1,21 @@
-// 모듈 및 설정파일
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const postController = require('../controller/posts');
-const authMiddleware = require('../middlewares/auth-middleware');
+const postController = require("../controller/posts")
+const authMiddleware = require("../middlewares/auth-middleware");
 
-// 채용정보 등록(기업회원 로그인 시 가능)
-router.post('/postings', authMiddleware, postController.recruitpost);
+// 글 작성하기
+router.post('/board/post', authMiddleware, postController.postUpload)
 
-// 채용정보 수정(기업회원 로그인 시 가능)
-router.put(
-  '/postings/:postingid',
-  authMiddleware,
-  postController.recruitfixment
-);
+// 글 전체 조회(임시)
+router.get('/board/post', postController.postAll)
 
-// 채용정보 상태 수정(기업회원 로그인 시 가능)
-router.patch(
-  '/postingstatus/:postingid',
-  authMiddleware,
-  postController.recruitstatusfixment
-);
+// 글 상세 조회
+router.get('/board/post/:post_id', postController.postDetail)
 
-// 채용정보 삭제(기업회원 로그인 시 가능)
-router.delete(
-  '/postings/:postingid',
-  authMiddleware,
-  postController.recruitdelete
-);
+// 글 수정
+router.put('/free/post/:post_id', authMiddleware, postController.postEdit)
 
-// 채용정보 전체조회
-router.get('/postings', postController.recruitget);
+// 글 삭제
+router.delete('/free/post/:post_id', authMiddleware, postController.postRemove)
 
 module.exports = router;

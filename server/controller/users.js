@@ -7,14 +7,14 @@ const nodemailer = require('nodemailer');
 // const Message = require('../schemas/messages');
 
 const postUsersSchema = Joi.object({
-  userid: Joi.string().required().email(),
+  user_id: Joi.string().required().email(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   confirmpassword: Joi.string(),
 });
 
 async function signup(req, res) {
   try {
-    const { userid, password, confirmpassword } =
+    const { user_id, password, confirmpassword } =
       await postUsersSchema.validateAsync(req.body);
 
     if (password !== confirmpassword) {
@@ -23,7 +23,7 @@ async function signup(req, res) {
       });
     }
 
-    const exitstUsers = await User.find({ userid });
+    const exitstUsers = await User.find({ user_id });
     if (exitstUsers.length) {
       return res.status(400).send({
         errorMessage: '중복된 아이디가 존재합니다.',
@@ -34,7 +34,7 @@ async function signup(req, res) {
     const hashPassword = await Bcrypt.hash(password, salt);
 
     const user = new User({
-      userid,
+      user_id,
       password: hashPassword,
     });
     await user.save();
@@ -50,9 +50,9 @@ async function signup(req, res) {
 
 async function login(req, res) {
   try {
-    const { userid, password } = req.body;
+    const { user_id, password } = req.body;
 
-    const user_find = await User.findOne({ userid });
+    const user_find = await User.findOne({ user_id });
 
     if (!user_find) {
       return res.status(400).send({
@@ -70,13 +70,13 @@ async function login(req, res) {
       return res.send('비밀번호가 틀렸습니다..');
     }
 
-    const token = jwt.sign({ userid: userid }, 'secret', {
+    const token = jwt.sign({ user_id: user_id }, 'secret', {
       expiresIn: '1200s',
     });
     const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
-    await user_find.update({ refresh_token }, { where: { userid: userid } });
+    await user_find.update({ refresh_token }, { where: { user_id: user_id } });
     res.status(200).send({ message: 'success', token: token });
   } catch (err) {
     res.status(400).send({ message: err + ' : login failed' });

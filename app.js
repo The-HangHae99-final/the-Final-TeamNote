@@ -9,18 +9,16 @@ const session = require('express-session');
 const port = 3000;
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
-const tasksRouter = require('./routes/tasks');
-// const mypageRouter = require('./routes/mypage');
-// const communityRouter = require('./routes/community');
-// const G_authRouter = require('./routes/google_auth');
+const mypageRouter = require('./routes/mypage');
+const communityRouter = require('./routes/community');
+const G_authRouter = require('./routes/google_auth');
 const passport = require('passport');
 const { Server } = require('socket.io');
-const swaggerUi = require('swagger-ui-express');
-// const swaggerFile = require('./swagger_output');
 const http = require('http');
 const server = http.createServer(app);
-// const Msg = require('./schemas/messages');
+const Msg = require('./schemas/messages');
 const cookieParser = require('cookie-parser');
+const kakaoRouter = require('./routes/kakao');
 
 connect();
 
@@ -32,7 +30,6 @@ console.log('현재 시각은 ' + createdAt + ' 입니다.');
 
 app.use(morgan('dev'));
 app.use(cors());
-// app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,12 +42,14 @@ app.use(
 // Passport setting
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', [usersRouter, postsRouter, tasksRouter]);
-// app.use('/auth', [G_authRouter]);
+app.use('/api', [usersRouter, postsRouter, mypageRouter, communityRouter]);
+app.use('/auth', [G_authRouter]);
 
-app.get('/', (req, res) => {
-  res.send('헬로 월드');
-});
+app.use('/', kakaoRouter);
+
+// app.get('/', (req, res) => {
+//   res.send('헬로 월드');
+// });
 
 app.get('/chat', (req, res) => {
   res.sendFile(__dirname + '/chat.html');
