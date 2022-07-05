@@ -113,4 +113,8 @@ async function naver_parsing(req, res) {
   // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
 }
 
-module.exports = router;
+module.exports = {
+  naver,
+  naver_member,
+  naver_parsing,
+};
