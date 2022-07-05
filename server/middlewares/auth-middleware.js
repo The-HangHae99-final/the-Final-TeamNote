@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
 
   if (authorization == null) {
     res.status(401).send({
-      errorMessage: '로그인이 필요합니다.',
+      errorMessage: '로그인이 필요합니다.-------null------------',
     });
     return;
   }
