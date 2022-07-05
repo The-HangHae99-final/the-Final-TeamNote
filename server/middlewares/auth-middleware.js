@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
 
   if (tokenType !== 'Bearer') {
     res.status(401).send({
-      errorMessage: '로그인이 필요합니다.',
+      errorMessage: '로그인이 필요합니다.---------Bearer--------',
     });
     return;
   }
@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
         refresh_token = u.refresh_token;
         const myRefreshToken = verifyToken(refresh_token);
         if (myRefreshToken == 'jwt expired') {
-          res.send({ errorMessage: '로그인이 필요합니다.' });
+          res.send({ errorMessage: '로그인이 필요합니다.------expired------' });
         } else {
           const myNewToken = jwt.sign({ userId: u.userId }, 'secret', {
             expiresIn: '1200s',
@@ -48,7 +48,9 @@ module.exports = (req, res, next) => {
       });
     }
   } catch (err) {
-    res.send({ errorMessage: err + ' : 로그인이 필요합니다.' });
+    res.send({
+      errorMessage: err + ' : 로그인이 필요합니다. -----------그외-----------',
+    });
   }
 };
 
