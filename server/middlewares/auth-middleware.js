@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const myToken = verifyToken(authorization);
+    const myToken = verifyToken(tokenValue);
     console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
