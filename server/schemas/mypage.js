@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const MypageSchema = new mongoose.Schema({
   userid: {
     type: String, //토큰 받아서 유저아이디만 필요하므로 똑같이 정함.
@@ -7,4 +7,4 @@ const MypageSchema = new mongoose.Schema({
     type: Array,
   },
 });
-module.exports = mongoose.model("mypage", MypageSchema);
+module.exports = mongoose.model('mypage', MypageSchema);

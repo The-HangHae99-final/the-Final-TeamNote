@@ -1,136 +1,145 @@
 const Post = require("../schemas/post");
+const Comment = require("../schemas/comment")
 
-//채용정보 등록
-async function recruitpost(req, res) {
+//글 작성하기
+async function postUpload(req, res, next) {
   try {
-    const { user } = res.locals;
-    const userid = user[0].userid;
-    const companyname = user[0].companyname;
-    const profileimage = user[0].profileimage;
-    const intro = user[0].intro;
-    const address = user[0].address;
-    const country = user[0].country;
-    const region = user[0].region;
-    let status = true;
+    const { userId } = res.locals.user;
+    const { title, content, category } = req.body;
 
-    // postingid 자동으로 생성되게 설정
-    const maxpostingid = await Post.findOne().sort("-postingid");
-    let postingid = 1;
-    if (maxpostingid) {
-      postingid = maxpostingid.postingid + 1;
+    const maxpostId = await Post.findOne().sort({
+      postId: -1,
+    });
+    // console.log(maxpostId)
+    let postId = 1;
+    if (maxpostId) {
+      postId = maxpostId.postId + 1;
     }
 
-    const { thumbnail, title, maincontent, subcontent, position } = req.body;
-
-    const recruit = await Post.create({
-      postingid,
-      userid,
-      companyname,
-      profileimage,
-      intro,
-      address,
-      country,
-      region,
-      thumbnail,
+    const createdPost = await Post.create({
+      postId,
+      userId,
       title,
-      maincontent,
-      subcontent,
-      position,
-      status,
+      content,
+      category,
     });
-    res.status(200).send({
-      success: true,
-      msg: "등록이 완료되었습니다.",
+    return res.json({
+      result: createdPost,
+      ok: true,
+      message: "게시물 작성 성공",
     });
   } catch (err) {
-    res.status(400).send("채용정보 작성 오류");
+    console.log(err);
+    res.status(400).send({
+      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+    });
   }
 }
 
-//채용정보수정
-async function recruitfixment(req, res) {
+// 글 전체 조회
+async function postAllView(req, res, next) {
   try {
-    const { postingid } = req.params;
-    const { thumbnail, title, maincontent, subcontent, userimage, position } =
-      req.body;
-    const { user } = res.locals;
-    const userid = user[0].userid;
-    const list = await Post.findOne({ postingid });
+    let posts;
+    if (!req.query.category) {
+      posts = await Post.find({}).sort("-postId");
+    } else {
+      const category = req.query.category;
+      posts = await Post.find({ category }).sort("-postId");
+    }
+    return res.json({
+      result: {
+        count: posts.length,
+        rows: posts,
+      },
+      ok: true,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ ok: false, message: "게시물 조회 실패" });
+  }
+}
 
-    if (userid === list.userid) {
-      await Post.updateOne({ postingid }, { $set: req.body });
-      res.status(201).send({ success: true });
-    } else {
-      res.status(403).send("수정 권한이 없습니다.");
-    }
-  } catch {
-    res.status(400).send("채용정보 수정 오류");
-  }
-}
-//채용정보삭제
-async function recruitdelete(req, res) {
+//글 하나 조회
+async function postView(req, res, next) {
   try {
-    const { postingid } = req.params;
-    const { user } = res.locals;
-    const userid = user[0].userid;
-    const list = await Post.findOne({ postingid: Number(postingid) });
-    if (userid === list.userid) {
-      await Post.deleteOne({ postingid: Number(postingid) });
-      res.status(200).send({ success: true });
-    } else {
-      res.status(403).send("삭제 권한이 없습니다.");
-    }
-  } catch {
-    res.status(400).send("채용정보 삭제 오류");
-  }
-}
-//채용정보상태수정
-async function recruitstatusfixment(req, res) {
-  try {
-    const { postingid } = req.params;
-    const { status } = req.body;
-    const { user } = res.locals;
-    const userid = user[0].userid;
-    const list = await Post.findOne({ postingid });
-
-    if (userid === list.userid) {
-      await Post.updateOne({ postingid }, { $set: req.body });
-      res.status(201).send({ success: true });
-    } else {
-      res.status(403).send("상태 수정 권한이 없습니다.");
-    }
-  } catch {
-    res.status(400).send("채용정보 수정 오류");
-  }
-}
-//채용정보조회
-async function recruitget(req, res) {
-  try {
-    const posts = await Post.find({ status: true }).sort({ postingid: -1 });
-    const companyinfo = await CompanyUser.find(
-      {},
-      {
-        companyname: 1,
-        profileimage: 1,
-        intro: 1,
-        image: 1,
-        address: 1,
-        industry: 1,
-      }
+    const postId = Number(req.params.postId);
+    const existsPost = await Post.find(
+      { postId },
     );
-    const info = {};
-    info.posts = posts;
-    info.companyinfo = companyinfo;
-    res.send(info);
+    if (!existsPost.length) {
+      return res
+        .status(400)
+        .json({ ok: false, errorMessage: "찾는 게시물 없음." });
+    }
+
+    const existsComment = await Comment.find(
+      { postId },
+    ).sort({ commentId: -1 });
+    res.json({ existsPost, existsComment });
   } catch (err) {
-    res.status(400).send("채용정보 조회 오류");
+    console.log(err);
+    res.status(400).send({
+      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+    });
+  }
+}
+
+// 글 수정
+async function postEdit(req, res, next) {
+  try {
+    const postId = Number(req.params.postId);
+    const [existPost] = await Post.find({ postId });
+    const { user } = res.locals;
+    const { title, category, content } = req.body;
+    if (user.userId !== existPost.userId) {
+      return res.status(401).json({ ok: false, message: "작성자가 아닙니다." });
+    }
+    if (!title || !category || !content) {
+      return res.status(400).json({ ok: false, message: "빈값을 채워주세요" });
+    }
+
+    await Post.updateOne({ postId }, { $set: { title, category, content } });
+    return res.status(200).json({
+      result: await Post.findOne({ postId }),
+      ok: true,
+      message: "게시글 수정 성공",
+    });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: "게시글 수정 에러" });
+  }
+}
+
+// 글 삭제
+async function postDelete(req, res, next) {
+  try {
+    const postId = Number(req.params.postId);
+    console.log("postId: ", postId);
+    const [targetPost] = await Post.find({ postId });
+    const { userId } = res.locals.user;
+
+    if (userId !== targetPost.userId) {
+      return res.status(401).json({
+        ok: false,
+        message: "작성자가 아닙니다.",
+      });
+    }
+
+    await Post.deleteOne({ postId });
+    return res.json({ ok: true, message: "게시글 삭제 성공" });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: "게시글 삭제 실패",
+    });
   }
 }
 
 module.exports = {
-  recruitpost,
-  recruitfixment,
-  recruitdelete,
-  recruitget,
-  recruitstatusfixment,
+  postUpload,
+  postAllView,
+  postView,
+  postEdit,
+  postDelete,
 };

@@ -7,23 +7,25 @@ const nodemailer = require("nodemailer");
 // const Message = require('../schemas/messages');
 
 const postUsersSchema = Joi.object({
-  userid: Joi.string().required().email(),
+  userId: Joi.string().required().email(),
+  userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{4,12}$")).required(),
-  confirmpassword: Joi.string(),
+  confirmPassword: Joi.string(),
+  profileImage: Joi.string(),
 });
-
+//회원가입
 async function signup(req, res) {
   try {
-    const { userid, password, confirmpassword } =
+    const { userId, userName, password, confirmPassword, profileImage, } =
       await postUsersSchema.validateAsync(req.body);
 
-    if (password !== confirmpassword) {
+    if (password !== confirmPassword) {
       return res.status(400).send({
         errorMessage: "패스워드가 패스워드 확인란과 동일하지 않습니다.",
       });
     }
 
-    const exitstUsers = await User.find({ userid });
+    const exitstUsers = await User.find({ userId });
     if (exitstUsers.length) {
       return res.status(400).send({
         errorMessage: "중복된 아이디가 존재합니다.",
@@ -34,27 +36,33 @@ async function signup(req, res) {
     const hashPassword = await Bcrypt.hash(password, salt);
 
     const user = new User({
-      userid,
+      userId,
+      userName,
       password: hashPassword,
+      profileImage,
     });
     await user.save();
-
     res.status(201).send({
       ok: true,
-      result: { user },
+      msg: '회원가입을 성공하였습니다',
     });
+
+    // res.status(201).send({
+    //   ok: true,
+    //   result: { user },
+    // });
   } catch (error) {
     return res.status(400).send(console.error(error));
   }
 }
-
+//로그인
 async function login(req, res) {
   try {
-    const { userid, password } = req.body;
+    const { userId, password } = req.body;
 
-    const user_find = await User.findOne({ userid });
+    const userFind = await User.findOne({ userId });
 
-    if (!user_find) {
+    if (!userFind) {
       return res.status(400).send({
         errorMessage: "아이디 또는 비밀번호를 확인해주세요.",
       });
@@ -62,28 +70,27 @@ async function login(req, res) {
 
     let validPassword = "";
 
-    if (user_find) {
-      validPassword = await Bcrypt.compare(password, user_find.password);
+    if (userFind) {
+      validPassword = await Bcrypt.compare(password, userFind.password);
     }
 
     if (!validPassword) {
       return res.send("비밀번호가 틀렸습니다..");
     }
 
-    const token = jwt.sign({ userid: userid }, "secret", {
+    const token = jwt.sign({ userId: userId }, "secret", {
       expiresIn: "1200s",
     });
     const refresh_token = jwt.sign({}, "secret", {
       expiresIn: "14d",
     });
-    await user_find.update({ refresh_token }, { where: { userid: userid } });
+    await userFind.update({ refresh_token }, { where: { userId: userId } });
     res.status(200).send({ message: "success", token: token });
   } catch (err) {
     res.status(400).send({ message: err + " : login failed" });
   }
 }
 
-// async function getuser(req, res)
 module.exports = {
   signup,
   login,

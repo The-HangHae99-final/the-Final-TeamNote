@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
 // const passport = require('../config/passport.js');
@@ -25,4 +25,4 @@ const router = express.Router();
 //   res.redirect('/main');
 // }
 
-module.exports = router;
+// module.exports = router;

@@ -4,7 +4,7 @@ const GuserSchema = new mongoose.Schema({
     type: String,
   },
 
-  userid: {
+  userId: {
     type: String,
     unique: true,
   },

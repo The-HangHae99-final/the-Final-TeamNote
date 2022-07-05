@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-  userid: {
+  userId: {
     type: String,
     unique: true,
   },
@@ -12,9 +12,13 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 
-  refresh_token: {
+  userName: {
+    type: String,
+  },
+
+  profileImage: {
     type: String,
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

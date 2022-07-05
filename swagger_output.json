@@ -228,7 +228,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userid": {
+                "userId": {
                   "example": "any"
                 }
               }
@@ -255,7 +255,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userid": {
+                "userId": {
                   "example": "any"
                 }
               }
@@ -282,7 +282,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userid": {
+                "userId": {
                   "example": "any"
                 },
                 "password": {
