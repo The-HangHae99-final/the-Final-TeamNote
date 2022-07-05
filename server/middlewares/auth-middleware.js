@@ -15,7 +15,6 @@ module.exports = (req, res, next) => {
   const [tokenType, tokenValue] = authorization.split(' ');
   console.log('tokenValue: ', tokenValue);
   console.log('tokenType: ', tokenType);
-  
 
   if (tokenType !== 'Bearer') {
     console.log('tokenType: ', tokenType);
@@ -44,9 +43,9 @@ module.exports = (req, res, next) => {
           });
         } else {
           const myNewToken = jwt.sign({ userId: u.userId }, 'secret', {
-            console.log('myNewToken: ', myNewToken);
             expiresIn: '1200s',
           });
+          console.log('myNewToken: ', myNewToken);
           res.send({ message: 'new token', myNewToken });
         }
       });
