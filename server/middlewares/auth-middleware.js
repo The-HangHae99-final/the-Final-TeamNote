@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const myToken = jwt.sign(tokenValue);
+    const myToken = jwt.sign(tokenValue, 'signup');
     console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
