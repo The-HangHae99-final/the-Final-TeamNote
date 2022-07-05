@@ -56,6 +56,7 @@ function naver(req, res) {
     });
   } catch (err) {
     res.status(400).send('오류가 발생했습니다.');
+    console.log('error +', err);
   }
 }
 
@@ -84,6 +85,7 @@ function naver_member(req, res) {
     });
   } catch (err) {
     res.status(400).send('에러가 발생했습니다');
+    console.log(err);
   }
 }
 
@@ -108,6 +110,7 @@ async function naver_parsing(req, res) {
     }
   } catch (err) {
     res.status(400).send('에러가 발생했습니다.');
+    console.log('error =' + err);
   }
 
   // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
