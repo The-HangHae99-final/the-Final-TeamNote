@@ -8,12 +8,10 @@ var socialUser = require('../schemas/social_user');
 
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
-
-var express = require('express');
-var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
-const client_id = process.env.kakao_client_id;
+const client_id = process.env.client_id;
+console.log('client_id:', client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 
 // router.post(
