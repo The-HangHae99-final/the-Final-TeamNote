@@ -19,13 +19,14 @@ module.exports = (req, res, next) => {
   if (tokenType !== 'Bearer') {
     console.log('tokenType: ', tokenType);
     res.status(401).send({
-      errorMessage: '로그인이 필요합니다.---------Bearer----------',
+      errorMessage:
+        error.message + '로그인이 필요합니다.---------Bearer----------',
     });
     return;
   }
 
   try {
-    const myToken = verifyToken(tokenValue);
+    const myToken = verifyToken(authorization);
     console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
@@ -39,7 +40,8 @@ module.exports = (req, res, next) => {
         if (myRefreshToken == 'jwt expired') {
           console.log('myRefreshToken: ', myRefreshToken);
           res.send({
-            errorMessage: '로그인이 필요합니다.---------expired----------',
+            errorMessage:
+              error.message + '로그인이 필요합니다.---------expired----------',
           });
         } else {
           const myNewToken = jwt.sign({ userId: u.userId }, 'secret', {
