@@ -20,7 +20,8 @@ const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
-global.logger || (global.logger = require('./server/config/logger.js')); // → 전역에서 사용
+
+global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
 const morganMiddleware = require('./server/config/morganMiddleware');
 app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 
@@ -47,7 +48,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api', [usersRouter, postsRouter]);
-app.use('/auth', [G_authRouter]);
 
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 // app.use('/', (req,res)=> {
@@ -67,6 +67,4 @@ app.get('/', (req, res) => {
   res.send('실전 파이널 프로젝트 서버');
 });
 
-app.get('/chat', (req, res) => {
-  res.sendFile(__dirname + '/chat.html');
-});
+module.exports = server;

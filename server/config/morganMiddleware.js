@@ -1,5 +1,5 @@
 const morgan = require('morgan');
-const Logger = require('./server/config/logger');
+const Logger = require('../config/logger');
 
 // 참고 : https://levelup.gitconnected.com/better-logs-for-expressjs-using-winston-and-morgan-with-typescript-1c31c1ab9342
 
