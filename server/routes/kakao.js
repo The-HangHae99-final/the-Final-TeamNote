@@ -12,7 +12,7 @@ const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.kakao_client_id;
 console.log('client_id: ' + client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
-const kakaoController = '../controller/kakao';
+const kakaoController = require('../controller/kakaos');
 
 router.post('/auth/login/kakao/callback', kakaoController.kakao_callback);
 
