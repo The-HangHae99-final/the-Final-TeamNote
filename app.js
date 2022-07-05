@@ -11,7 +11,7 @@ const usersRouter = require('./server/routes/users');
 const postsRouter = require('./server/routes/posts');
 const commentsRouter = require('./server/routes/comments');
 const likesRouter = require('./server/routes/likes');
-const passport = require('passport');
+const helmet = require('helmet');
 const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
@@ -43,7 +43,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
-
+app.use(helmet());
 app.use('/api', [usersRouter, postsRouter]);
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 app.set('view engine', 'ejs');
