@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const naverController = require('../controller/naver');
+const naverController = require('../controller/navers');
 dotenv.config();
 var axios = require('axios');
 var request = require('request');
