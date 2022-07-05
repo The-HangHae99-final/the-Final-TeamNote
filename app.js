@@ -6,13 +6,13 @@ const http = require("http");
 const server = http.createServer(app);
 
 
-const connect = require('./schemas/db');
+const connect = require('./server/schemas/db');
 const cors = require('cors');
 const morgan = require('morgan');
-const usersRouter = require('./routes/users');
-const postsRouter = require('./routes/posts');
-const commentsRouter = require('./routes/comments');
-const likesRouter = require('./routes/likes');
+const usersRouter = require('./server/routes/users');
+const postsRouter = require('./server/routes/posts');
+const commentsRouter = require('./server/routes/comments');
+const likesRouter = require('./server/routes/likes');
 
 connect();
 

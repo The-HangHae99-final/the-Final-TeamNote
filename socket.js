@@ -1,6 +1,6 @@
 const http = require("./app");
 const socketIo = require("socket.io");
-const Message = require("./schemas/message")
+const Message = require("./server/schemas/message")
 
 
 const io = socketIo(http, {
