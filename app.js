@@ -44,23 +44,11 @@ app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
 
-// Passport setting
-app.use(passport.initialize());
-app.use(passport.session());
 app.use('/api', [usersRouter, postsRouter]);
-
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
-// app.use('/', (req,res)=> {
-// 	currentPut().then((response) => {
-// 		res.setHeader("Access-Control-Allow-Origin","*");
-// 		res.json(response.data.response.body);
-// 	});
-// });
 app.set('view engine', 'ejs');
-
 app.get('/api', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
-  // res.send('hi');
 });
 
 app.get('/', (req, res) => {
