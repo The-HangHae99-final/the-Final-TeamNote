@@ -103,7 +103,7 @@ async function naver_parsing(req, res) {
     const double = await socialUser.findOne({ email });
 
     if (!double) {
-      const social = new socialUser({ userid, email, nickname, site });
+      const social = new socialUser({ userId, email, _user, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {

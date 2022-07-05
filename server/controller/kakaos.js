@@ -106,7 +106,7 @@ async function kakao_parsing(req, res) {
     console.log('double: ', double);
 
     if (!double) {
-      const social = new socialUser({ userid, email, nickname, site });
+      const social = new socialUser({ userId, email, _user, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {
