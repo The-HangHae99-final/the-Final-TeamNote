@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const socialSchema = new mongoose.Schema({
   userid: {
@@ -14,6 +14,10 @@ const socialSchema = new mongoose.Schema({
   nickname: {
     type: String,
   },
+
+  site: {
+    type: String,
+  },
 });
 
-module.exports = mongoose.model("socialUser", socialSchema);
+module.exports = mongoose.model('socialUser', socialSchema);
