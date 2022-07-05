@@ -11,7 +11,7 @@ const socialSchema = new mongoose.Schema({
     type: String,
   },
 
-  nickname: {
+  _user: {
     type: String,
   },
 
