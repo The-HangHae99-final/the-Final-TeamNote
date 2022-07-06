@@ -35,7 +35,7 @@ const createdAt = moment().format('HH:mm');
 console.log('현재 시각은 ' + createdAt + ' 입니다.');
 
 app.use(morgan('combined'));
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
