@@ -11,10 +11,7 @@ var socialUser = require('../schemas/social_user');
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-<<<<<<< HEAD
-=======
 console.log('client_id:', client_id);
->>>>>>> e87a85883055f6224afbf63d03a29abfa5e5ad77
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 
 // router.post(

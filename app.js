@@ -11,7 +11,7 @@ const usersRouter = require('./server/routes/users');
 const postsRouter = require('./server/routes/posts');
 const commentsRouter = require('./server/routes/comments');
 const likesRouter = require('./server/routes/likes');
-const passport = require('passport');
+const helmet = require('helmet');
 const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
@@ -21,8 +21,8 @@ const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
 
-global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
-const morganMiddleware = require('./server/config/morganMiddleware');
+global.logger || (global.logger = require('./config/logger')); // → 전역에서 사용
+const morganMiddleware = require('./config/morganMiddleware');
 app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 
 connect();
@@ -43,7 +43,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
-
+app.use(helmet());
 app.use('/api', [usersRouter, postsRouter]);
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 app.set('view engine', 'ejs');
