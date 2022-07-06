@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { user } = require('../schemas/social_user');
+const User = require('../schemas/social_user');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (authorization == null) {
@@ -29,7 +29,7 @@ module.exports = (req, res, next) => {
       console.log('userInfo: ', userInfo);
       const userId = userInfo.userId;
       let refresh_token;
-      user.findOne({ where: userId }).then((u) => {
+      User.findOne({ where: userId }).then((u) => {
         refresh_token = u.refresh_token;
         const myRefreshToken = verifyToken(refresh_token);
         if (myRefreshToken == 'jwt expired') {
@@ -48,8 +48,8 @@ module.exports = (req, res, next) => {
     } else {
       const { userId } = jwt.verify(tokenValue, 'secret');
       console.log('userId: ', userId);
-      user.findOne({ where: userId }).then((u) => {
-        res.locals.user = u;
+      User.findOne({ where: userId }).then((u) => {
+        res.locals.User = u;
         next();
       });
     }
