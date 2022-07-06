@@ -14,8 +14,8 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", async (username, room) => {
     socket.join(room);
-    const chat_list = await Message.find({room});
-    console.log('chat_list: ', chat_list);
+    const chat_list = await Message.find({ room });
+    console.log("chat_list: ", chat_list);
     socket.emit("chat_list", chat_list);
     //data : 방 이름
 
@@ -23,19 +23,24 @@ io.on("connection", (socket) => {
     socket.emit("welcome_msg", username, room);
   });
 
-  socket.on("send_message", async (messageData) => {
-    const messages = new Message(messageData);
-    console.log('messages: ', messages);
-    await messages.save();
-    
+  socket.on("send_message", async (sendMessageData) => {
+    const sendMessages = new Message(sendMessageData);
+    console.log("sendMessages: ", sendMessages);
+    await sendMessages.save();
+
     //data: 방 이름, 쓴 사람, 메시지 내용, 작성 시간
-    socket.to(messageData.room).emit("receive_message", messageData);
+    socket
+      .to(sendMessageData.room)
+      .emit("receive_message", async (receiveMessageData) => {
+        const receiveMessages = new Message(receiveMessageData);
+        console.log("receiveMessages: ", receiveMessages);
+        await receiveMessages.save();
+      });
   });
   //방 떠나면서 채팅내역 저장하게 할것임. (조회해보고 방 정보가 같으면 그쪽 데이터를 갱신해주는 방식으로 수정해야할듯.)
   socket.on("leave_room", (room, messageList) => {
     console.log("room: ", `${room}을 떠남.`);
     socket.leave(room);
-
   });
 
   socket.on("change_room", (now, next) => {
