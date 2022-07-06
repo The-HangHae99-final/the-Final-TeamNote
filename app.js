@@ -43,6 +43,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
+
 app.use(helmet());
 app.use('/api', [usersRouter, postsRouter]);
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
