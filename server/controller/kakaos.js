@@ -118,7 +118,7 @@ async function kakao_parsing(req, res) {
     // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new socialUser({ userid, email, nickname, site });
+      const social = new socialUser({ userId, email, nickname, site });
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { email } });
