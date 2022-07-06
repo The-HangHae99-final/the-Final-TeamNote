@@ -111,6 +111,7 @@ async function kakao_parsing(req, res) {
     const token = jwt.sign({ userId }, 'secret', {
       expiresIn: '1200s',
     });
+    console.log('token------114', token);
     const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
