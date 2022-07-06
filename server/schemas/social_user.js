@@ -18,6 +18,10 @@ const socialSchema = new mongoose.Schema({
   site: {
     type: String,
   },
+
+  refresh_token: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('socialUser', socialSchema);

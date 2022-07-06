@@ -5,6 +5,8 @@ var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 var socialUser = require('../schemas/social_user');
+const soUser = require('../schemas/social_user');
+const message = require('../schemas/message');
 
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
@@ -103,10 +105,20 @@ async function kakao_parsing(req, res) {
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
 
+    const userFind = await soUser.findOne({ email });
+
+    const token = jwt.sign({ userId: userId }, 'secret', {
+      expiresIn: '1200s',
+    });
+    const refresh_token = jwt.sign({}, 'secret', {
+      expiresIn: '14d',
+    });
+    await userFind.update({ refresh_token }, { where: { email: email } });
+
     if (!double) {
       const social = new socialUser({ userId, email, _user, site });
       social.save();
-      res.send('저장에 성공하였습니다.');
+      res.json({ token, message: '저장에 성공하였습니다.' });
     } else {
       res.send('이미 있는 유저입니다.');
     }
