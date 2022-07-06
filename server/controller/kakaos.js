@@ -105,15 +105,15 @@ async function kakao_parsing(req, res) {
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
 
-    const userFind = await soUser.findOne({ email });
+    // const userFind = await soUser.findOne({ email });
 
-    const token = jwt.sign({ userId: userId }, 'secret', {
-      expiresIn: '1200s',
-    });
-    const refresh_token = jwt.sign({}, 'secret', {
-      expiresIn: '14d',
-    });
-    await userFind.update({ refresh_token }, { where: { email: email } });
+    // const token = jwt.sign({ userId: userId }, 'secret', {
+    //   expiresIn: '1200s',
+    // });
+    // const refresh_token = jwt.sign({}, 'secret', {
+    //   expiresIn: '14d',
+    // });
+    // await userFind.update({ refresh_token }, { where: { email: email } });
 
     if (!double) {
       const social = new socialUser({ userId, email, _user, site });
