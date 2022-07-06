@@ -122,12 +122,12 @@ async function kakao_parsing(req, res) {
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { email } });
-      res.send( token: token, msg: '저장에 성공하였습니다.' );
+      res.send(token, '저장에 성공하였습니다.');
     } else {
       // 다른 경우라면,
       // 기존에서 리프레시 토큰만 대체하기
       await double.update({ refresh_token }, { where: { email } });
-      res.send(token: token, msg: '이미 있는 유저입니다.' );
+      res.send(token, '이미 있는 유저입니다.');
     }
     // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
   } catch (err) {
