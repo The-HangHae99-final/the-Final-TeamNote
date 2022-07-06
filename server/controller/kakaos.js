@@ -29,8 +29,12 @@ function kakao_callback(req, res, next) {
           }
         )
         .then((result) => {
-          console.log('엑세스토큰------' + result.data['access_token']);
-          res.send(result.data['access_token']);
+          console.log(
+            'rere----------------------------------------------------------------' +
+              result
+          );
+          // console.log('엑세스토큰------' + result.data['access_token']);
+          // res.send(result.data['access_token']);
           // 토큰을 활용한 로직을 적어주면된다.
         })
         .catch((e) => {
