@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { user } = require('../schemas/user');
+const { user } = require('../schemas/social_user');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (authorization == null) {
@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
 
   try {
     const myToken = jwt.verify(JSON.parse(tokenValue), 'secret');
-    console.log('myToken: ', myToken);
+    console.log('myToken-----------------: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
       const userInfo = jwt.decode(tokenValue, 'secret');
@@ -33,7 +33,7 @@ module.exports = (req, res, next) => {
         refresh_token = u.refresh_token;
         const myRefreshToken = verifyToken(refresh_token);
         if (myRefreshToken == 'jwt expired') {
-          console.log('myRefreshToken: ', myRefreshToken);
+          console.log('myRefreshToken-----------: ', myRefreshToken);
           res.send({
             errorMessage: '로그인이 필요합니다.---------expired----------',
           });
