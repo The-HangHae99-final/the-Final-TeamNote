@@ -97,7 +97,7 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const userid = user_info.user_id;
+    const userId = user_info.user_id;
     console.log('userid: ', userId);
     const email = user_info.user_email;
     console.log('email: ', email);
