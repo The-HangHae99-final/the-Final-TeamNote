@@ -2,16 +2,16 @@ const jwt = require('jsonwebtoken');
 const User = require('../schemas/social_user');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
+  console.log('authorization----------------', authorization);
   if (authorization == null) {
-    console.log('authorization: ', authorization);
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.----------null------------',
     });
     return;
   }
   const [tokenType, tokenValue] = authorization.split(' ');
-  console.log('tokenValue: ', tokenValue);
-  console.log('tokenType: ', tokenType);
+  console.log('tokenValue----------------: ', tokenValue);
+  console.log('tokenType---------------------: ', tokenType);
   if (tokenType !== 'Bearer') {
     console.log('tokenType: ', tokenType);
     res.status(401).send({
@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
     if (myToken == 'jwt expired') {
       // access token 만료
       const userInfo = jwt.decode(tokenValue, 'secret');
-      console.log('userInfo: ', userInfo);
+      console.log('userInfo----------: ', userInfo);
       const userId = userInfo.userId;
       let refresh_token;
       User.findOne({ where: userId }).then((u) => {
