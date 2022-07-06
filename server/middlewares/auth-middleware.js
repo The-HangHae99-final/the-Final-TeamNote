@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const myToken = jwt.verify(JSON.parse(tokenValue), 'secret');
+    const myToken = jwt.verify(tokenValue, 'secret');
     console.log('myToken-----------------555555: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
@@ -31,9 +31,13 @@ module.exports = (req, res, next) => {
       let refresh_token;
       User.findOne({ where: userId }).then((u) => {
         refresh_token = u.refresh_token;
+        console.log(
+          'refreshToken-----------------77777777777: ',
+          refresh_token
+        );
         const myRefreshToken = verifyToken(refresh_token);
         console.log(
-          'myRefreshToken------------------77777777777: ',
+          'myRefreshToken------------------8888888888888: ',
           myRefreshToken
         );
         if (myRefreshToken == 'jwt expired') {
