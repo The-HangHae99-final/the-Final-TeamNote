@@ -58,11 +58,11 @@
   Designer
   </td>
   <tr>
-  <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F56d2808d-73f7-47d9-b580-310b311774f0%2FUntitled.png?table=block&id=dae3a277-b892-4185-9dc1-2b9fd53605e9&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
+  <td align="center"><img src="" width="60px;" alt=""/>
     </td>
     <td align="center" >
     <b>김하연</b></a><br>
-    <a href="https://github.com/jeangho293">Github</a>
+    <a href="https://github.com/hayeonkimm">Github</a>
     <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
     </td>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4cd551ad-0c09-4ef8-8027-b9e3d47a79e8%2FUntitled.png?table=block&id=493a20f5-e908-4ef8-b07d-710d2f42f3f9&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
