@@ -3,7 +3,7 @@
 
 
 ## 🏠 [Home Page Link](https://www.antsori.com)
-## 소개 영상 [youtube](https://www.youtube.com/watch?v=wD4DdZ-Sp0s)
+## 소개 영상 [youtube]
 
 <hr>
 <br>
@@ -31,7 +31,7 @@
 
 ## 📈 프로젝트 소개
 
-#### 주식하는 개미들의 투표기반 커뮤니티!
+#### -----
 
 - 📚 무거운 고민들을 쉽고 가볍게 해결할 수 있는
 - 📉 곡소리 나는 개미들의 주식 커뮤니티,
@@ -41,7 +41,7 @@
 
 ## 🗓 프로젝트 기간
 
-- 2021년 10월 23일 ~ 2021년 12월 03일
+- 2022년 6월 --일 ~ 2022년 8월 --일
 
 <br>
 
@@ -64,7 +64,7 @@
   <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F56d2808d-73f7-47d9-b580-310b311774f0%2FUntitled.png?table=block&id=dae3a277-b892-4185-9dc1-2b9fd53605e9&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center" >
-    <b>김정호</b></a><br>
+    <b>김하연</b></a><br>
     <a href="https://github.com/jeangho293">Github</a>
     <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
     </td>
@@ -129,7 +129,6 @@
 Node.js | 자바스크립트 런타임
 Express | 웹 프레임워크
 TypeScript | 타입스크립트
-MySQL | MySQL
 Redis | Redis
 Jenkins | CI/CD 툴
 Nginx | Proxy 서버
@@ -170,7 +169,7 @@ Docker | Docker
 <br>
 
 ## 🕹️ 주요 기능
-
+<!-- 
 ### 로그인 / 회원가입
 
 - 영문 소문자, 숫자, 특수기호를 이용하여 아이디와 비밀번호를 설정할 수 있다.
@@ -218,7 +217,7 @@ Docker | Docker
 - 다른 유저가 작성한 댓글에 대댓글을 작성할 수 있다.
 - 댓글 리스트에 Pagination 기능이 있어 페이지당 최대 5개의 댓글을 볼 수 있다.
 - 작성자의 프로필을 클릭하면 해당 프로필 페이지로 이동할 수 있다.
-- '좋아요' 기능이 존재하여 관심 있는 게시글에 한 번만 '좋아요'를 할 수 있다.
+- '좋아요' 기능이 존재하여 관심 있는 게시글에 한 번만 '좋아요'를 할 수 있다. -->
 
 <hr>
 
