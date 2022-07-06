@@ -46,7 +46,8 @@ function kakao_callback(req, res, next) {
     }
   } catch (err) {
     res.status(400).send('에러가 발생했습니다.');
-    console.log('error =' + err);
+    // console.log('error =' + err);
+    console.log(message.err);
   }
 }
 // 프론트에게서 인가코드를 받는다 post_1
