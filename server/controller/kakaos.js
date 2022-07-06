@@ -5,20 +5,16 @@ var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 var socialUser = require('../schemas/social_user');
-const soUser = require('../schemas/social_user');
-const message = require('../schemas/message');
-
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
+var express = require('express');
+var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
-const client_id = process.env.client_id;
-console.log('client_id:', client_id);
+const client_id = process.env.kakao_client_id;
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
-
 // router.post(
 //   '/auth/login/kakao/callback',
-
 function kakao_callback(req, res, next) {
   try {
     let code = req.body.code;
@@ -90,35 +86,25 @@ function kakao_member(req, res) {
     console.log('error =' + err);
   }
 }
-
 // router.post('/kakao/parsing',
 async function kakao_parsing(req, res) {
   try {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const _user = user_info.user_id;
-    console.log('_user: ', _user);
+    const userid = user_info.user_id;
+    console.log('userid: ', userid);
     const email = user_info.user_email;
     console.log('email: ', email);
-    const userId = user_info.user_name;
+    const nickname = user_info.user_name;
+    console.log('nickname: ', nickname);
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
 
-    // const userFind = await soUser.findOne({ email });
-
-    // const token = jwt.sign({ userId: userId }, 'secret', {
-    //   expiresIn: '1200s',
-    // });
-    // const refresh_token = jwt.sign({}, 'secret', {
-    //   expiresIn: '14d',
-    // });
-    // await userFind.update({ refresh_token }, { where: { email: email } });
-
     if (!double) {
-      const social = new socialUser({ userId, email, _user, site });
+      const social = new socialUser({ userid, email, nickname, site });
       social.save();
-      res.json({ token, message: '저장에 성공하였습니다.' });
+      res.send('저장에 성공하였습니다.');
     } else {
       res.send('이미 있는 유저입니다.');
     }
@@ -128,7 +114,6 @@ async function kakao_parsing(req, res) {
     console.log('error =' + err);
   }
 }
-
 module.exports = {
   kakao_callback,
   kakao_member,
