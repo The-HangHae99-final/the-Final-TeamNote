@@ -1,9 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { user } = require('../schemas/user');
-
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-
   if (authorization == null) {
     console.log('authorization: ', authorization);
     res.status(401).send({
@@ -11,22 +9,19 @@ module.exports = (req, res, next) => {
     });
     return;
   }
-
   const [tokenType, tokenValue] = authorization.split(' ');
   console.log('tokenValue: ', tokenValue);
   console.log('tokenType: ', tokenType);
-
   if (tokenType !== 'Bearer') {
     console.log('tokenType: ', tokenType);
     res.status(401).send({
-      errorMessage:
-        error.message + '로그인이 필요합니다.---------Bearer----------',
+      errorMessage: '로그인이 필요합니다.---------Bearer----------',
     });
     return;
   }
 
   try {
-    const myToken = verifyToken(tokenValue);
+    const myToken = jwt.verify(JSON.parse(tokenValue), 'secret');
     console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
@@ -40,8 +35,7 @@ module.exports = (req, res, next) => {
         if (myRefreshToken == 'jwt expired') {
           console.log('myRefreshToken: ', myRefreshToken);
           res.send({
-            errorMessage:
-              error.message + '로그인이 필요합니다.---------expired----------',
+            errorMessage: '로그인이 필요합니다.---------expired----------',
           });
         } else {
           const myNewToken = jwt.sign({ userId: u.userId }, 'secret', {
@@ -66,7 +60,6 @@ module.exports = (req, res, next) => {
     });
   }
 };
-
 function verifyToken(token) {
   try {
     return jwt.verify(token, 'secret');

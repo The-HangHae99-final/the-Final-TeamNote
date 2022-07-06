@@ -20,6 +20,7 @@ const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
+const taskRouter = require('./server/routes/task');
 
 global.logger || (global.logger = require('./config/logger')); // → 전역에서 사용
 const morganMiddleware = require('./config/morganMiddleware');
@@ -46,11 +47,8 @@ app.use(
 
 app.use(helmet());
 app.use('/api', [usersRouter, postsRouter]);
-app.use('/', [kakaoRouter, dayRouter, naverRouter]);
+app.use('/', [kakaoRouter, dayRouter, naverRouter,taskRouter]);
 app.set('view engine', 'ejs');
-app.get('/api', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-});
 
 app.get('/', (req, res) => {
   res.send('실전 파이널 프로젝트 서버');

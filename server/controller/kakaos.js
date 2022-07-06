@@ -5,23 +5,21 @@ var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 var socialUser = require('../schemas/social_user');
-const soUser = require('../schemas/social_user');
-const message = require('../schemas/message');
-
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
+var express = require('express');
+var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-console.log('client_id:', client_id);
+console.log('client_id---------------: ', client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
-
 // router.post(
 //   '/auth/login/kakao/callback',
-
 function kakao_callback(req, res, next) {
   try {
     let code = req.body.code;
+    console.log('코드다..........' + code);
     try {
       axios
         .post(
@@ -33,7 +31,8 @@ function kakao_callback(req, res, next) {
           }
         )
         .then((result) => {
-          console.log(result.data['access_token']);
+          console.log('korea' + result);
+          console.log('엑세스토큰------' + result.data['access_token']);
           res.send(result.data['access_token']);
           // 토큰을 활용한 로직을 적어주면된다.
         })
@@ -47,7 +46,8 @@ function kakao_callback(req, res, next) {
     }
   } catch (err) {
     res.status(400).send('에러가 발생했습니다.');
-    console.log('error =' + err);
+    // console.log('error =' + err);
+    console.log(message.err);
   }
 }
 // 프론트에게서 인가코드를 받는다 post_1
@@ -90,37 +90,43 @@ function kakao_member(req, res) {
     console.log('error =' + err);
   }
 }
-
 // router.post('/kakao/parsing',
 async function kakao_parsing(req, res) {
   try {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const _user = user_info.user_id;
-    console.log('_user: ', _user);
+    const userid = user_info.user_id;
+    console.log('userid: ', userid);
     const email = user_info.user_email;
     console.log('email: ', email);
-    const userId = user_info.user_name;
+    const nickname = user_info.user_name;
+    console.log('nickname: ', nickname);
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
 
-    const userFind = await soUser.findOne({ email });
+    // userId로 토큰값 만들기
 
-    const token = jwt.sign({ userId: userId }, 'secret', {
+    const token = jwt.sign({ userId }, 'secret', {
       expiresIn: '1200s',
     });
     const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
-    await userFind.update({ refresh_token }, { where: { email: email } });
+
+    // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new socialUser({ userId, email, _user, site });
+      const social = new socialUser({ userid, email, nickname, site });
+      // 저장하기
       social.save();
-      res.json({ token, message: '저장에 성공하였습니다.' });
+      await social.update({ refresh_token }, { where: { email } });
+      res.json({ token, msg: '저장에 성공하였습니다.' });
     } else {
-      res.send('이미 있는 유저입니다.');
+      // 다른 경우라면,
+      // 기존에서 리프레시 토큰만 대체하기
+      await double.update({ refresh_token }, { where: { email } });
+      res.json({ token, msg: '이미 있는 유저입니다.' });
     }
     // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
   } catch (err) {
@@ -128,7 +134,6 @@ async function kakao_parsing(req, res) {
     console.log('error =' + err);
   }
 }
-
 module.exports = {
   kakao_callback,
   kakao_member,

@@ -15,11 +15,7 @@ const msgSchema = new mongoose.Schema({
   time: {
     type: String,
     required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
+  }
 });
 
 module.exports = mongoose.model(`msg`, msgSchema);
