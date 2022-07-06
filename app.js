@@ -47,9 +47,6 @@ app.use(
 app.use('/api', [usersRouter, postsRouter]);
 app.use('/', [kakaoRouter, dayRouter, naverRouter]);
 app.set('view engine', 'ejs');
-app.get('/api', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-});
 
 app.get('/', (req, res) => {
   res.send('실전 파이널 프로젝트 서버');
