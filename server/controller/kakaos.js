@@ -97,11 +97,11 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const userId = user_info.user_id;
+    const _user = user_info.user_id;
     console.log('userid: ', userId);
     const email = user_info.user_email;
     console.log('email: ', email);
-    const nickname = user_info.user_name;
+    const userId = user_info.user_name;
     console.log('nickname: ', nickname);
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
@@ -122,12 +122,12 @@ async function kakao_parsing(req, res) {
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { email } });
-      res.json({ token: token, msg: '저장에 성공하였습니다.' });
+      res.send( token: token, msg: '저장에 성공하였습니다.' );
     } else {
       // 다른 경우라면,
       // 기존에서 리프레시 토큰만 대체하기
       await double.update({ refresh_token }, { where: { email } });
-      res.json({ token: token, msg: '이미 있는 유저입니다.' });
+      res.send(token: token, msg: '이미 있는 유저입니다.' );
     }
     // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
   } catch (err) {
