@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../schemas/social_user');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('authorization----------------', authorization);
+  console.log('authorization----------------11111', authorization);
   if (authorization == null) {
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.----------null------------',
@@ -10,10 +10,10 @@ module.exports = (req, res, next) => {
     return;
   }
   const [tokenType, tokenValue] = authorization.split(' ');
-  console.log('tokenValue----------------: ', tokenValue);
-  console.log('tokenType---------------------: ', tokenType);
+  console.log('tokenValue----------------2222: ', tokenValue);
+  console.log('tokenType---------------------3333: ', tokenType);
   if (tokenType !== 'Bearer') {
-    console.log('tokenType: ', tokenType);
+    console.log('tokenType-------------444444 ', tokenType);
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.---------Bearer----------',
     });
@@ -22,18 +22,18 @@ module.exports = (req, res, next) => {
 
   try {
     const myToken = jwt.verify(JSON.parse(tokenValue), 'secret');
-    console.log('myToken-----------------: ', myToken);
+    console.log('myToken-----------------555555: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
       const userInfo = jwt.decode(tokenValue, 'secret');
-      console.log('userInfo----------: ', userInfo);
+      console.log('userInfo----------6666666: ', userInfo);
       const userId = userInfo.userId;
       let refresh_token;
       User.findOne({ where: userId }).then((u) => {
         refresh_token = u.refresh_token;
         const myRefreshToken = verifyToken(refresh_token);
         console.log(
-          'myRefreshToken------------------!!!!!!!!: ',
+          'myRefreshToken------------------77777777777: ',
           myRefreshToken
         );
         if (myRefreshToken == 'jwt expired') {
