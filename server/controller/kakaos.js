@@ -18,6 +18,7 @@ const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 function kakao_callback(req, res, next) {
   try {
     let code = req.body.code;
+    console.log('코드다..........' + code);
     try {
       axios
         .post(
