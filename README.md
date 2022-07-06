@@ -33,9 +33,6 @@
 
 #### -----
 
-- 📚 무거운 고민들을 쉽고 가볍게 해결할 수 있는
-- 📉 곡소리 나는 개미들의 주식 커뮤니티,
-- 📈 투표를 통해 당신의 생각을 여러 개미들과 자유롭게 나눠보세요!
 
 <br> 
 
@@ -71,48 +68,48 @@
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4cd551ad-0c09-4ef8-8027-b9e3d47a79e8%2FUntitled.png?table=block&id=493a20f5-e908-4ef8-b07d-710d2f42f3f9&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>김갑민</b></a><br />
+    <b></b></a><br />
     <a href="https://github.com/gabmin" >Github</a>
     <br><img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/><br>
     </td>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd266d37c-2c38-4f03-b50f-c7908dabf868%2FUntitled.png?table=block&id=ebb3a525-c75c-4f30-974a-629f8818f109&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>김예은</b></a><br />
+    <b></b></a><br />
     </td>
     <tr>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2f229f59-5b48-4501-b9d8-44395fa066ab%2FUntitled.png?table=block&id=65bb4f7a-a244-4ba9-85e9-1886dc98432b&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>조윤재</b></a><br /> 
+    <b></b></a><br /> 
     <a href="https://github.com/Yunjaejo">Github</a>
     <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
     </td>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F651ce4da-3dd7-4845-8207-bcb564eb641d%2FUntitled.png?table=block&id=9973b5b1-8ec8-4d30-a7da-64d453e1da16&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>박시영</b></a><br /> 
+    <b></b></a><br /> 
     <a href="https://github.com/larisms">Github</a>
     <br><img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/><br>
     </td>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcd2c4a8c-5a95-41e0-9053-9897e4c95a1b%2FUntitled.png?table=block&id=d4cdb94a-8915-455e-af65-6f98d33dc665&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>김한비</b></a><br /> 
+    <b></b></a><br /> 
     </td>
     </tr>
     <tr>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd36d536e-0432-4cb0-96ef-9a1c3a1889d5%2FUntitled.png?table=block&id=8b7efded-cc3e-45e9-a950-724957fe55cd&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>황창환</b></a><br /> 
+    <b></b></a><br /> 
     <a href="https://github.com/changchanghwang">Github</a>
     <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
     </td>
     <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F828d0f28-79c9-407a-83da-6ba55ce7fbe4%2FUntitled.png?table=block&id=3d63dc23-b006-47f5-8191-65e9cc1350d8&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&userId=&cache=v2" width="60px;" alt=""/>
     </td>
     <td align="center">
-    <b>장원배</b></a><br /> 
+    <b></b></a><br /> 
     <a href="https://github.com/calvin9150">Github</a>
     <br><img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/><br>
     </td>
@@ -128,8 +125,6 @@
 ---|:---:
 Node.js | 자바스크립트 런타임
 Express | 웹 프레임워크
-TypeScript | 타입스크립트
-Redis | Redis
 Jenkins | CI/CD 툴
 Nginx | Proxy 서버
 Docker | Docker
@@ -259,24 +254,6 @@ Docker | Docker
 
 ## 🐱 Git Rule
 
-- 선빵필승. 뒤에 commit하는사람이 conflict 해결해서 commit하기
-- commit convention
-  - feat : 새로운 기능 추가
-  - fix : 버그 수정
-  - edit : 기능 수정
-  - docs : 문서 수정
-  - style : 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
-  - refactor : 코드 리팩토링
-  - test : 테스트 코드, 리팩토링 테스트 코드 추가
-  - chore : 빌드 업무 수정, 패키지 매니저 수정
-  - merge: pull 받은 후 바로 푸시를 해야될 경우
-  - mig: migration
-  - 제목은 50자 미만, 문장의 끝에 마침표 넣지 않음. 과거 시제 사용하지 않고, 명령어로 작성하도록 함.
-  - 제목 외에 추가적으로 정보를 전달하고 싶을 경우 본문에 추가 정보 기입
-  > 예시 : [feat] comment router CRUD 기능 추가 :  본인 이름
-- 각 기능 브랜치에서 작업 후 push —> develop 브랜치에 merge는 pull requests를 통해서 하기.
-  - 모든 pull requests는 팀원들의 확인 후 merge
-  - 이슈가 생길 시 issue 탭 활용
 
 <br>
 
