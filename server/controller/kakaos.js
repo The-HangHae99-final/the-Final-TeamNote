@@ -15,12 +15,11 @@ const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
 console.log('client_id---------------: ', client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
-// router.post(
-//   '/auth/login/kakao/callback',
+// post- '/auth/login/kakao/callback'
 function kakao_callback(req, res, next) {
   try {
     let code = req.body.code;
-    console.log('코드다..........' + code);
+    console.log('인가 코드' + code);
     try {
       axios
         .post(
@@ -37,13 +36,13 @@ function kakao_callback(req, res, next) {
           res.send(result.data['access_token']);
           // 토큰을 활용한 로직을 적어주면된다.
         })
-        .catch((e) => {
-          console.log(e);
-          res.send(e);
+        .catch((error) => {
+          console.log(error);
+          res.send(error);
         });
-    } catch (e) {
-      console.log(e);
-      res.send(e);
+    } catch (error) {
+      console.log(error);
+      res.send(error);
     }
   } catch (err) {
     res.status(400).send('에러가 발생했습니다.');
@@ -60,7 +59,7 @@ function kakao_callback(req, res, next) {
 // 클라이언트가 받고 데이터를 파싱해서 다시 보낸다.post_3  // 데이터 파싱문제!!
 // 백엔드가 받아서 DB에 저장한다.
 
-// router.post('/kakao/member',
+// router.post - '/kakao/member'
 function kakao_member(req, res) {
   try {
     var api_url = 'https://kapi.kakao.com/v2/user/me';
@@ -91,7 +90,7 @@ function kakao_member(req, res) {
     console.log('error =' + err);
   }
 }
-// router.post('/kakao/parsing',
+// post -'/kakao/parsing'
 async function kakao_parsing(req, res) {
   try {
     const site = 1; //kakao
@@ -130,7 +129,6 @@ async function kakao_parsing(req, res) {
       await double.update({ refresh_token }, { where: { email } });
       res.send(token);
     }
-    // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
   } catch (error) {
     res.status(400).send('에러가 발생했습니다.');
     console.log('error =' + error);
