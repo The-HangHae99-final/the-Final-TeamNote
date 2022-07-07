@@ -34,7 +34,7 @@ function kakao_callback(req, res, next) {
     console.log('인가코드:' + code);
     try {
       axios
-        .post(`url_api+${code}`, {
+        .post(`${url_api}+${code}`, {
           headers: {
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
           },
