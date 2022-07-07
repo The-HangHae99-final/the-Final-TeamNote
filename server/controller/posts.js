@@ -4,7 +4,7 @@ const Comment = require('../schemas/comment');
 //글 작성하기
 async function postUpload(req, res, next) {
   try {
-    const { userId } = res.locals.user;
+    const { userId } = res.locals.User;
     const { title, content, category } = req.body;
 
     const maxpostId = await Post.findOne().sort({
@@ -115,7 +115,7 @@ async function postDelete(req, res, next) {
     const postId = Number(req.params.postId);
     console.log('postId: ', postId);
     const [targetPost] = await Post.find({ postId });
-    const { userId } = res.locals.user;
+    const { userId } = res.locals.User;
 
     if (userId !== targetPost.userId) {
       return res.status(401).json({
