@@ -2,7 +2,7 @@ const User = require('../schemas/user');
 const Bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-// const jwtSecret = process.env.SECRET_KEY;
+const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 // const Message = require('../schemas/messages');
 
@@ -13,7 +13,8 @@ const postUsersSchema = Joi.object({
   confirmPassword: Joi.string(),
   profileImage: Joi.string(),
 });
-//회원가입
+
+//회원가입 API
 async function signup(req, res) {
   try {
     const { userId, userName, password, confirmPassword, profileImage } =
@@ -43,7 +44,7 @@ async function signup(req, res) {
     });
     await user.save();
     res.status(201).send({
-      ok: true,
+      success: true,
       msg: '회원가입을 성공하였습니다',
     });
   } catch (error) {
@@ -73,10 +74,10 @@ async function login(req, res) {
       return res.send('비밀번호가 틀렸습니다..');
     }
 
-    const token = jwt.sign({ email }, 'secret', {
+    const token = jwt.sign({ email }, jwtSecret, {
       expiresIn: '1200s',
     });
-    const refresh_token = jwt.sign({}, 'secret', {
+    const refresh_token = jwt.sign({}, jwtSecret, {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { email } });
