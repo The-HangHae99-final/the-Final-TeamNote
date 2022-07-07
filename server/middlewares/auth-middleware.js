@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../schemas/social_user');
+const jwtSecret = process.env.SECRET_KEY;
+
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   console.log('authorization', authorization);
@@ -21,11 +23,11 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const myToken = jwt.verify(tokenValue, 'secret');
+    const myToken = jwt.verify(tokenValue, jwtSecret);
     console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
-      const userInfo = jwt.decode(tokenValue, 'secret');
+      const userInfo = jwt.decode(tokenValue, jwtSecret);
       console.log('userInfo: ', userInfo);
       const userId = userInfo.email;
       let refresh_token;
@@ -40,7 +42,7 @@ module.exports = (req, res, next) => {
             errorMessage: '로그인이 필요합니다.---------expired----------',
           });
         } else {
-          const myNewToken = jwt.sign({ email: u.email }, 'secret', {
+          const myNewToken = jwt.sign({ email: u.email }, jwtSecret, {
             expiresIn: '1200s',
           });
           console.log('myNewToken: ', myNewToken);
@@ -48,7 +50,7 @@ module.exports = (req, res, next) => {
         }
       });
     } else {
-      const { userId } = jwt.verify(tokenValue, 'secret');
+      const { userId } = jwt.verify(tokenValue, jwtSecret);
       console.log('userId: ', userId);
       User.findOne({ where: userId }).then((u) => {
         res.locals.User = u;
@@ -64,7 +66,7 @@ module.exports = (req, res, next) => {
 };
 function verifyToken(token) {
   try {
-    return jwt.verify(token, 'secret');
+    return jwt.verify(token, SECRET_KEY);
   } catch (error) {
     return error.message;
   }
