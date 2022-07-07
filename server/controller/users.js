@@ -10,16 +10,17 @@ const postUsersSchema = Joi.object({
   user_: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
-  // confirmPassword: Joi.string(),
+  confirmPassword: Joi.string(),
 });
 
 //회원가입 API
 async function signup(req, res) {
   try {
-    // const { userId, userName, password, confirmPassword } =
-    const { _user, userName, password } = await postUsersSchema.validateAsync(
-      req.body // 임시로 테스트를 위해 로그인을 간편하기 위해
-    );
+    // const { user_, userName, password, confirmPassword } =
+    const { user_, userName, password, confirmPassword } =
+      await postUsersSchema.validateAsync(
+        req.body // 임시로 테스트를 위해 로그인을 간편하기 위해
+      );
 
     if (password !== confirmPassword) {
       return res.status(400).send({
@@ -27,7 +28,7 @@ async function signup(req, res) {
       });
     }
 
-    const exitstUsers = await User.find({ userId });
+    const exitstUsers = await User.find({ user_ });
     if (exitstUsers.length) {
       return res.status(400).send({
         errorMessage: '중복된 아이디가 존재합니다.',
@@ -38,10 +39,9 @@ async function signup(req, res) {
     const hashPassword = await Bcrypt.hash(password, salt);
 
     const user = new User({
-      userId,
+      user_,
       userName,
       password: hashPassword,
-      profileImage,
     });
     await user.save();
     res.status(201).send({
@@ -55,9 +55,9 @@ async function signup(req, res) {
 //로그인
 async function login(req, res) {
   try {
-    const { userId, password } = req.body;
+    const { user_, password } = req.body;
 
-    const userFind = await User.findOne({ userId });
+    const userFind = await User.findOne({ user_ });
 
     if (!userFind) {
       return res.status(400).send({
