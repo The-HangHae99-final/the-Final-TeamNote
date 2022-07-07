@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../schemas/social_user');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('authorization----------------11111', authorization);
+  console.log('authorization', authorization);
   if (authorization == null) {
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.----------null------------',
@@ -10,10 +10,10 @@ module.exports = (req, res, next) => {
     return;
   }
   const [tokenType, tokenValue] = authorization.split(' ');
-  console.log('tokenValue----------------2222: ', tokenValue);
-  console.log('tokenType---------------------3333: ', tokenType);
+  console.log('tokenValue: ', tokenValue);
+  console.log('tokenType: ', tokenType);
   if (tokenType !== 'Bearer') {
-    console.log('tokenType-------------444444 ', tokenType);
+    console.log('tokenType ', tokenType);
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.---------Bearer----------',
     });
@@ -22,26 +22,20 @@ module.exports = (req, res, next) => {
 
   try {
     const myToken = jwt.verify(tokenValue, 'secret');
-    console.log('myToken-----------------555555: ', myToken);
+    console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
       const userInfo = jwt.decode(tokenValue, 'secret');
-      console.log('userInfo----------6666666: ', userInfo);
+      console.log('userInfo: ', userInfo);
       const userId = userInfo.email;
       let refresh_token;
       User.findOne({ where: userId }).then((u) => {
         refresh_token = u.refresh_token;
-        console.log(
-          'refreshToken-----------------77777777777: ',
-          refresh_token
-        );
+        console.log('refreshToken: ', refresh_token);
         const myRefreshToken = verifyToken(refresh_token);
-        console.log(
-          'myRefreshToken------------------8888888888888: ',
-          myRefreshToken
-        );
+        console.log('myRefreshToken: ', myRefreshToken);
         if (myRefreshToken == 'jwt expired') {
-          console.log('myRefreshToken-----------: ', myRefreshToken);
+          console.log('myRefreshToken: ', myRefreshToken);
           res.send({
             errorMessage: '로그인이 필요합니다.---------expired----------',
           });
@@ -62,7 +56,7 @@ module.exports = (req, res, next) => {
       });
     }
   } catch (err) {
-    console.log('에러받아라-------------------------' + err);
+    console.log('err 59 line' + err);
     res.send({
       errorMessage: err + ' : 로그인이 필요합니다. -----------그외-----------',
     });
