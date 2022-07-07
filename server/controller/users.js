@@ -7,18 +7,19 @@ const nodemailer = require('nodemailer');
 // const Message = require('../schemas/messages');
 
 const postUsersSchema = Joi.object({
-  userId: Joi.string().required().email(),
+  _user: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
-  confirmPassword: Joi.string(),
-  profileImage: Joi.string(),
+  // confirmPassword: Joi.string(),
 });
 
 //회원가입 API
 async function signup(req, res) {
   try {
-    const { userId, userName, password, confirmPassword, profileImage } =
-      await postUsersSchema.validateAsync(req.body);
+    // const { userId, userName, password, confirmPassword } =
+    const { _user, userName, password } = await postUsersSchema.validateAsync(
+      req.body // 임시로 테스트를 위해 로그인을 간편하기 위해
+    );
 
     if (password !== confirmPassword) {
       return res.status(400).send({
