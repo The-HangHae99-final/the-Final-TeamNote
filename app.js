@@ -7,7 +7,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
 const port = 3000;
-const usersRouter = require('./server/routes/users');
+const usersRouter = require('./server/routes/user');
 const postsRouter = require('./server/routes/posts');
 const commentsRouter = require('./server/routes/comments');
 const likesRouter = require('./server/routes/likes');
@@ -47,7 +47,7 @@ app.use(
 
 app.use(helmet());
 app.use('/api', [usersRouter, postsRouter]);
-app.use('/', [kakaoRouter, dayRouter, naverRouter,taskRouter]);
+app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
