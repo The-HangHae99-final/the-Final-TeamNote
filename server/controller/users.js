@@ -73,13 +73,13 @@ async function login(req, res) {
       return res.send('비밀번호가 틀렸습니다..');
     }
 
-    const token = jwt.sign({ userId: userId }, 'secret', {
+    const token = jwt.sign({ email }, 'secret', {
       expiresIn: '1200s',
     });
     const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
-    await userFind.update({ refresh_token }, { where: { userId: userId } });
+    await userFind.update({ refresh_token }, { where: { email } });
     res.status(200).send({ message: 'success', token: token });
   } catch (err) {
     res.status(400).send({ message: err + ' : login failed' });
