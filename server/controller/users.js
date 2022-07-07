@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 // const Message = require('../schemas/messages');
 
 const postUsersSchema = Joi.object({
-  _user: Joi.string().required().email(),
+  user_: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   // confirmPassword: Joi.string(),
