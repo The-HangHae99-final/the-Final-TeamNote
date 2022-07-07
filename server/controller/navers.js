@@ -2,14 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 var axios = require('axios');
 var request = require('request');
-
 var socialUser = require('../schemas/social_user');
-// router.get('/callback', (req, res) => {
-//   const data = req.query.code;
-//   console.log(data);
-//   res.send(data);
-// });
-
 var express = require('express');
 var app = express();
 var router = express.Router();
@@ -17,10 +10,10 @@ var client_id = process.env.YOUR_CLIENT_ID;
 var client_secret = process.env.YOUR_CLIENT_SECRET;
 var state = 'teamnote';
 var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
-// var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
 
-// router.post('/naver',
+// post-naver
+// 프론트에게서 인가코드 받고, api_url로 정보를 요청해서 access_token 등 data를 돌려받는다.
 
 function naver(req, res) {
   try {
@@ -60,7 +53,9 @@ function naver(req, res) {
   }
 }
 
-// router.post('/member'
+// post - member
+// 네이버 api_url에 정보요청해서 정보 받아오기
+
 function naver_member(req, res) {
   try {
     var api_url = 'https://openapi.naver.com/v1/nid/me';
@@ -89,17 +84,16 @@ function naver_member(req, res) {
   }
 }
 
-// router.post('/parsing',
+// post - parsing
+// 프론트에서 파싱해서 돌려주는 것 받아서 변수에 저장, DB에 저장하기
+
 async function naver_parsing(req, res) {
   try {
-    const site = 2; //naver
+    const site = 2; // naver는 사이트 2로 표현한다.
     const user_info = req.body;
-    // console.log(user_info);
-    // console.log(user_info.user_name);
     const _user = user_info.user_id;
     const email = user_info.user_email;
     const userId = user_info.user_name;
-
     const double = await socialUser.findOne({ email });
 
     if (!double) {
@@ -113,8 +107,6 @@ async function naver_parsing(req, res) {
     res.status(400).send('에러가 발생했습니다.');
     console.log('error =' + err);
   }
-
-  // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
 }
 
 module.exports = {
