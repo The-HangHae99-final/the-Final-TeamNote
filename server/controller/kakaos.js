@@ -12,7 +12,7 @@ const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
 // console.log('client_id---------------: ', client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
-const url_api = `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${KAKAO_GRANT_TYPE}&client_id=${client_id}&redirect_uri=${KAKAO_REDIRECT_URL}&code=${code}`;
+const url_api = `${KAKAO_OAUTH_TOKEN_API_URL}?grant_type=${KAKAO_GRANT_TYPE}&client_id=${client_id}&redirect_uri=${KAKAO_REDIRECT_URL}&code=`;
 
 // 전체적 로직 (설명: hayeonkimm)
 
@@ -34,7 +34,7 @@ function kakao_callback(req, res, next) {
     console.log('인가코드:' + code);
     try {
       axios
-        .post(url_api, {
+        .post(`url_api+${code}`, {
           headers: {
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
           },
