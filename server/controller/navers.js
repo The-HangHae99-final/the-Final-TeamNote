@@ -54,7 +54,7 @@ function naver(req, res) {
 }
 
 // post - member
-// 네이버 api에 정보요청해서 정보 받아오기
+// 네이버 api_url에 정보요청해서 정보 받아오기
 
 function naver_member(req, res) {
   try {
