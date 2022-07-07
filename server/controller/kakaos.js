@@ -100,11 +100,11 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const userId = user_info.user_id;
+    const _user = user_info.user_id;
     console.log('userid: ', userId);
     const email = user_info.user_email;
     console.log('email: ', email);
-    const nickname = user_info.user_name;
+    const userName = user_info.user_name;
     console.log('nickname: ', nickname);
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
