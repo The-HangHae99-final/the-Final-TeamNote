@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
       // access token 만료
       const userInfo = jwt.decode(tokenValue, 'secret');
       console.log('userInfo----------6666666: ', userInfo);
-      const userId = userInfo.userId;
+      const userId = userInfo.email;
       let refresh_token;
       User.findOne({ where: userId }).then((u) => {
         refresh_token = u.refresh_token;
@@ -46,7 +46,7 @@ module.exports = (req, res, next) => {
             errorMessage: '로그인이 필요합니다.---------expired----------',
           });
         } else {
-          const myNewToken = jwt.sign({ userId: u.userId }, 'secret', {
+          const myNewToken = jwt.sign({ email: u.email }, 'secret', {
             expiresIn: '1200s',
           });
           console.log('myNewToken: ', myNewToken);
