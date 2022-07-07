@@ -101,8 +101,8 @@ async function kakao_parsing(req, res) {
     console.log('userid: ', userId);
     const email = user_info.user_email;
     console.log('email: ', email);
-    const nickname = user_info.user_name;
-    console.log('nickname: ', nickname);
+    const userName = user_info.user_name;
+    console.log('userName: ', userName);
     const double = await socialUser.findOne({ email });
     console.log('double: ', double);
 
@@ -119,7 +119,7 @@ async function kakao_parsing(req, res) {
     // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new socialUser({ userId, email, nickname, site });
+      const social = new socialUser({ userId, email, userName, site });
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { email } });
@@ -131,9 +131,9 @@ async function kakao_parsing(req, res) {
       res.send(token);
     }
     // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
-  } catch (err) {
+  } catch (error) {
     res.status(400).send('에러가 발생했습니다.');
-    console.log('error =' + err);
+    console.log('error =' + error);
   }
 }
 module.exports = {
