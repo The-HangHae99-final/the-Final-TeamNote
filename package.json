@@ -6,10 +6,9 @@
   "scripts": {
     "test": "jest",
     "prettify": "prettier --write *.js **/*.js",
-    "backend": "nodemon app",
+    "start": "node server.js",
     "start-gendoc": "node swagger.js",
-    "prestart": "node ./swagger.js",
-    "start": "node src/index.js"
+    "prestart": "node ./swagger.js"
   },
   "repository": {
     "type": "git",
