@@ -32,7 +32,7 @@ async function signup(req, res) {
     const exitstUsers = await User.findOne({ userEmail });
     if (exitstUsers) {
       return res.status(400).send({
-        errorMessage: '중복된 아이디가 존재합니다.',
+        errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
 
