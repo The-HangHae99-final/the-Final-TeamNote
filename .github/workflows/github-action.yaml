@@ -1,15 +1,14 @@
-name: github-action
+name: learn-github-actions
 on:
   push:
-    branch:
-      - hayeon
-
+    branches:
+      - main
 jobs:
   python-hello-world:
     runs-on: ubuntu-latest
     steps:
-      -uses: actions/checkout@v2
-      -uses: actions/setup-python@v2
-      with:
-          python-version: "3.8"
-      -run: python -c "print('hello world')""
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - run: python -c "print('hello world')"
