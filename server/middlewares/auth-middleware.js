@@ -1,8 +1,13 @@
+const dotenv = require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
 const User = require('../schemas/social_user');
+const jwtSecret = process.env.SECRET_KEY;
+console.log('jwt secret:', jwtSecret);
+
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('authorization----------------11111', authorization);
+  console.log('authorization', authorization);
   if (authorization == null) {
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.----------null------------',
@@ -10,10 +15,10 @@ module.exports = (req, res, next) => {
     return;
   }
   const [tokenType, tokenValue] = authorization.split(' ');
-  console.log('tokenValue----------------2222: ', tokenValue);
-  console.log('tokenType---------------------3333: ', tokenType);
+  console.log('tokenValue: ', tokenValue);
+  console.log('tokenType: ', tokenType);
   if (tokenType !== 'Bearer') {
-    console.log('tokenType-------------444444 ', tokenType);
+    console.log('tokenType ', tokenType);
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.---------Bearer----------',
     });
@@ -21,32 +26,26 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const myToken = jwt.verify(tokenValue, 'secret');
-    console.log('myToken-----------------555555: ', myToken);
+    const myToken = jwt.verify(tokenValue, jwtSecret);
+    console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
       // access token 만료
-      const userInfo = jwt.decode(tokenValue, 'secret');
-      console.log('userInfo----------6666666: ', userInfo);
-      const userId = userInfo.userId;
+      const userInfo = jwt.decode(tokenValue, jwtSecret);
+      console.log('userInfo: ', userInfo);
+      const userId = userInfo.userEmail;
       let refresh_token;
-      User.findOne({ where: userId }).then((u) => {
+      User.findOne({ where: userEmail }).then((u) => {
         refresh_token = u.refresh_token;
-        console.log(
-          'refreshToken-----------------77777777777: ',
-          refresh_token
-        );
+        console.log('refreshToken: ', refresh_token);
         const myRefreshToken = verifyToken(refresh_token);
-        console.log(
-          'myRefreshToken------------------8888888888888: ',
-          myRefreshToken
-        );
+        console.log('myRefreshToken: ', myRefreshToken);
         if (myRefreshToken == 'jwt expired') {
-          console.log('myRefreshToken-----------: ', myRefreshToken);
+          console.log('myRefreshToken: ', myRefreshToken);
           res.send({
             errorMessage: '로그인이 필요합니다.---------expired----------',
           });
         } else {
-          const myNewToken = jwt.sign({ userId: u.userId }, 'secret', {
+          const myNewToken = jwt.sign({ email: u.email }, jwtSecret, {
             expiresIn: '1200s',
           });
           console.log('myNewToken: ', myNewToken);
@@ -54,23 +53,24 @@ module.exports = (req, res, next) => {
         }
       });
     } else {
-      const { userId } = jwt.verify(tokenValue, 'secret');
-      console.log('userId: ', userId);
+      const { userId } = jwt.verify(tokenValue, jwtSecret);
+      console.log('userEmail ', userId);
       User.findOne({ where: userId }).then((u) => {
         res.locals.User = u;
         next();
       });
     }
-  } catch (err) {
-    console.log('에러받아라-------------------------' + err);
+  } catch (error) {
+    console.log('error: ' + error);
     res.send({
-      errorMessage: err + ' : 로그인이 필요합니다. -----------그외-----------',
+      errorMessage:
+        error + ' : 로그인이 필요합니다. -----------그외-----------',
     });
   }
 };
 function verifyToken(token) {
   try {
-    return jwt.verify(token, 'secret');
+    return jwt.verify(token, jwtSecret);
   } catch (error) {
     return error.message;
   }
