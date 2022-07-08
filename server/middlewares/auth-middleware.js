@@ -60,16 +60,17 @@ module.exports = (req, res, next) => {
         next();
       });
     }
-  } catch (err) {
-    console.log('err 59 line' + err);
+  } catch (error) {
+    console.log('error: ' + error);
     res.send({
-      errorMessage: err + ' : 로그인이 필요합니다. -----------그외-----------',
+      errorMessage:
+        error + ' : 로그인이 필요합니다. -----------그외-----------',
     });
   }
 };
 function verifyToken(token) {
   try {
-    return jwt.verify(token, SECRET_KEY);
+    return jwt.verify(token, jwtSecret);
   } catch (error) {
     return error.message;
   }
