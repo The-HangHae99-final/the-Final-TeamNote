@@ -1,6 +1,9 @@
+const dotenv = require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
 const User = require('../schemas/social_user');
 const jwtSecret = process.env.SECRET_KEY;
+console.log('jwt secret:', jwtSecret);
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -29,9 +32,9 @@ module.exports = (req, res, next) => {
       // access token 만료
       const userInfo = jwt.decode(tokenValue, jwtSecret);
       console.log('userInfo: ', userInfo);
-      const userId = userInfo.email;
+      const userId = userInfo.userEmail;
       let refresh_token;
-      User.findOne({ where: userId }).then((u) => {
+      User.findOne({ where: userEmail }).then((u) => {
         refresh_token = u.refresh_token;
         console.log('refreshToken: ', refresh_token);
         const myRefreshToken = verifyToken(refresh_token);
@@ -51,7 +54,7 @@ module.exports = (req, res, next) => {
       });
     } else {
       const { userId } = jwt.verify(tokenValue, jwtSecret);
-      console.log('userId: ', userId);
+      console.log('userEmail ', userId);
       User.findOne({ where: userId }).then((u) => {
         res.locals.User = u;
         next();
