@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const taskSchema = mongoose.Schema({
-  task_id: {
+  taskId: {
     type: Number,
     required: true,
     unique: true,
   },
-  start_date: {  // 시작 날짜
+  startDate: {  // 시작 날짜
     type: String,
     required: true,
   },
-  end_date: {   // 종료 날짜
+  endDate: {   // 종료 날짜
     type: String,
     required: true,
   },
@@ -21,7 +21,7 @@ const taskSchema = mongoose.Schema({
   desc: {
     type: String,
   },
-  user_id: {   // 한 명인가, 여러 명인가? - 나중에 논의할 것
+  userId: {   // 한 명인가, 여러 명인가? - 나중에 논의할 것
     type: String,
     required: true,
   },

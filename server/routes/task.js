@@ -10,12 +10,12 @@ router.post('/task', authMiddleware, taskController.taskUpload);
 router.get('/task', taskController.taskAll);
 
 // 일정 상세 조회
-router.get('/task/:task_id', taskController.taskDetail);
+router.get('/task/:taskId', taskController.taskDetail);
 
 // 일정 수정
-router.put('/task/:task_id', authMiddleware, taskController.taskEdit);
+router.put('/task/:taskId', authMiddleware, taskController.taskEdit);
 
 // 일정 삭제
-router.delete('/task/:task_id', authMiddleware, taskController.taskRemove);
+router.delete('/task/:taskId', authMiddleware, taskController.taskRemove);
 
 module.exports = router;
