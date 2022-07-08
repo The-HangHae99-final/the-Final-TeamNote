@@ -1,7 +1,7 @@
-FROM node:16-alpine
+FROM node:14-airline
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
+EXPOSE 3001
 CMD [ "node", "server.js" ]
-EXPOSE 3000
