@@ -4,7 +4,7 @@ const Comment = require('../schemas/comment');
 //글 작성하기
 async function postUpload(req, res, next) {
   try {
-    const userId = res.locals.User;
+    const userName = res.locals.User;
     const { title, content, category } = req.body;
 
     const maxpostId = await Post.findOne().sort({
@@ -18,7 +18,7 @@ async function postUpload(req, res, next) {
 
     const createdPost = await Post.create({
       postId,
-      userId,
+      userName,
       title,
       content,
       category,
@@ -89,7 +89,7 @@ async function postEdit(req, res, next) {
     const [existPost] = await Post.find({ postId });
     const { user } = res.locals;
     const { title, category, content } = req.body;
-    if (user.userId !== existPost.userId) {
+    if (user.userName !== existPost.userName) {
       return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
     }
     if (!title || !category || !content) {
@@ -115,9 +115,9 @@ async function postDelete(req, res, next) {
     const postId = Number(req.params.postId);
     console.log('postId: ', postId);
     const [targetPost] = await Post.find({ postId });
-    const { userId } = res.locals.User;
+    const { userName } = res.locals.User;
 
-    if (userId !== targetPost.userId) {
+    if (userName !== targetPost.userName) {
       return res.status(401).json({
         ok: false,
         message: '작성자가 아닙니다.',
