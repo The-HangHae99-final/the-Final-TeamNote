@@ -7,11 +7,8 @@ const socialSchema = new mongoose.Schema({
   userName: {
     type: String,
   },
-  email: {
-    type: String,
-  },
 
-  _user: {
+  userEmail: {
     type: String,
   },
 
