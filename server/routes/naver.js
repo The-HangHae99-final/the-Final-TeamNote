@@ -4,7 +4,7 @@ dotenv.config();
 var axios = require('axios');
 var request = require('request');
 
-var socialUser = require('../schemas/social_user');
+var User = require('../schemas/user');
 // router.get('/callback', (req, res) => {
 //   const data = req.query.code;
 //   console.log(data);
