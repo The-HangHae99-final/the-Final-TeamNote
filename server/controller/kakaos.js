@@ -95,20 +95,15 @@ async function kakao_parsing(req, res) {
   try {
     const site = 1; //kakao
     const user_info = req.body;
-    console.log('user_info = ' + user_info);
-
-    const UserName = user_info.user_id;
-    console.log('UserName: ', UserName);
     const userEmail = user_info.user_email;
-    console.log('userEmail: ', UserEmail);
     const userName = user_info.user_name;
     console.log('userName: ', userName);
     const double = await User.findOne({ userEmail });
     console.log('double: ', double);
 
-    // UserName로 토큰값 만들기
+    // userName로 토큰값 만들기
 
-    const token = jwt.sign({ UserEmail }, 'secret', {
+    const token = jwt.sign({ userEmail }, 'secret', {
       expiresIn: '1200s',
     });
     console.log('token------114', token);
