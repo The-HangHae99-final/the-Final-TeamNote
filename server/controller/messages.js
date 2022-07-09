@@ -35,7 +35,7 @@ async function messageDelete(req, res) {
     const { userName } = res.locals.user;
     console.log("userName: ", userName);
 
-    if (userName !== targetMessage.userId) {
+    if (userName !== targetMessage.userEmail) {
       return res.status(401).json({
         ok: false,
         message: "작성자가 아닙니다.",

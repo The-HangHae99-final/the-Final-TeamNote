@@ -9,18 +9,18 @@ async function create(req, res) {
     const existName = await workSpace.find({ name });
 
     if (existName.length) {
-      if (existName[0].owner === owner.userId)
+      if (existName[0].owner === owner.userEmail)
         return res
           .status(400)
           .send({ errorMessage: "이미 존재하는 이름입니다." });
     } else {
       const createdWorkSpace = await workSpace.create({
-        owner: owner.userId,
+        owner: owner.userEmail,
         name,
       });
 
       createdWorkSpace.memberList.push({
-        memberId: owner.userId,
+        memberId: owner.userEmail,
         memberName: owner.userName,
       });
 
@@ -43,14 +43,14 @@ async function create(req, res) {
 //멤버 추가
 async function memberAdd(req, res) {
   try {
-    const owner = res.locals.user.userId;
+    const owner = res.locals.user.userEmail;
     const { workSpaceName } = req.params;
-    const { userId } = req.body;
+    const { userEmail } = req.body;
 
     const [myWorkSpace] = await workSpace.find({ name: workSpaceName });
-    const existCheck = await User.findOne({ userId: userId });
+    const existCheck = await User.findOne({ userEmail: userEmail });
     const existMember = myWorkSpace.memberList.filter(
-      (memberInfo) => memberInfo.memberId === userId
+      (memberInfo) => memberInfo.memberId === userEmail
     );
 
     if (!existCheck) {
@@ -63,7 +63,7 @@ async function memberAdd(req, res) {
         .json({ of: false, message: "이미 포함된 유저입니다." });
     } else {
       myWorkSpace.memberList.push({
-        memberId: existCheck.userId,
+        memberId: existCheck.userEmail,
         memberName: existCheck.userName,
       });
       myWorkSpace.save();
@@ -89,7 +89,7 @@ async function deleteMember(req, res) {
     const existMember = myWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberId === memberId
     );
-    if (authority.userId !== myWorkSpace.owner) {
+    if (authority.userEmail !== myWorkSpace.owner) {
       return res
         .status(400)
         .json({ ok: false, message: "오너만 멤버를 삭제할 수 있습니다." });

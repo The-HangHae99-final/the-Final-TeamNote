@@ -5,16 +5,16 @@ const Like = require("../schemas/like");
 async function like(req, res) {
   try {
     const postId = Number(req.params.postId);
-    const { userId } = res.locals.user;
+    const { userEmail } = res.locals.user;
 
     const existsPost = await Post.find({ postId });
     const aleadyLike = await Like.find({ postId });
     // let like = existsPost[0]["likes"];
-    // if (userId === aleadyLike[0].userId) {
+    // if (userEmail === aleadyLike[0].userEmail) {
     //   res.status(400).send("이미 좋아요 상태입니다.");
     // } else {
       await Post.updateOne({ postId }, { $set: { likes: like + 1 } });
-      await Like.create({ userId, postId });
+      await Like.create({ userEmail, postId });
 
       res.send("좋아요 up.");
     // }
@@ -27,7 +27,7 @@ async function like(req, res) {
 async function unlike(req, res) {
   try {
     const postId = Number(req.params.postId);
-    const { userId } = res.locals.user;
+    const { userEmail } = res.locals.user;
 
     const existsPost = await Post.find({ postId });
     const zeroLike = await Like.find({ postId });
@@ -39,8 +39,8 @@ async function unlike(req, res) {
     } else {
       await Post.updateOne({ postId }, { $set: { likes: like - 1 } });
       await Like.findOneAndDelete(
-        { userId: userId, postId: postId },
-        { userId }
+        { userEmail: userEmail, postId: postId },
+        { userEmail }
       );
 
       res.send("좋아요 down");
