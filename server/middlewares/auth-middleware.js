@@ -1,7 +1,8 @@
 const dotenv = require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
-const User = require('../schemas/social_user');
+// const User = require('../schemas/social_user');
+const User = require('../schemas/user');
 const jwtSecret = process.env.SECRET_KEY;
 console.log('jwt secret:', jwtSecret);
 
