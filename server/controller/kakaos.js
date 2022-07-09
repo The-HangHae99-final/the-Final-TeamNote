@@ -5,7 +5,7 @@ var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
-var socialUser = require('../schemas/social_user');
+var User = require('../schemas/user');
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 var express = require('express');
@@ -102,7 +102,7 @@ async function kakao_parsing(req, res) {
     console.log('email: ', email);
     const userName = user_info.user_name;
     console.log('userName: ', userName);
-    const double = await socialUser.findOne({ email });
+    const double = await User.findOne({ email });
     console.log('double: ', double);
 
     // userId로 토큰값 만들기
@@ -118,7 +118,7 @@ async function kakao_parsing(req, res) {
     // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new socialUser({ userId, email, userName, site });
+      const social = new User({ userId, email, userName, site });
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { email } });
