@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "prettify": "prettier --write *.js **/*.js",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "start-gendoc": "node swagger.js",
     "prestart": "node ./swagger.js"
   },
