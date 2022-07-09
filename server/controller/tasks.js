@@ -4,7 +4,8 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload (req, res, next) {
   try {
-    const { userId } = res.locals.user;
+    const { userEmail } = res.locals.user;
+    // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort("-taskId");
     let taskId = 1;
@@ -12,7 +13,7 @@ async function taskUpload (req, res, next) {
       taskId = maxTaskId.taskId + 1;
     }
     const createdTask = await Task.create({
-      taskId, startDate, endDate, title, desc, userId
+      taskId, startDate, endDate, title, desc, userEmail
     });
 
     return res.json({ 
@@ -77,7 +78,7 @@ async function taskEdit(req, res, next) {
     const [existTask] = await Task.find({ taskId });
     const { user } = res.locals;
     const { startDate, endDate, title, desc } = req.body;
-    if (user.userId !== existTask.userId) {
+    if (user.userEmail !== existTask.userEmail) {
       return res
         .status(401)
         .json({ ok: false, message: "작성자가 아닙니다." });
@@ -106,9 +107,9 @@ async function taskRemove(req, res, next) {
   try {
     const taskId = Number(req.params.taskId);
     const [targetTask] = await Task.find({ taskId })
-    const {userId} = res.locals.user
+    const {userEmail} = res.locals.user
     
-    if (userId !== targetTask.userId){
+    if (userEmail !== targetTask.userEmail){
       return res.status(401).json({ 
         ok : false, 
         message : "작성자가 아닙니다."

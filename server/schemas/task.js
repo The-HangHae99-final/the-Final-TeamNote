@@ -21,7 +21,7 @@ const taskSchema = mongoose.Schema({
   desc: {
     type: String,
   },
-  userId: {   // 한 명인가, 여러 명인가? - 나중에 논의할 것
+  userEmail: {   // 한 명인가, 여러 명인가? - 나중에 논의할 것
     type: String,
     required: true,
   },
