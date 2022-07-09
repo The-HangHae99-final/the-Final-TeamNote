@@ -8,7 +8,7 @@
   "host": "http://3.36.78.173",
   "basePath": "/api",
   "schemes": ["http"],
-  
+
   "paths": {
     "/board/postComment/{postId}": {
       "post": {
@@ -130,13 +130,7 @@
     },
     "/day": {
       "get": {
-<<<<<<< HEAD
-        "tags": [
-          "swagger"
-        ],
-=======
         "tags": ["swagger"],
->>>>>>> aa6d736c272f7c4b2476ba5d8cec5644884f9bb5
         "description": "",
         "parameters": [],
         "responses": {
