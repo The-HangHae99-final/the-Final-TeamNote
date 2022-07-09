@@ -10,7 +10,7 @@ const nodemailer = require('nodemailer');
 const postUsersSchema = Joi.object({
   userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{4,12}$")).required(),
   confirmPassword: Joi.string(),
 });
 
@@ -25,14 +25,14 @@ async function signup(req, res) {
 
     if (password !== confirmPassword) {
       return res.status(400).send({
-        errorMessage: '패스워드가 패스워드 확인란과 동일하지 않습니다.',
+        errorMessage: "패스워드가 패스워드 확인란과 동일하지 않습니다.",
       });
     }
 
     const exitstUsers = await User.find({ userEmail });
     if (exitstUsers.length) {
       return res.status(400).send({
-        errorMessage: '중복된 아이디가 존재합니다.',
+        errorMessage: "중복된 아이디가 존재합니다.",
       });
     }
 
@@ -49,6 +49,11 @@ async function signup(req, res) {
       success: true,
       msg: '회원가입을 성공하였습니다',
     });
+
+    // res.status(201).send({
+    //   ok: true,
+    //   result: { user },
+    // });
   } catch (error) {
     return res.status(400).send(console.error(error));
   }
@@ -62,20 +67,21 @@ async function login(req, res) {
 
     if (!userFind) {
       return res.status(400).send({
-        errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
+        errorMessage: "아이디 또는 비밀번호를 확인해주세요.",
       });
     }
 
-    let validPassword = '';
+    let validPassword = "";
 
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
     }
 
     if (!validPassword) {
-      return res.send('비밀번호가 틀렸습니다..');
+      return res.send("비밀번호가 틀렸습니다..");
     }
 
+<<<<<<< HEAD
     const token = jwt.sign({ userEmail }, jwtSecret, {
       expiresIn: '1200s',
     });
@@ -84,8 +90,18 @@ async function login(req, res) {
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
     res.status(200).send({ message: 'success', token: token });
+=======
+    const token = jwt.sign({ userId: userId }, "secret", {
+      expiresIn: "7200s",
+    });
+    const refresh_token = jwt.sign({}, "secret", {
+      expiresIn: "14d",
+    });
+    await userFind.update({ refresh_token }, { where: { userId: userId } });
+    res.status(200).send({ message: "success", ID: userId, token: token });
+>>>>>>> 8826e04f14e1253c3bff2f4254b40849e8305219
   } catch (err) {
-    res.status(400).send({ message: err + ' : login failed' });
+    res.status(400).send({ message: err + " : login failed" });
   }
 }
 
