@@ -21,7 +21,7 @@ const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
-const taskRouter = require('./server/routes/task');
+const taskRouter = require('./server/routes/tasks');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 
