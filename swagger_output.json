@@ -546,6 +546,7 @@
         }
       },
       "put": {
+        "tags": ["PostId로 공지 수정 API"],
         "description": "",
         "parameters": [
           {
@@ -591,6 +592,7 @@
         }
       },
       "delete": {
+        "tags": ["PostId로 공지 삭제 API"],
         "description": "",
         "parameters": [
           {
@@ -620,6 +622,7 @@
     },
     "/task": {
       "post": {
+        "tags": ["일정 등록 API"]
         "description": "",
         "parameters": [
           {
@@ -662,6 +665,7 @@
         }
       },
       "get": {
+        "tags": ["일정 조회 API"]
         "description": "",
         "parameters": [],
         "responses": {
@@ -676,6 +680,7 @@
     },
     "/task/{task_id}": {
       "get": {
+        "tags": ["일정 task_id로 조회 API"],
         "description": "",
         "parameters": [
           {
@@ -695,6 +700,7 @@
         }
       },
       "put": {
+        "tags": ["일정 task_id로 수정 API"],
         "description": "",
         "parameters": [
           {
@@ -743,6 +749,7 @@
         }
       },
       "delete": {
+        "tags": ["일정 task_id로 수정 API"],
         "description": "",
         "parameters": [
           {
@@ -772,6 +779,7 @@
     },
     "/users/signup": {
       "post": {
+        "tags": ["회원가입 API"],
         "description": "",
         "parameters": [],
         "responses": {
@@ -786,6 +794,7 @@
     },
     "/users/login": {
       "post": {
+        "tags": ["로그인 API"],
         "description": "",
         "parameters": [],
         "responses": {
