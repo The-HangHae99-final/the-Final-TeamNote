@@ -6,7 +6,7 @@
     "description": ""
   },
   "host": "localhost:3001",
-  "basePath": "/",
+  "basePath": "/api",
   "schemes": ["http"],
   "paths": {
     "/board/postComment/{postId}": {
