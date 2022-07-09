@@ -13,6 +13,7 @@ var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
+console.log('client_id---------------: ', client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 // post- '/auth/login/kakao/callback'
 function kakao_callback(req, res, next) {
@@ -95,8 +96,8 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const _user = user_info.user_id;
-    console.log('_user: ', _user);
+    const userId = user_info.user_id;
+    console.log('userid: ', userId);
     const email = user_info.user_email;
     console.log('email: ', email);
     const userName = user_info.user_name;
@@ -104,11 +105,24 @@ async function kakao_parsing(req, res) {
     const double = await User.findOne({ email });
     console.log('double: ', double);
 
+    // userId로 토큰값 만들기
+
+    const token = jwt.sign({ userId }, 'secret', {
+      expiresIn: '1200s',
+    });
+    console.log('token------114', token);
+    const refresh_token = jwt.sign({}, 'secret', {
+      expiresIn: '14d',
+    });
+
+    // 만약 디비에 user의 email이 없다면,
+
     if (!double) {
       const social = new User({ userId, email, userName, site });
       // 저장하기
       social.save();
-      res.send('저장에 성공하였습니다.');
+      await social.update({ refresh_token }, { where: { email } });
+      res.send(token);
     } else {
       // 다른 경우라면,
       // 기존에서 리프레시 토큰만 대체하기
@@ -120,7 +134,6 @@ async function kakao_parsing(req, res) {
     console.log('error =' + error);
   }
 }
-
 module.exports = {
   kakao_callback,
   kakao_member,
