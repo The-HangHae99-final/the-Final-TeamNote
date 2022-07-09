@@ -98,11 +98,11 @@ async function kakao_parsing(req, res) {
     console.log('user_info = ' + user_info);
     const UserName = user_info.user_id;
     console.log('UserName: ', UserName);
-    const email = user_info.user_email;
-    console.log('email: ', email);
+    const userEmail = user_info.user_email;
+    console.log('userEmail: ', UserEmail);
     const userName = user_info.user_name;
     console.log('userName: ', userName);
-    const double = await User.findOne({ email });
+    const double = await User.findOne({ userEmail });
     console.log('double: ', double);
 
     // UserName로 토큰값 만들기
@@ -118,15 +118,15 @@ async function kakao_parsing(req, res) {
     // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new User({ UserName, email, userName, site });
+      const social = new User({ userEmail, userName, site });
       // 저장하기
       social.save();
-      await social.update({ refresh_token }, { where: { email } });
+      await social.update({ refresh_token }, { where: { userEmail } });
       res.send(token);
     } else {
       // 다른 경우라면,
       // 기존에서 리프레시 토큰만 대체하기
-      await double.update({ refresh_token }, { where: { email } });
+      await double.update({ refresh_token }, { where: { userEmail } });
       res.send(token);
     }
   } catch (error) {
