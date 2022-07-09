@@ -53,10 +53,9 @@ module.exports = (req, res, next) => {
         }
       });
     } else {
-      const { userId } = jwt.verify(tokenValue, jwtSecret);
-      console.log('userEmail ', userId);
-      User.findOne({ where: userId }).then((u) => {
-        res.locals.User = u;
+      const { userEmail } = jwt.verify(tokenValue, jwtSecret);
+      User.findOne({ userEmail }).then((u) => {
+        res.locals.user = u;
         next();
       });
     }
