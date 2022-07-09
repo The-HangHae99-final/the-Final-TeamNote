@@ -5,7 +5,7 @@ const Like = require("../schemas/like");
 async function like(req, res) {
   try {
     const postId = Number(req.params.postId);
-    const { userEmail } = res.locals.user;
+    const { userEmail } = res.locals.User;
 
     const existsPost = await Post.find({ postId });
     const aleadyLike = await Like.find({ postId });
@@ -27,7 +27,7 @@ async function like(req, res) {
 async function unlike(req, res) {
   try {
     const postId = Number(req.params.postId);
-    const { userEmail } = res.locals.user;
+    const { userEmail } = res.locals.User;
 
     const existsPost = await Post.find({ postId });
     const zeroLike = await Like.find({ postId });

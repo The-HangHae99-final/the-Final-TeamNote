@@ -29,20 +29,30 @@ async function messageEdit(req, res) {
 //메시지 삭제(미완)
 async function messageDelete(req, res) {
   try {
-    const _id = req.params._id;
+    const { _id } = req.params;
+    const { author } = res.locals.User;
+    console.log('author: ', author);
+
+    console.log('_id: ', _id);
     const targetMessage = await Message.find({ _id });
-    console.log("targetMessage: ", targetMessage);
-    const { userName } = res.locals.user;
-    console.log("userName: ", userName);
+    console.log('targetMessage: ', targetMessage);
 
-    if (userName !== targetMessage.userEmail) {
-      return res.status(401).json({
-        ok: false,
-        message: "작성자가 아닙니다.",
-      });
+    if(!targetMessage.length)
+    {
+      return res.status(400).json({
+      ok: false,
+      message: "해당 메시지가 존재하지 않습니다.",
+    });
     }
+    else if(targetMessage[0].author !== author)
+    {return res.status(400).json({
+      ok: false,
+      message: "본인만 삭제 가능 합니다.",
+    });
 
-    await Message.deleteOne({ _id });
+    }
+    
+    await Message.findByIdAndDelete({ _id });
     return res.status(200).json({ ok: true, message: "메시지 삭제 성공" });
   } catch (error) {
     return res.status(400).json({
@@ -54,10 +64,9 @@ async function messageDelete(req, res) {
 //메시지 조회
 async function messagesView(req, res) {
   try {
-    const _id = String(req.params._id);
-    console.log("_id: ", _id);
+    const { _id } = req.params;
+
     const targetMessage = await Message.find({ _id });
-    // const messages = await Message.find({}).sort("_id");
 
     return res.json({
       targetMessage,

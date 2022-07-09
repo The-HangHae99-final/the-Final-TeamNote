@@ -4,7 +4,8 @@ const workSpace = require("../schemas/workSpace");
 //워크스페이스 생성
 async function create(req, res) {
   try {
-    const owner = res.locals.user;
+    const owner = res.locals.User;
+    console.log('owner: ', owner);
     const { name } = req.body;
     const existName = await workSpace.find({ name });
 
@@ -20,7 +21,7 @@ async function create(req, res) {
       });
 
       createdWorkSpace.memberList.push({
-        memberId: owner.userEmail,
+        memberEmail: owner.userEmail,
         memberName: owner.userName,
       });
 
@@ -43,14 +44,14 @@ async function create(req, res) {
 //멤버 추가
 async function memberAdd(req, res) {
   try {
-    const owner = res.locals.user.userEmail;
+    const owner = res.locals.User.userEmail;
     const { workSpaceName } = req.params;
     const { userEmail } = req.body;
 
     const [myWorkSpace] = await workSpace.find({ name: workSpaceName });
     const existCheck = await User.findOne({ userEmail: userEmail });
     const existMember = myWorkSpace.memberList.filter(
-      (memberInfo) => memberInfo.memberId === userEmail
+      (memberInfo) => memberInfo.memberEmail === userEmail
     );
 
     if (!existCheck) {
@@ -63,7 +64,7 @@ async function memberAdd(req, res) {
         .json({ of: false, message: "이미 포함된 유저입니다." });
     } else {
       myWorkSpace.memberList.push({
-        memberId: existCheck.userEmail,
+        memberEmail: existCheck.userEmail,
         memberName: existCheck.userName,
       });
       myWorkSpace.save();
@@ -81,13 +82,13 @@ async function memberAdd(req, res) {
 //멤버 삭제
 async function deleteMember(req, res) {
   try {
-    const authority = res.locals.user;
+    const authority = res.locals.User;
     console.log('authority: ', authority);
     const { workSpaceName } = req.params;
-    const { memberId } = req.body;
+    const { memberEmail } = req.body;
     const myWorkSpace = await workSpace.findOne({ workSpaceName });
     const existMember = myWorkSpace.memberList.filter(
-      (memberInfo) => memberInfo.memberId === memberId
+      (memberInfo) => memberInfo.memberEmail === memberEmail
     );
     if (authority.userEmail !== myWorkSpace.owner) {
       return res
@@ -98,10 +99,10 @@ async function deleteMember(req, res) {
       return res.status(400).json({ ok: false, message: "해당 멤버가 없습니다." });
     }  else {
       const filtered = myWorkSpace.memberList.filter(
-        (memberInfo) => memberInfo.memberId !== memberId
+        (memberInfo) => memberInfo.memberEmail !== memberEmail
       );
       await workSpace.updateOne(
-        { memberId },
+        { memberEmail },
         { $set: { memberList: filtered } }
       );
 
@@ -133,7 +134,7 @@ async function getMemberList(req, res) {
 //방 이름 건네주기
 async function roomName(req, res) {
   try {
-    const me = res.locals.user.userName;
+    const me = res.locals.User.userName;
     const { workSpaceName } = req.params;
     const { opponent } = req.params;
 

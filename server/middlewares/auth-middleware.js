@@ -40,7 +40,7 @@ module.exports = (req, res, next) => {
       console.log('userInfo: ', userInfo);
       const userEmail = userInfo.userEmail;
       let refresh_token;
-      User.findOne({ where: userEmail }).then((u) => {
+      User.findOne({ userEmail }).then((u) => {
         refresh_token = u.refresh_token;
         console.log('refreshToken: ', refresh_token);
         const myRefreshToken = verifyToken(refresh_token);
@@ -60,9 +60,9 @@ module.exports = (req, res, next) => {
         }
       });
     } else {
-      const { userId } = jwt.verify(tokenValue, jwtSecret);
-      console.log('userEmail ', userId);
-      User.findOne({ where: userId }).then((u) => {
+      const { userEmail } = jwt.verify(tokenValue, jwtSecret);
+      console.log('userEmail ', userEmail);
+      User.findOne({ userEmail }).then((u) => {
         res.locals.User = u;
         next();
       });

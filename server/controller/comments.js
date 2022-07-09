@@ -6,7 +6,7 @@ async function commentUpload(req, res) {
   try {
     const postId = Number(req.params.postId);
     const { comment } = req.body;
-    const { userEmail } = res.locals.user;
+    const { userEmail } = res.locals.User;
 
     const maxCommentId = await Comment.findOne({ postId }).sort({
       commentId: -1,
@@ -39,7 +39,7 @@ async function commentDelete(req, res) {
     const { postId } = req.params;
     const { commentId } = req.params;
 
-    const { userEmail } = res.locals.user;
+    const { userEmail } = res.locals.User;
     const existComment = await Comment.find({
       $and: [{ postId }, { commentId }],
     });
@@ -69,7 +69,7 @@ async function commentEdit(req, res) {
   const { postId } = req.params;
   const { commentId } = req.params;
   const { comment } = req.body;
-  const userEmail = res.locals.user.userEmail;
+  const userEmail = res.locals.User.userEmail;
   const existComment = await Comment.find({
     $and: [{ postId }, { commentId }],
   });
