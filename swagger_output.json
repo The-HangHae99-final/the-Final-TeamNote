@@ -290,7 +290,9 @@
     },
     "/messages/edit/{_id}": {
       "put": {
+
         "tags": ["메세지 수정 API"],
+
         "description": "",
         "parameters": [
           {
@@ -332,7 +334,9 @@
     },
     "/messages/delete/{_id}": {
       "delete": {
+
         "tags": ["메세지 삭제 API"],
+
         "description": "",
         "parameters": [
           {
@@ -362,7 +366,9 @@
     },
     "/messages/view/{room}": {
       "get": {
+
         "tags": ["방 ID에 따라 메세지 불러오기"],
+
         "description": "",
         "parameters": [
           {
@@ -814,6 +820,20 @@
       "post": {
         "tags": ["워크스페이스 생성 API"],
         "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/workSpace/create": {
+      "post": {
+        "description": "",
         "parameters": [
           {
             "name": "authorization",
@@ -848,7 +868,9 @@
     },
     "/workSpace/memberAdd/{workSpaceName}": {
       "put": {
+
         "tags": ["워크스페이스 멤버추가 API"],
+
         "description": "",
         "parameters": [
           {
@@ -868,6 +890,7 @@
             "schema": {
               "type": "object",
               "properties": {
+
                 "UserName": {
                   "example": "any"
                 }
@@ -977,6 +1000,7 @@
               "type": "object",
               "properties": {
                 "memberId": {
+
                   "example": "any"
                 }
               }
@@ -992,12 +1016,14 @@
           },
           "401": {
             "description": "Unauthorized"
+
           }
         }
       }
     }
   },
   "swaggerDefinition": {
+
     "openapi": "3.0.0",
     "info": {
       "title": "Express Service with Swagger!",
@@ -1012,3 +1038,4 @@
   },
   "apis": []
 }
+

@@ -96,6 +96,7 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
+
     const UserName = user_info.user_id;
     console.log('UserName: ', UserName);
     const userEmail = user_info.user_email;
@@ -107,7 +108,7 @@ async function kakao_parsing(req, res) {
 
     // UserName로 토큰값 만들기
 
-    const token = jwt.sign({ UserName }, 'secret', {
+    const token = jwt.sign({ UserEmail }, 'secret', {
       expiresIn: '1200s',
     });
     console.log('token------114', token);
