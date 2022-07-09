@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 var axios = require('axios');
 var request = require('request');
-var socialUser = require('../schemas/social_user');
+var User = require('../schemas/user');
 var express = require('express');
 var app = express();
 var router = express.Router();
@@ -94,10 +94,10 @@ async function naver_parsing(req, res) {
     const _user = user_info.user_id;
     const email = user_info.user_email;
     const userName = user_info.user_name;
-    const double = await socialUser.findOne({ email });
+    const double = await User.findOne({ email });
 
     if (!double) {
-      const social = new socialUser({ userId, email, _user, site });
+      const social = new User({ userId, email, _user, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {
