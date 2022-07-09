@@ -1,4 +1,4 @@
-FROM node:14-airline
+FROM node:14
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
