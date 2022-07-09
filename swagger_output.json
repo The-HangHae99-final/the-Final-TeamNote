@@ -5,9 +5,11 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "3.36.78.173",
-  "basePath": "/api",
-  "schemes": ["http"],
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/board/postComment/{postId}": {
       "post": {
@@ -129,6 +131,9 @@
     },
     "/day": {
       "get": {
+        "tags": [
+          "swagger"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
