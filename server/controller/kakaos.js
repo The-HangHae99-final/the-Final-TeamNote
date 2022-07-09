@@ -95,8 +95,8 @@ async function kakao_parsing(req, res) {
     const site = 1; //kakao
     const user_info = req.body;
     console.log('user_info = ' + user_info);
-    const userId = user_info.user_id;
-    console.log('userid: ', userId);
+    const _user = user_info.user_id;
+    console.log('_user: ', _user);
     const email = user_info.user_email;
     console.log('email: ', email);
     const userName = user_info.user_name;
@@ -104,24 +104,11 @@ async function kakao_parsing(req, res) {
     const double = await User.findOne({ email });
     console.log('double: ', double);
 
-    // userId로 토큰값 만들기
-
-    const token = jwt.sign({ userId }, 'secret', {
-      expiresIn: '1200s',
-    });
-    console.log('token------114', token);
-    const refresh_token = jwt.sign({}, 'secret', {
-      expiresIn: '14d',
-    });
-
-    // 만약 디비에 user의 email이 없다면,
-
     if (!double) {
       const social = new User({ userId, email, userName, site });
       // 저장하기
       social.save();
-      await social.update({ refresh_token }, { where: { email } });
-      res.send(token);
+      res.send('저장에 성공하였습니다.');
     } else {
       // 다른 경우라면,
       // 기존에서 리프레시 토큰만 대체하기
@@ -133,6 +120,7 @@ async function kakao_parsing(req, res) {
     console.log('error =' + error);
   }
 }
+
 module.exports = {
   kakao_callback,
   kakao_member,

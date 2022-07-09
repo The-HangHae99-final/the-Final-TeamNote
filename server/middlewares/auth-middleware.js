@@ -7,20 +7,24 @@ console.log('jwt secret:', jwtSecret);
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log('authorization', authorization);
+
   if (authorization == null) {
+    console.log('authorization: ', authorization);
     res.status(401).send({
       errorMessage: '로그인이 필요합니다.----------null------------',
     });
     return;
   }
+
   const [tokenType, tokenValue] = authorization.split(' ');
   console.log('tokenValue: ', tokenValue);
   console.log('tokenType: ', tokenType);
+
   if (tokenType !== 'Bearer') {
-    console.log('tokenType ', tokenType);
+    console.log('tokenType: ', tokenType);
     res.status(401).send({
-      errorMessage: '로그인이 필요합니다.---------Bearer----------',
+      errorMessage:
+        error.message + '로그인이 필요합니다.---------Bearer----------',
     });
     return;
   }
@@ -44,13 +48,14 @@ module.exports = (req, res, next) => {
         if (myRefreshToken == 'jwt expired') {
           console.log('myRefreshToken: ', myRefreshToken);
           res.send({
-            errorMessage: '로그인이 필요합니다.---------expired----------',
+            errorMessage:
+              error.message + '로그인이 필요합니다.---------expired----------',
           });
         } else {
           const myNewToken = jwt.sign({ userEmail: u.userEmail }, jwtSecret, {
             expiresIn: '1200s',
           });
-          console.log('myNewToken: ', myNewToken);
+          console.log('3333333333myNewToken3333333333: ', myNewToken);
           res.send({ message: 'new token', myNewToken });
         }
       });
@@ -70,6 +75,7 @@ module.exports = (req, res, next) => {
     });
   }
 };
+
 function verifyToken(token) {
   try {
     return jwt.verify(token, jwtSecret);

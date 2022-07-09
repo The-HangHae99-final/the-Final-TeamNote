@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const msgSchema = new mongoose.Schema({
+  // _id: {
+  //   type: String,
+  // },
   room: {
     type: String,
     required: true,
@@ -18,4 +21,4 @@ const msgSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model(`msg`, msgSchema);
+module.exports = mongoose.model('msg', msgSchema);
