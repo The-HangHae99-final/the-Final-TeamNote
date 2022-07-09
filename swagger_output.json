@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "http://3.36.78.173/",
+  "host": "http://3.36.78.173",
   "basePath": "/api",
   "schemes": ["http"],
   "paths": {
