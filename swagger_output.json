@@ -12,6 +12,7 @@
   "paths": {
     "/board/postComment/{postId}": {
       "post": {
+        "tags": ["게시물에 댓글 작성기능"],
         "description": "",
         "parameters": [
           {
@@ -53,6 +54,7 @@
     },
     "/board/postComment/{postId}/{commentId}": {
       "delete": {
+        "tags": ["게시물 댓글 삭제기능"],
         "description": "",
         "parameters": [
           {
@@ -86,6 +88,7 @@
         }
       },
       "put": {
+        "tags": ["게시물 댓글 수정기능"],
         "description": "",
         "parameters": [
           {
@@ -130,7 +133,7 @@
     },
     "/day": {
       "get": {
-        "tags": ["swagger"],
+        "tags": ["날짜 조회 기능"],
         "description": "",
         "parameters": [],
         "responses": {
@@ -142,6 +145,7 @@
     },
     "/auth/login/kakao/callback": {
       "post": {
+        "tags": ["KAKAO URL로 로그인 요청"],
         "description": "",
         "parameters": [
           {
@@ -169,6 +173,7 @@
     },
     "/kakao/member": {
       "post": {
+        "tags": ["KAKAO 정보 요청 API"],
         "description": "",
         "parameters": [
           {
@@ -193,6 +198,7 @@
     },
     "/kakao/parsing": {
       "post": {
+        "tags": ["클라이언트에게 파싱된 데이터를 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -282,6 +288,7 @@
     },
     "/messages/edit/{_id}": {
       "put": {
+        "tags": ["메세지 수정 API"],
         "description": "",
         "parameters": [
           {
@@ -323,6 +330,7 @@
     },
     "/messages/delete/{_id}": {
       "delete": {
+        "tags": ["메세지 삭제 API"],
         "description": "",
         "parameters": [
           {
@@ -352,6 +360,7 @@
     },
     "/messages/view/{room}": {
       "get": {
+        "tags": ["방 ID에 따라 메세지 불러오기"],
         "description": "",
         "parameters": [
           {
@@ -373,6 +382,7 @@
     },
     "/naver": {
       "post": {
+        "tags": ["NAVER로 부터 인가코드 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -397,6 +407,7 @@
     },
     "/member": {
       "post": {
+        "tags": ["NAVER 정보요청 API"],
         "description": "",
         "parameters": [
           {
@@ -454,6 +465,7 @@
     },
     "/board/post": {
       "post": {
+        "tags": ["공지 등록 API"],
         "description": "",
         "parameters": [
           {
@@ -493,6 +505,7 @@
         }
       },
       "get": {
+        "tags": ["공지 조회 API"],
         "description": "",
         "parameters": [
           {
@@ -513,6 +526,7 @@
     },
     "/board/post/{postId}": {
       "get": {
+        "tags": ["PostId로 공지 조회 API"],
         "description": "",
         "parameters": [
           {
