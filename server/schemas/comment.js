@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
   //게시글 고유번호
@@ -11,7 +11,7 @@ const commentSchema = new mongoose.Schema({
     type: Number,
   },
   //작성자 id
-  userId: {
+  UserName: {
     type: String,
     match: /.+\@.+\..+/,
   },
@@ -21,4 +21,4 @@ const commentSchema = new mongoose.Schema({
     required: true,
   },
 });
-module.exports = mongoose.model("Comment", commentSchema);
+module.exports = mongoose.model('Comment', commentSchema);

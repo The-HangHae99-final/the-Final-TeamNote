@@ -839,7 +839,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userId": {
+                "UserName": {
                   "example": "any"
                 }
               }

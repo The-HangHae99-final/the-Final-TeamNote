@@ -60,9 +60,9 @@ module.exports = (req, res, next) => {
         }
       });
     } else {
-      const { userId } = jwt.verify(tokenValue, jwtSecret);
-      console.log('userEmail ', userId);
-      User.findOne({ where: userId }).then((u) => {
+      const { userEmail } = jwt.verify(tokenValue, jwtSecret);
+      console.log('userEmail ', userEmail);
+      User.findOne({ where: userEmail }).then((u) => {
         res.locals.User = u;
         next();
       });
