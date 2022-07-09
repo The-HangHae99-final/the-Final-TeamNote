@@ -1,5 +1,5 @@
-const Post = require('../schemas/post');
-const Comment = require('../schemas/comment');
+const Post = require("../schemas/post");
+const Comment = require("../schemas/comment")
 
 //글 작성하기
 async function postUpload(req, res, next) {
@@ -23,15 +23,15 @@ async function postUpload(req, res, next) {
       content,
       category,
     });
-    return res.send({
+    return res.json({
       result: createdPost,
       ok: true,
-      message: '게시물 작성 성공',
+      message: "게시물 작성 성공",
     });
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
     });
   }
 }
@@ -41,10 +41,10 @@ async function postAllView(req, res, next) {
   try {
     let posts;
     if (!req.query.category) {
-      posts = await Post.find({}).sort('-postId');
+      posts = await Post.find({}).sort("-postId");
     } else {
       const category = req.query.category;
-      posts = await Post.find({ category }).sort('-postId');
+      posts = await Post.find({ category }).sort("-postId");
     }
     return res.json({
       result: {
@@ -55,7 +55,7 @@ async function postAllView(req, res, next) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '게시물 조회 실패' });
+    return res.status(400).json({ ok: false, message: "게시물 조회 실패" });
   }
 }
 
@@ -63,21 +63,23 @@ async function postAllView(req, res, next) {
 async function postView(req, res, next) {
   try {
     const postId = Number(req.params.postId);
-    const existsPost = await Post.find({ postId });
+    const existsPost = await Post.find(
+      { postId },
+    );
     if (!existsPost.length) {
       return res
         .status(400)
-        .json({ ok: false, errorMessage: '찾는 게시물 없음.' });
+        .json({ ok: false, errorMessage: "찾는 게시물 없음." });
     }
 
-    const existsComment = await Comment.find({ postId }).sort({
-      commentId: -1,
-    });
+    const existsComment = await Comment.find(
+      { postId },
+    ).sort({ commentId: -1 });
     res.json({ existsPost, existsComment });
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
     });
   }
 }
@@ -90,22 +92,22 @@ async function postEdit(req, res, next) {
     const { user } = res.locals;
     const { title, category, content } = req.body;
     if (user.userId !== existPost.userId) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      return res.status(401).json({ ok: false, message: "작성자가 아닙니다." });
     }
     if (!title || !category || !content) {
-      return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      return res.status(400).json({ ok: false, message: "빈값을 채워주세요" });
     }
 
     await Post.updateOne({ postId }, { $set: { title, category, content } });
     return res.status(200).json({
       result: await Post.findOne({ postId }),
       ok: true,
-      message: '게시글 수정 성공',
+      message: "게시글 수정 성공",
     });
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: '게시글 수정 에러' });
+      .json({ success: false, message: "게시글 수정 에러" });
   }
 }
 
@@ -113,23 +115,23 @@ async function postEdit(req, res, next) {
 async function postDelete(req, res, next) {
   try {
     const postId = Number(req.params.postId);
-    console.log('postId: ', postId);
+    console.log("postId: ", postId);
     const [targetPost] = await Post.find({ postId });
     const { userId } = res.locals.user;
 
     if (userId !== targetPost.userId) {
       return res.status(401).json({
         ok: false,
-        message: '작성자가 아닙니다.',
+        message: "작성자가 아닙니다.",
       });
     }
 
     await Post.deleteOne({ postId });
-    return res.json({ ok: true, message: '게시글 삭제 성공' });
+    return res.json({ ok: true, message: "게시글 삭제 성공" });
   } catch (error) {
     return res.status(400).json({
       ok: false,
-      message: '게시글 삭제 실패',
+      message: "게시글 삭제 실패",
     });
   }
 }
