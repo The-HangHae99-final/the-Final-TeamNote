@@ -4,7 +4,8 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
-var socialUser = require('../schemas/social_user');
+const jwt = require('jsonwebtoken');
+var User = require('../schemas/user');
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 var express = require('express');
@@ -12,7 +13,6 @@ var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-console.log('client_id---------------: ', client_id);
 const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 // post- '/auth/login/kakao/callback'
 function kakao_callback(req, res, next) {
@@ -101,11 +101,11 @@ async function kakao_parsing(req, res) {
     console.log('email: ', email);
     const userName = user_info.user_name;
     console.log('userName: ', userName);
-    const double = await socialUser.findOne({ email });
+    const double = await User.findOne({ email });
     console.log('double: ', double);
 
     if (!double) {
-      const social = new socialUser({ userId, email, userName, site });
+      const social = new User({ userId, email, userName, site });
       // 저장하기
       social.save();
       res.send('저장에 성공하였습니다.');

@@ -1,7 +1,9 @@
 const dotenv = require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
-const user = require('../schemas/user');
+const User = require('../schemas/user');
+const jwtSecret = process.env.SECRET_KEY;
+console.log('jwt secret:', jwtSecret);
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -31,10 +33,12 @@ module.exports = (req, res, next) => {
     const myToken = jwt.verify(tokenValue, jwtSecret);
     console.log('myToken: ', myToken);
     if (myToken == 'jwt expired') {
-      // access token 만료
+      // 엑세스 토큰이 만료되었다면,
+
       const userInfo = jwt.decode(tokenValue, jwtSecret);
+      // 원래 값을 디코드 했을 때의 값
       console.log('userInfo: ', userInfo);
-      const userId = userInfo.userEmail;
+      const userEmail = userInfo.userEmail;
       let refresh_token;
       User.findOne({ where: userEmail }).then((u) => {
         refresh_token = u.refresh_token;
@@ -48,7 +52,7 @@ module.exports = (req, res, next) => {
               error.message + '로그인이 필요합니다.---------expired----------',
           });
         } else {
-          const myNewToken = jwt.sign({ email: u.email }, jwtSecret, {
+          const myNewToken = jwt.sign({ userEmail: u.userEmail }, jwtSecret, {
             expiresIn: '1200s',
           });
           console.log('3333333333myNewToken3333333333: ', myNewToken);

@@ -22,6 +22,8 @@ const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
 const taskRouter = require('./server/routes/task');
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json');
 
 global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
 const morganMiddleware = require('./server/config/morganMiddleware');
@@ -45,13 +47,14 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use('/api', [usersRouter, postsRouter, messageRouter, commentsRouter, likesRouter, workSpaceRouter]);
 app.use('/', [kakaoRouter, dayRouter, naverRouter,taskRouter]);
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버');
+  res.send('실전 파이널 프로젝트 서버---반영확인용');
 });
 
 module.exports = server;
