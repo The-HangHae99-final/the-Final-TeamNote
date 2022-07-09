@@ -1,0 +1,20 @@
+{
+  "config": {
+    "target": "http://localhost:3001/",
+    "phases": [{ "duration": 60, "arrivalRate": 200 }],
+    "defaults": { "headers": { "User-Agent": "Artillery" } }
+  },
+  "scenarios": [
+    {
+      "name": "get테스트",
+      "flow": [
+        {
+          "get": {
+            "url": "/day",
+            "json": { "id": "[아이디]", "password": "[비밀번호]" }
+          }
+        }
+      ]
+    }
+  ]
+}

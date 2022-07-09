@@ -4,7 +4,7 @@ const Comment = require('../schemas/comment');
 //글 작성하기
 async function postUpload(req, res, next) {
   try {
-    const userName = res.locals.User;
+    const { userName } = res.locals.User;
     const { title, content, category } = req.body;
 
     const maxpostId = await Post.findOne().sort({
@@ -23,7 +23,7 @@ async function postUpload(req, res, next) {
       content,
       category,
     });
-    return res.send({
+    return res.json({
       result: createdPost,
       ok: true,
       message: '게시물 작성 성공',

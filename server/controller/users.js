@@ -7,7 +7,7 @@ const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 // const Message = require('../schemas/messages');
 
-const postUsersSchema = Joi.object({
+const usersSchema = Joi.object({
   userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
@@ -19,7 +19,7 @@ async function signup(req, res) {
   try {
     // const { userEmail, userName, password, confirmPassword } =
     const { userEmail, userName, password, confirmPassword } =
-      await postUsersSchema.validateAsync(
+      await usersSchema.validateAsync(
         req.body // 임시로 테스트를 위해 로그인을 간편하기 위해
       );
 
@@ -29,20 +29,21 @@ async function signup(req, res) {
       });
     }
 
-    const exitstUsers = await User.find({ userEmail });
-    if (exitstUsers.length) {
+    const exitstUsers = await User.findOne({ userEmail });
+    if (exitstUsers) {
       return res.status(400).send({
-        errorMessage: '중복된 아이디가 존재합니다.',
+        errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
 
     const salt = await Bcrypt.genSalt(Number(process.env.SaltKEY));
     const hashPassword = await Bcrypt.hash(password, salt);
-
+    let site = 0;
     const user = new User({
       userEmail,
       userName,
       password: hashPassword,
+      site,
     });
     await user.save();
     res.status(201).send({
@@ -77,7 +78,7 @@ async function login(req, res) {
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '1200s',
+      expiresIn: '12000s',
     });
     const refresh_token = jwt.sign({}, jwtSecret, {
       expiresIn: '14d',

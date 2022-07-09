@@ -7,23 +7,26 @@ const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
 const port = 3000;
-const usersRouter = require('./server/routes/user');
+const usersRouter = require('./server/routes/users');
 const postsRouter = require('./server/routes/posts');
+const messageRouter = require('./server/routes/message');
 const commentsRouter = require('./server/routes/comments');
 const likesRouter = require('./server/routes/likes');
-const helmet = require('helmet');
+const workSpaceRouter = require('./server/routes/workSpaces');
+const passport = require('passport');
 const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
-const Message = require('./server/schemas/message');
 const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
 const taskRouter = require('./server/routes/task');
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json');
 
-global.logger || (global.logger = require('./config/logger')); // → 전역에서 사용
-const morganMiddleware = require('./config/morganMiddleware');
+global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
+const morganMiddleware = require('./server/config/morganMiddleware');
 app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 
 connect();
@@ -44,14 +47,14 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use(helmet());
-app.use('/api', [usersRouter, postsRouter]);
-app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
+app.use('/api', [usersRouter, postsRouter, messageRouter, commentsRouter, likesRouter, workSpaceRouter]);
+app.use('/', [kakaoRouter, dayRouter, naverRouter,taskRouter]);
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버');
+  res.send('실전 파이널 프로젝트 서버---반영확인용');
 });
 
 module.exports = server;
