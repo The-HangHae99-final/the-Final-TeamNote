@@ -3,6 +3,10 @@ const Comment = require('../schemas/comment');
 
 //글 작성하기
 async function postUpload(req, res, next) {
+  // 글 작성하기
+  //#swagger.tags= ['TeamNote'];
+  // swagger.summary= '북마크'
+  //swagger.description='북마크추가
   try {
     const { userName } = res.locals.User;
     const { title, content, category } = req.body;
