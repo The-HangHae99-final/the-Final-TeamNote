@@ -49,8 +49,19 @@ app.use(
 );
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.use('/api', [usersRouter, postsRouter, messageRouter, commentsRouter, likesRouter, workSpaceRouter]);
-app.use('/', [kakaoRouter, dayRouter, naverRouter,taskRouter]);
+app.use('/api', [
+  usersRouter,
+  postsRouter,
+  messageRouter,
+  commentsRouter,
+  likesRouter,
+  workSpaceRouter,
+  kakaoRouter,
+  dayRouter,
+  naverRouter,
+  taskRouter,
+]);
+// app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
