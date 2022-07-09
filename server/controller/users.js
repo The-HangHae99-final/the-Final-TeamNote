@@ -7,7 +7,7 @@ const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 // const Message = require('../schemas/messages');
 
-const postUsersSchema = Joi.object({
+const usersSchema = Joi.object({
   userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
@@ -19,7 +19,7 @@ async function signup(req, res) {
   try {
     // const { userEmail, userName, password, confirmPassword } =
     const { userEmail, userName, password, confirmPassword } =
-      await postUsersSchema.validateAsync(
+      await usersSchema.validateAsync(
         req.body // 임시로 테스트를 위해 로그인을 간편하기 위해
       );
 
@@ -38,11 +38,12 @@ async function signup(req, res) {
 
     const salt = await Bcrypt.genSalt(Number(process.env.SaltKEY));
     const hashPassword = await Bcrypt.hash(password, salt);
-
+    let site = 0;
     const user = new User({
       userEmail,
       userName,
       password: hashPassword,
+      site,
     });
     await user.save();
     res.status(201).send({
