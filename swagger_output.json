@@ -198,7 +198,7 @@
     },
     "/kakao/parsing": {
       "post": {
-        "tags": ["클라이언트에게 파싱된 네이버 회원 데이터를 받는 API"],
+        "tags": ["클라이언트에게 파싱된 카카오 회원 데이터를 받는 API"],
         "description": "",
         "parameters": [
           {
