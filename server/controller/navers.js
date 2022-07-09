@@ -95,7 +95,7 @@ async function naver_parsing(req, res) {
     const double = await User.findOne({ email });
 
     if (!double) {
-      const social = new User({ userId, email, _user, site });
+      const social = new User({ UserName, email, _user, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else {
