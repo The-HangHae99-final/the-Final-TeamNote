@@ -622,7 +622,7 @@
     },
     "/task": {
       "post": {
-        "tags": ["일정 등록 API"]
+        "tags": ["일정 등록 API"],
         "description": "",
         "parameters": [
           {
@@ -665,7 +665,7 @@
         }
       },
       "get": {
-        "tags": ["일정 조회 API"]
+        "tags": ["일정 조회 API"],
         "description": "",
         "parameters": [],
         "responses": {
