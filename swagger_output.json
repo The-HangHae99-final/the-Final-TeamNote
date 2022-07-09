@@ -198,7 +198,7 @@
     },
     "/kakao/parsing": {
       "post": {
-        "tags": ["클라이언트에게 파싱된 데이터를 받는 API"],
+        "tags": ["클라이언트에게 파싱된 네이버 회원 데이터를 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -232,6 +232,7 @@
     },
     "/board/post/like/{postId}": {
       "put": {
+        "tags": ["게시물 좋아요 수정 API"],
         "description": "",
         "parameters": [
           {
@@ -259,6 +260,7 @@
         }
       },
       "delete": {
+        "tags": ["게시물 좋아요 취소 API"],
         "description": "",
         "parameters": [
           {
@@ -432,6 +434,7 @@
     },
     "/parsing": {
       "post": {
+        "tags": ["클라이언트에게 파싱된 네이버 회원 데이터를 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -749,7 +752,7 @@
         }
       },
       "delete": {
-        "tags": ["일정 task_id로 수정 API"],
+        "tags": ["일정 task_id로 삭제 API"],
         "description": "",
         "parameters": [
           {
@@ -809,6 +812,7 @@
     },
     "/workSpace/create": {
       "post": {
+        "tags": ["워크스페이스 생성 API"],
         "description": "",
         "parameters": [
           {
@@ -844,6 +848,7 @@
     },
     "/workSpace/memberAdd/{workSpaceName}": {
       "put": {
+        "tags": ["워크스페이스 멤버추가 API"],
         "description": "",
         "parameters": [
           {
@@ -885,6 +890,7 @@
     },
     "/workSpace/getRoomName/{workSpaceName}/{opponent}": {
       "get": {
+        "tags": ["룸 이름 얻기 API"],
         "description": "",
         "parameters": [
           {
@@ -920,6 +926,7 @@
     },
     "/workSpace/MemberList/{workSpaceName}": {
       "get": {
+        "tags": ["워크스페이스 멤버목록 조회 API"],
         "description": "",
         "parameters": [
           {
@@ -949,6 +956,7 @@
     },
     "/workSpace/deleteMember/{workSpaceName}": {
       "put": {
+        "tags": ["워크스페이스 멤버 삭제 API"],
         "description": "",
         "parameters": [
           {
