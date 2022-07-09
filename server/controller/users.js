@@ -49,11 +49,6 @@ async function signup(req, res) {
       success: true,
       msg: '회원가입을 성공하였습니다',
     });
-
-    // res.status(201).send({
-    //   ok: true,
-    //   result: { user },
-    // });
   } catch (error) {
     return res.status(400).send(console.error(error));
   }
