@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "3.36.78.173",
+  "host": "52.79.82.195:3001/",
   "basePath": "/api",
   "schemes": ["http"],
 
@@ -290,7 +290,6 @@
     },
     "/messages/edit/{_id}": {
       "put": {
-
         "tags": ["메세지 수정 API"],
 
         "description": "",
@@ -334,7 +333,6 @@
     },
     "/messages/delete/{_id}": {
       "delete": {
-
         "tags": ["메세지 삭제 API"],
 
         "description": "",
@@ -366,7 +364,6 @@
     },
     "/messages/view/{room}": {
       "get": {
-
         "tags": ["방 ID에 따라 메세지 불러오기"],
 
         "description": "",
@@ -868,7 +865,6 @@
     },
     "/workSpace/memberAdd/{workSpaceName}": {
       "put": {
-
         "tags": ["워크스페이스 멤버추가 API"],
 
         "description": "",
@@ -890,7 +886,6 @@
             "schema": {
               "type": "object",
               "properties": {
-
                 "UserName": {
                   "example": "any"
                 }
@@ -1000,7 +995,6 @@
               "type": "object",
               "properties": {
                 "memberId": {
-
                   "example": "any"
                 }
               }
@@ -1016,14 +1010,12 @@
           },
           "401": {
             "description": "Unauthorized"
-
           }
         }
       }
     }
   },
   "swaggerDefinition": {
-
     "openapi": "3.0.0",
     "info": {
       "title": "Express Service with Swagger!",
@@ -1038,4 +1030,3 @@
   },
   "apis": []
 }
-
