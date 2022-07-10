@@ -66,7 +66,7 @@ async function emailFirst(req, res) {
         .send({ email: userEmail, success: '존재하는 회원입니다.' });
     }
   } catch (error) {
-    res.send(401).send({ errorMessage: error , "로그인에 실패했습니다."});
+    res.send(401).send({ errorMessage: error , "이메일 혹은 비밀번호가 틀렸습니다."});
   }
 }
 
