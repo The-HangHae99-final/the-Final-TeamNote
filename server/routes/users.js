@@ -22,8 +22,8 @@ router.post(
   })
 );
 
-router.get('/users/email', userController.emailFirst);
+router.post('/users/email', userController.emailFirst);
 
-router.get('/users/password', userController.passwordSecond);
+router.post('/users/password', userController.passwordSecond);
 
 module.exports = router;
