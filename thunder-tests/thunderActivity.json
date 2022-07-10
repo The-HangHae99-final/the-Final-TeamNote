@@ -455,12 +455,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-10T15:52:03.373Z",
-    "modified": "2022-07-10T16:01:48.876Z",
+    "modified": "2022-07-10T16:12:12.142Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "raw": "    {\"userEmail\": \"chocokaka34@naver.com\"\n\n    }",
       "form": []
     },
     "tests": []
@@ -645,7 +645,7 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-10T16:05:17.362Z",
-    "modified": "2022-07-10T16:05:30.608Z",
+    "modified": "2022-07-10T16:07:25.501Z",
     "headers": [],
     "params": [],
     "body": {
