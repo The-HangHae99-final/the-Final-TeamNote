@@ -11,7 +11,7 @@ const user = require('../schemas/user');
 router.post('/users/signup', userController.signup);
 
 //로그인
-router.post('/users/login', userController.login);
+// router.post('/users/login', userController.login);
 
 //소셜로그인
 router.post(
@@ -22,8 +22,8 @@ router.post(
   })
 );
 
-router.post('/users/email', userController.emailFirst);
+router.get('/users/email', userController.emailFirst);
 
-router.post('/users/password', userController.passwordSecond);
+router.get('/users/password', userController.passwordSecond);
 
 module.exports = router;

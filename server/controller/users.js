@@ -61,21 +61,24 @@ async function emailFirst(req, res) {
     const { userEmail } = req.body;
     const userFind = User.findOne({ userEmail });
     if (userFind) {
-      res.status(200).send({ success: '존재하는 회원입니다.' });
+      res
+        .status(200)
+        .send({ email: userEmail, success: '존재하는 회원입니다.' });
     }
   } catch (error) {
-    res.send(401).send({ ErrorMessage: error.message });
+    res.send(401).send({ errorMessage: error });
   }
 }
 
 async function passwordSecond(req, res) {
   try {
     const { userEmail, password } = req.body;
-    const userFind = User.findOne({ userEmail });
-
+    const userFind = await User.findOne({ userEmail });
+    let validPassword;
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
     }
+
     if (!validPassword) {
       return res.send('비밀번호가 틀렸습니다..');
     }
@@ -87,13 +90,12 @@ async function passwordSecond(req, res) {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
-    res
-      .status(200)
-      .send({ success: '로그인에 성공 하였습니다.', token: token });
+    res.status(200).send({ success: '로그인에 성공 하였습니다.', token });
   } catch (error) {
+    console.error(error);
     res
       .status(400)
-      .send({ errorMessage: message.error + ' : 로그인에 실패 하였습니다.' });
+      .send({ errorMessage: error + ' : 로그인에 실패 하였습니다.' });
   }
 }
 
@@ -104,19 +106,14 @@ async function passwordSecond(req, res) {
 
 // 기존 로그인 api 잠시 주석처리
 
-// //로그인
-// async function login(req, res) {
+//로그인
+// async function passwordSecond(req, res) {
 //   try {
 //     const { userEmail, password } = req.body;
 
 //     const userFind = await User.findOne({ userEmail });
 
-//     if (!userFind) {
-//       return res.status(400).send({
-//         errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
-//       });
-//     }
-
+//
 //     let validPassword = '';
 
 //     if (userFind) {
@@ -151,9 +148,7 @@ async function login(req, res) {
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
-    res
-      .status(400)
-      .send({ errorMessage: message.error + '에러가 발생했습니다..' });
+    res.status(400).send({ errorMessage: error + '에러가 발생했습니다..' });
   }
 }
 

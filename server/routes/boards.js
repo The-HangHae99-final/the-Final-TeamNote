@@ -3,7 +3,7 @@ const router = express.Router();
 const boardController = require('../controller/boards');
 const authMiddleware = require('../middlewares/auth-middleware');
 
-router.post('/board/notice', authMiddleware, postController.boardUpload);
+router.post('/board/notice', authMiddleware, boardController.boardUpload);
 
 // 글 전체 조회(임시)
 router.get('/board/notice', boardController.boardAllView);
