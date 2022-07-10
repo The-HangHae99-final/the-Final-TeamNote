@@ -20,7 +20,7 @@ function email_validator(email) {
 // const Message = require('../schemas/messages');
 
 const usersSchema = Joi.object({
-  userEmail: Joi.string().required().email(),
+  userEmail: Joi.string().required(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   confirmPassword: Joi.string(),

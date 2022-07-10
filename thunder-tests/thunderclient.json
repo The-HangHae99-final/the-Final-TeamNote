@@ -24,10 +24,10 @@
     "containerId": "",
     "name": "이메일 먼저",
     "url": "http://localhost:3001/api/users/email",
-    "method": "GET",
+    "method": "POST",
     "sortNum": 20000,
     "created": "2022-07-10T11:43:08.949Z",
-    "modified": "2022-07-10T14:09:36.592Z",
+    "modified": "2022-07-10T15:53:15.725Z",
     "headers": [],
     "params": [],
     "body": {

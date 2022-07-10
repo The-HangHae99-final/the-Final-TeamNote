@@ -22,7 +22,7 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-08T11:57:36.501Z",
-    "modified": "2022-07-10T11:39:43.938Z",
+    "modified": "2022-07-10T15:53:00.428Z",
     "headers": [],
     "params": [],
     "body": {
@@ -206,7 +206,7 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-07-08T13:39:58.159Z",
-    "modified": "2022-07-10T14:09:36.594Z",
+    "modified": "2022-07-10T15:53:04.814Z",
     "headers": [],
     "params": [],
     "body": {
@@ -403,7 +403,59 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-10T14:09:34.042Z",
-    "modified": "2022-07-10T14:09:34.068Z",
+    "modified": "2022-07-10T15:53:15.727Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "a15df876-58b4-4d27-8691-b120d515cf73",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/api/users/emai",
+    "url": "http://52.79.82.195:3001/api/users/emai",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-07-10T15:51:50.616Z",
+    "modified": "2022-07-10T15:51:50.691Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ab760981-c8bb-442d-b0f2-8424cfcad564",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/api/users/email",
+    "url": "http://52.79.82.195:3001/api/users/email",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-07-10T15:51:52.465Z",
+    "modified": "2022-07-10T15:52:11.214Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "9724039a-22af-4a6e-b836-6122febc85ef",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/api/users/email",
+    "url": "http://52.79.82.195:3001/api/users/email",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-07-10T15:52:03.373Z",
+    "modified": "2022-07-10T15:52:25.519Z",
     "headers": [],
     "params": [],
     "body": {
