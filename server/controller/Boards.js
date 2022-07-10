@@ -1,4 +1,5 @@
-const Post = require('../schemas/post');
+const { lib } = require('nunjucks');
+const Board = require('../schemas/boards');
 const Comment = require('../schemas/comment');
 
 //글 작성하기
@@ -13,7 +14,7 @@ async function boardUpload(req, res, next) {
     const { userName } = res.locals.User;
     const { title, content } = req.body;
 
-    const maxpostId = await Post.findOne().sort({
+    const maxpostId = await Board.findOne().sort({
       postId: -1,
     });
     // console.log(maxpostId)
@@ -21,8 +22,10 @@ async function boardUpload(req, res, next) {
     if (maxpostId) {
       postId = maxpostId.postId + 1;
     }
+    const createdTime = new Date();
+    console.log(createdTime);
 
-    const createdPost = await Post.create({
+    const createdPost = await Board.create({
       postId,
       userName,
       title,
@@ -47,7 +50,7 @@ async function boardUpload(req, res, next) {
 // 워크스페이스 파라미터 값
 async function boardAllView(req, res, next) {
   try {
-    const posts = await Post.find().sort('-postId');
+    const posts = await Board.find().sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
@@ -60,7 +63,7 @@ async function boardAllView(req, res, next) {
 async function boardView(req, res, next) {
   try {
     const postId = Number(req.params.postId);
-    const existsPost = await Post.find({ postId });
+    const existsPost = await Board.find({ postId });
     if (!existsPost.length) {
       return res
         .status(400)
@@ -85,7 +88,7 @@ async function boardView(req, res, next) {
 async function boardEdit(req, res, next) {
   try {
     const postId = Number(req.params.postId);
-    const [existPost] = await Post.find({ postId });
+    const [existPost] = await Board.find({ postId });
     const { user } = res.locals;
     const { title, content } = req.body;
     if (user.userName !== existPost.userName) {
@@ -95,9 +98,9 @@ async function boardEdit(req, res, next) {
       return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
     }
 
-    await Post.updateOne({ postId }, { $set: { title, content } });
+    await Board.updateOne({ postId }, { $set: { title, content } });
     return res.status(200).json({
-      result: await Post.findOne({ postId }),
+      result: await Board.findOne({ postId }),
       ok: true,
       message: '게시글 수정 성공',
     });
@@ -113,7 +116,7 @@ async function boardDelete(req, res, next) {
   try {
     const postId = Number(req.params.postId);
     console.log('postId: ', postId);
-    const [targetPost] = await Post.find({ postId });
+    const [targetPost] = await Board.find({ postId });
     const { userName } = res.locals.User;
 
     if (userName !== targetPost.userName) {
@@ -122,7 +125,7 @@ async function boardDelete(req, res, next) {
         message: '작성자가 아닙니다.',
       });
     }
-    await Post.deleteOne({ postId });
+    await Board.deleteOne({ postId });
     return res.json({ ok: true, message: '게시글 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
