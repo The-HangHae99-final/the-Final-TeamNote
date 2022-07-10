@@ -22,8 +22,8 @@ router.post(
   })
 );
 
-router.post('/users/email', userController.emailFirst);
+router.post('/users/hey/email', userController.emailFirst);
 
-router.post('/users/password', userController.passwordSecond);
+router.post('/users/baby/password', userController.passwordSecond);
 
 module.exports = router;

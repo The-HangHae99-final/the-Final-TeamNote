@@ -436,12 +436,12 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-07-10T15:51:52.465Z",
-    "modified": "2022-07-10T15:54:10.651Z",
+    "modified": "2022-07-10T16:01:51.325Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\"\n    }",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
       "form": []
     },
     "tests": []
@@ -455,12 +455,88 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-10T15:52:03.373Z",
-    "modified": "2022-07-10T15:54:12.827Z",
+    "modified": "2022-07-10T16:01:48.876Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "90ed40b5-8345-4dc0-889e-3761c8820a21",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/",
+    "url": "http://52.79.82.195:3001/",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-07-10T16:00:25.350Z",
+    "modified": "2022-07-10T16:00:25.372Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
       "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "c45f031e-b1d5-474a-abae-8e74cc7795b9",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/",
+    "url": "http://52.79.82.195:3001/",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-07-10T16:00:28.583Z",
+    "modified": "2022-07-10T16:00:28.608Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "28147d4c-6925-4164-9b00-2c590b7b1243",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/api/users/password",
+    "url": "http://52.79.82.195:3001/api/users/password",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-07-10T16:01:55.529Z",
+    "modified": "2022-07-10T16:02:00.003Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d2edf692-55d2-4f7d-af2f-22232bd4f854",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/api/users/password",
+    "url": "http://52.79.82.195:3001/api/users/password",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-07-10T16:01:58.119Z",
+    "modified": "2022-07-10T16:02:11.789Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
       "form": []
     },
     "tests": []
