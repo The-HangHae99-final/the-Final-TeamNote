@@ -16,7 +16,12 @@ function email_validator(email) {
   if (email.includes('.') == true) {
     var answer = true;
   }
-  return answer;
+
+  if (email.includes('..')) {
+    var answer = false;
+  }
+
+  if (email.includes) return answer;
 }
 // const Message = require('../schemas/messages');
 
@@ -92,13 +97,13 @@ async function passwordSecond(req, res) {
   try {
     const { userEmail, password } = req.body;
     const userFind = await User.findOne({ userEmail });
-    let validPassword;
+    var validPassword;
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
     }
 
     if (!validPassword) {
-      return res.send('비밀번호가 틀렸습니다..');
+      return res.send('비밀번호가 틀렸습니다.');
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
@@ -108,7 +113,7 @@ async function passwordSecond(req, res) {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
-    res.status(200).send({ success: '로그인에 성공 하였습니다.', token });
+    res.status(200).send({ success: true, token });
   } catch (error) {
     console.error(error);
     res

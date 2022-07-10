@@ -22,12 +22,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-08T11:57:36.501Z",
-    "modified": "2022-07-10T16:04:01.636Z",
+    "modified": "2022-07-10T16:28:56.928Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"userName\": \"김하연123\",\n    \"userEmail\": \"chocokakao@naver.com\",\n    \"password\":\"1234\",\n    \"confirmPassword\":\"1234\"\n    \n    \n}",
+      "raw": "{\n    \"userName\": \"김하연1234\",\n    \"userEmail\": \"chocokakao1@naver.com\",\n    \"password\":\"1234\",\n    \"confirmPassword\":\"1234\"\n    \n    \n}",
       "form": []
     },
     "tests": []
@@ -531,12 +531,12 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-10T16:01:58.119Z",
-    "modified": "2022-07-10T16:02:11.789Z",
+    "modified": "2022-07-10T16:35:55.545Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "raw": "    {\"userEmail\": \"chocokakao12@naver.com\",\n    \"password\":\"1234\"\n    }",
       "form": []
     },
     "tests": []
@@ -645,12 +645,50 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-07-10T16:05:17.362Z",
-    "modified": "2022-07-10T16:07:25.501Z",
+    "modified": "2022-07-10T16:29:12.310Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "raw": "    {\"userEmail\": \"chocokakao1@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "b62f5534-ae27-41e6-ac42-2f0a721e50f2",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3001/api/users/password",
+    "url": "http://localhost:3001/api/users/password",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-07-10T16:29:18.373Z",
+    "modified": "2022-07-10T16:29:18.495Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "    {\"userEmail\": \"chocokakao1@naver.com\",\n    \"password\":\"1234\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "164dda42-9d8e-4838-a1eb-439b3dfe6366",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://52.79.82.195:3001/api/users/signup",
+    "url": "http://52.79.82.195:3001/api/users/signup",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-07-10T16:29:49.967Z",
+    "modified": "2022-07-10T16:29:57.347Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"userName\": \"김하연12345\",\n    \"userEmail\": \"chocokakao12@naver.com\",\n    \"password\":\"1234\",\n    \"confirmPassword\":\"1234\"\n    \n    \n}",
       "form": []
     },
     "tests": []
