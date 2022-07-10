@@ -5,6 +5,7 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
+const user = require('../schemas/user');
 // const Message = require('../schemas/messages');
 
 const usersSchema = Joi.object({
@@ -54,6 +55,53 @@ async function signup(req, res) {
     return res.status(400).send(console.error(error));
   }
 }
+
+async function emailFirst(req, res) {
+  try {
+    const { userEmail } = req.body;
+    const userFind = User.findOne({ userEmail });
+    if (userFind) {
+      res.status(200).send({ success: '존재하는 회원입니다.' });
+    }
+  } catch (error) {
+    res.send(401).send({ ErrorMessage: error.message });
+  }
+}
+
+async function passwordSecond(req, res) {
+  try {
+    const { userEmail, password } = req.body;
+    const userFind = User.findOne({ userEmail });
+
+    if (userFind) {
+      validPassword = await Bcrypt.compare(password, userFind.password);
+    }
+    if (!validPassword) {
+      return res.send('비밀번호가 틀렸습니다..');
+    }
+
+    const token = jwt.sign({ userEmail }, jwtSecret, {
+      expiresIn: '12000s',
+    });
+    const refresh_token = jwt.sign({}, jwtSecret, {
+      expiresIn: '14d',
+    });
+    await userFind.update({ refresh_token }, { where: { userEmail } });
+    res
+      .status(200)
+      .send({ message: '로그인에 성공 하였습니다.', token: token });
+  } catch (error) {
+    res
+      .status(400)
+      .send({ errorMessage: message.error + ' : 로그인에 실패 하였습니다.' });
+  }
+}
+
+//로그인에서 이메일 입력 (로그인완료, success:존재하는 회원입니다.)
+// 그다음 페이지에서 비밀번호 입력
+
+//회원가입 시 이메일 쏘는 부분과 다른 변수 쏘는 api 나누기
+
 //로그인
 async function login(req, res) {
   try {
@@ -86,11 +134,25 @@ async function login(req, res) {
     await userFind.update({ refresh_token }, { where: { userEmail } });
     res.status(200).send({ message: 'success', token: token });
   } catch (err) {
-    res.status(400).send({ message: err + ' : login failed' });
+    res.status(400).send({ errorMessage: err + ' : login failed' });
+  }
+}
+
+//탈퇴 기능
+
+async function login(req, res) {
+  try {
+    const { userEmail } = res.locals.user;
+    const userFind = await User.deleteOne({ userEmail });
+  } catch {
+    console.log(error);
+    res.status(400).send({ errorMessage: '에러가 발생했습니다..' });
   }
 }
 
 module.exports = {
   signup,
   login,
+  emailFirst,
+  passwordSecond,
 };

@@ -1,11 +1,11 @@
 const Post = require('../schemas/post');
 const Like = require('../schemas/like');
 
-//좋아요
+//공지 글 좋아요 등록
 async function like(req, res) {
   try {
     const postId = Number(req.params.postId);
-    const { UserName } = res.locals.user;
+    const { UserName } = res.locals.User;
 
     const existsPost = await Post.find({ postId });
     const aleadyLike = await Like.find({ postId });
@@ -23,7 +23,7 @@ async function like(req, res) {
   }
 }
 
-//좋아요 취소
+//공지 글 좋아요 취소
 async function unlike(req, res) {
   try {
     const postId = Number(req.params.postId);
