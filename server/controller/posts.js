@@ -12,7 +12,8 @@ async function postUpload(req, res, next) {
   try {
     const { userName } = res.locals.User;
     const { title, content } = req.body;
-
+    const createdTime = new Date();
+    console.log(createdTime);
     const maxpostId = await Post.findOne().sort({
       postId: -1,
     });
