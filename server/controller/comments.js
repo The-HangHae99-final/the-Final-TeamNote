@@ -1,12 +1,12 @@
 const Post = require('../schemas/post');
 const Comment = require('../schemas/comment');
 
-//댓글 작성하기
+//code :102 공지 댓글 작성하기
 async function commentUpload(req, res) {
   try {
     const postId = Number(req.params.postId);
     const { comment } = req.body;
-    const { UserName } = res.locals.user;
+    const { userName } = res.locals.User;
 
     const maxCommentId = await Comment.findOne({ postId }).sort({
       commentId: -1,
@@ -22,8 +22,9 @@ async function commentUpload(req, res) {
     const createdcomment = await Comment.create({
       postId,
       commentId,
-      UserName,
-      comment,
+      userName,
+      content,
+      createdTime,
     });
     res.json({ targetPost: createdcomment });
   } catch (err) {
