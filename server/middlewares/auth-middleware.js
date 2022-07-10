@@ -53,7 +53,7 @@ module.exports = (req, res, next) => {
           });
         } else {
           const myNewToken = jwt.sign({ userEmail: u.userEmail }, jwtSecret, {
-            expiresIn: '1200s',
+            expiresIn: '12000s',
           });
           console.log('3333333333myNewToken3333333333: ', myNewToken);
           res.send({ message: 'new token', myNewToken });

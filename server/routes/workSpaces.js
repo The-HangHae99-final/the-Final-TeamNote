@@ -20,4 +20,8 @@ router.get("/workSpace/MemberList/:workSpaceName", authMiddleware, isMember, wor
 //멤버 삭제
 router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, isMember, workSpaceController.deleteMember);
 
+//워크스페이스 탈퇴하기
+router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceLeave);
+
+
 module.exports = router;

@@ -2,12 +2,13 @@ const User = require("../schemas/user");
 const workSpace = require("../schemas/workSpace");
 
 //워크스페이스 생성
+// router.post("/workSpace/create", authMiddleware, workSpaceController.create);
 async function create(req, res) {
   try {
     const owner = res.locals.User;
-    console.log('owner: ', owner);
     const { name } = req.body;
-    const existName = await workSpace.find({ name });
+    const fullName = `${owner.userEmail}+${name}`;
+    const existName = await workSpace.find({ name: fullName });
 
     if (existName.length) {
       if (existName[0].owner === owner.userEmail)
@@ -17,7 +18,7 @@ async function create(req, res) {
     } else {
       const createdWorkSpace = await workSpace.create({
         owner: owner.userEmail,
-        name,
+        name: `${owner.userEmail}+${name}`,
       });
 
       createdWorkSpace.memberList.push({
@@ -42,9 +43,9 @@ async function create(req, res) {
 }
 
 //멤버 추가
+// router.put("/workSpace/memberAdd/:workSpaceName", authMiddleware,isMember, workSpaceController.memberAdd);
 async function memberAdd(req, res) {
   try {
-    const owner = res.locals.User.userEmail;
     const { workSpaceName } = req.params;
     const { userEmail } = req.body;
 
@@ -80,13 +81,13 @@ async function memberAdd(req, res) {
   }
 }
 //멤버 삭제
+// router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, isMember, workSpaceController.deleteMember);
 async function deleteMember(req, res) {
   try {
     const authority = res.locals.User;
-    console.log('authority: ', authority);
     const { workSpaceName } = req.params;
     const { memberEmail } = req.body;
-    const myWorkSpace = await workSpace.findOne({ workSpaceName });
+    const myWorkSpace = await workSpace.findOne({ name: workSpaceName });
     const existMember = myWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail === memberEmail
     );
@@ -94,17 +95,19 @@ async function deleteMember(req, res) {
       return res
         .status(400)
         .json({ ok: false, message: "오너만 멤버를 삭제할 수 있습니다." });
-    }
-    else if (!existMember.length) {
-      return res.status(400).json({ ok: false, message: "해당 멤버가 없습니다." });
-    }  else {
+    } else if (!existMember.length) {
+      return res
+        .status(400)
+        .json({ ok: false, message: "해당 멤버가 없습니다." });
+    } else {
       const filtered = myWorkSpace.memberList.filter(
         (memberInfo) => memberInfo.memberEmail !== memberEmail
       );
       await workSpace.updateOne(
-        { memberEmail },
+        { name: workSpaceName },
         { $set: { memberList: filtered } }
       );
+      console.log("filtered: ", filtered);
 
       return res.status(200).json({
         ok: true,
@@ -116,6 +119,7 @@ async function deleteMember(req, res) {
   }
 }
 //멤버 목록 조회
+// router.get("/workSpace/MemberList/:workSpaceName", authMiddleware, isMember, workSpaceController.getMemberList);
 async function getMemberList(req, res) {
   try {
     const { workSpaceName } = req.params;
@@ -131,7 +135,30 @@ async function getMemberList(req, res) {
   }
 }
 
+//워크스페이스 탈퇴하기
+// router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceLeave);
+async function workSpaceLeave(req, res) {
+  try {
+    const userEmail = res.locals.User.userEmail;
+    const { workSpaceName } = req.params;
+    const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
+
+    const excepted = targetWorkSpace.memberList.filter(
+      (memberInfo) => memberInfo.memberEmail !== userEmail
+    );
+
+    await workSpace.updateOne(
+      { name: workSpaceName },
+      { $set: { memberList: excepted } }
+    );
+    return res.status(200).json({ ok: true, message: "탈퇴 성공" });
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: "탈퇴 에러" });
+  }
+}
+
 //방 이름 건네주기
+// router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, isMember, workSpaceController.roomName);
 async function roomName(req, res) {
   try {
     const me = res.locals.User.userName;
@@ -163,4 +190,5 @@ module.exports = {
   roomName,
   getMemberList,
   deleteMember,
+  workSpaceLeave,
 };

@@ -30,12 +30,11 @@ async function messageEdit(req, res) {
 async function messageDelete(req, res) {
   try {
     const { _id } = req.params;
-    const { author } = res.locals.User;
+    console.log('_id: ', _id);
+    const  author  = res.locals.User.userName;
     console.log('author: ', author);
 
-    console.log('_id: ', _id);
     const targetMessage = await Message.find({ _id });
-    console.log('targetMessage: ', targetMessage);
 
     if(!targetMessage.length)
     {
