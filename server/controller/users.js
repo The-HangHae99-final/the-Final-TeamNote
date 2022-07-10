@@ -81,9 +81,7 @@ async function emailFirst(req, res) {
     const { userEmail } = req.body;
     const userFind = User.findOne({ userEmail });
     if (userFind) {
-      res
-        .status(200)
-        .send({ email: userEmail, success: '존재하는 회원입니다.' });
+      res.status(200).send({ email: userEmail, success: true });
     }
   } catch (error) {
     res.send(401).send({ errorMessage: error });
