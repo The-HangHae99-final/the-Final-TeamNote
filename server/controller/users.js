@@ -89,7 +89,7 @@ async function passwordSecond(req, res) {
     await userFind.update({ refresh_token }, { where: { userEmail } });
     res
       .status(200)
-      .send({ message: '로그인에 성공 하였습니다.', token: token });
+      .send({ success: '로그인에 성공 하였습니다.', token: token });
   } catch (error) {
     res
       .status(400)
@@ -102,41 +102,45 @@ async function passwordSecond(req, res) {
 
 //회원가입 시 이메일 쏘는 부분과 다른 변수 쏘는 api 나누기
 
-//로그인
-async function login(req, res) {
-  try {
-    const { userEmail, password } = req.body;
+// 기존 로그인 api 잠시 주석처리
 
-    const userFind = await User.findOne({ userEmail });
+// //로그인
+// async function login(req, res) {
+//   try {
+//     const { userEmail, password } = req.body;
 
-    if (!userFind) {
-      return res.status(400).send({
-        errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
-      });
-    }
+//     const userFind = await User.findOne({ userEmail });
 
-    let validPassword = '';
+//     if (!userFind) {
+//       return res.status(400).send({
+//         errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
+//       });
+//     }
 
-    if (userFind) {
-      validPassword = await Bcrypt.compare(password, userFind.password);
-    }
+//     let validPassword = '';
 
-    if (!validPassword) {
-      return res.send('비밀번호가 틀렸습니다..');
-    }
+//     if (userFind) {
+//       validPassword = await Bcrypt.compare(password, userFind.password);
+//     }
 
-    const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '12000s',
-    });
-    const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '14d',
-    });
-    await userFind.update({ refresh_token }, { where: { userEmail } });
-    res.status(200).send({ message: 'success', token: token });
-  } catch (err) {
-    res.status(400).send({ errorMessage: err + ' : login failed' });
-  }
-}
+//     if (!validPassword) {
+//       return res.send('비밀번호가 틀렸습니다..');
+//     }
+
+//     const token = jwt.sign({ userEmail }, jwtSecret, {
+//       expiresIn: '12000s',
+//     });
+//     const refresh_token = jwt.sign({}, jwtSecret, {
+//       expiresIn: '14d',
+//     });
+//     await userFind.update({ refresh_token }, { where: { userEmail } });
+//     res.status(200).send({ success: '로그인에 성공하였습니다.', token: token });
+//   } catch (error) {
+//     res
+//       .status(400)
+//       .send({ errorMessage: message.error + ' : 로그인에 실패하였습니다.' });
+//   }
+// }
 
 //탈퇴 기능
 
@@ -144,9 +148,12 @@ async function login(req, res) {
   try {
     const { userEmail } = res.locals.user;
     const userFind = await User.deleteOne({ userEmail });
+    res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
-    res.status(400).send({ errorMessage: '에러가 발생했습니다..' });
+    res
+      .status(400)
+      .send({ errorMessage: message.error + '에러가 발생했습니다..' });
   }
 }
 
