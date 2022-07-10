@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-10T11:41:05.557Z",
-    "modified": "2022-07-10T11:41:05.557Z",
+    "modified": "2022-07-10T15:58:31.907Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"userName\": \"김하연123\",\n    \"userEmail\": \"chocokakao111123455@naver.com\",\n    \"password\":\"1234\",\n    \"confirmPassword\":\"1234\"\n    \n    \n}",
+      "raw": "{\n    \"userName\": \"김하연123\",\n    \"userEmail\": \"chocokakao@naver.com\",\n    \"password\":\"1234\",\n    \"confirmPassword\":\"1234\"\n    \n    \n}",
       "form": []
     },
     "tests": []

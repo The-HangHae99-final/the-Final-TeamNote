@@ -8,19 +8,20 @@ const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
 
 function email_validator(email) {
-  if (email.includes('@') == false) {
-    return false;
+  var answer = false;
+  if (email.includes('@')) {
+    var answer = true;
   }
 
-  if (email.includes('.') == false) {
-    return false;
+  if (email.includes('.') == true) {
+    var answer = true;
   }
-  return true;
+  return answer;
 }
 // const Message = require('../schemas/messages');
 
 const usersSchema = Joi.object({
-  userEmail: Joi.string().required(),
+  userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   confirmPassword: Joi.string(),
