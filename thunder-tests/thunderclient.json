@@ -23,16 +23,16 @@
     "colId": "a40fe8dc-dc44-47d2-bf38-48570cfae769",
     "containerId": "",
     "name": "이메일 먼저",
-    "url": "http://localhost:3001/api/users/email",
+    "url": "http://localhost:3001/api/users/baby/password",
     "method": "POST",
     "sortNum": 20000,
     "created": "2022-07-10T11:43:08.949Z",
-    "modified": "2022-07-10T15:53:15.725Z",
+    "modified": "2022-07-10T16:05:30.608Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\"\n    }",
+      "raw": "    {\"userEmail\": \"chocokakao1111234@naver.com\",\n    \"password\":\"1234\"\n    }",
       "form": []
     },
     "tests": []
