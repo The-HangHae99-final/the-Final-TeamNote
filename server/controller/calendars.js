@@ -4,7 +4,7 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload(req, res, next) {
   try {
-    const { userName } = res.locals.user;
+    const { userName } = res.locals.User;
     const { start_date, end_date, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort('-task_id');
     let task_id = 1;
