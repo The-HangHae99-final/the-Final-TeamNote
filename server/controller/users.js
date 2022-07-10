@@ -52,7 +52,9 @@ async function signup(req, res) {
       msg: '회원가입을 성공하였습니다',
     });
   } catch (error) {
-    return res.status(400).send({ errorMessage: error });
+    res.status(400).send({
+      errorMessage: error + '이메일 혹은 비밀번호가 틀렸습니다.',
+    });
   }
 }
 
@@ -66,7 +68,7 @@ async function emailFirst(req, res) {
         .send({ email: userEmail, success: '존재하는 회원입니다.' });
     }
   } catch (error) {
-    res.send(401).send({ errorMessage: error , "이메일 혹은 비밀번호가 틀렸습니다."});
+    res.send(401).send({ errorMessage: error });
   }
 }
 
