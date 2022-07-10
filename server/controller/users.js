@@ -6,6 +6,17 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
+
+function email_validator(email) {
+  if (email.includes('@') == false) {
+    return false;
+  }
+
+  if (email.includes('.') == false) {
+    return false;
+  }
+  return true;
+}
 // const Message = require('../schemas/messages');
 
 const usersSchema = Joi.object({
@@ -27,6 +38,12 @@ async function signup(req, res) {
     if (password !== confirmPassword) {
       return res.status(400).send({
         errorMessage: '패스워드가 패스워드 확인란과 동일하지 않습니다.',
+      });
+    }
+
+    if (!email_validator(userEmail)) {
+      res.status(400).send({
+        errorMessage: '이메일 형식이 틀렸습니다.',
       });
     }
 

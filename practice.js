@@ -1,7 +1,8 @@
 const { func } = require('joi');
 
-const email = 'dsdfsdf.com';
-
+const email2 = 'dsdfsdf.com';
+const email3 = 'abc@';
+const email4 = 'chocokakao@naver.com';
 function email_validator(email) {
   if (email.includes('@') == false) {
     return false;
@@ -10,4 +11,7 @@ function email_validator(email) {
   if (email.includes('.') == false) {
     return false;
   }
+  return true;
 }
+
+console.log(email_validator(email4));

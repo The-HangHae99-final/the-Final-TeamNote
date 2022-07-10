@@ -5,17 +5,13 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "host": "3.36.78.173:3001/",
+  "basePath": "api",
+  "schemes": ["http"],
   "paths": {
     "/board/notice": {
       "post": {
-        "tags": [
-          "TeamNote"
-        ],
+        "tags": ["TeamNote"],
         "description": "",
         "parameters": [
           {
@@ -746,9 +742,7 @@
     },
     "/board/post": {
       "post": {
-        "tags": [
-          "TeamNote"
-        ],
+        "tags": ["TeamNote"],
         "description": "",
         "parameters": [
           {
