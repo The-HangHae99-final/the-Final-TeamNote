@@ -205,6 +205,8 @@ async function roomName(req, res) {
   }
 }
 
+//본인 속한 워크스페이스 목록 조회
+// router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
 async function getWorkSpaceList(req, res) {
   try {
     const user = res.locals.User.userEmail;
