@@ -16,7 +16,7 @@
 
 함께 프로젝트를 하는 사람들과 일정을 공유하고, 정리하고, 대화를 나눠보세요!
 
-Share your Assignment~!
+Share your task ~!
 
 
 ### 2. [팀 구성](#-팀-구성)
