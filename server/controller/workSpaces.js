@@ -157,6 +157,22 @@ async function workSpaceLeave(req, res) {
   }
 }
 
+//워크스페이스 삭제
+// router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
+async function workSpaceRemove(req, res) {
+  try{const owner = res.locals.User.userEmail
+  const { workSpaceName } = req.params;
+  const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
+
+  if(targetWorkSpace.owner === owner){
+    await workSpace.deleteMany({name: workSpaceName})
+    return res.status(200).json({ok: true, message: "워크스페이스가 삭제되었습니다."}); 
+  } }
+  catch (err) {
+    return res.status(400).json({ ok: false, message: "워크스페이스 삭제 에러" });
+  }
+}
+
 //방 이름 건네주기
 // router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, isMember, workSpaceController.roomName);
 async function roomName(req, res) {
@@ -191,4 +207,5 @@ module.exports = {
   getMemberList,
   deleteMember,
   workSpaceLeave,
+  workSpaceRemove
 };

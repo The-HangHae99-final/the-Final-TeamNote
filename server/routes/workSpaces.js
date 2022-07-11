@@ -23,5 +23,8 @@ router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, isMember, w
 //워크스페이스 탈퇴하기
 router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceLeave);
 
+//워크스페이스 삭제
+router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
+
 
 module.exports = router;
