@@ -1,5 +1,5 @@
 const Post = require('../schemas/post');
-const Comment = require('../schemas/comment');
+const postComment = require('../schemas/postComment');
 
 //글 작성하기
 
@@ -71,7 +71,7 @@ async function postView(req, res, next) {
         .json({ ok: false, errorMessage: '찾는 게시물 없음.' });
     }
 
-    const existsComment = await Comment.find({ postId }).sort({
+    const existsComment = await postComment.find({ postId }).sort({
       commentId: -1,
     });
     res.json({ existsPost, existsComment });
