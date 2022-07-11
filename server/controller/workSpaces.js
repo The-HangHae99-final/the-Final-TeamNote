@@ -15,12 +15,12 @@ async function create(req, res) {
           .send({ errorMessage: '이미 존재하는 이름입니다.' });
     } else {
       const createdWorkSpace = await workSpace.create({
-        owner: owner.UserName,
+        owner: owner.userName,
         name,
       });
 
       createdWorkSpace.memberList.push({
-        memberId: owner.UserName,
+        memberId: owner.userName,
         memberName: owner.userName,
       });
 

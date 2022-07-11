@@ -5,14 +5,305 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "3.36.78.173",
-  "basePath": "/api",
+  "host": "3.36.78.173:3001/",
+  "basePath": "api",
   "schemes": ["http"],
-
   "paths": {
+    "/board/notice": {
+      "post": {
+        "tags": ["TeamNote"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/board/notice/{postId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/task": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start_date": {
+                  "example": "any"
+                },
+                "end_date": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "desc": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/task/{task_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start_date": {
+                  "example": "any"
+                },
+                "end_date": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "desc": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/board/postComment/{postId}": {
       "post": {
-        "tags": ["게시물에 댓글 작성기능"],
         "description": "",
         "parameters": [
           {
@@ -54,7 +345,6 @@
     },
     "/board/postComment/{postId}/{commentId}": {
       "delete": {
-        "tags": ["게시물 댓글 삭제기능"],
         "description": "",
         "parameters": [
           {
@@ -88,7 +378,6 @@
         }
       },
       "put": {
-        "tags": ["게시물 댓글 수정기능"],
         "description": "",
         "parameters": [
           {
@@ -133,7 +422,6 @@
     },
     "/day": {
       "get": {
-        "tags": ["날짜 조회 기능"],
         "description": "",
         "parameters": [],
         "responses": {
@@ -145,7 +433,6 @@
     },
     "/auth/login/kakao/callback": {
       "post": {
-        "tags": ["KAKAO URL로 로그인 요청"],
         "description": "",
         "parameters": [
           {
@@ -173,7 +460,6 @@
     },
     "/kakao/member": {
       "post": {
-        "tags": ["KAKAO 정보 요청 API"],
         "description": "",
         "parameters": [
           {
@@ -198,7 +484,6 @@
     },
     "/kakao/parsing": {
       "post": {
-        "tags": ["클라이언트에게 파싱된 카카오 회원 데이터를 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -207,9 +492,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "user_id": {
-                  "example": "any"
-                },
                 "user_email": {
                   "example": "any"
                 },
@@ -232,7 +514,6 @@
     },
     "/board/post/like/{postId}": {
       "put": {
-        "tags": ["게시물 좋아요 수정 API"],
         "description": "",
         "parameters": [
           {
@@ -260,7 +541,6 @@
         }
       },
       "delete": {
-        "tags": ["게시물 좋아요 취소 API"],
         "description": "",
         "parameters": [
           {
@@ -290,9 +570,6 @@
     },
     "/messages/edit/{_id}": {
       "put": {
-
-        "tags": ["메세지 수정 API"],
-
         "description": "",
         "parameters": [
           {
@@ -334,9 +611,6 @@
     },
     "/messages/delete/{_id}": {
       "delete": {
-
-        "tags": ["메세지 삭제 API"],
-
         "description": "",
         "parameters": [
           {
@@ -366,9 +640,6 @@
     },
     "/messages/view/{room}": {
       "get": {
-
-        "tags": ["방 ID에 따라 메세지 불러오기"],
-
         "description": "",
         "parameters": [
           {
@@ -390,7 +661,6 @@
     },
     "/naver": {
       "post": {
-        "tags": ["NAVER로 부터 인가코드 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -415,7 +685,6 @@
     },
     "/member": {
       "post": {
-        "tags": ["NAVER 정보요청 API"],
         "description": "",
         "parameters": [
           {
@@ -440,7 +709,6 @@
     },
     "/parsing": {
       "post": {
-        "tags": ["클라이언트에게 파싱된 네이버 회원 데이터를 받는 API"],
         "description": "",
         "parameters": [
           {
@@ -474,7 +742,7 @@
     },
     "/board/post": {
       "post": {
-        "tags": ["공지 등록 API"],
+        "tags": ["TeamNote"],
         "description": "",
         "parameters": [
           {
@@ -493,9 +761,6 @@
                 },
                 "content": {
                   "example": "any"
-                },
-                "category": {
-                  "example": "any"
                 }
               }
             }
@@ -514,167 +779,6 @@
         }
       },
       "get": {
-        "tags": ["공지 조회 API"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "category",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/board/post/{postId}": {
-      "get": {
-        "tags": ["PostId로 공지 조회 API"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "put": {
-        "tags": ["PostId로 공지 수정 API"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "content": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["PostId로 공지 삭제 API"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/task": {
-      "post": {
-        "tags": ["일정 등록 API"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "start_date": {
-                  "example": "any"
-                },
-                "end_date": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "desc": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "get": {
-        "tags": ["일정 조회 API"],
         "description": "",
         "parameters": [],
         "responses": {
@@ -687,13 +791,12 @@
         }
       }
     },
-    "/task/{task_id}": {
+    "/board/post/{postId}": {
       "get": {
-        "tags": ["일정 task_id로 조회 API"],
         "description": "",
         "parameters": [
           {
-            "name": "task_id",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -709,11 +812,10 @@
         }
       },
       "put": {
-        "tags": ["일정 task_id로 수정 API"],
         "description": "",
         "parameters": [
           {
-            "name": "task_id",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -729,16 +831,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "start_date": {
-                  "example": "any"
-                },
-                "end_date": {
-                  "example": "any"
-                },
                 "title": {
                   "example": "any"
                 },
-                "desc": {
+                "content": {
                   "example": "any"
                 }
               }
@@ -758,11 +854,10 @@
         }
       },
       "delete": {
-        "tags": ["일정 task_id로 삭제 API"],
         "description": "",
         "parameters": [
           {
-            "name": "task_id",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -788,7 +883,6 @@
     },
     "/users/signup": {
       "post": {
-        "tags": ["회원가입 API"],
         "description": "",
         "parameters": [],
         "responses": {
@@ -803,22 +897,24 @@
     },
     "/users/login": {
       "post": {
-        "tags": ["로그인 API"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/email": {
+      "get": {
         "description": "",
         "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
     },
-    "/workSpace/create": {
-      "post": {
-        "tags": ["워크스페이스 생성 API"],
+    "/users/password": {
+      "get": {
         "description": "",
         "parameters": [],
         "responses": {
@@ -868,9 +964,6 @@
     },
     "/workSpace/memberAdd/{workSpaceName}": {
       "put": {
-
-        "tags": ["워크스페이스 멤버추가 API"],
-
         "description": "",
         "parameters": [
           {
@@ -890,7 +983,6 @@
             "schema": {
               "type": "object",
               "properties": {
-
                 "UserName": {
                   "example": "any"
                 }
@@ -913,7 +1005,6 @@
     },
     "/workSpace/getRoomName/{workSpaceName}/{opponent}": {
       "get": {
-        "tags": ["룸 이름 얻기 API"],
         "description": "",
         "parameters": [
           {
@@ -949,7 +1040,6 @@
     },
     "/workSpace/MemberList/{workSpaceName}": {
       "get": {
-        "tags": ["워크스페이스 멤버목록 조회 API"],
         "description": "",
         "parameters": [
           {
@@ -979,7 +1069,6 @@
     },
     "/workSpace/deleteMember/{workSpaceName}": {
       "put": {
-        "tags": ["워크스페이스 멤버 삭제 API"],
         "description": "",
         "parameters": [
           {
@@ -1000,7 +1089,6 @@
               "type": "object",
               "properties": {
                 "memberId": {
-
                   "example": "any"
                 }
               }
@@ -1016,14 +1104,12 @@
           },
           "401": {
             "description": "Unauthorized"
-
           }
         }
       }
     }
   },
   "swaggerDefinition": {
-
     "openapi": "3.0.0",
     "info": {
       "title": "Express Service with Swagger!",
@@ -1032,10 +1118,9 @@
     },
     "servers": [
       {
-        "url": "http://localhost:4040"
+        "url": "http://52.79.82.195:3001/api"
       }
     ]
   },
   "apis": []
 }
-

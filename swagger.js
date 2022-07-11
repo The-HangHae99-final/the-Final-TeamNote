@@ -26,7 +26,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://3.36.78.173/api',
+        url: 'http://52.79.82.195:3001/api',
       },
     ],
   },
@@ -34,4 +34,3 @@ const options = {
 };
 //아래 코드에 .then() 이후를 삭제한다.
 swaggerAutogen(outputFile, endpointsFiles, options);
-

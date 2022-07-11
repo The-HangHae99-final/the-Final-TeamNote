@@ -13,6 +13,7 @@ const messageRouter = require('./server/routes/message');
 const commentsRouter = require('./server/routes/comments');
 const likesRouter = require('./server/routes/likes');
 const workSpaceRouter = require('./server/routes/workSpaces');
+const boardRouter = require('./server/routes/boards');
 const passport = require('passport');
 const { Server } = require('socket.io');
 const http = require('http');
@@ -21,7 +22,7 @@ const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
 const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
-const taskRouter = require('./server/routes/task');
+const taskRouter = require('./server/routes/calendars');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 
@@ -60,6 +61,7 @@ app.use('/api', [
   dayRouter,
   naverRouter,
   taskRouter,
+  boardRouter,
 ]);
 // app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');

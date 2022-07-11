@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const taskController = require("../controller/tasks");
-const authMiddleware = require("../middlewares/auth-middleware");
+const taskController = require('../controller/calendars');
+const authMiddleware = require('../middlewares/auth-middleware');
 
 // 일정 생성
 router.post('/task', authMiddleware, taskController.taskUpload);
