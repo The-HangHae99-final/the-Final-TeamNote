@@ -8,7 +8,7 @@ const postSchema = new Schema({
   title: { type: String, required: true }, // 글 제목
   content: { type: String, required: true }, //글 내용
   createdTime: { type: String, required: true },
-  // likes: { type: Number, default: 0 }, // 좋아요 수
+  //   likes: { type: Number, default: 0 }, // 좋아요 수
 });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Board', postSchema);

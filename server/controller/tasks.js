@@ -4,11 +4,18 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload (req, res, next) {
   try {
+<<<<<<< HEAD
     const { userEmail } = res.locals.user;
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort("-taskId");
     let taskId = 1;
+=======
+    const { user_id } = res.locals.User;
+    const { start_date, end_date, title, desc } = req.body;
+    const maxTaskId = await Task.findOne().sort("-task_id");
+    let task_id = 1;
+>>>>>>> main
     if (maxTaskId) {
       taskId = maxTaskId.taskId + 1;
     }
@@ -32,7 +39,11 @@ async function taskUpload (req, res, next) {
 // 전체 일정 조회
 async function taskAll (req, res, next) {
   try {
+<<<<<<< HEAD
     tasks = await Task.find({}).sort("-taskId");
+=======
+    const tasks = await Task.find({}).sort("-task_id");
+>>>>>>> main
     return res.json({ 
       result: {
         count: tasks.length,
@@ -105,9 +116,9 @@ async function taskEdit(req, res, next) {
 // 일정 삭제 
 async function taskRemove(req, res, next) {
   try {
-    const taskId = Number(req.params.taskId);
-    const [targetTask] = await Task.find({ taskId })
-    const {userEmail} = res.locals.user
+    const task_id = Number(req.params.task_id);
+    const [targetTask] = await Task.find({ task_id })
+    const {user_id} = res.locals.User
     
     if (userEmail !== targetTask.userEmail){
       return res.status(401).json({ 
