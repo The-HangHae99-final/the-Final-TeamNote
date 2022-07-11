@@ -4,7 +4,7 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload (req, res, next) {
   try {
-    const { user_id } = res.locals.user;
+    const { user_id } = res.locals.User;
     const { start_date, end_date, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort("-task_id");
     let task_id = 1;
@@ -31,7 +31,7 @@ async function taskUpload (req, res, next) {
 // 전체 일정 조회
 async function taskAll (req, res, next) {
   try {
-    tasks = await Task.find({}).sort("-task_id");
+    const tasks = await Task.find({}).sort("-task_id");
     return res.json({ 
       result: {
         count: tasks.length,
@@ -106,7 +106,7 @@ async function taskRemove(req, res, next) {
   try {
     const task_id = Number(req.params.task_id);
     const [targetTask] = await Task.find({ task_id })
-    const {user_id} = res.locals.user
+    const {user_id} = res.locals.User
     
     if (user_id !== targetTask.user_id){
       return res.status(401).json({ 
