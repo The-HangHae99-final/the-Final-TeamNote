@@ -4,6 +4,9 @@ const Like = require('../schemas/like');
 //공지 글 좋아요 등록
 async function like(req, res) {
   try {
+    //#swagger.tags= ['공지글 좋아요 API'];
+    //#swagger.summary= '공지글 좋아요 등록 API'
+    //#swagger.description='-'
     const postId = Number(req.params.postId);
     const { UserName } = res.locals.User;
 
@@ -26,6 +29,9 @@ async function like(req, res) {
 //공지 글 좋아요 취소
 async function unlike(req, res) {
   try {
+    //#swagger.tags= ['공지글 좋아요 API'];
+    //#swagger.summary= '공지글 좋아요 취소 API'
+    //#swagger.description='-'
     const postId = Number(req.params.postId);
     const { UserName } = res.locals.user;
 

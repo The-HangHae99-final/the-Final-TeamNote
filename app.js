@@ -20,7 +20,6 @@ const http = require('http');
 const server = http.createServer(app);
 const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
-const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
 const taskRouter = require('./server/routes/calendars');
 const swaggerUi = require('swagger-ui-express');
@@ -58,7 +57,7 @@ app.use('/api', [
   likesRouter,
   workSpaceRouter,
   kakaoRouter,
-  dayRouter,
+
   naverRouter,
   taskRouter,
   boardRouter,

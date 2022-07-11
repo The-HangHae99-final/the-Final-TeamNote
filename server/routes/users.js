@@ -14,16 +14,18 @@ router.post('/users/signup', userController.signup);
 // router.post('/users/login', userController.login);
 
 //소셜로그인
-router.post(
-  '/users/login',
-  passport.authenticate('local', {
-    session: false,
-    failureRedirect: '/auth/fail',
-  })
-);
+// router.post(
+//   '/users/login',
+//   passport.authenticate('local', {
+//     session: false,
+//     failureRedirect: '/auth/fail',
+//   })
+// );
 
 router.post('/users/email', userController.emailFirst);
 
 router.post('/users/password', userController.passwordSecond);
+
+router.delete('/user/delete', userController.deleteUser);
 
 module.exports = router;

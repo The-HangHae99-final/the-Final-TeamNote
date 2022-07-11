@@ -4,6 +4,9 @@ const Comment = require('../schemas/comment');
 //code :102 공지 댓글 작성하기
 async function commentUpload(req, res) {
   try {
+    //#swagger.tags= ['댓글 API'];
+    //#swagger.summary= '댓글 등록 API'
+    //##swagger.description='-'
     const postId = Number(req.params.postId);
     const { comment } = req.body;
     const { userName } = res.locals.User;
@@ -37,7 +40,11 @@ async function commentUpload(req, res) {
 //댓글 삭제하기
 async function commentDelete(req, res) {
   try {
-    const { postId } = req.params;
+    //#swagger.tags= ['댓글 API'];
+    //#swagger.summary= '댓글 삭제 API'
+    //##swagger.description='-'
+    const { postId } = req.para;
+    ms;
     const { commentId } = req.params;
 
     const { UserName } = res.locals.User;
@@ -67,6 +74,9 @@ async function commentDelete(req, res) {
 }
 //댓글 수정하기
 async function commentEdit(req, res) {
+  //#swagger.tags= ['댓글 API'];
+  //#swagger.summary= '댓글 수정 API'
+  //##swagger.description='-'
   const { postId } = req.params;
   const { commentId } = req.params;
   const { comment } = req.body;

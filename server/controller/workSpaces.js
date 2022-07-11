@@ -5,6 +5,9 @@ const workSpace = require("../schemas/workSpace");
 // router.post("/workSpace/create", authMiddleware, workSpaceController.create);
 async function create(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 생성 API'
+    //##swagger.description='-'
     const owner = res.locals.User;
     const { name } = req.body;
     const fullName = `${owner.userEmail}+${name}`;
@@ -46,6 +49,9 @@ async function create(req, res) {
 // router.put("/workSpace/memberAdd/:workSpaceName", authMiddleware,isMember, workSpaceController.memberAdd);
 async function memberAdd(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 멤버 추가 API'
+    //##swagger.description='-'
     const { workSpaceName } = req.params;
     const { userEmail } = req.body;
 
@@ -84,6 +90,9 @@ async function memberAdd(req, res) {
 // router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, isMember, workSpaceController.deleteMember);
 async function deleteMember(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 멤버 삭제 API'
+    //##swagger.description='-'
     const authority = res.locals.User;
     const { workSpaceName } = req.params;
     const { memberEmail } = req.body;
@@ -122,6 +131,9 @@ async function deleteMember(req, res) {
 // router.get("/workSpace/MemberList/:workSpaceName", authMiddleware, isMember, workSpaceController.getMemberList);
 async function getMemberList(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 멤버 조회 API'
+    //##swagger.description='-'
     const { workSpaceName } = req.params;
     const memberList = await workSpace.findOne({ name: workSpaceName });
     console.log("memberList: ", memberList);
@@ -139,6 +151,9 @@ async function getMemberList(req, res) {
 // router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceLeave);
 async function workSpaceLeave(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 탈퇴 API'
+    //##swagger.description='-'
     const userEmail = res.locals.User.userEmail;
     const { workSpaceName } = req.params;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
@@ -161,6 +176,9 @@ async function workSpaceLeave(req, res) {
 // router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
 async function workSpaceRemove(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 삭제 API'
+    //##swagger.description='-'
     const owner = res.locals.User.userEmail;
     const { workSpaceName } = req.params;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
@@ -182,6 +200,9 @@ async function workSpaceRemove(req, res) {
 // router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, isMember, workSpaceController.roomName);
 async function roomName(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '방 이름 건네주기 API'
+    //#swagger.description='-'
     const me = res.locals.User.userName;
     const { workSpaceName } = req.params;
     const { opponent } = req.params;

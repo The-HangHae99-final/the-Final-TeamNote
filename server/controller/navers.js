@@ -17,6 +17,9 @@ var request = require('request');
 
 function naver(req, res) {
   try {
+    //#swagger.tags= ['네이버 API'];
+    //#swagger.summary= '네이버 콜백 API'
+    //#swagger.description='-'
     var code = req.body.code;
     console.log('code:', code);
     var state = 'teamnote';
@@ -56,6 +59,9 @@ function naver(req, res) {
 // router.post('/member'
 function naver_member(req, res) {
   try {
+    //#swagger.tags= ['네이버 API'];
+    //#swagger.summary= '네이버 정보요청 API'
+    //#swagger.description='-'
     var api_url = 'https://openapi.naver.com/v1/nid/me';
     var request = require('request');
     var token = req.body.token;
@@ -85,6 +91,9 @@ function naver_member(req, res) {
 // router.post('/parsing',
 async function naver_parsing(req, res) {
   try {
+    //#swagger.tags= ['네이버 API'];
+    //#swagger.summary= '네이버 파싱 API'
+    //#swagger.description='-'
     const site = 2; //naver
     const user_info = req.body;
     // console.log(user_info);

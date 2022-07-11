@@ -8,8 +8,8 @@ const doc = {
       version: '3.0.0',
       description: 'Test API with express',
     },
-    host: 'localhost:3300',
-    basePath: '/',
+    // host: '3.36.78.173:3001',
+    // basePath: '/api',
   },
   apis: ['./routes/*.js', './swagger/*'],
 };

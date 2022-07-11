@@ -6,13 +6,13 @@ const Comment = require('../schemas/comment');
 // code : 101 , 소속 워크스페이스 공지용 , 채팅 X
 async function postUpload(req, res, next) {
   // 글 작성하기
-  //#swagger.tags= ['TeamNote'];
-  // swagger.summary= '북마크'
-  //swagger.description='북마크추가
+  //#swagger.tags= ['공지용 API'];
+  //#swagger.summary= '공지용 글 작성 API'
+  //#swagger.description='-'
   try {
     const { userName } = res.locals.User;
     const { workSpaceName } = req.params;
-    
+
     const { title, content } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
@@ -51,7 +51,7 @@ async function postUpload(req, res, next) {
 async function postAllView(req, res, next) {
   try {
     const { workSpaceName } = req.params;
-    const posts = await Post.find({workSpaceName}).sort('-postId');
+    const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
@@ -63,6 +63,10 @@ async function postAllView(req, res, next) {
 // 이 부분도 파라미터 값 받아야함
 async function postView(req, res, next) {
   try {
+    // 글 작성하기
+    //#swagger.tags= ['공지용 API'];
+    //#swagger.summary= '공지용 특정 글 조회 API'
+    //#swagger.description='-'
     const postId = Number(req.params.postId);
     const existsPost = await Post.find({ postId });
     if (!existsPost.length) {
@@ -88,6 +92,9 @@ async function postView(req, res, next) {
 // 카테고리 빼기
 async function postEdit(req, res, next) {
   try {
+    //#swagger.tags= ['공지용 API'];
+    //#swagger.summary= '공지용 글 수정 API'
+    //#swagger.description='-'
     const postId = Number(req.params.postId);
     const [existPost] = await Post.find({ postId });
     const { user } = res.locals.User;
@@ -115,6 +122,9 @@ async function postEdit(req, res, next) {
 // 글 삭제
 async function postDelete(req, res, next) {
   try {
+    //#swagger.tags= ['공지용 API'];
+    //#swagger.summary= '공지용 삭제 API'
+    //#swagger.description='-'
     const postId = Number(req.params.postId);
     console.log('postId: ', postId);
     const [targetPost] = await Post.find({ postId });

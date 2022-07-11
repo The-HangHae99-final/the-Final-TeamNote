@@ -29,6 +29,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
+    "email-validator": "^2.0.4",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "google-login": "^1.0.3",
@@ -44,6 +45,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-kakao": "^1.0.1",
+    "password-validator": "^5.3.0",
     "request": "^2.88.2",
     "socket.io": "^4.5.1",
     "swagger-autogen": "^2.21.5",
@@ -54,13 +56,15 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
+    "chai": "^4.3.6",
     "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "jest": "^28.1.2",
     "nodemon": "^2.0.16",
     "prettier": "^2.7.1",
-    "supertest": "^6.2.4"
+    "supertest": "^6.2.4",
+    "ts-jest": "^28.0.5"
   },
   "directories": {
     "test": "test"
