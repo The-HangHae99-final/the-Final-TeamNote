@@ -25,7 +25,6 @@ const naverRouter = require('./server/routes/naver');
 const taskRouter = require('./server/routes/calendars');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
-const validator = require('email-validator');
 
 global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
 const morganMiddleware = require('./server/config/morganMiddleware');

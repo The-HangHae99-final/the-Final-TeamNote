@@ -48,7 +48,7 @@ async function signup(req, res) {
       });
     }
 
-    if (!validator.validate(userEmail)) {
+    if (validator.validate(userEmail) == false) {
       return res
         .status(400)
         .send({ errorMessage: '이메일 형식이 틀렸습니다.' });
