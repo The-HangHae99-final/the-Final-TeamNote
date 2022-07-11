@@ -11,7 +11,7 @@ const commentSchema = new mongoose.Schema({
     type: Number,
   },
   //작성자 id
-  userId: {
+  userEmail: {
     type: String,
     match: /.+\@.+\..+/,
   },

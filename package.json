@@ -61,5 +61,8 @@
     "nodemon": "^2.0.16",
     "prettier": "^2.7.1",
     "supertest": "^6.2.4"
+  },
+  "directories": {
+    "test": "test"
   }
 }

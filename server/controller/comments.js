@@ -6,7 +6,7 @@ async function commentUpload(req, res) {
   try {
     const postId = Number(req.params.postId);
     const { comment } = req.body;
-    const { userId } = res.locals.user;
+    const { userEmail } = res.locals.User;
 
     const maxCommentId = await Comment.findOne({ postId }).sort({
       commentId: -1,
@@ -22,7 +22,7 @@ async function commentUpload(req, res) {
     const createdcomment = await Comment.create({
       postId,
       commentId,
-      userId,
+      userEmail,
       comment,
     });
     res.json({ targetPost: createdcomment });
@@ -39,7 +39,7 @@ async function commentDelete(req, res) {
     const { postId } = req.params;
     const { commentId } = req.params;
 
-    const { userId } = res.locals.user;
+    const { userEmail } = res.locals.User;
     const existComment = await Comment.find({
       $and: [{ postId }, { commentId }],
     });
@@ -49,10 +49,10 @@ async function commentDelete(req, res) {
         .json({ errorMessage: "댓글이 존재하지 않습니다." });
     }
 
-    if (userId === existComment[0].userId) {
+    if (userEmail === existComment[0].userEmail) {
       await Comment.deleteOne({ commentId });
       res.status(200).json({ result: true });
-    } else if (existComment[0].userId !== userId) {
+    } else if (existComment[0].userEmail !== userEmail) {
       return res
         .status(400)
         .json({ errorMessage: "본인이 쓴 댓글만 수정가능합니다." });
@@ -69,18 +69,15 @@ async function commentEdit(req, res) {
   const { postId } = req.params;
   const { commentId } = req.params;
   const { comment } = req.body;
-  const userId = res.locals.user.userId;
+  const userEmail = res.locals.User.userEmail;
   const existComment = await Comment.find({
     $and: [{ postId }, { commentId }],
   });
-  console.log('userId: ', userId);
-  console.log('existComment[0]: ', existComment[0]);
-  console.log(existComment[0].userId);
 
   if (existComment.length === 0) {
     return res.json({ errorMessage: "댓글이 존재하지 않습니다." });
   }
-  if (existComment[0].userId !== userId) {
+  if (existComment[0].userEmail !== userEmail) {
     return res.json({ errorMessage: "본인이 쓴 댓글만 수정가능합니다." });
   }
   
