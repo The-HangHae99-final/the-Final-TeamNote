@@ -7,24 +7,7 @@ const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
 const validator = require('email-validator');
-
-// function email_validator(email) {
-//   var answer = false;
-//   if (email.includes('@')) {
-//     var answer = true;
-//   }
-
-//   if (email.includes('.') == true) {
-//     var answer = true;
-//   }
-
-//   if (email.includes('..')) {
-//     var answer = false;
-//   }
-
-//   if (email.includes) return answer;
-// }
-// const Message = require('../schemas/messages');
+const passwordValidator = require('../../server/controller/util/passwordValidator');
 
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -54,7 +37,13 @@ async function signup(req, res) {
     if (validator.validate(userEmail) == false) {
       return res
         .status(400)
-        .send({ errorMessage: '이메일 형식이 틀렸습니다.' });
+        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
+    }
+
+    if (passwordValidator(password) != true) {
+      return res
+        .status(400)
+        .send({ success: false, errorMessage: '패스워드 형식이 틀렸습니다.' });
     }
 
     const exitstUsers = await User.findOne({ userEmail });
@@ -80,6 +69,7 @@ async function signup(req, res) {
     });
   } catch (error) {
     res.status(400).send({
+      success: false,
       errorMessage: error + '이메일 혹은 비밀번호가 틀렸습니다.',
     });
   }
@@ -123,14 +113,12 @@ async function passwordSecond(req, res) {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
-    res
-      .status(200)
-      .send({
-        success: true,
-        token,
-        email: userEmail,
-        name: userFind.userName,
-      });
+    res.status(200).send({
+      success: true,
+      token,
+      email: userEmail,
+      name: userFind.userName,
+    });
   } catch (error) {
     console.error(error);
     res
