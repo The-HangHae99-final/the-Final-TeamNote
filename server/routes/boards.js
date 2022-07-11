@@ -5,20 +5,20 @@ const authMiddleware = require('../middlewares/auth-middleware');
 const isMember = require("../middlewares/isMember");
 
 //글 작성
-router.post('/board/notice/:workSpaceName', authMiddleware,isMember, boardController.boardUpload);
+router.post('/board/:workSpaceName', authMiddleware,isMember, boardController.boardUpload);
 
 // 글 전체 조회(임시)
-router.get('/board/notice/:workSpaceName',authMiddleware,isMember, boardController.boardAllView);
+router.get('/board/:workSpaceName',authMiddleware,isMember, boardController.boardAllView);
 
 // 글 한개 조회
-router.get('/board/notice/:workSpaceName/:postId',authMiddleware, isMember,boardController.boardView);
+router.get('/board/:workSpaceName/:boardId',authMiddleware, isMember,boardController.boardView);
 
 // 글 수정
-router.put('/board/notice/:workSpaceName/:postId',authMiddleware,isMember, boardController.boardEdit);
+router.put('/board/:workSpaceName/:boardId',authMiddleware,isMember, boardController.boardEdit);
 
 // 글 삭제
 router.delete(
-  '/board/notice/:workSpaceName/:postId',
+  '/board/:workSpaceName/:boardId',
   authMiddleware,
   boardController.boardDelete
 );
