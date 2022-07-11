@@ -134,7 +134,7 @@ async function passwordSecond(req, res) {
 
 //탈퇴 기능
 
-async function login(req, res) {
+async function deleteUser(req, res) {
   try {
     //#swagger.tags= ['탈퇴 API'];
     //#swagger.summary= '탈퇴 API'
@@ -150,7 +150,7 @@ async function login(req, res) {
 
 module.exports = {
   signup,
-  login,
   emailFirst,
   passwordSecond,
+  deleteUser,
 };

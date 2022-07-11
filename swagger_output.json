@@ -778,7 +778,7 @@
     },
     "/board/post": {
       "post": {
-        "tags": ["공지용 글 API"],
+        "tags": ["공지용 API"],
         "summary": "공지용 글 작성 API",
         "description": "-",
         "parameters": [
@@ -942,13 +942,6 @@
         }
       }
     },
-    "/users/login": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/users/email": {
       "post": {
         "tags": ["로그인 API"],
@@ -997,6 +990,22 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/delete": {
+      "delete": {
+        "tags": ["탈퇴 API"],
+        "summary": "탈퇴 API",
+        "description": "-",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"

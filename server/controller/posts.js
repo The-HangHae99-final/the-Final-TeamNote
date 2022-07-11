@@ -6,7 +6,7 @@ const Comment = require('../schemas/comment');
 // code : 101 , 소속 워크스페이스 공지용 , 채팅 X
 async function postUpload(req, res, next) {
   // 글 작성하기
-  //#swagger.tags= ['공지용 글 API'];
+  //#swagger.tags= ['공지용 API'];
   //#swagger.summary= '공지용 글 작성 API'
   //#swagger.description='-'
   try {
