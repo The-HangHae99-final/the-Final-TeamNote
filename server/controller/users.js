@@ -6,23 +6,24 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
+const validator = require('email-validator');
 
-function email_validator(email) {
-  var answer = false;
-  if (email.includes('@')) {
-    var answer = true;
-  }
+// function email_validator(email) {
+//   var answer = false;
+//   if (email.includes('@')) {
+//     var answer = true;
+//   }
 
-  if (email.includes('.') == true) {
-    var answer = true;
-  }
+//   if (email.includes('.') == true) {
+//     var answer = true;
+//   }
 
-  if (email.includes('..')) {
-    var answer = false;
-  }
+//   if (email.includes('..')) {
+//     var answer = false;
+//   }
 
-  if (email.includes) return answer;
-}
+//   if (email.includes) return answer;
+// }
 // const Message = require('../schemas/messages');
 
 const usersSchema = Joi.object({
@@ -47,10 +48,10 @@ async function signup(req, res) {
       });
     }
 
-    if (!email_validator(userEmail)) {
-      res.status(400).send({
-        errorMessage: '이메일 형식이 틀렸습니다.',
-      });
+    if (!validator.validate(userEmail)) {
+      return res
+        .status(400)
+        .send({ errorMessage: '이메일 형식이 틀렸습니다.' });
     }
 
     const exitstUsers = await User.findOne({ userEmail });
