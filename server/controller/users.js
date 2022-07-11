@@ -123,7 +123,9 @@ async function passwordSecond(req, res) {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
-    res.status(200).send({ success: true, token });
+    res
+      .status(200)
+      .send({ success: true, token, Email: userEmail, password: password });
   } catch (error) {
     console.error(error);
     res
