@@ -5,13 +5,13 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "3.36.78.173:3001/",
-  "basePath": "api",
+  "host": "localhost:3000",
+  "basePath": "/",
   "schemes": ["http"],
   "paths": {
     "/board/notice": {
       "post": {
-        "tags": ["TeamNote"],
+        "tags": [],
         "description": "",
         "parameters": [
           {
@@ -638,12 +638,12 @@
         }
       }
     },
-    "/messages/view/{room}": {
+    "/messages/view/{_id}": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "room",
+            "name": "_id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -742,7 +742,7 @@
     },
     "/board/post": {
       "post": {
-        "tags": ["TeamNote"],
+        "tags": [""],
         "description": "",
         "parameters": [
           {
@@ -903,9 +903,22 @@
       }
     },
     "/users/email": {
-      "get": {
+      "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -914,9 +927,25 @@
       }
     },
     "/users/password": {
-      "get": {
+      "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -983,7 +1012,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "UserName": {
+                "userEmail": {
                   "example": "any"
                 }
               }
@@ -1088,11 +1117,69 @@
             "schema": {
               "type": "object",
               "properties": {
-                "memberId": {
+                "memberEmail": {
                   "example": "any"
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/workSpace/workSpaceLeave/{workSpaceName}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "workSpaceName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/workSpace/workSpaceRemove/{workSpaceName}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "workSpaceName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
