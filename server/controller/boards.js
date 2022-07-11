@@ -48,7 +48,6 @@ async function boardUpload(req, res, next) {
 }
 
 // 공지 글 전체 조회
-// 김하연이 이 부분 수정
 // 워크스페이스 파라미터 값
 async function boardAllView(req, res, next) {
   try {
