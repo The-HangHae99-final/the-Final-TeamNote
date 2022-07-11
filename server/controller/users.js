@@ -125,7 +125,12 @@ async function passwordSecond(req, res) {
     await userFind.update({ refresh_token }, { where: { userEmail } });
     res
       .status(200)
-      .send({ success: true, token, Email: userEmail, password: password });
+      .send({
+        success: true,
+        token,
+        email: userEmail,
+        name: userFind.userName,
+      });
   } catch (error) {
     console.error(error);
     res
