@@ -26,5 +26,8 @@ router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, isMember,
 //워크스페이스 삭제
 router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
 
+//본인 속한 워크스페이스 목록 조회
+router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
+
 
 module.exports = router;
