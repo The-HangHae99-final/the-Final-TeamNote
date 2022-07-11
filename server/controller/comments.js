@@ -40,7 +40,7 @@ async function commentDelete(req, res) {
     const { postId } = req.params;
     const { commentId } = req.params;
 
-    const { UserName } = res.locals.user;
+    const { UserName } = res.locals.User;
     const existComment = await Comment.find({
       $and: [{ postId }, { commentId }],
     });
@@ -70,13 +70,10 @@ async function commentEdit(req, res) {
   const { postId } = req.params;
   const { commentId } = req.params;
   const { comment } = req.body;
-  const UserName = res.locals.user.UserName;
+  const userName = res.locals.User.userName;
   const existComment = await Comment.find({
     $and: [{ postId }, { commentId }],
   });
-  console.log('UserName: ', UserName);
-  console.log('existComment[0]: ', existComment[0]);
-  console.log(existComment[0].UserName);
 
   if (existComment.length === 0) {
     return res.json({ errorMessage: '댓글이 존재하지 않습니다.' });

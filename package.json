@@ -29,6 +29,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
+    "email-validator": "^2.0.4",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "google-login": "^1.0.3",
@@ -61,5 +62,8 @@
     "nodemon": "^2.0.16",
     "prettier": "^2.7.1",
     "supertest": "^6.2.4"
+  },
+  "directories": {
+    "test": "test"
   }
 }

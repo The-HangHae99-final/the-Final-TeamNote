@@ -4,7 +4,7 @@ const workSpace = require('../schemas/workSpace');
 module.exports = async (req, res, next) => {
   try {
     const { workSpaceName } = req.params;
-    const UserName = res.locals.user.UserName;
+    const userEmail = res.locals.User.userEmail;
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
 
     if (existWorkSpace === null) {
@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
       return;
     }
     const existMember = existWorkSpace.memberList.filter(
-      (memberInfo) => memberInfo.memberId === UserName
+      (memberInfo) => memberInfo.memberEmail === userEmail
     );
     if (!existMember.length) {
       res.status(400).send({

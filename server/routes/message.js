@@ -7,7 +7,7 @@ router.put("/messages/edit/:_id", authMiddleware, messageController.messageEdit)
 
 router.delete("/messages/delete/:_id", authMiddleware, messageController.messageDelete);
 
-router.get("/messages/view/:room", messageController.messagesView); 
+router.get("/messages/view/:_id", messageController.messagesView); 
 
 module.exports = router;
 
