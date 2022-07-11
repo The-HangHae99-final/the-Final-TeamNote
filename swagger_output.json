@@ -634,17 +634,6 @@
         }
       }
     },
-    "/day": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/auth/login/kakao/callback": {
       "post": {
         "tags": ["카카오 API"],
