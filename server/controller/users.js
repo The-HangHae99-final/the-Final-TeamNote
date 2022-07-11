@@ -132,46 +132,6 @@ async function passwordSecond(req, res) {
   }
 }
 
-//로그인에서 이메일 입력 (로그인완료, success:존재하는 회원입니다.)
-// 그다음 페이지에서 비밀번호 입력
-
-//회원가입 시 이메일 쏘는 부분과 다른 변수 쏘는 api 나누기
-
-// 기존 로그인 api 잠시 주석처리
-
-//로그인
-// async function passwordSecond(req, res) {
-//   try {
-//     const { userEmail, password } = req.body;
-
-//     const userFind = await User.findOne({ userEmail });
-
-//
-//     let validPassword = '';
-
-//     if (userFind) {
-//       validPassword = await Bcrypt.compare(password, userFind.password);
-//     }
-
-//     if (!validPassword) {
-//       return res.send('비밀번호가 틀렸습니다..');
-//     }
-
-//     const token = jwt.sign({ userEmail }, jwtSecret, {
-//       expiresIn: '12000s',
-//     });
-//     const refresh_token = jwt.sign({}, jwtSecret, {
-//       expiresIn: '14d',
-//     });
-//     await userFind.update({ refresh_token }, { where: { userEmail } });
-//     res.status(200).send({ success: '로그인에 성공하였습니다.', token: token });
-//   } catch (error) {
-//     res
-//       .status(400)
-//       .send({ errorMessage: message.error + ' : 로그인에 실패하였습니다.' });
-//   }
-// }
-
 //탈퇴 기능
 
 async function login(req, res) {

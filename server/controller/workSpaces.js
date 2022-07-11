@@ -176,6 +176,9 @@ async function workSpaceLeave(req, res) {
 // router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
 async function workSpaceRemove(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '워크 스페이스 삭제 API'
+    //##swagger.description='-'
     const owner = res.locals.User.userEmail;
     const { workSpaceName } = req.params;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
