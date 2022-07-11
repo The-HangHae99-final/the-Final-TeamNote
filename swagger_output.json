@@ -5,14 +5,15 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:3000",
-  "basePath": "/",
+  "host": "52.79.82.195:3001/",
+  "basePath": "api",
   "schemes": ["http"],
   "paths": {
     "/board/notice": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": ["게시글 API"],
+        "summary": "게시글 등록 API",
+        "description": "-",
         "parameters": [
           {
             "name": "authorization",
@@ -48,7 +49,9 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": ["게시글 API"],
+        "summary": "게시글 전체 조회 API",
+        "description": "-",
         "parameters": [],
         "responses": {
           "200": {
@@ -62,7 +65,9 @@
     },
     "/board/notice/{postId}": {
       "get": {
-        "description": "",
+        "tags": ["게시글 API"],
+        "summary": "게시글 특정 한개 조회 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -81,7 +86,9 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["게시글 API"],
+        "summary": "게시글 수정 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -123,7 +130,9 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["게시글 API"],
+        "summary": "게시글 삭제 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -152,7 +161,9 @@
     },
     "/task": {
       "post": {
-        "description": "",
+        "tags": ["일정 API"],
+        "summary": "일정 등록 API",
+        "description": "-",
         "parameters": [
           {
             "name": "authorization",
@@ -194,7 +205,9 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": ["일정 API"],
+        "summary": "일정 조회 API",
+        "description": "-",
         "parameters": [],
         "responses": {
           "200": {
@@ -208,7 +221,9 @@
     },
     "/task/{task_id}": {
       "get": {
-        "description": "",
+        "tags": ["일정 API"],
+        "summary": "일정 상세조회 API",
+        "description": "-",
         "parameters": [
           {
             "name": "task_id",
@@ -227,7 +242,9 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["일정 API"],
+        "summary": "일정 수정 API",
+        "description": "-",
         "parameters": [
           {
             "name": "task_id",
@@ -275,7 +292,9 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["일정 API"],
+        "summary": "일정 삭제 API",
+        "description": "-",
         "parameters": [
           {
             "name": "task_id",
@@ -304,7 +323,9 @@
     },
     "/board/postComment/{postId}": {
       "post": {
-        "description": "",
+        "tags": ["댓글 API"],
+        "summary": "댓글 등록 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -345,7 +366,9 @@
     },
     "/board/postComment/{postId}/{commentId}": {
       "delete": {
-        "description": "",
+        "tags": ["댓글 API"],
+        "summary": "댓글 삭제 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -378,7 +401,9 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["댓글 API"],
+        "summary": "댓글 수정 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -433,7 +458,9 @@
     },
     "/auth/login/kakao/callback": {
       "post": {
-        "description": "",
+        "tags": ["카카오 API"],
+        "summary": "카카오 콜백 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -460,7 +487,9 @@
     },
     "/kakao/member": {
       "post": {
-        "description": "",
+        "tags": ["카카오 API"],
+        "summary": "카카오 정보요청 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -484,7 +513,9 @@
     },
     "/kakao/parsing": {
       "post": {
-        "description": "",
+        "tags": ["카카오 API"],
+        "summary": "카카오 파싱 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -514,7 +545,9 @@
     },
     "/board/post/like/{postId}": {
       "put": {
-        "description": "",
+        "tags": ["공지글 좋아요 API"],
+        "summary": "공지글 좋아요 등록 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -541,7 +574,9 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["공지글 좋아요 API"],
+        "summary": "공지글 좋아요 취소 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -570,7 +605,9 @@
     },
     "/messages/edit/{_id}": {
       "put": {
-        "description": "",
+        "tags": ["메세지 API"],
+        "summary": "메세지 수정 API",
+        "description": "-",
         "parameters": [
           {
             "name": "_id",
@@ -611,7 +648,9 @@
     },
     "/messages/delete/{_id}": {
       "delete": {
-        "description": "",
+        "tags": ["메세지 API"],
+        "summary": "메세지 삭제 API",
+        "description": "-",
         "parameters": [
           {
             "name": "_id",
@@ -640,7 +679,9 @@
     },
     "/messages/view/{_id}": {
       "get": {
-        "description": "",
+        "tags": ["메세지 API"],
+        "summary": "메세지 조회 API",
+        "description": "-",
         "parameters": [
           {
             "name": "_id",
@@ -661,7 +702,9 @@
     },
     "/naver": {
       "post": {
-        "description": "",
+        "tags": ["네이버 API"],
+        "summary": "네이버 콜백 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -685,7 +728,9 @@
     },
     "/member": {
       "post": {
-        "description": "",
+        "tags": ["네이버 API"],
+        "summary": "네이버 정보요청 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -709,7 +754,9 @@
     },
     "/parsing": {
       "post": {
-        "description": "",
+        "tags": ["네이버 API"],
+        "summary": "네이버 파싱 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -742,8 +789,9 @@
     },
     "/board/post": {
       "post": {
-        "tags": [""],
-        "description": "",
+        "tags": ["공지용 글 API"],
+        "summary": "공지용 글 작성 API",
+        "description": "-",
         "parameters": [
           {
             "name": "authorization",
@@ -779,7 +827,9 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": ["공지용 API"],
+        "summary": "공지용 글 조회 API",
+        "description": "-",
         "parameters": [],
         "responses": {
           "200": {
@@ -793,7 +843,9 @@
     },
     "/board/post/{postId}": {
       "get": {
-        "description": "",
+        "tags": ["공지용 API"],
+        "summary": "공지용 특정 글 조회 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -812,7 +864,9 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["공지용 API"],
+        "summary": "공지용 글 수정 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -854,7 +908,9 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["공지용 API"],
+        "summary": "공지용 삭제 API",
+        "description": "-",
         "parameters": [
           {
             "name": "postId",
@@ -883,7 +939,9 @@
     },
     "/users/signup": {
       "post": {
-        "description": "",
+        "tags": ["회원가입 API"],
+        "summary": "회원가입 API",
+        "description": "-",
         "parameters": [],
         "responses": {
           "201": {
@@ -904,7 +962,9 @@
     },
     "/users/email": {
       "post": {
-        "description": "",
+        "tags": ["로그인 API"],
+        "summary": "로그인 이메일 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -928,7 +988,9 @@
     },
     "/users/password": {
       "post": {
-        "description": "",
+        "tags": ["로그인 API"],
+        "summary": "로그인 패스워드 API",
+        "description": "-",
         "parameters": [
           {
             "name": "body",
@@ -958,7 +1020,9 @@
     },
     "/workSpace/create": {
       "post": {
-        "description": "",
+        "tags": ["워크 스페이스 API"],
+        "summary": "워크 스페이스 생성 API",
+        "description": "-",
         "parameters": [
           {
             "name": "authorization",
@@ -993,7 +1057,9 @@
     },
     "/workSpace/memberAdd/{workSpaceName}": {
       "put": {
-        "description": "",
+        "tags": ["워크 스페이스 API"],
+        "summary": "워크 스페이스 멤버 추가 API",
+        "description": "-",
         "parameters": [
           {
             "name": "workSpaceName",
@@ -1034,7 +1100,9 @@
     },
     "/workSpace/getRoomName/{workSpaceName}/{opponent}": {
       "get": {
-        "description": "",
+        "tags": ["워크 스페이스 API"],
+        "summary": "방 이름 건네주기 API",
+        "description": "-",
         "parameters": [
           {
             "name": "workSpaceName",
@@ -1069,7 +1137,9 @@
     },
     "/workSpace/MemberList/{workSpaceName}": {
       "get": {
-        "description": "",
+        "tags": ["워크 스페이스 API"],
+        "summary": "워크 스페이스 멤버 조회 API",
+        "description": "-",
         "parameters": [
           {
             "name": "workSpaceName",
@@ -1098,7 +1168,9 @@
     },
     "/workSpace/deleteMember/{workSpaceName}": {
       "put": {
-        "description": "",
+        "tags": ["워크 스페이스 API"],
+        "summary": "워크 스페이스 멤버 삭제 API",
+        "description": "-",
         "parameters": [
           {
             "name": "workSpaceName",
@@ -1139,7 +1211,9 @@
     },
     "/workSpace/workSpaceLeave/{workSpaceName}": {
       "put": {
-        "description": "",
+        "tags": ["워크 스페이스 API"],
+        "summary": "워크 스페이스 탈퇴 API",
+        "description": "-",
         "parameters": [
           {
             "name": "workSpaceName",

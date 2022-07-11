@@ -7,10 +7,11 @@ const Comment = require('../schemas/comment');
 // code : 101 , 소속 워크스페이스 공지용 , 채팅 X
 async function boardUpload(req, res, next) {
   // 글 작성하기
-  //#swagger.tags= ['TeamNote'];
-  // swagger.summary= '북마크'
-  //swagger.description='북마크추가
+
   try {
+    //#swagger.tags= ['게시글 API'];
+    //#swagger.summary= '게시글 등록 API'
+    //##swagger.description='-'
     const { userName } = res.locals.User;
     const { title, content } = req.body;
 
@@ -50,6 +51,9 @@ async function boardUpload(req, res, next) {
 // 워크스페이스 파라미터 값
 async function boardAllView(req, res, next) {
   try {
+    //#swagger.tags= ['게시글 API'];
+    //#swagger.summary= '게시글 전체 조회 API'
+    //##swagger.description='-'
     const posts = await Board.find().sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
@@ -62,6 +66,9 @@ async function boardAllView(req, res, next) {
 // 이 부분도 파라미터 값 받아야함
 async function boardView(req, res, next) {
   try {
+    //#swagger.tags= ['게시글 API'];
+    //#swagger.summary= '게시글 특정 한개 조회 API'
+    //##swagger.description='-'
     const postId = Number(req.params.postId);
     const existsPost = await Board.find({ postId });
     if (!existsPost.length) {
@@ -87,6 +94,9 @@ async function boardView(req, res, next) {
 // 카테고리 빼기
 async function boardEdit(req, res, next) {
   try {
+    //#swagger.tags= ['게시글 API'];
+    //#swagger.summary= '게시글 수정 API'
+    //##swagger.description='-'
     const postId = Number(req.params.postId);
     const [existPost] = await Board.find({ postId });
     const { user } = res.locals;
@@ -114,6 +124,9 @@ async function boardEdit(req, res, next) {
 // 글 삭제
 async function boardDelete(req, res, next) {
   try {
+    //#swagger.tags= ['게시글 API'];
+    //#swagger.summary= '게시글 삭제 API'
+    //##swagger.description='-'
     const postId = Number(req.params.postId);
     console.log('postId: ', postId);
     const [targetPost] = await Board.find({ postId });
@@ -142,4 +155,3 @@ module.exports = {
   boardEdit,
   boardDelete,
 };
-

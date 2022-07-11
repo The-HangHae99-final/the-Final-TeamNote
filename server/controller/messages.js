@@ -3,6 +3,9 @@ const Message = require('../schemas/message');
 // 메시지 수정(미완)
 async function messageEdit(req, res) {
   try {
+    //#swagger.tags= ['메세지 API'];
+    //#swagger.summary= '메세지 수정 API'
+    //#swagger.description='-'
     const _id = req.params._id;
     const [existMessage] = await Message.find({ _id });
     const { user } = res.locals;
@@ -29,6 +32,9 @@ async function messageEdit(req, res) {
 //메시지 삭제(미완)
 async function messageDelete(req, res) {
   try {
+    //#swagger.tags= ['메세지 API'];
+    //#swagger.summary= '메세지 삭제 API'
+    //#swagger.description='-'
     const { _id } = req.params;
     console.log('_id: ', _id);
     const author = res.locals.User.userName;
@@ -60,6 +66,9 @@ async function messageDelete(req, res) {
 //메시지 조회
 async function messagesView(req, res) {
   try {
+    //#swagger.tags= ['메세지 API'];
+    //#swagger.summary= '메세지 조회 API'
+    //#swagger.description='-'
     const { _id } = req.params;
 
     const targetMessage = await Message.find({ _id });

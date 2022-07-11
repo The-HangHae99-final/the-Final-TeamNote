@@ -36,6 +36,9 @@ const usersSchema = Joi.object({
 //회원가입 API
 async function signup(req, res) {
   try {
+    //#swagger.tags= ['회원가입 API'];
+    //#swagger.summary= '회원가입 API'
+    //#swagger.description='-'
     // const { userEmail, userName, password, confirmPassword } =
     const { userEmail, userName, password, confirmPassword } =
       await usersSchema.validateAsync(
@@ -84,6 +87,9 @@ async function signup(req, res) {
 
 async function emailFirst(req, res) {
   try {
+    //#swagger.tags= ['로그인 API'];
+    //#swagger.summary= '로그인 이메일 API'
+    //#swagger.description='-'
     const { userEmail } = req.body;
     const userFind = User.findOne({ userEmail });
     if (userFind) {
@@ -96,6 +102,9 @@ async function emailFirst(req, res) {
 
 async function passwordSecond(req, res) {
   try {
+    //#swagger.tags= ['로그인 API'];
+    //#swagger.summary= '로그인 패스워드 API'
+    //#swagger.description='-'
     const { userEmail, password } = req.body;
     const userFind = await User.findOne({ userEmail });
     var validPassword;
@@ -167,6 +176,9 @@ async function passwordSecond(req, res) {
 
 async function login(req, res) {
   try {
+    //#swagger.tags= ['탈퇴 API'];
+    //#swagger.summary= '탈퇴 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.user;
     const userFind = await User.deleteOne({ userEmail });
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
