@@ -1,12 +1,12 @@
-const Post = require("../schemas/post");
-const Comment = require("../schemas/comment");
+const Post = require('../schemas/post');
+const Comment = require('../schemas/comment');
 
-//댓글 작성하기
+//code :102 공지 댓글 작성하기
 async function commentUpload(req, res) {
   try {
     const postId = Number(req.params.postId);
     const { comment } = req.body;
-    const { userEmail } = res.locals.User;
+    const { userName } = res.locals.User;
 
     const maxCommentId = await Comment.findOne({ postId }).sort({
       commentId: -1,
@@ -22,14 +22,15 @@ async function commentUpload(req, res) {
     const createdcomment = await Comment.create({
       postId,
       commentId,
-      userEmail,
-      comment,
+      userName,
+      content,
+      createdTime,
     });
     res.json({ targetPost: createdcomment });
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
     });
   }
 }
@@ -39,28 +40,28 @@ async function commentDelete(req, res) {
     const { postId } = req.params;
     const { commentId } = req.params;
 
-    const { userEmail } = res.locals.User;
+    const { UserName } = res.locals.User;
     const existComment = await Comment.find({
       $and: [{ postId }, { commentId }],
     });
     if (existComment.length === 0) {
       return res
         .status(400)
-        .json({ errorMessage: "댓글이 존재하지 않습니다." });
+        .json({ errorMessage: '댓글이 존재하지 않습니다.' });
     }
 
-    if (userEmail === existComment[0].userEmail) {
+    if (UserName === existComment[0].UserName) {
       await Comment.deleteOne({ commentId });
       res.status(200).json({ result: true });
-    } else if (existComment[0].userEmail !== userEmail) {
+    } else if (existComment[0].UserName !== UserName) {
       return res
         .status(400)
-        .json({ errorMessage: "본인이 쓴 댓글만 수정가능합니다." });
+        .json({ errorMessage: '본인이 쓴 댓글만 수정가능합니다.' });
     }
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
     });
   }
 }
@@ -69,24 +70,23 @@ async function commentEdit(req, res) {
   const { postId } = req.params;
   const { commentId } = req.params;
   const { comment } = req.body;
-  const userEmail = res.locals.User.userEmail;
+  const userName = res.locals.User.userName;
   const existComment = await Comment.find({
     $and: [{ postId }, { commentId }],
   });
 
   if (existComment.length === 0) {
-    return res.json({ errorMessage: "댓글이 존재하지 않습니다." });
+    return res.json({ errorMessage: '댓글이 존재하지 않습니다.' });
   }
-  if (existComment[0].userEmail !== userEmail) {
-    return res.json({ errorMessage: "본인이 쓴 댓글만 수정가능합니다." });
+  if (existComment[0].UserName !== UserName) {
+    return res.json({ errorMessage: '본인이 쓴 댓글만 수정가능합니다.' });
   }
-  
 
   await Comment.updateOne(
     { $and: [{ postId }, { commentId }] },
     { $set: { comment } }
   );
-  res.status(200).json({ successMessage: "정상적으로 수정 완료하였습니다." });
+  res.status(200).json({ successMessage: '정상적으로 수정 완료하였습니다.' });
 }
 
 module.exports = {
