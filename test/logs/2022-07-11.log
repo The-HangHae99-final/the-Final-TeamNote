@@ -1,0 +1,59 @@
+ 2022-07-11 13:07:06 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot find module '../data/new-Product.json'[39m
+[31mRequire stack:[39m
+[31m- /Users/hayeon/Desktop/full_final/test/integration/products.int.test.js[39m
+[31mError: Cannot find module '../data/new-Product.json'[39m
+[31mRequire stack:[39m
+[31m- /Users/hayeon/Desktop/full_final/test/integration/products.int.test.js[39m
+[31m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+[31m    at Object.<anonymous> (/Users/hayeon/Desktop/full_final/test/integration/products.int.test.js:3:20)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[31m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+ 2022-07-11 13:07:29 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot find module '../data/new-Product.json'[39m
+[31mRequire stack:[39m
+[31m- /Users/hayeon/Desktop/full_final/test/integration/products.int.test.js[39m
+[31mError: Cannot find module '../data/new-Product.json'[39m
+[31mRequire stack:[39m
+[31m- /Users/hayeon/Desktop/full_final/test/integration/products.int.test.js[39m
+[31m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+[31m    at Object.<anonymous> (/Users/hayeon/Desktop/full_final/test/integration/products.int.test.js:3:20)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[31m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+ 2022-07-11 13:07:56 || [ [31merror[39m ] ▶ [31muncaughtException: it is not defined[39m
+[31mReferenceError: it is not defined[39m
+[31m    at Object.<anonymous> (/Users/hayeon/Desktop/full_final/test/integration/products.int.test.js:11:1)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[31m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[31m    at node:internal/main/run_main_module:17:47[39m
+ 2022-07-11 13:07:86 || [ [31merror[39m ] ▶ [31muncaughtException: it is not defined[39m
+[31mReferenceError: it is not defined[39m
+[31m    at Object.<anonymous> (/Users/hayeon/Desktop/full_final/test/integration/products.int.test.js:11:1)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[31m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[31m    at node:internal/main/run_main_module:17:47[39m
+ 2022-07-11 13:07:24 || [ [31merror[39m ] ▶ [31muncaughtException: it is not defined[39m
+[31mReferenceError: it is not defined[39m
+[31m    at Object.<anonymous> (/Users/hayeon/Desktop/full_final/test/integration/products.int.test.js:11:1)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[31m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[31m    at node:internal/main/run_main_module:17:47[39m
