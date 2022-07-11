@@ -4,10 +4,7 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload(req, res, next) {
   try {
-    //#swagger.tags= ['일정 API'];
-    //#swagger.summary= '일정 생성 API'
-    //#swagger.description='-'
-    const { user_id } = res.locals.User;
+    const { userName } = res.locals.user;
     const { start_date, end_date, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort('-task_id');
     let task_id = 1;
@@ -20,7 +17,7 @@ async function taskUpload(req, res, next) {
       end_date,
       title,
       desc,
-      user_id,
+      userName,
     });
 
     return res.json({
@@ -37,10 +34,7 @@ async function taskUpload(req, res, next) {
 // 전체 일정 조회
 async function taskAll(req, res, next) {
   try {
-    //#swagger.tags= ['일정 API'];
-    //#swagger.summary= '일정 조회 API'
-    //#swagger.description='-'
-    const tasks = await Task.find({}).sort('-task_id');
+    tasks = await Task.find({}).sort('-task_id');
     return res.json({
       result: {
         count: tasks.length,
@@ -78,14 +72,11 @@ async function taskDetail(req, res, next) {
 // 일정 수정
 async function taskEdit(req, res, next) {
   try {
-    //#swagger.tags= ['일정 API'];
-    //#swagger.summary= '일정 수정 API'
-    //#swagger.description='-'
     const task_id = Number(req.params.task_id);
     const [existTask] = await Task.find({ task_id });
     const { user } = res.locals;
     const { start_date, end_date, title, desc } = req.body;
-    if (user.user_id !== existTask.user_id) {
+    if (user.userName !== existTask.userName) {
       return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
     }
     if (!start_date || !end_date || !title) {
@@ -109,14 +100,11 @@ async function taskEdit(req, res, next) {
 // 일정 삭제
 async function taskRemove(req, res, next) {
   try {
-    //#swagger.tags= ['일정 API'];
-    //#swagger.summary= '일정 삭제 API'
-    //#swagger.description='-'
     const task_id = Number(req.params.task_id);
     const [targetTask] = await Task.find({ task_id });
-    const { user_id } = res.locals.User;
+    const { userName } = res.locals.user;
 
-    if (user_id !== targetTask.user_id) {
+    if (userName !== targetTask.userName) {
       return res.status(401).json({
         ok: false,
         message: '작성자가 아닙니다.',

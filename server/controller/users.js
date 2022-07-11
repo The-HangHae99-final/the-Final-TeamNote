@@ -103,7 +103,7 @@ async function passwordSecond(req, res) {
     }
 
     if (!validPassword) {
-      return res.send('비밀번호가 틀렸습니다.');
+      return res.status(400).send('비밀번호가 틀렸습니다.');
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {

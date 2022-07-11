@@ -4,8 +4,11 @@ const workSpace = require('../schemas/workSpace');
 module.exports = async (req, res, next) => {
   try {
     const { workSpaceName } = req.params;
+    console.log('workSpaceName: ', workSpaceName);
     const userEmail = res.locals.User.userEmail;
+    console.log('userEmail: ', userEmail);
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
+    console.log('existWorkSpace: ', existWorkSpace);
 
     if (existWorkSpace === null) {
       res.status(400).send({

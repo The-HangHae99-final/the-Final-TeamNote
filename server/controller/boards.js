@@ -1,4 +1,3 @@
-const { lib } = require('nunjucks');
 const Board = require('../schemas/boards');
 const Comment = require('../schemas/comment');
 
@@ -13,6 +12,7 @@ async function boardUpload(req, res, next) {
     //#swagger.summary= '게시글 등록 API'
     //##swagger.description='-'
     const { userName } = res.locals.User;
+    const { workSpaceName } = req.params;
     const { title, content } = req.body;
 
     const maxpostId = await Board.findOne().sort({
@@ -28,6 +28,7 @@ async function boardUpload(req, res, next) {
 
     const createdPost = await Board.create({
       postId,
+      workSpaceName,
       userName,
       title,
       content,
@@ -51,10 +52,8 @@ async function boardUpload(req, res, next) {
 // 워크스페이스 파라미터 값
 async function boardAllView(req, res, next) {
   try {
-    //#swagger.tags= ['게시글 API'];
-    //#swagger.summary= '게시글 전체 조회 API'
-    //##swagger.description='-'
-    const posts = await Board.find().sort('-postId');
+    const { workSpaceName } = req.params;
+    const posts = await Board.find({ workSpaceName }).sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);

@@ -11,6 +11,8 @@ async function postUpload(req, res, next) {
   //#swagger.description='-'
   try {
     const { userName } = res.locals.User;
+    const { workSpaceName } = req.params;
+
     const { title, content } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
@@ -25,6 +27,7 @@ async function postUpload(req, res, next) {
 
     const createdPost = await Post.create({
       postId,
+      workSpaceName,
       userName,
       title,
       content,
@@ -47,11 +50,8 @@ async function postUpload(req, res, next) {
 // 김하연이 이 부분 수정
 async function postAllView(req, res, next) {
   try {
-    // 글 조회 하기
-    //#swagger.tags= ['공지용 API'];
-    //#swagger.summary= '공지용 글 조회 API'
-    //#swagger.description='-'
-    const posts = await Post.find().sort('-postId');
+    const { workSpaceName } = req.params;
+    const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
