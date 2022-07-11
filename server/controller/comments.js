@@ -1,22 +1,13 @@
 const Post = require('../schemas/post');
-const Board = require('../schemas/boards')
+const Board = require('../schemas/boards');
 const postComment = require('../schemas/postComment');
 const boardComment = require('../schemas/boardComment');
-
 
 //code :102 공지 댓글 작성하기
 async function boardCommentUpload(req, res) {
   try {
-<<<<<<< HEAD
-    //#swagger.tags= ['댓글 API'];
-    //#swagger.summary= '댓글 등록 API'
-    //##swagger.description='-'
-    const postId = Number(req.params.postId);
-    const { comment } = req.body;
-=======
     const boardId = Number(req.params.boardId);
     const { content } = req.body;
->>>>>>> b60656331babf837c93d9a8af9bfecb22daf1583
     const { userName } = res.locals.User;
     const createdTime = new Date();
 
@@ -49,15 +40,7 @@ async function boardCommentUpload(req, res) {
 //댓글 삭제하기
 async function boardCommentDelete(req, res) {
   try {
-<<<<<<< HEAD
-    //#swagger.tags= ['댓글 API'];
-    //#swagger.summary= '댓글 삭제 API'
-    //##swagger.description='-'
-    const { postId } = req.para;
-    ms;
-=======
     const { boardId } = req.params;
->>>>>>> b60656331babf837c93d9a8af9bfecb22daf1583
     const { commentId } = req.params;
 
     const { UserName } = res.locals.User;
@@ -206,5 +189,5 @@ module.exports = {
   boardCommentEdit,
   postCommentUpload,
   postCommentDelete,
-  postCommentEdit
+  postCommentEdit,
 };
