@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
 const validator = require('email-validator');
 const passwordValidator = require('../../server/controller/util/passwordValidator');
+const { response } = require('express');
 
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -40,11 +41,11 @@ async function signup(req, res) {
         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
     }
 
-    // if (passwordValidator(password) != true) {
-    //   return res
-    //     .status(400)
-    //     .send({ success: false, errorMessage: '패스워드 형식이 틀렸습니다.' });
-    // }
+    if (password.length < 4) {
+      return res
+        .status(400)
+        .send({ success: false, errorMessage: '비밀번호는 4글자 이상입니다.' });
+    }
 
     const exitstUsers = await User.findOne({ userEmail });
     if (exitstUsers) {
