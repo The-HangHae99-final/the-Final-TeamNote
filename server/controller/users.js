@@ -40,11 +40,11 @@ async function signup(req, res) {
         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
     }
 
-    if (passwordValidator(password) != true) {
-      return res
-        .status(400)
-        .send({ success: false, errorMessage: '패스워드 형식이 틀렸습니다.' });
-    }
+    // if (passwordValidator(password) != true) {
+    //   return res
+    //     .status(400)
+    //     .send({ success: false, errorMessage: '패스워드 형식이 틀렸습니다.' });
+    // }
 
     const exitstUsers = await User.findOne({ userEmail });
     if (exitstUsers) {
@@ -68,9 +68,9 @@ async function signup(req, res) {
       msg: '회원가입을 성공하였습니다',
     });
   } catch (error) {
-    res.status(400).send({
+    res.status(401).send({
       success: false,
-      errorMessage: error + '이메일 혹은 비밀번호가 틀렸습니다.',
+      errorMessage: error + '특정할 수 없는 에러가 발생했습니다..',
     });
   }
 }
