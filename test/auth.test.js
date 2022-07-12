@@ -1,40 +1,47 @@
-const assert = require('assert');
-const request = require('supertest');
-const Users = require('../server/schemas/user');
-const app = require('../app');
+// const dotenv = require('dotenv').config();
+// const request = require('supertest');
+// const app = require('../app');
+// const { param } = require('../server/routes/users');
 
-describe('test login request', () => {
-  it('should success login', async () => {
-    const user = {
-      userEmail: 'test@test.com',
-      // userName: 'auddn6676',
-      password: '1234',
-      // confirmPassword: '12345',
-    };
-    const res = await request(app).post('/users/password').send(user);
-    expect(res.statusCode).toEqual(200);
-  });
-  it('should not success login', async () => {
-    const user = {
-      userName: 'auddn6676',
-      password: '12345',
-    };
-    const res = await request(app).post('/users/password').send(user);
-    expect(res.statusCode).toEqual(404);
-  });
-  it("don't have id & pw property", async () => {
-    const user = {};
-    const res = await request(app).post('/users/login').send(user);
-    expect(res.statusCode).toEqual(404);
-  });
-  it('param is undefined', async () => {
-    const user = undefined;
-    const res = await request(app).post('/users/login').send(user);
-    expect(res.statusCode).toEqual(404);
-  });
-  it('param is null', async () => {
-    const user = null;
-    const res = await request(app).post('/users/login').send(user);
-    expect(res.statusCode).toEqual(404);
-  });
-});
+// describe('post /user/email', function () {
+//   it('responds with json', function (done) {
+//     request(app)
+//       .post('/api/users/email')
+//       .set('Accept', 'application/json')
+//       .expect(200, done);
+//   });
+// });
+
+// describe('post /use/password', function () {
+//   it('responds with json', function (done) {
+//     request(app)
+//       .post('/api/users/email')
+//       .send({ userEmail: 'test@test.com', password: '1234' })
+//       .set('Accept', 'application/json')
+//       .expect(200, done);
+//   });
+// });
+
+// describe('post /users/signup', function () {
+//   it('responds with json', function (done) {
+//     request(app)
+//       .post('/api/users/email')
+//       .send({
+//         userEmail: 'testq@test.com',
+//         userName: 'some-user-id11',
+//         confirmPassword: '1234',
+//         password: '1234',
+//       })
+//       .set('Accept', 'application/json')
+//       .expect(200, done);
+//   });
+// });
+
+// describe('post /users/delete', function () {
+//   it('responds with json', function (done) {
+//     request(app)
+//       .delete('/api/users/delete/test@test.com')
+//       .set('Accept', 'application/json')
+//       .expect(200, done);
+//   });
+// });
