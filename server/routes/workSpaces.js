@@ -29,5 +29,9 @@ router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMem
 //본인 속한 워크스페이스 목록 조회
 router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
 
+//워크스페이스 전체 조회하기(개발기능)
+router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
+
+
 
 module.exports = router;
