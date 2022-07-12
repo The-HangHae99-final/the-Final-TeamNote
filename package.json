@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/selim-jo/backend-clonePro#readme",
   "dependencies": {
+    "ajax": "^0.0.4",
     "artillery": "^2.0.0-20",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",

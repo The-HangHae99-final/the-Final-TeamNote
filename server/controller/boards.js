@@ -2,7 +2,7 @@ const Board = require('../schemas/boards');
 const boardComment = require('../schemas/boardComment');
 
 //글 작성하기
-
+// /board/:workSpaceName
 // code : 101 , 소속 워크스페이스 공지용 , 채팅 X
 async function boardUpload(req, res, next) {
   // 글 작성하기
@@ -49,6 +49,7 @@ async function boardUpload(req, res, next) {
 
 // 공지 글 전체 조회
 // 워크스페이스 파라미터 값
+// /board/:workSpaceName
 async function boardAllView(req, res, next) {
   try {
     const { workSpaceName } = req.params;
@@ -62,6 +63,8 @@ async function boardAllView(req, res, next) {
 
 //글 하나 조회
 // 이 부분도 파라미터 값 받아야함
+
+// /board/:workSpaceName/:boardId
 async function boardView(req, res, next) {
   try {
     const boardId = Number(req.params.boardId);
@@ -87,6 +90,7 @@ async function boardView(req, res, next) {
 // 글 수정
 // 수정시간 넣기
 // 카테고리 빼기
+// /board/:workSpaceName/:boardId
 async function boardEdit(req, res, next) {
   try {
     const boardId = Number(req.params.boardId);
@@ -114,6 +118,7 @@ async function boardEdit(req, res, next) {
 }
 
 // 글 삭제
+// /board/:workSpaceName/:boardId
 async function boardDelete(req, res, next) {
   try {
     const boardId = Number(req.params.boardId);

@@ -101,10 +101,13 @@ async function passwordSecond(req, res) {
     var validPassword;
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-    }
 
-    if (!validPassword) {
-      return res.status(400).send('비밀번호가 틀렸습니다.');
+      if (validPassword == 'false') {
+        res.status(400).send({
+          success: true,
+          errorMessage: '유효하지 않은 비밀번호입니다.',
+        });
+      }
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
