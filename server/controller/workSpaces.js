@@ -12,7 +12,7 @@ async function create(req, res) {
     const { name } = req.body;
     const fullName = `${owner.userEmail}+${name}`;
     const existName = await workSpace.find({ name: fullName });
-
+    console.log('owner.user--------' + owner.userEmail);
     if (existName.length) {
       if (existName[0].owner === owner.userEmail)
         return res
@@ -258,10 +258,10 @@ async function everyWorkSpace(req, res) {
     return res.status(200).json({
       workSpaceList,
       ok: true,
-      message: "전체 워크스페이스 조회 성공",
+      message: '전체 워크스페이스 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: " 에러싫어에러" });
+    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
   }
 }
 
@@ -274,5 +274,5 @@ module.exports = {
   workSpaceLeave,
   workSpaceRemove,
   getWorkSpaceList,
-  everyWorkSpace
+  everyWorkSpace,
 };

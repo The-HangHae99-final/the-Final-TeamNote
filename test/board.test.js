@@ -6,7 +6,7 @@ const { param } = require('../server/routes/users');
 describe('post - /api/board', function () {
   it('게시물 등록 API 테스트', function (done) {
     request(app)
-      .post('/api/board/워크스페이스이름')
+      .post('/api/board/해적왕들의모임')
       .send({ title: 'Hello', content: 'hihello' })
       .set('Accept', 'application/json')
       .expect(200, done);
