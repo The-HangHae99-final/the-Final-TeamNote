@@ -248,6 +248,23 @@ async function getWorkSpaceList(req, res) {
   }
 }
 
+//전체 워크스페이스 조회
+// router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
+
+async function everyWorkSpace(req, res) {
+  try {
+    const workSpaceList = await workSpace.find();
+
+    return res.status(200).json({
+      workSpaceList,
+      ok: true,
+      message: "전체 워크스페이스 조회 성공",
+    });
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: " 에러싫어에러" });
+  }
+}
+
 module.exports = {
   create,
   memberAdd,
@@ -257,4 +274,5 @@ module.exports = {
   workSpaceLeave,
   workSpaceRemove,
   getWorkSpaceList,
+  everyWorkSpace
 };
