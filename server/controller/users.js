@@ -134,8 +134,9 @@ async function deleteUser(req, res) {
     //#swagger.tags= ['탈퇴 API'];
     //#swagger.summary= '탈퇴 API'
     //#swagger.description='-'
-    const { userEmail } = res.locals.user;
-    const userFind = await User.deleteOne({ userEmail });
+    const { userEmail } = req.params;
+    console.log(userEmail);
+    await User.deleteOne({ userEmail });
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
