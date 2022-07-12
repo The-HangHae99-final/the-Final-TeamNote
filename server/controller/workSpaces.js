@@ -213,13 +213,28 @@ async function getWorkSpaceList(req, res) {
     const workSpaceList = await workSpace.find({});
     console.log("workSpaceList: ", workSpaceList);
 
-    const includedList = workSpaceList.filter(
-      (Info) => Info.owner === user
-    );
+    const includedList = workSpaceList.filter((Info) => Info.owner === user);
     return res.status(200).json({
       includedList,
       ok: true,
       message: "워크스페이스 목록 조회 성공",
+    });
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: " 에러싫어에러" });
+  }
+}
+
+//전체 워크스페이스 조회
+// router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
+
+async function everyWorkSpace(req, res) {
+  try {
+    const workSpaceList = await workSpace.find();
+
+    return res.status(200).json({
+      workSpaceList,
+      ok: true,
+      message: "전체 워크스페이스 조회 성공",
     });
   } catch (err) {
     return res.status(400).json({ ok: false, message: " 에러싫어에러" });
@@ -235,4 +250,5 @@ module.exports = {
   workSpaceLeave,
   workSpaceRemove,
   getWorkSpaceList,
+  everyWorkSpace
 };
