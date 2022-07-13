@@ -131,9 +131,11 @@ Share your task ~!
 | -------- | :-----------------: |
 | Node.js  | 자바스크립트 런타임 |
 | Express  |    웹 프레임워크    |
-| Jenkins  |      CI/CD 툴       |
+| Git Action  |      CI/CD 툴       |
 | Nginx    |     Proxy 서버      |
 | Docker   |       Docker        |
+| MongoDB  |   NoSQL 비관계형 DB |
+| VsCode   |        소스 코드 편집기            |
 
 <br>
 
