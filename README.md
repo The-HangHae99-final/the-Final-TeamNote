@@ -1,4 +1,4 @@
-# 💻협업툴 - Backend
+# 💻 TEAM NOTE - Backend
 
 ## 🏠 [Home Page Link](https://www.antsori.com)
 
