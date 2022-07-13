@@ -50,7 +50,7 @@ Share your task ~!
 
 ## 🧑‍💻 팀 구성
 
-[팀 소개 페이지](https://crawling-health-e0d.notion.site/be6df84bde484ca883f54739be96eb8f))
+[팀 소개 페이지](https://crawling-health-e0d.notion.site/be6df84bde484ca883f54739be96eb8f)
 
 <table>
   <tr>
@@ -125,7 +125,7 @@ Share your task ~!
 
 <br>
 
-## 🛠 기술스택 ([WHY?](https://sprout-dress-47a.notion.site/2d490dffed3f486ca5af157a68a64970)
+## 🛠 기술스택 ([WHY?](https://sprout-dress-47a.notion.site/2d490dffed3f486ca5af157a68a64970))
 
 | 기술스택 |        설명         |
 | -------- | :-----------------: |
