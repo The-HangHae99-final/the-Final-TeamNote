@@ -50,7 +50,7 @@ Share your task ~!
 
 ## 🧑‍💻 팀 구성
 
-[팀 소개 페이지](https://crawling-health-e0d.notion.site/be6df84bde484ca883f54739be96eb8f)
+[팀 소개 페이지](https://crawling-health-e0d.notion.site/be6df84bde484ca883f54739be96eb8f))
 
 <table>
   <tr>
