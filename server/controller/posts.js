@@ -12,7 +12,7 @@ async function postUpload(req, res, next) {
   try {
     const { userName } = res.locals.User;
     const { workSpaceName } = req.params;
-    
+
     const { title, content } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
@@ -47,11 +47,11 @@ async function postUpload(req, res, next) {
 }
 
 // 공지 글 전체 조회
-// 김하연이 이 부분 수정
+
 async function postAllView(req, res, next) {
   try {
     const { workSpaceName } = req.params;
-    const posts = await Post.find({workSpaceName}).sort('-postId');
+    const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);

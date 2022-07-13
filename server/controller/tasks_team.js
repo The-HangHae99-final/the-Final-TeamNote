@@ -2,129 +2,128 @@ const TeamTask = require('../schemas/task_team');
 const moment = require('moment');
 
 // 팀 일정 생성
-async function teamTaskUpload (req, res, next) {
+async function teamTaskUpload(req, res, next) {
   try {
+    const { workSpaceName } = req.params;
     const { userEmail } = res.locals.user;
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
-    const maxTaskId = await TeamTask.findOne().sort("-taskId");
+    const maxTaskId = await TeamTask.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
     if (maxTaskId) {
       taskId = maxTaskId.taskId + 1;
     }
     const createdTask = await TeamTask.create({
-      taskId, startDate, endDate, title, desc, userEmail
+      taskId,
+      startDate,
+      endDate,
+      title,
+      desc,
+      userEmail,
+      workSpaceName,
     });
 
-    return res.json({ 
+    return res.json({
       result: createdTask,
-      ok: true, 
-      message: "일정 생성 성공"
+      ok: true,
+      message: '일정 생성 성공',
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(400)
-      .json({ ok: false, message: "일정 생성 실패" });
+    return res.status(400).json({ ok: false, message: '일정 생성 실패' });
   }
 }
 
 // 팀 전체 일정 조회
-async function teamTaskAll (req, res, next) {
+async function teamTaskAll(req, res, next) {
   try {
-    tasks = await TeamTask.find({}).sort("-taskId");
-    return res.json({ 
+    const { workSpaceName } = req.params;
+    tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
+    return res.json({
       result: {
         count: tasks.length,
-        rows: tasks
+        rows: tasks,
       },
-      ok: true
+      ok: true,
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(400)
-      .json({ ok: false, message: "전체 일정 조회 실패" });
+    return res.status(400).json({ ok: false, message: '전체 일정 조회 실패' });
   }
 }
 
 // 팀 일정 상세 조회
-async function teamTaskDetail (req, res, next) {
+async function teamTaskDetail(req, res, next) {
   try {
+    const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
-    const task = await TeamTask.findOne({ taskId });
+    const task = await TeamTask.findOne({ taskId, workSpaceName });
 
     const now = moment();
     const { endDate } = task;
-    const diff = now.diff(endDate, 'days')
+    const diff = now.diff(endDate, 'days');
 
-    return res.json({ 
+    return res.json({
       result: task,
-      dayCount: -diff + 1,   // 마감까지 D-day
-      ok: true
-    })
+      dayCount: -diff + 1, // 마감까지 D-day
+      ok: true,
+    });
   } catch (err) {
     console.error(err);
-    return res
-      .status(400)
-      .json({ ok: false, message: "일정 상세 조회 실패" });
+    return res.status(400).json({ ok: false, message: '일정 상세 조회 실패' });
   }
 }
 
 // 팀 일정 수정
 async function teamTaskEdit(req, res, next) {
   try {
+    const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
-    const [existTask] = await TeamTask.find({ taskId });
+    const [existTask] = await TeamTask.find({ taskId, workSpaceName });
     const { user } = res.locals;
     const { startDate, endDate, title, desc } = req.body;
     if (user.userEmail !== existTask.userEmail) {
-      return res
-        .status(401)
-        .json({ ok: false, message: "작성자가 아닙니다." });
+      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
     }
     if (!startDate || !endDate || !title) {
-      return res
-        .status(400)
-        .json({ ok: false, message: "빈값을 채워주세요" });
+      return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
     }
 
-    await TeamTask.updateOne({ taskId }, { $set: { startDate, endDate, title, desc } });
-    return res.status(200).json({ 
+    await TeamTask.updateOne(
+      { taskId },
+      { $set: { startDate, endDate, title, desc } }
+    );
+    return res.status(200).json({
       result: await TeamTask.findOne({ taskId }),
       ok: true,
-      message: "일정 수정 성공"
+      message: '일정 수정 성공',
     });
   } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false, message: "일정 수정 에러" });
+    return res.status(400).json({ success: false, message: '일정 수정 에러' });
   }
 }
 
-// 팀 일정 삭제 
+// 팀 일정 삭제
 async function teamTaskRemove(req, res, next) {
   try {
+    const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
-    const [targetTask] = await TeamTask.find({ taskId })
-    const {userEmail} = res.locals.user
-    
-    if (userEmail !== targetTask.userEmail){
-      return res.status(401).json({ 
-        ok : false, 
-        message : "작성자가 아닙니다."
+    const [targetTask] = await TeamTask.find({ taskId, workSpaceName });
+    const { userEmail } = res.locals.user;
+
+    if (userEmail !== targetTask.userEmail) {
+      return res.status(401).json({
+        ok: false,
+        message: '작성자가 아닙니다.',
       });
     }
 
-    await TeamTask.deleteOne({ taskId })
-    return res.json({ ok : true , message : "일정 삭제 성공"})
-    
+    await TeamTask.deleteOne({ taskId });
+    return res.json({ ok: true, message: '일정 삭제 성공' });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-          ok: false,
-          message: "일정 삭제 실패"
+    return res.status(400).json({
+      ok: false,
+      message: '일정 삭제 실패',
     });
   }
 }
