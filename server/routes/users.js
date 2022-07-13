@@ -26,6 +26,6 @@ router.post('/users/email', userController.emailFirst);
 
 router.post('/users/password', userController.passwordSecond);
 
-router.delete('/user/delete', userController.deleteUser);
+router.delete('/users/delete/:userEmail', userController.deleteUser);
 
 module.exports = router;

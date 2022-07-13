@@ -2,14 +2,14 @@ const Board = require('../schemas/boards');
 const boardComment = require('../schemas/boardComment');
 
 //글 작성하기
-
+// /board/:workSpaceName
 // code : 101 , 소속 워크스페이스 공지용 , 채팅 X
 async function boardUpload(req, res, next) {
   // 글 작성하기
 
   try {
-    //#swagger.tags= ['게시글 API'];
-    //#swagger.summary= '게시글 등록 API'
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 등록 API'
     //##swagger.description='-'
     const { userName } = res.locals.User;
     const { workSpaceName } = req.params;
@@ -48,10 +48,13 @@ async function boardUpload(req, res, next) {
 }
 
 // 공지 글 전체 조회
-// 김하연이 이 부분 수정
 // 워크스페이스 파라미터 값
+// /board/:workSpaceName
 async function boardAllView(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 전체 조회 API'
+    //##swagger.description='-'
     const { workSpaceName } = req.params;
     const boards = await Board.find({ workSpaceName }).sort('-boardId');
     res.send({ boards, message: '공지 조회에 성공 했습니다.' });
@@ -63,8 +66,13 @@ async function boardAllView(req, res, next) {
 
 //글 하나 조회
 // 이 부분도 파라미터 값 받아야함
+
+// /board/:workSpaceName/:boardId
 async function boardView(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 한개 조회 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     const existsBoard = await Board.find({ boardId });
     if (!existsBoard.length) {
@@ -88,8 +96,12 @@ async function boardView(req, res, next) {
 // 글 수정
 // 수정시간 넣기
 // 카테고리 빼기
+// /board/:workSpaceName/:boardId
 async function boardEdit(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 수정 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     const [existBoard] = await Board.find({ boardId });
     const { user } = res.locals;
@@ -115,8 +127,12 @@ async function boardEdit(req, res, next) {
 }
 
 // 글 삭제
+// /board/:workSpaceName/:boardId
 async function boardDelete(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 삭제 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     console.log('boardId: ', boardId);
     const [targetBoard] = await Board.find({ boardId });

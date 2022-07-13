@@ -7,10 +7,11 @@ const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
 const validator = require('email-validator');
-const passwordValidator = require('../../server/controller/util/passwordValidator');
+const { response } = require('express');
+const { error } = require('winston');
 
 const usersSchema = Joi.object({
-  userEmail: Joi.string().required(),
+  userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   confirmPassword: Joi.string(),
@@ -40,10 +41,10 @@ async function signup(req, res) {
         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
     }
 
-    if (passwordValidator(password) != true) {
+    if (password.length < 4) {
       return res
         .status(400)
-        .send({ success: false, errorMessage: '패스워드 형식이 틀렸습니다.' });
+        .send({ success: false, errorMessage: '비밀번호는 4글자 이상입니다.' });
     }
 
     const exitstUsers = await User.findOne({ userEmail });
@@ -68,9 +69,9 @@ async function signup(req, res) {
       msg: '회원가입을 성공하였습니다',
     });
   } catch (error) {
-    res.status(400).send({
+    res.status(401).send({
       success: false,
-      errorMessage: error + '이메일 혹은 비밀번호가 틀렸습니다.',
+      errorMessage: error + '특정할 수 없는 에러가 발생했습니다..',
     });
   }
 }
@@ -81,9 +82,18 @@ async function emailFirst(req, res) {
     //#swagger.summary= '로그인 이메일 API'
     //#swagger.description='-'
     const { userEmail } = req.body;
-    const userFind = User.findOne({ userEmail });
-    if (userFind) {
-      res.status(200).send({ email: userEmail, success: true });
+    console.log('userEmail: ', userEmail);
+    const userFind = await User.findOne({ userEmail });
+
+    console.log(
+      'userFind---------------------------------------------------- ',
+      userFind
+    );
+
+    if (userFind == null || userFind == undefined) {
+      res.status(400).json({ success: false, errorMessage: error });
+    } else {
+      res.status(200).json({ success: true, errorMessage: error });
     }
   } catch (error) {
     res.send(401).send({ errorMessage: error });
@@ -100,10 +110,13 @@ async function passwordSecond(req, res) {
     var validPassword;
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-    }
 
-    if (!validPassword) {
-      return res.status(400).send('비밀번호가 틀렸습니다.');
+      if (validPassword == 'false') {
+        res.status(400).send({
+          success: true,
+          errorMessage: '유효하지 않은 비밀번호입니다.',
+        });
+      }
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
@@ -134,8 +147,9 @@ async function deleteUser(req, res) {
     //#swagger.tags= ['탈퇴 API'];
     //#swagger.summary= '탈퇴 API'
     //#swagger.description='-'
-    const { userEmail } = res.locals.user;
-    const userFind = await User.deleteOne({ userEmail });
+    const { userEmail } = req.params;
+    console.log(userEmail);
+    await User.deleteOne({ userEmail });
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
