@@ -18,7 +18,8 @@ const server = http.createServer(app);
 const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
 const naverRouter = require('./server/routes/naver');
-const taskRouter = require('./server/routes/calendars');
+const taskRouter = require('./server/routes/tasks');
+const tasksRouter = require('./server/routes/tasks_team');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 
@@ -55,6 +56,7 @@ app.use('/api', [
   kakaoRouter,
   naverRouter,
   taskRouter,
+  tasksRouter,
   boardRouter,
 ]);
 // app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);

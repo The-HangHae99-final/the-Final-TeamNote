@@ -18,15 +18,21 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3001/api/post",
-    "url": "http://localhost:3001/api/workSpace/workSpaceList",
-    "method": "GET",
+    "url": "http://localhost:3001/api/task/1/chocokakao12@naver.com+1234",
+    "method": "POST",
     "sortNum": 0,
     "created": "2022-07-13T02:35:46.689Z",
-    "modified": "2022-07-13T05:39:04.843Z",
+    "modified": "2022-07-13T07:05:38.861Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\"startDate\":\"1234\", \"endDate\":\"1234\", \"title\":\"1234\", \"desc\":\"1234\"}",
+      "form": []
+    },
     "auth": {
-      "type": "basic"
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJjaG9jb2tha2FvMTJAbmF2ZXIuY29tIiwiaWF0IjoxNjU3NjkyMTA5LCJleHAiOjE2NTc3MDQxMDl9.KqV6bQwqRu77XJ_a7ybH9XEa4GEj06QAOnlG5kaNGUk"
     },
     "tests": []
   },
@@ -63,11 +69,11 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3001/api/post/one",
-    "url": "http://localhost:3001/api/post/one",
-    "method": "POST",
+    "url": "http://localhost:3001/api/workSpace/workSpaceList",
+    "method": "GET",
     "sortNum": 0,
     "created": "2022-07-13T03:39:19.522Z",
-    "modified": "2022-07-13T03:39:19.543Z",
+    "modified": "2022-07-13T06:46:25.117Z",
     "headers": [],
     "params": [],
     "tests": []

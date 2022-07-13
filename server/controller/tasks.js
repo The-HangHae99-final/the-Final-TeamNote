@@ -2,10 +2,11 @@ const Task = require('../schemas/task');
 const moment = require('moment');
 
 // 일정 생성
+//  '/task/:workSpaceName',
 async function taskUpload(req, res, next) {
   try {
     const { workSpaceName } = req.params;
-    const { userEmail } = res.locals.user;
+    const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort('-taskId');
@@ -55,9 +56,8 @@ async function taskAll(req, res, next) {
 // 일정 상세 조회
 async function taskDetail(req, res, next) {
   try {
-    const { workSpaceName } = req.params;
-    const taskId = Number(req.params.taskId);
-    const task = await Task.findOne({ taskId, workSpaceName });
+    const { taskId } = req.params;
+    const task = await Task.findOne({ taskId });
 
     const now = moment();
     const { endDate } = task;

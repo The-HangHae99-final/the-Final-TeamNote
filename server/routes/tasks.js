@@ -2,44 +2,37 @@ const express = require('express');
 const router = express.Router();
 const taskController = require('../controller/tasks');
 const authMiddleware = require('../middlewares/auth-middleware');
+const isMember = require('../middlewares/isMember');
 
 // 일정 생성
 router.post(
   '/task/:workSpaceName',
+  authMiddleware,
   isMember,
-  authMiddleware,
-  authMiddleware,
   taskController.taskUpload
 );
 
 // 전체 일정 조회
 router.get(
   '/task/:workSpaceName',
-  isMember,
   authMiddleware,
+  isMember,
+
   taskController.taskAll
 );
 
 // 일정 상세 조회
 router.get(
-  '/task/:taskId/:workSpaceName',
-  isMember,
+  '/task/:taskId',
   authMiddleware,
+  isMember,
   taskController.taskDetail
 );
 
 // 일정 수정
-router.put(
-  '/task/:taskId/:workSpaceName',
-  authMiddleware,
-  taskController.taskEdit
-);
+router.put('/task/:taskId/', authMiddleware, taskController.taskEdit);
 
 // 일정 삭제
-router.delete(
-  '/task/:taskId/:workSpaceName',
-  authMiddleware,
-  taskController.taskRemove
-);
+router.delete('/task/:taskId/', authMiddleware, taskController.taskRemove);
 
 module.exports = router;

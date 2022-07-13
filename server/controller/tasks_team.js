@@ -5,7 +5,7 @@ const moment = require('moment');
 async function teamTaskUpload(req, res, next) {
   try {
     const { workSpaceName } = req.params;
-    const { userEmail } = res.locals.user;
+    const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
     const maxTaskId = await TeamTask.findOne({ workSpaceName }).sort('-taskId');
@@ -55,9 +55,9 @@ async function teamTaskAll(req, res, next) {
 // 팀 일정 상세 조회
 async function teamTaskDetail(req, res, next) {
   try {
-    const { workSpaceName } = req.params;
-    const taskId = Number(req.params.taskId);
-    const task = await TeamTask.findOne({ taskId, workSpaceName });
+    const { taskId } = req.params;
+    console.log('taskId-----------' + taskId);
+    const task = await TeamTask.findOne({ taskId });
 
     const now = moment();
     const { endDate } = task;
