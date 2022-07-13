@@ -7,7 +7,6 @@ const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
 const validator = require('email-validator');
-const passwordValidator = require('../../server/controller/util/passwordValidator');
 const { response } = require('express');
 const { error } = require('winston');
 
