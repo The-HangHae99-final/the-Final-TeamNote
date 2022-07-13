@@ -22,7 +22,7 @@ router.get(
 
 // 팀 일정 상세 조회
 router.get(
-  '/task/team/:taskId/',
+  '/task/team/:workSpaceName/:taskId',
   authMiddleware,
   isMember,
   taskController.teamTaskDetail
@@ -30,7 +30,7 @@ router.get(
 
 // 팀 일정 수정
 router.put(
-  '/task/team/:taskId/',
+  '/task/team/:workSpaceName/:taskId',
   authMiddleware,
   isMember,
   taskController.teamTaskEdit
@@ -38,7 +38,7 @@ router.put(
 
 // 팀 일정 삭제
 router.delete(
-  '/task/team/:taskId/',
+  '/task/team/:workSpaceName/:taskId',
   authMiddleware,
   isMember,
   taskController.teamTaskRemove

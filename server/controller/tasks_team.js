@@ -80,11 +80,10 @@ async function teamTaskEdit(req, res, next) {
     const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
     const [existTask] = await TeamTask.find({ taskId, workSpaceName });
-    const { user } = res.locals;
+    console.log('existTask: ', existTask);
+    const {userEmail} = res.locals.User;
     const { startDate, endDate, title, desc } = req.body;
-    if (user.userEmail !== existTask.userEmail) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
-    }
+    
     if (!startDate || !endDate || !title) {
       return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
     }
@@ -99,6 +98,7 @@ async function teamTaskEdit(req, res, next) {
       message: '일정 수정 성공',
     });
   } catch (err) {
+    console.log('err: ', err);
     return res.status(400).json({ success: false, message: '일정 수정 에러' });
   }
 }
@@ -106,16 +106,11 @@ async function teamTaskEdit(req, res, next) {
 // 팀 일정 삭제
 async function teamTaskRemove(req, res, next) {
   try {
-    const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
-    const [targetTask] = await TeamTask.find({ taskId, workSpaceName });
-    const { userEmail } = res.locals.user;
-
-    if (userEmail !== targetTask.userEmail) {
-      return res.status(401).json({
-        ok: false,
-        message: '작성자가 아닙니다.',
-      });
+    const existTask = await TeamTask.findOne({taskId});
+    
+    if(!existTask){
+      return res.status(400).json({ok: false, message: '없는 일정입니다.'})
     }
 
     await TeamTask.deleteOne({ taskId });
