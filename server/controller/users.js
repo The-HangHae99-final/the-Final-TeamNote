@@ -13,8 +13,8 @@ const { error } = require('winston');
 const usersSchema = Joi.object({
   userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
-  password: Joi.string().required()
-  confirmPassword: Joi.string(),
+  password: Joi.string().required(),
+  confirmPassword: Joi.string().required(),
 });
 
 //회원가입 API
