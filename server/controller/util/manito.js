@@ -14,9 +14,10 @@ router.get('/manito', async (req, res) => {
   min = Math.ceil(0);
   max = Math.floor(userFind.length);
 
-  manito = emailBox[Math.floor(Math.random() * (max - min)) + min];
+  Email = emailBox[Math.floor(Math.random() * (max - min)) + min];
 
-  res.send({ manito: manito });
+  const emailFind = await User.findOne({ Email });
+  res.send({ manito: emailFind.userName });
 });
 
 // random 장치
