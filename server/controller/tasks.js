@@ -7,7 +7,7 @@ async function taskUpload(req, res, next) {
     const { workSpaceName } = req.params;
     const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
-    const { startDate, endDate, title, desc } = req.body;
+    const { startDate, endDate, title, desc, color } = req.body;
     const maxTaskId = await Task.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
     if (maxTaskId) {
@@ -21,6 +21,7 @@ async function taskUpload(req, res, next) {
       desc,
       userEmail,
       workSpaceName,
+      color,
     });
 
     return res.json({
@@ -41,9 +42,8 @@ async function taskAll(req, res, next) {
     const { workSpaceName } = req.params;
     const tasks = await Task.find({ workSpaceName }).sort('-taskId');
     console.log('tasks: ', tasks[0].userEmail);
-    if(tasks[0].userEmail!==userEmail)
-    {
-      return res.status(400).json({ok: false, message: '본인이 아닙니다.'})
+    if (tasks[0].userEmail !== userEmail) {
+      return res.status(400).json({ ok: false, message: '본인이 아닙니다.' });
     }
     return res.json({
       result: {
@@ -69,9 +69,8 @@ async function taskDetail(req, res, next) {
     const { endDate } = task;
     const diff = now.diff(endDate, 'days');
 
-    if(task.userEmail!==userEmail)
-    {
-      return res.status(400).json({ok: false, message: '본인이 아닙니다.'})
+    if (task.userEmail !== userEmail) {
+      return res.status(400).json({ ok: false, message: '본인이 아닙니다.' });
     }
 
     return res.json({
@@ -92,8 +91,8 @@ async function taskEdit(req, res, next) {
     const taskId = Number(req.params.taskId);
     const [existTask] = await Task.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);
-    const {userEmail} = res.locals.User;
-    const { startDate, endDate, title, desc } = req.body;
+    const { userEmail } = res.locals.User;
+    const { startDate, endDate, title, desc, color } = req.body;
     if (userEmail !== existTask.userEmail) {
       return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
     }
@@ -120,14 +119,14 @@ async function taskEdit(req, res, next) {
 async function taskRemove(req, res, next) {
   try {
     const taskId = Number(req.params.taskId);
-    const existTask = await Task.findOne({taskId});
+    const existTask = await Task.findOne({ taskId });
 
     if (userEmail !== existTask.userEmail) {
       return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
     }
-    
-    if(!existTask){
-      return res.status(400).json({ok: false, message: '없는 일정입니다.'})
+
+    if (!existTask) {
+      return res.status(400).json({ ok: false, message: '없는 일정입니다.' });
     }
 
     await Task.deleteOne({ taskId });

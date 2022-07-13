@@ -7,7 +7,7 @@ async function teamTaskUpload(req, res, next) {
     const { workSpaceName } = req.params;
     const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
-    const { startDate, endDate, title, desc } = req.body;
+    const { startDate, endDate, title, desc, color } = req.body;
     const maxTaskId = await TeamTask.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
     if (maxTaskId) {
@@ -21,6 +21,7 @@ async function teamTaskUpload(req, res, next) {
       desc,
       userEmail,
       workSpaceName,
+      color,
     });
 
     return res.json({
@@ -81,9 +82,9 @@ async function teamTaskEdit(req, res, next) {
     const taskId = Number(req.params.taskId);
     const [existTask] = await TeamTask.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);
-    const {userEmail} = res.locals.User;
-    const { startDate, endDate, title, desc } = req.body;
-    
+    const { userEmail } = res.locals.User;
+    const { startDate, endDate, title, desc, color } = req.body;
+
     if (!startDate || !endDate || !title) {
       return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
     }
@@ -107,10 +108,10 @@ async function teamTaskEdit(req, res, next) {
 async function teamTaskRemove(req, res, next) {
   try {
     const taskId = Number(req.params.taskId);
-    const existTask = await TeamTask.findOne({taskId});
-    
-    if(!existTask){
-      return res.status(400).json({ok: false, message: '없는 일정입니다.'})
+    const existTask = await TeamTask.findOne({ taskId });
+
+    if (!existTask) {
+      return res.status(400).json({ ok: false, message: '없는 일정입니다.' });
     }
 
     await TeamTask.deleteOne({ taskId });

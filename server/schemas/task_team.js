@@ -20,11 +20,14 @@ const teamTaskSchema = mongoose.Schema(
     },
     userEmail: {
       type: String,
-      required: true
+      required: true,
     },
     desc: {},
     workSpace: {
       type: Object,
+    },
+    color: {
+      type: string,
     },
   },
   {
