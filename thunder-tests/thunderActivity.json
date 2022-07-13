@@ -135,13 +135,18 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3001/api/manito",
-    "url": "http://localhost:3001/api/manito",
-    "method": "GET",
+    "url": "http://localhost:3001/api/users/password",
+    "method": "POST",
     "sortNum": 0,
     "created": "2022-07-13T13:32:25.964Z",
-    "modified": "2022-07-13T14:01:54.826Z",
+    "modified": "2022-07-13T14:05:47.059Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"userEmail\":\"chocokakao12@naver.com\",\n    \"password\":\"1234\"\n    \n}",
+      "form": []
+    },
     "tests": []
   },
   {
