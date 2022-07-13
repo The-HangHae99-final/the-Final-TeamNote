@@ -4,16 +4,24 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload(req, res, next) {
   try {
+<<<<<<< HEAD
     const { workSpaceName } = req.params;
     const { userEmail } = res.locals.user;
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
     const maxTaskId = await Task.findOne().sort('-taskId');
     let taskId = 1;
+=======
+    const { userName } = res.locals.user;
+    const { start_date, end_date, title, desc } = req.body;
+    const maxTaskId = await Task.findOne().sort('-task_id');
+    let task_id = 1;
+>>>>>>> hayeon
     if (maxTaskId) {
-      taskId = maxTaskId.taskId + 1;
+      task_id = maxTaskId.task_id + 1;
     }
     const createdTask = await Task.create({
+<<<<<<< HEAD
       taskId,
       startDate,
       endDate,
@@ -21,6 +29,14 @@ async function taskUpload(req, res, next) {
       desc,
       userEmail,
       workSpaceName,
+=======
+      task_id,
+      start_date,
+      end_date,
+      title,
+      desc,
+      userName,
+>>>>>>> hayeon
     });
 
     return res.json({

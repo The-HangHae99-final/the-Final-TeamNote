@@ -6,7 +6,6 @@ const connect = require('./server/schemas/db');
 const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
-const port = 3000;
 const usersRouter = require('./server/routes/users');
 const postsRouter = require('./server/routes/posts');
 const messageRouter = require('./server/routes/message');
@@ -14,13 +13,10 @@ const commentsRouter = require('./server/routes/comments');
 const likesRouter = require('./server/routes/likes');
 const workSpaceRouter = require('./server/routes/workSpaces');
 const boardRouter = require('./server/routes/boards');
-const passport = require('passport');
-const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 const cookieParser = require('cookie-parser');
 const kakaoRouter = require('./server/routes/kakao');
-const dayRouter = require('./server/routes/day');
 const naverRouter = require('./server/routes/naver');
 const taskRouter = require('./server/routes/calendars');
 const swaggerUi = require('swagger-ui-express');
@@ -33,7 +29,6 @@ app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 connect();
 
 const moment = require('moment');
-const { application } = require('express');
 require('moment-timezone');
 moment.tz.setDefault('Asia/seoul');
 const createdAt = moment().format('HH:mm');
@@ -58,7 +53,6 @@ app.use('/api', [
   likesRouter,
   workSpaceRouter,
   kakaoRouter,
-  dayRouter,
   naverRouter,
   taskRouter,
   boardRouter,

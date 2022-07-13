@@ -6,24 +6,9 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
 const user = require('../schemas/user');
-
-function email_validator(email) {
-  var answer = false;
-  if (email.includes('@')) {
-    var answer = true;
-  }
-
-  if (email.includes('.') == true) {
-    var answer = true;
-  }
-
-  if (email.includes('..')) {
-    var answer = false;
-  }
-
-  if (email.includes) return answer;
-}
-// const Message = require('../schemas/messages');
+const validator = require('email-validator');
+const passwordValidator = require('../../server/controller/util/passwordValidator');
+const { response } = require('express');
 
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -35,6 +20,9 @@ const usersSchema = Joi.object({
 //회원가입 API
 async function signup(req, res) {
   try {
+    //#swagger.tags= ['회원가입 API'];
+    //#swagger.summary= '회원가입 API'
+    //#swagger.description='-'
     // const { userEmail, userName, password, confirmPassword } =
     const { userEmail, userName, password, confirmPassword } =
       await usersSchema.validateAsync(
@@ -47,10 +35,16 @@ async function signup(req, res) {
       });
     }
 
-    if (!email_validator(userEmail)) {
-      res.status(400).send({
-        errorMessage: '이메일 형식이 틀렸습니다.',
-      });
+    if (validator.validate(userEmail) == false) {
+      return res
+        .status(400)
+        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
+    }
+
+    if (password.length < 4) {
+      return res
+        .status(400)
+        .send({ success: false, errorMessage: '비밀번호는 4글자 이상입니다.' });
     }
 
     const exitstUsers = await User.findOne({ userEmail });
@@ -75,14 +69,18 @@ async function signup(req, res) {
       msg: '회원가입을 성공하였습니다',
     });
   } catch (error) {
-    res.status(400).send({
-      errorMessage: error + '이메일 혹은 비밀번호가 틀렸습니다.',
+    res.status(401).send({
+      success: false,
+      errorMessage: error + '특정할 수 없는 에러가 발생했습니다..',
     });
   }
 }
 
 async function emailFirst(req, res) {
   try {
+    //#swagger.tags= ['로그인 API'];
+    //#swagger.summary= '로그인 이메일 API'
+    //#swagger.description='-'
     const { userEmail } = req.body;
     const userFind = User.findOne({ userEmail });
     if (userFind) {
@@ -95,15 +93,21 @@ async function emailFirst(req, res) {
 
 async function passwordSecond(req, res) {
   try {
+    //#swagger.tags= ['로그인 API'];
+    //#swagger.summary= '로그인 패스워드 API'
+    //#swagger.description='-'
     const { userEmail, password } = req.body;
     const userFind = await User.findOne({ userEmail });
     var validPassword;
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-    }
 
-    if (!validPassword) {
-      return res.status(400).send('비밀번호가 틀렸습니다.');
+      if (validPassword == 'false') {
+        res.status(400).send({
+          success: true,
+          errorMessage: '유효하지 않은 비밀번호입니다.',
+        });
+      }
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
@@ -113,7 +117,12 @@ async function passwordSecond(req, res) {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
-    res.status(200).send({ success: true, token });
+    res.status(200).send({
+      success: true,
+      token,
+      email: userEmail,
+      name: userFind.userName,
+    });
   } catch (error) {
     console.error(error);
     res
@@ -122,52 +131,16 @@ async function passwordSecond(req, res) {
   }
 }
 
-//로그인에서 이메일 입력 (로그인완료, success:존재하는 회원입니다.)
-// 그다음 페이지에서 비밀번호 입력
-
-//회원가입 시 이메일 쏘는 부분과 다른 변수 쏘는 api 나누기
-
-// 기존 로그인 api 잠시 주석처리
-
-//로그인
-// async function passwordSecond(req, res) {
-//   try {
-//     const { userEmail, password } = req.body;
-
-//     const userFind = await User.findOne({ userEmail });
-
-//
-//     let validPassword = '';
-
-//     if (userFind) {
-//       validPassword = await Bcrypt.compare(password, userFind.password);
-//     }
-
-//     if (!validPassword) {
-//       return res.send('비밀번호가 틀렸습니다..');
-//     }
-
-//     const token = jwt.sign({ userEmail }, jwtSecret, {
-//       expiresIn: '12000s',
-//     });
-//     const refresh_token = jwt.sign({}, jwtSecret, {
-//       expiresIn: '14d',
-//     });
-//     await userFind.update({ refresh_token }, { where: { userEmail } });
-//     res.status(200).send({ success: '로그인에 성공하였습니다.', token: token });
-//   } catch (error) {
-//     res
-//       .status(400)
-//       .send({ errorMessage: message.error + ' : 로그인에 실패하였습니다.' });
-//   }
-// }
-
 //탈퇴 기능
 
-async function login(req, res) {
+async function deleteUser(req, res) {
   try {
-    const { userEmail } = res.locals.user;
-    const userFind = await User.deleteOne({ userEmail });
+    //#swagger.tags= ['탈퇴 API'];
+    //#swagger.summary= '탈퇴 API'
+    //#swagger.description='-'
+    const { userEmail } = req.params;
+    console.log(userEmail);
+    await User.deleteOne({ userEmail });
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
@@ -177,7 +150,7 @@ async function login(req, res) {
 
 module.exports = {
   signup,
-  login,
   emailFirst,
   passwordSecond,
+  deleteUser,
 };

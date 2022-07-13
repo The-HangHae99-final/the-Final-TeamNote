@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const commentSchema = new mongoose.Schema({
+const postCommentSchema = new mongoose.Schema({
   //게시글 고유번호
   postId: {
     type: Number,
@@ -16,9 +16,9 @@ const commentSchema = new mongoose.Schema({
     match: /.+\@.+\..+/,
   },
   //댓글 내용
-  comment: {
+  content: {
     type: String,
     required: true,
   },
 });
-module.exports = mongoose.model('Comment', commentSchema);
+module.exports = mongoose.model('postComment', postCommentSchema);

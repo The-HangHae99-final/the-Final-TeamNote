@@ -17,6 +17,9 @@ const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 // post- '/auth/login/kakao/callback'
 function kakao_callback(req, res, next) {
   try {
+    //#swagger.tags= ['카카오 API'];
+    //#swagger.summary= '카카오 콜백 API'
+    //##swagger.description='-'
     let code = req.body.code;
     console.log('인가 코드' + code);
     try {
@@ -61,6 +64,9 @@ function kakao_callback(req, res, next) {
 // router.post - '/kakao/member'
 function kakao_member(req, res) {
   try {
+    //#swagger.tags= ['카카오 API'];
+    //#swagger.summary= '카카오 정보요청 API'
+    //##swagger.description='-'
     var api_url = 'https://kapi.kakao.com/v2/user/me';
     var request = require('request');
     var token = req.body.token;
@@ -92,6 +98,9 @@ function kakao_member(req, res) {
 // post -'/kakao/parsing'
 async function kakao_parsing(req, res) {
   try {
+    //#swagger.tags= ['카카오 API'];
+    //#swagger.summary= '카카오 파싱 API'
+    //##swagger.description='-'
     const site = 1; //kakao
     const user_info = req.body;
     const userEmail = user_info.user_email;
