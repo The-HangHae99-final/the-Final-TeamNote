@@ -1,18 +1,18 @@
-const Task = require('../schemas/task');
+const TeamTask = require('../schemas/task_team');
 const moment = require('moment');
 
-// 일정 생성
-async function taskUpload (req, res, next) {
+// 팀 일정 생성
+async function teamTaskUpload (req, res, next) {
   try {
     const { userEmail } = res.locals.user;
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc } = req.body;
-    const maxTaskId = await Task.findOne().sort("-taskId");
+    const maxTaskId = await TeamTask.findOne().sort("-taskId");
     let taskId = 1;
     if (maxTaskId) {
       taskId = maxTaskId.taskId + 1;
     }
-    const createdTask = await Task.create({
+    const createdTask = await TeamTask.create({
       taskId, startDate, endDate, title, desc, userEmail
     });
 
@@ -29,10 +29,10 @@ async function taskUpload (req, res, next) {
   }
 }
 
-// 전체 일정 조회
-async function taskAll (req, res, next) {
+// 팀 전체 일정 조회
+async function teamTaskAll (req, res, next) {
   try {
-    tasks = await Task.find({}).sort("-taskId");
+    tasks = await TeamTask.find({}).sort("-taskId");
     return res.json({ 
       result: {
         count: tasks.length,
@@ -48,11 +48,11 @@ async function taskAll (req, res, next) {
   }
 }
 
-// 일정 상세 조회
-async function taskDetail (req, res, next) {
+// 팀 일정 상세 조회
+async function teamTaskDetail (req, res, next) {
   try {
     const taskId = Number(req.params.taskId);
-    const task = await Task.findOne({ taskId });
+    const task = await TeamTask.findOne({ taskId });
 
     const now = moment();
     const { endDate } = task;
@@ -71,11 +71,11 @@ async function taskDetail (req, res, next) {
   }
 }
 
-// 일정 수정
-async function taskEdit(req, res, next) {
+// 팀 일정 수정
+async function teamTaskEdit(req, res, next) {
   try {
     const taskId = Number(req.params.taskId);
-    const [existTask] = await Task.find({ taskId });
+    const [existTask] = await TeamTask.find({ taskId });
     const { user } = res.locals;
     const { startDate, endDate, title, desc } = req.body;
     if (user.userEmail !== existTask.userEmail) {
@@ -89,9 +89,9 @@ async function taskEdit(req, res, next) {
         .json({ ok: false, message: "빈값을 채워주세요" });
     }
 
-    await Task.updateOne({ taskId }, { $set: { startDate, endDate, title, desc } });
+    await TeamTask.updateOne({ taskId }, { $set: { startDate, endDate, title, desc } });
     return res.status(200).json({ 
-      result: await Task.findOne({ taskId }),
+      result: await TeamTask.findOne({ taskId }),
       ok: true,
       message: "일정 수정 성공"
     });
@@ -102,11 +102,11 @@ async function taskEdit(req, res, next) {
   }
 }
 
-// 일정 삭제 
-async function taskRemove(req, res, next) {
+// 팀 일정 삭제 
+async function teamTaskRemove(req, res, next) {
   try {
     const taskId = Number(req.params.taskId);
-    const [targetTask] = await Task.find({ taskId })
+    const [targetTask] = await TeamTask.find({ taskId })
     const {userEmail} = res.locals.user
     
     if (userEmail !== targetTask.userEmail){
@@ -116,7 +116,7 @@ async function taskRemove(req, res, next) {
       });
     }
 
-    await Task.deleteOne({ taskId })
+    await TeamTask.deleteOne({ taskId })
     return res.json({ ok : true , message : "일정 삭제 성공"})
     
   } catch (error) {
@@ -130,9 +130,9 @@ async function taskRemove(req, res, next) {
 }
 
 module.exports = {
-  taskUpload,
-  taskAll,
-  taskDetail,
-  taskEdit,
-  taskRemove,
+  teamTaskUpload,
+  teamTaskAll,
+  teamTaskDetail,
+  teamTaskEdit,
+  teamTaskRemove,
 };
