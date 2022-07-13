@@ -5,10 +5,28 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
+const user = require('../schemas/user');
+
+function email_validator(email) {
+  var answer = false;
+  if (email.includes('@')) {
+    var answer = true;
+  }
+
+  if (email.includes('.') == true) {
+    var answer = true;
+  }
+
+  if (email.includes('..')) {
+    var answer = false;
+  }
+
+  if (email.includes) return answer;
+}
 // const Message = require('../schemas/messages');
 
 const usersSchema = Joi.object({
-  userEmail: Joi.string().required().email(),
+  userEmail: Joi.string().required(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   confirmPassword: Joi.string(),
@@ -26,6 +44,12 @@ async function signup(req, res) {
     if (password !== confirmPassword) {
       return res.status(400).send({
         errorMessage: '패스워드가 패스워드 확인란과 동일하지 않습니다.',
+      });
+    }
+
+    if (!email_validator(userEmail)) {
+      res.status(400).send({
+        errorMessage: '이메일 형식이 틀렸습니다.',
       });
     }
 
@@ -51,30 +75,35 @@ async function signup(req, res) {
       msg: '회원가입을 성공하였습니다',
     });
   } catch (error) {
-    return res.status(400).send(console.error(error));
+    res.status(400).send({
+      errorMessage: error + '이메일 혹은 비밀번호가 틀렸습니다.',
+    });
   }
 }
-//로그인
-async function login(req, res) {
+
+async function emailFirst(req, res) {
+  try {
+    const { userEmail } = req.body;
+    const userFind = User.findOne({ userEmail });
+    if (userFind) {
+      res.status(200).send({ email: userEmail, success: true });
+    }
+  } catch (error) {
+    res.send(401).send({ errorMessage: error });
+  }
+}
+
+async function passwordSecond(req, res) {
   try {
     const { userEmail, password } = req.body;
-
     const userFind = await User.findOne({ userEmail });
-
-    if (!userFind) {
-      return res.status(400).send({
-        errorMessage: '아이디 또는 비밀번호를 확인해주세요.',
-      });
-    }
-
-    let validPassword = '';
-
+    var validPassword;
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
     }
 
     if (!validPassword) {
-      return res.send('비밀번호가 틀렸습니다..');
+      return res.status(400).send('비밀번호가 틀렸습니다.');
     }
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
@@ -84,13 +113,71 @@ async function login(req, res) {
       expiresIn: '14d',
     });
     await userFind.update({ refresh_token }, { where: { userEmail } });
-    res.status(200).send({ message: 'success', token: token });
-  } catch (err) {
-    res.status(400).send({ message: err + ' : login failed' });
+    res.status(200).send({ success: true, token });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .send({ errorMessage: error + ' : 로그인에 실패 하였습니다.' });
+  }
+}
+
+//로그인에서 이메일 입력 (로그인완료, success:존재하는 회원입니다.)
+// 그다음 페이지에서 비밀번호 입력
+
+//회원가입 시 이메일 쏘는 부분과 다른 변수 쏘는 api 나누기
+
+// 기존 로그인 api 잠시 주석처리
+
+//로그인
+// async function passwordSecond(req, res) {
+//   try {
+//     const { userEmail, password } = req.body;
+
+//     const userFind = await User.findOne({ userEmail });
+
+//
+//     let validPassword = '';
+
+//     if (userFind) {
+//       validPassword = await Bcrypt.compare(password, userFind.password);
+//     }
+
+//     if (!validPassword) {
+//       return res.send('비밀번호가 틀렸습니다..');
+//     }
+
+//     const token = jwt.sign({ userEmail }, jwtSecret, {
+//       expiresIn: '12000s',
+//     });
+//     const refresh_token = jwt.sign({}, jwtSecret, {
+//       expiresIn: '14d',
+//     });
+//     await userFind.update({ refresh_token }, { where: { userEmail } });
+//     res.status(200).send({ success: '로그인에 성공하였습니다.', token: token });
+//   } catch (error) {
+//     res
+//       .status(400)
+//       .send({ errorMessage: message.error + ' : 로그인에 실패하였습니다.' });
+//   }
+// }
+
+//탈퇴 기능
+
+async function login(req, res) {
+  try {
+    const { userEmail } = res.locals.user;
+    const userFind = await User.deleteOne({ userEmail });
+    res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
+  } catch {
+    console.log(error);
+    res.status(400).send({ errorMessage: error + '에러가 발생했습니다..' });
   }
 }
 
 module.exports = {
   signup,
   login,
+  emailFirst,
+  passwordSecond,
 };
