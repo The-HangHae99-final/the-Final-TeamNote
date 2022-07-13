@@ -50,6 +50,9 @@ async function postUpload(req, res, next) {
 
 async function postAllView(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 글 전체 조회 API'
+    //##swagger.description='-'
     const { workSpaceName } = req.params;
     const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
@@ -92,7 +95,7 @@ async function postView(req, res, next) {
 // 카테고리 빼기
 async function postEdit(req, res, next) {
   try {
-    //#swagger.tags= ['공지용 API'];
+    //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지용 글 수정 API'
     //#swagger.description='-'
     const postId = Number(req.params.postId);

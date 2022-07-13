@@ -27,7 +27,7 @@ const teamTaskSchema = mongoose.Schema(
       type: Object,
     },
     color: {
-      type: string,
+      type: String,
     },
   },
   {

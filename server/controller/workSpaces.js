@@ -254,6 +254,9 @@ async function getWorkSpaceList(req, res) {
 
 async function everyWorkSpace(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '전체 워크스페이스 조회(개발용) API'
+    //#swagger.description='-'
     const workSpaceList = await workSpace.find();
 
     return res.status(200).json({

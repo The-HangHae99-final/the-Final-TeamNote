@@ -4,6 +4,9 @@ const moment = require('moment');
 // 일정 생성
 async function taskUpload(req, res, next) {
   try {
+    //#swagger.tags= ['개인 일정 API'];
+    //#swagger.summary= '개인 일정 생성 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.params;
     const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
@@ -38,6 +41,9 @@ async function taskUpload(req, res, next) {
 // 전체 일정 조회
 async function taskAll(req, res, next) {
   try {
+    //#swagger.tags= ['개인 일정 API'];
+    //#swagger.summary= '개인 일정 전체조회 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const { workSpaceName } = req.params;
     const tasks = await Task.find({ workSpaceName }).sort('-taskId');
@@ -61,6 +67,9 @@ async function taskAll(req, res, next) {
 // 일정 상세 조회
 async function taskDetail(req, res, next) {
   try {
+    //#swagger.tags= ['개인 일정 API'];
+    //#swagger.summary= '개인 일정 상세 조회 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const { taskId } = req.params;
     const task = await Task.findOne({ taskId });
@@ -87,6 +96,9 @@ async function taskDetail(req, res, next) {
 // 일정 수정
 async function taskEdit(req, res, next) {
   try {
+    //#swagger.tags= ['개인 일정 API'];
+    //#swagger.summary= '개인 일정 수정 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
     const [existTask] = await Task.find({ taskId, workSpaceName });
@@ -118,6 +130,9 @@ async function taskEdit(req, res, next) {
 // 일정 삭제
 async function taskRemove(req, res, next) {
   try {
+    //#swagger.tags= ['일정 API'];
+    //#swagger.summary= '개인 일정 삭제 API'
+    //#swagger.description='-'
     const taskId = Number(req.params.taskId);
     const existTask = await Task.findOne({ taskId });
 

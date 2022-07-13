@@ -4,6 +4,9 @@ const moment = require('moment');
 // 팀 일정 생성
 async function teamTaskUpload(req, res, next) {
   try {
+    //#swagger.tags= ['팀 일정 API'];
+    //#swagger.summary= '팀 알정 생성 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.params;
     const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
@@ -38,6 +41,9 @@ async function teamTaskUpload(req, res, next) {
 // 팀 전체 일정 조회
 async function teamTaskAll(req, res, next) {
   try {
+    //#swagger.tags= ['일정 API'];
+    //#swagger.summary= '팀 전체 일정 조회 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.params;
     tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
     return res.json({
@@ -56,6 +62,9 @@ async function teamTaskAll(req, res, next) {
 // 팀 일정 상세 조회
 async function teamTaskDetail(req, res, next) {
   try {
+    //#swagger.tags= ['팀 일정 API'];
+    //#swagger.summary= '팀 일정 상세조회  API'
+    //#swagger.description='-'
     const { taskId } = req.params;
     console.log('taskId-----------' + taskId);
     const task = await TeamTask.findOne({ taskId });
@@ -78,6 +87,9 @@ async function teamTaskDetail(req, res, next) {
 // 팀 일정 수정
 async function teamTaskEdit(req, res, next) {
   try {
+    //#swagger.tags= ['팀 일정 API'];
+    //#swagger.summary= '일정 수정 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.params;
     const taskId = Number(req.params.taskId);
     const [existTask] = await TeamTask.find({ taskId, workSpaceName });
@@ -107,6 +119,9 @@ async function teamTaskEdit(req, res, next) {
 // 팀 일정 삭제
 async function teamTaskRemove(req, res, next) {
   try {
+    //#swagger.tags= ['팀 일정 API'];
+    //#swagger.summary= '팀 일정 삭제 API'
+    //#swagger.description='-'
     const taskId = Number(req.params.taskId);
     const existTask = await TeamTask.findOne({ taskId });
 

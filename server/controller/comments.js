@@ -6,6 +6,9 @@ const boardComment = require('../schemas/boardComment');
 //code :102 공지 댓글 작성하기
 async function boardCommentUpload(req, res) {
   try {
+    //#swagger.tags= ['공지 댓글 API'];
+    //#swagger.summary= '공지 댓글 작성 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     const { content } = req.body;
     const { userName } = res.locals.User;
@@ -40,6 +43,9 @@ async function boardCommentUpload(req, res) {
 //댓글 삭제하기
 async function boardCommentDelete(req, res) {
   try {
+    //#swagger.tags= ['공지 댓글 API'];
+    //#swagger.summary= '공지 댓글 삭제 API'
+    //##swagger.description='-'
     const { boardId } = req.params;
     const { commentId } = req.params;
 
@@ -70,6 +76,9 @@ async function boardCommentDelete(req, res) {
 }
 //댓글 수정하기
 async function boardCommentEdit(req, res) {
+  //#swagger.tags= ['공지 댓글 API'];
+  //#swagger.summary= '공지 댓글 수정 API'
+  //##swagger.description='-'
   const { boardId } = req.params;
   const { commentId } = req.params;
   const { content } = req.body;
@@ -95,6 +104,9 @@ async function boardCommentEdit(req, res) {
 //포스트 댓글 작성
 async function postCommentUpload(req, res) {
   try {
+    //#swagger.tags= ['게시글 댓글 API'];
+    //#swagger.summary= '게시글 댓글 작성 API'
+    //##swagger.description='-'
     const postId = Number(req.params.postId);
     const { content } = req.body;
     const { userName } = res.locals.User;
@@ -129,6 +141,9 @@ async function postCommentUpload(req, res) {
 
 //포스트 댓글 수정하기
 async function postCommentEdit(req, res) {
+  //#swagger.tags= ['게시글 댓글 API'];
+  //#swagger.summary= '게시글 댓글 수정 API'
+  //##swagger.description='-'
   const { postId } = req.params;
   const { commentId } = req.params;
   const { content } = req.body;
@@ -154,6 +169,9 @@ async function postCommentEdit(req, res) {
 //포스트 댓글 삭제하기
 async function postCommentDelete(req, res) {
   try {
+    //#swagger.tags= ['게시글 댓글 API'];
+    //#swagger.summary= '게시글 댓글 삭제 API'
+    //##swagger.description='-'
     const { postId } = req.params;
     const { commentId } = req.params;
 

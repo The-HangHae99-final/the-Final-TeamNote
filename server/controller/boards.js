@@ -8,8 +8,8 @@ async function boardUpload(req, res, next) {
   // 글 작성하기
 
   try {
-    //#swagger.tags= ['게시글 API'];
-    //#swagger.summary= '게시글 등록 API'
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 등록 API'
     //##swagger.description='-'
     const { userName } = res.locals.User;
     const { workSpaceName } = req.params;
@@ -52,6 +52,9 @@ async function boardUpload(req, res, next) {
 // /board/:workSpaceName
 async function boardAllView(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 전체 조회 API'
+    //##swagger.description='-'
     const { workSpaceName } = req.params;
     const boards = await Board.find({ workSpaceName }).sort('-boardId');
     res.send({ boards, message: '공지 조회에 성공 했습니다.' });
@@ -67,6 +70,9 @@ async function boardAllView(req, res, next) {
 // /board/:workSpaceName/:boardId
 async function boardView(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 한개 조회 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     const existsBoard = await Board.find({ boardId });
     if (!existsBoard.length) {
@@ -93,6 +99,9 @@ async function boardView(req, res, next) {
 // /board/:workSpaceName/:boardId
 async function boardEdit(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 수정 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     const [existBoard] = await Board.find({ boardId });
     const { user } = res.locals;
@@ -121,6 +130,9 @@ async function boardEdit(req, res, next) {
 // /board/:workSpaceName/:boardId
 async function boardDelete(req, res, next) {
   try {
+    //#swagger.tags= ['공지글 API'];
+    //#swagger.summary= '공지글 삭제 API'
+    //##swagger.description='-'
     const boardId = Number(req.params.boardId);
     console.log('boardId: ', boardId);
     const [targetBoard] = await Board.find({ boardId });

@@ -30,7 +30,7 @@ const taskSchema = mongoose.Schema(
       required: true,
     },
     color: {
-      type: string,
+      type: String,
     },
   },
   {
