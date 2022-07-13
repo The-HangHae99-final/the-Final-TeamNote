@@ -9,9 +9,10 @@ const user = require('../schemas/user');
 const validator = require('email-validator');
 const passwordValidator = require('../../server/controller/util/passwordValidator');
 const { response } = require('express');
+const { error } = require('winston');
 
 const usersSchema = Joi.object({
-  userEmail: Joi.string().required(),
+  userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
   password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
   confirmPassword: Joi.string(),
@@ -82,9 +83,18 @@ async function emailFirst(req, res) {
     //#swagger.summary= '로그인 이메일 API'
     //#swagger.description='-'
     const { userEmail } = req.body;
-    const userFind = User.findOne({ userEmail });
-    if (userFind) {
-      res.status(200).send({ email: userEmail, success: true });
+    console.log('userEmail: ', userEmail);
+    const userFind = await User.findOne({ userEmail });
+
+    console.log(
+      'userFind---------------------------------------------------- ',
+      userFind
+    );
+
+    if (userFind == null || userFind == undefined) {
+      res.status(400).json({ success: false, errorMessage: error });
+    } else {
+      res.status(200).json({ success: true, errorMessage: error });
     }
   } catch (error) {
     res.send(401).send({ errorMessage: error });
