@@ -13,7 +13,7 @@ const { error } = require('winston');
 const usersSchema = Joi.object({
   userEmail: Joi.string().required().email(),
   userName: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{4,12}$')).required(),
+  password: Joi.string().required()
   confirmPassword: Joi.string(),
 });
 
