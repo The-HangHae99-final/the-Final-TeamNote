@@ -62,6 +62,7 @@ router.get(
   workSpaceController.getWorkSpaceList
 );
 
+// 워크 스페이스 전체 조회
 router.get('/workSpace/everyWorkSpace', workSpaceController.everyWorkSpace);
 
 module.exports = router;
