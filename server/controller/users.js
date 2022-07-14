@@ -85,13 +85,10 @@ async function emailFirst(req, res) {
     console.log('userEmail: ', userEmail);
     const userFind = await User.findOne({ userEmail });
 
-    console.log(
-      'userFind---------------------------------------------------- ',
-      userFind
-    );
+    console.log('userFind----------- ', userFind);
 
     if (!userFind) {
-      res.status(400).json({ success: false, errorMessage: error });
+      res.status(200).json({ success: true, errorMessage: error });
     } else {
       res.status(200).json({ success: true, errorMessage: error });
     }
