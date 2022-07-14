@@ -244,7 +244,7 @@ async function getWorkSpaceList(req, res) {
       message: '워크스페이스 목록 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
+    return res.status(400).json({ ok: false, message: '소속 워크스페이스 목록 조회 실패!' });
   }
 }
 
