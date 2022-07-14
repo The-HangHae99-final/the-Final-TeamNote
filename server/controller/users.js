@@ -75,7 +75,7 @@ async function signup(req, res) {
       port: 587, // SMTP 포트
       auth: {
         user: 'hanghae99@naver.com', // 사용자 이메일
-        pass: 'qwer1234', // 사용자 패스워드
+        pass: process.env.password, // 사용자 패스워드
       },
     });
 
