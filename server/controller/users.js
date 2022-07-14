@@ -118,8 +118,6 @@ async function emailFirst(req, res) {
     console.log('userEmail: ', userEmail);
     const userFind = await User.findOne({ userEmail });
 
-    console.log('userFind----------- ', userFind);
-
     if (!userFind) {
       console.log(userFind);
       res.status(400).json({ success: false });
