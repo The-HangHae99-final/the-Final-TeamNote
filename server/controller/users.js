@@ -90,7 +90,7 @@ async function emailFirst(req, res) {
       userFind
     );
 
-    if (userFind == null || userFind == undefined) {
+    if (!userFind) {
       res.status(400).json({ success: false, errorMessage: error });
     } else {
       res.status(200).json({ success: true, errorMessage: error });
