@@ -234,11 +234,10 @@ async function getWorkSpaceList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '본인이 속한 워크 스페이스 목록 조회 API'
     //#swagger.description='-'
-    const user = res.locals.User.userEmail;
+    const {userEmail} = res.locals.User;
     const workSpaceList = await workSpace.find({});
-    console.log('workSpaceList: ', workSpaceList);
 
-    const includedList = workSpaceList.filter((Info) => Info.owner === user);
+    const includedList = workSpaceList.filter((Info) => Info.owner === userEmail);
     return res.status(200).json({
       includedList,
       ok: true,

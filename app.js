@@ -65,7 +65,7 @@ app.use('/api', [
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버---반영확인용');
+  res.send('실전 파이널 프로젝트 서버 반영확인용');
 });
 
 module.exports = server;

@@ -56,7 +56,7 @@ router.delete(
 );
 
 //본인 속한 워크스페이스 목록 조회
-router.get('/workSpace/workSpaceList', workSpaceController.getWorkSpaceList);
+router.get('/workSpace/workSpaceList', authMiddleware, workSpaceController.getWorkSpaceList);
 
 router.get('/workSpace/everyWorkSpace', workSpaceController.everyWorkSpace);
 
