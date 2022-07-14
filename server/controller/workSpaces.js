@@ -236,8 +236,11 @@ async function getWorkSpaceList(req, res) {
     //#swagger.description='-'
     const {userEmail} = res.locals.User;
     const workSpaceList = await workSpace.find({});
-
-    const includedList = workSpaceList.filter((Info) => Info.owner === userEmail);
+    
+    const includedList = [];
+    workSpaceList.filter((Info) =>
+      Info.memberList.filter((member) => member.memberEmail === userEmail ? includedList.push(Info): null)
+    );
     return res.status(200).json({
       includedList,
       ok: true,
