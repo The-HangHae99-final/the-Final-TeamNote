@@ -68,6 +68,39 @@ async function signup(req, res) {
       success: true,
       msg: '회원가입을 성공하였습니다',
     });
+
+    let transporter = nodemailer.createTransport({
+      service: 'naver', // 메일 이용할 서비스
+      host: 'smtp.naver.com', // SMTP 서버명
+      port: 587, // SMTP 포트
+      auth: {
+        user: 'hanghae99@naver.com', // 사용자 이메일
+        pass: 'qwer1234', // 사용자 패스워드
+      },
+    });
+
+    // 메일 옵션
+    let mailOptions = {
+      from: 'hanghae99@naver.com', // 메일 발신자
+      to: req.body.userEmail, // 메일 수신자
+
+      // 회원가입 완료하고 축하 메시지 전송할 시
+      // to: req.body.userid
+      subject: `${req.body.userName}님 팀노트 회원가입을 축하합니다.`, // 메일 제목
+      html: `<h2>${req.body.userName}님의 팀 협업 행복을 응원합니다.</h2>
+            <br/>
+            <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
+            <p>팀노트 200% 활용법을 확인해 보세요.</p>
+            <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
+    };
+    // 메일 발송
+    transporter.sendMail(mailOptions, function (err, success) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Email sent successfully!');
+      }
+    });
   } catch (error) {
     res.status(401).send({
       success: false,
