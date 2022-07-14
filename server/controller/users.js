@@ -88,7 +88,8 @@ async function emailFirst(req, res) {
     console.log('userFind----------- ', userFind);
 
     if (!userFind) {
-      res.status(200).json({ success: true, errorMessage: error });
+      console.log(userFind);
+      res.status(400).json({ success: false });
     } else {
       res.status(200).json({ success: true, errorMessage: error });
     }
