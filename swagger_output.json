@@ -9,18 +9,12 @@
   "basePath": "api",
   "schemes": ["http"],
   "paths": {
-    "/boards/{workSpaceName}": {
+    "/boards/workSpaceName": {
       "post": {
         "tags": ["공지글 API"],
         "summary": "공지글 등록 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -63,12 +57,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -87,18 +75,12 @@
         }
       }
     },
-    "/boards/{workSpaceName}/{boardId}": {
+    "/boards/workSpaceName/{boardId}": {
       "get": {
         "tags": ["공지글 API"],
         "summary": "공지글 한개 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -128,12 +110,6 @@
         "summary": "공지글 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -177,18 +153,12 @@
         }
       }
     },
-    "/board/{workSpaceName}/{boardId}": {
+    "/board/workSpaceName/{boardId}": {
       "delete": {
         "tags": ["공지글 API"],
         "summary": "공지글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -214,18 +184,12 @@
         }
       }
     },
-    "/board/boardComment/{workSpaceName}/{boardId}": {
+    "/board/boardComment/workSpaceName/{boardId}": {
       "post": {
         "tags": ["공지 댓글 API"],
         "summary": "공지 댓글 작성 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -266,18 +230,12 @@
         }
       }
     },
-    "/board/boardComment/{workSpaceName}/{boardId}/{commentId}": {
+    "/board/boardComment/workSpaceName/{boardId}/{commentId}": {
       "delete": {
         "tags": ["공지 댓글 API"],
         "summary": "공지 댓글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -326,12 +284,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "boardId",
             "in": "path",
             "required": true,
@@ -377,18 +329,12 @@
         }
       }
     },
-    "/post/postComment/{workSpaceName}/{postId}": {
+    "/post/postComment/workSpaceName/{postId}": {
       "post": {
         "tags": ["게시글 댓글 API"],
         "summary": "게시글 댓글 작성 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -429,18 +375,12 @@
         }
       }
     },
-    "/post/postComment/{workSpaceName}/{postId}/{commentId}": {
+    "/post/postComment/workSpaceName/{postId}/{commentId}": {
       "delete": {
         "tags": ["게시글 댓글 API"],
         "summary": "게시글 댓글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -488,12 +428,6 @@
         "summary": "게시글 댓글 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -627,18 +561,12 @@
         }
       }
     },
-    "/board/post/like/{workSpaceName}/{postId}": {
+    "/board/post/like/workSpaceName/{postId}": {
       "put": {
         "tags": ["공지글 좋아요 API"],
         "summary": "공지글 좋아요 등록 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -680,12 +608,6 @@
         "summary": "공지글 좋아요 취소 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -736,18 +658,12 @@
         }
       }
     },
-    "/messages/edit/{workSpaceName}/{_id}": {
+    "/messages/edit/workSpaceName/{_id}": {
       "put": {
         "tags": ["메세지 API"],
         "summary": "메세지 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "_id",
             "in": "path",
@@ -788,18 +704,12 @@
         }
       }
     },
-    "/messages/delete/{workSpaceName}/{_id}": {
+    "/messages/delete/workSpaceName/{_id}": {
       "delete": {
         "tags": ["메세지 API"],
         "summary": "메세지 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "_id",
             "in": "path",
@@ -837,18 +747,12 @@
         }
       }
     },
-    "/messages/view/{workSpaceName}/{_id}": {
+    "/messages/view/workSpaceName/{_id}": {
       "get": {
         "tags": ["메세지 API"],
         "summary": "메세지 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "_id",
             "in": "path",
@@ -953,18 +857,12 @@
         }
       }
     },
-    "/post/{workSpaceName}": {
+    "/post/workSpaceName": {
       "post": {
         "tags": ["일반 게시글 API"],
         "summary": "일반 게시글 등록 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1007,12 +905,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -1031,18 +923,12 @@
         }
       }
     },
-    "/post/{workSpaceName}/{postId}": {
+    "/post/workSpaceName/{postId}": {
       "get": {
         "tags": ["일반 게시글 API"],
         "summary": "일반게시글 특정 글 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -1072,12 +958,6 @@
         "summary": "일반 게시글 글 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -1125,12 +1005,6 @@
         "summary": "일반 게시글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
