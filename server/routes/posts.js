@@ -30,7 +30,6 @@ const upload = multer({
 //글 작성
 router.post(
   '/post/workSpaceName',
-  upload.single('img'),
   authMiddleware,
   isMember,
   postController.postUpload

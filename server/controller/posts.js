@@ -186,7 +186,7 @@ async function postUpload(req, res, next) {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '일반 게시글 등록 API'
     //#swagger.description='-'
-    const image = req.file.location;
+    // const image = req.file.location;
     console.log('--------------------------------' + image);
     const { userName } = res.locals.User;
     const { title, content, workSpaceName, category } = req.body;
@@ -202,7 +202,7 @@ async function postUpload(req, res, next) {
     }
 
     const createdPost = await Post.create({
-      image,
+      // image,
       postId,
       workSpaceName,
       userName,
