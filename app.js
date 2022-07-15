@@ -22,7 +22,7 @@ const taskRouter = require('./server/routes/tasks');
 const tasksRouter = require('./server/routes/tasks_team');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
-const manitoRouter = require('./server/controller/util/manito');
+const manitoRouter = require('./server/routes/manito');
 
 global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
 const morganMiddleware = require('./server/config/morganMiddleware');
