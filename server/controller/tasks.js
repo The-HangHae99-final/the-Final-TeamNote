@@ -60,12 +60,14 @@ async function taskAll(req, res, next) {
     //#swagger.summary= '개인 일정 전체조회 API'
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
-    const { workSpaceName } = req.body;
-    const tasks = await Task.find({ workSpaceName }).sort('-taskId');
-    console.log('tasks: ', tasks[0].userEmail);
-    if (tasks[0].userEmail !== userEmail) {
-      return res.status(400).json({ ok: false, message: '본인이 아닙니다.' });
-    }
+
+    const tasks = await Task.find({ userEmail }).sort('-taskId');
+    // console.log('tasks: ', tasks[0].userEmail);
+    // if (tasks[0].userEmail !== userEmail) {
+    //   console.log('---------task[0].usermail-------' + tasks[0].userEmail);
+    //   console.log('----------userEmail-----' + userEmail);
+    //   return res.status(400).json({ ok: false, message: '본인이 아닙니다.' });
+    // }
     return res.json({
       result: {
         count: tasks.length,
