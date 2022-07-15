@@ -8,12 +8,7 @@ const isMember = require('../middlewares/isMember');
 router.post('/task/work', authMiddleware, isMember, taskController.taskUpload);
 
 // 전체 일정 조회
-router.get(
-  '/task/workSpaceName',
-  authMiddleware,
-  isMember,
-  taskController.taskAll
-);
+router.get('/task/workSpaceName', authMiddleware, taskController.taskAll);
 
 // 일정 상세 조회
 router.get(
