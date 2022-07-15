@@ -9,7 +9,7 @@ router.post('/workSpace/create', authMiddleware, workSpaceController.create);
 
 //워크스페이스 멤버 추가
 router.put(
-  '/workSpace/memberAdd/:workSpaceName',
+  '/workSpace/memberAdd/workSpaceName',
   authMiddleware,
   isMember,
   workSpaceController.memberAdd
@@ -17,7 +17,7 @@ router.put(
 
 //룸 이름 얻기
 router.get(
-  '/workSpace/getRoomName/:workSpaceName/:opponent',
+  '/workSpace/getRoomName/workSpaceName/:opponent',
   authMiddleware,
   isMember,
   workSpaceController.roomName
@@ -25,7 +25,7 @@ router.get(
 
 //멤버 목록 조회
 router.get(
-  '/workSpace/MemberList/:workSpaceName',
+  '/workSpace/MemberList/workSpaceName',
   authMiddleware,
   isMember,
   workSpaceController.getMemberList
@@ -33,7 +33,7 @@ router.get(
 
 //멤버 삭제
 router.put(
-  '/workSpace/deleteMember/:workSpaceName',
+  '/workSpace/deleteMember/workSpaceName',
   authMiddleware,
   isMember,
   workSpaceController.deleteMember
@@ -41,7 +41,7 @@ router.put(
 
 //워크스페이스 탈퇴하기
 router.put(
-  '/workSpace/workSpaceLeave/:workSpaceName',
+  '/workSpace/workSpaceLeave/workSpaceName',
   authMiddleware,
   isMember,
   workSpaceController.workSpaceLeave
@@ -49,7 +49,7 @@ router.put(
 
 //워크스페이스 삭제
 router.delete(
-  '/workSpace/workSpaceRemove/:workSpaceName',
+  '/workSpace/workSpaceRemove/workSpaceName',
   authMiddleware,
   isMember,
   workSpaceController.workSpaceRemove
