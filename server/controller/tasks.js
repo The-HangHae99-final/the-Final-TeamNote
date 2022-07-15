@@ -7,10 +7,10 @@ async function taskUpload(req, res, next) {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 생성 API'
     //#swagger.description='-'
-    const { workSpaceName } = req.params;
+
     const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
-    const { startDate, endDate, title, desc, color } = req.body;
+    const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await Task.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
     if (maxTaskId) {
