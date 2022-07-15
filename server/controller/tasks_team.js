@@ -75,7 +75,6 @@ async function teamTaskDetail(req, res, next) {
     //#swagger.summary= '팀 일정 상세조회  API'
     //#swagger.description='-'
     const { taskId } = req.params;
-    console.log('taskId-----------' + taskId);
     const task = await TeamTask.findOne({ taskId });
 
     const now = moment();
@@ -103,12 +102,12 @@ async function teamTaskEdit(req, res, next) {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
-    const { workSpaceName } = req.body;
+
     const taskId = Number(req.params.taskId);
     const [existTask] = await TeamTask.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);
     const { userEmail } = res.locals.User;
-    const { startDate, endDate, title, desc, color } = req.body;
+    const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
 
     if (!startDate || !endDate || !title) {
       return res
@@ -120,8 +119,9 @@ async function teamTaskEdit(req, res, next) {
       { taskId },
       { $set: { startDate, endDate, title, desc } }
     );
+    const editTask = await TeamTask.findOne({ taskId });
     return res.status(200).json({
-      result: await TeamTask.findOne({ taskId }),
+      result: editTask,
       success: true,
       message: '팀 일정 수정 성공',
     });

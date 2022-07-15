@@ -145,8 +145,9 @@ async function taskEdit(req, res, next) {
       { taskId },
       { $set: { startDate, endDate, title, desc } }
     );
+    const editTask = await Task.findOne({ taskId });
     res.status(200).json({
-      result: await Task.findOne({ taskId }),
+      result: editTask,
       success: true,
       message: '일정 수정 성공',
     });
