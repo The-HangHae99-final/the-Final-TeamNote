@@ -45,7 +45,7 @@ async function taskAll(req, res, next) {
     //#swagger.summary= '개인 일정 전체조회 API'
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const tasks = await Task.find({ workSpaceName }).sort('-taskId');
     console.log('tasks: ', tasks[0].userEmail);
     if (tasks[0].userEmail !== userEmail) {
@@ -99,7 +99,7 @@ async function taskEdit(req, res, next) {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 수정 API'
     //#swagger.description='-'
-    const { workSpaceName } = req.params;
+
     const taskId = Number(req.params.taskId);
     const [existTask] = await Task.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);
