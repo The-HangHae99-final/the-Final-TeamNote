@@ -5,12 +5,7 @@ const authMiddleware = require('../middlewares/auth-middleware');
 const isMember = require('../middlewares/isMember');
 
 // 일정 생성
-router.post(
-  '/task/workSpaceName',
-  authMiddleware,
-  isMember,
-  taskController.taskUpload
-);
+router.post('/task/work', authMiddleware, isMember, taskController.taskUpload);
 
 // 전체 일정 조회
 router.get(
