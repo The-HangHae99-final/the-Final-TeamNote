@@ -9,9 +9,17 @@ async function taskUpload(req, res, next) {
     //#swagger.description='-'
 
     const { userEmail } = res.locals.User;
+    console.log(
+      'userEmail11111111111111--------------------------------------------------------',
+      userEmail
+    );
     // console.log((res.locals.user))
     const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await Task.findOne({ workSpaceName }).sort('-taskId');
+    console.log(
+      'maxTaskId 222222222222222--------------------------------------------------------',
+      maxTaskId
+    );
     let taskId = 1;
     if (maxTaskId) {
       taskId = maxTaskId.taskId + 1;
@@ -27,14 +35,21 @@ async function taskUpload(req, res, next) {
       color,
     });
 
+    console.log(
+      'createdTask3333333333333333---------------------',
+      createdTask
+    );
+
     return res.json({
       result: createdTask,
-      ok: true,
+      success: true,
       message: '일정 생성 성공',
     });
-  } catch (err) {
-    console.error(err);
-    return res.status(400).json({ ok: false, message: '일정 생성 실패' });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(400)
+      .json({ ok: false, message: '일정 생성 실패', errorMeassage: error });
   }
 }
 
