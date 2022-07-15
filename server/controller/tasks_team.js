@@ -30,11 +30,11 @@ async function teamTaskUpload(req, res, next) {
     return res.json({
       result: createdTask,
       ok: true,
-      message: '일정 생성 성공',
+      message: '팀 일정 생성 성공',
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '일정 생성 실패' });
+    return res.status(400).json({ ok: false, message: '팀 일정 생성 실패' });
   }
 }
 
@@ -55,7 +55,9 @@ async function teamTaskAll(req, res, next) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '전체 일정 조회 실패' });
+    return res
+      .status(400)
+      .json({ ok: false, message: '전체 팀 일정 조회 실패' });
   }
 }
 
@@ -80,7 +82,9 @@ async function teamTaskDetail(req, res, next) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '일정 상세 조회 실패' });
+    return res
+      .status(400)
+      .json({ ok: false, message: '팀 일정 상세 조회 실패' });
   }
 }
 
@@ -108,11 +112,13 @@ async function teamTaskEdit(req, res, next) {
     return res.status(200).json({
       result: await TeamTask.findOne({ taskId }),
       ok: true,
-      message: '일정 수정 성공',
+      message: '팀 일정 수정 성공',
     });
   } catch (err) {
     console.log('err: ', err);
-    return res.status(400).json({ success: false, message: '일정 수정 에러' });
+    return res
+      .status(400)
+      .json({ success: false, message: '팀 일정 수정 에러' });
   }
 }
 
@@ -126,15 +132,17 @@ async function teamTaskRemove(req, res, next) {
     const existTask = await TeamTask.findOne({ taskId });
 
     if (!existTask) {
-      return res.status(400).json({ ok: false, message: '없는 일정입니다.' });
+      return res
+        .status(400)
+        .json({ ok: false, message: '없는 팀 일정입니다.' });
     }
 
     await TeamTask.deleteOne({ taskId });
-    return res.json({ ok: true, message: '일정 삭제 성공' });
+    return res.json({ ok: true, message: '팀 일정 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
       ok: false,
-      message: '일정 삭제 실패',
+      message: '팀 일정 삭제 실패',
     });
   }
 }

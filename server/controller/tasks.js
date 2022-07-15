@@ -43,13 +43,15 @@ async function taskUpload(req, res, next) {
     return res.json({
       result: createdTask,
       success: true,
-      message: '일정 생성 성공',
+      message: '개인 일정 생성 성공',
     });
   } catch (error) {
     console.error(error);
-    return res
-      .status(400)
-      .json({ ok: false, message: '일정 생성 실패', errorMeassage: error });
+    return res.status(400).json({
+      ok: false,
+      message: '개인 일정 생성 실패',
+      errorMeassage: error,
+    });
   }
 }
 
@@ -77,7 +79,9 @@ async function taskAll(req, res, next) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '전체 일정 조회 실패' });
+    return res
+      .status(400)
+      .json({ ok: false, message: '전체 개인 일정 조회 실패' });
   }
 }
 
@@ -106,7 +110,9 @@ async function taskDetail(req, res, next) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '일정 상세 조회 실패' });
+    return res
+      .status(400)
+      .json({ ok: false, message: '개인 일정 상세 조회 실패' });
   }
 }
 
@@ -140,7 +146,9 @@ async function taskEdit(req, res, next) {
     });
   } catch (err) {
     console.log('err: ', err);
-    return res.status(400).json({ success: false, message: '일정 수정 에러' });
+    return res
+      .status(400)
+      .json({ success: false, message: '개인 일정 수정 에러' });
   }
 }
 
@@ -158,15 +166,17 @@ async function taskRemove(req, res, next) {
     }
 
     if (!existTask) {
-      return res.status(400).json({ ok: false, message: '없는 일정입니다.' });
+      return res
+        .status(400)
+        .json({ ok: false, message: '없는 개인 일정입니다.' });
     }
 
     await Task.deleteOne({ taskId });
-    return res.json({ ok: true, message: '일정 삭제 성공' });
+    return res.json({ ok: true, message: '개인 일정 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
       ok: false,
-      message: '일정 삭제 실패',
+      message: '개인 일정 삭제 실패',
     });
   }
 }
