@@ -22,7 +22,7 @@ async function postAllView(req, res, next) {
   }
 }
 
-//글 하나 조회
+//글 상세 조회
 // 이 부분도 파라미터 값 받아야함
 async function postView(req, res, next) {
   try {
@@ -35,7 +35,7 @@ async function postView(req, res, next) {
     if (!existsPost.length) {
       return res
         .status(400)
-        .json({ ok: false, errorMessage: '찾는 게시물 없음.' });
+        .json({ success: false, errorMessage: '찾는 게시물 없음.' });
     }
 
     const existsComment = await postComment.find({ postId }).sort({
@@ -61,18 +61,22 @@ async function postEdit(req, res, next) {
     const postId = Number(req.params.postId);
     const [existPost] = await Post.find({ postId });
     const { user } = res.locals.User;
-    const { title, content } = req.body;
+    const { title, conten, category } = req.body;
     if (user.userName !== existPost.userName) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '작성자가 아닙니다.' });
     }
     if (!title || !content) {
-      return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      return res
+        .status(400)
+        .json({ success: false, message: '빈값을 채워주세요' });
     }
 
     await Post.updateOne({ postId }, { $set: { title, content } });
     return res.status(200).json({
       result: await Post.findOne({ postId }),
-      ok: true,
+      success: true,
       message: '게시글 수정 성공',
     });
   } catch (err) {
@@ -95,20 +99,20 @@ async function postDelete(req, res, next) {
 
     if (userName !== targetPost.userName) {
       return res.status(401).json({
-        ok: false,
+        success: false,
         message: '작성자가 아닙니다.',
       });
     }
     await Post.deleteOne({ postId });
-    return res.json({ ok: true, message: '게시글 삭제 성공' });
+    return res.json({ success: true, message: '게시글 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
-      ok: false,
+      success: false,
       message: '게시글 삭제 실패',
     });
   }
 }
-
+// image 한개 업로드
 async function postImage(req, res, next) {
   try {
     console.log('경로 정보입니다.', req.file.location);
@@ -119,6 +123,7 @@ async function postImage(req, res, next) {
   }
 }
 
+// 글 작성 API
 // router.post('/post', upload.single('image'), async (req, res) => {
 async function postUpload(req, res, next) {
   try {
@@ -152,13 +157,12 @@ async function postUpload(req, res, next) {
     });
     return res.json({
       result: createdPost,
-      ok: true,
+      success: true,
       message: '게시물 작성 성공',
     });
     res.json({ result: true });
   } catch (error) {
     res.send({
-      category: category,
       errorMessage: error.message,
       success: false,
     });
