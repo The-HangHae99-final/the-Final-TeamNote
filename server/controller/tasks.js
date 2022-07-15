@@ -164,7 +164,7 @@ async function taskEdit(req, res, next) {
 // 일정 삭제
 async function taskRemove(req, res, next) {
   try {
-    //#swagger.tags= ['일정 API'];
+    //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 삭제 API'
     //#swagger.description='-'
     const taskId = Number(req.params.taskId);

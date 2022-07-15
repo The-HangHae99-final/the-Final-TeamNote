@@ -202,6 +202,9 @@ async function all(req, res) {
 //유저 검색
 async function searchUser(req, res) {
   try {
+    //#swagger.tags= [' 유저 검색 API'];
+    //#swagger.summary= '유저 검색 API'
+    //#swagger.description='-'
     const { userEmail } = req.body;
     const existUser = await User.findOne({ userEmail });
 

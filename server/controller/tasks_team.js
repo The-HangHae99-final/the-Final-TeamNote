@@ -45,7 +45,7 @@ async function teamTaskUpload(req, res, next) {
 // 팀 전체 일정 조회
 async function teamTaskAll(req, res, next) {
   try {
-    //#swagger.tags= ['일정 API'];
+    //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
 
