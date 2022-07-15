@@ -149,7 +149,7 @@ async function taskEdit(req, res, next) {
     res.status(200).json({
       result: editTask,
       success: true,
-      message: '일정 수정 성공',
+      message: '개인 일정 수정 성공',
     });
   } catch (err) {
     console.log('err: ', err);
