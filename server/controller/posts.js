@@ -67,7 +67,7 @@ const path = require('path');
 //   }
 // }
 
-// 공지 글 전체 조회
+// 일반 글 전체 조회
 
 async function postAllView(req, res, next) {
   try {
@@ -189,7 +189,7 @@ async function postUpload(req, res, next) {
     const image = req.file.location;
     console.log('--------------------------------' + image);
     const { userName } = res.locals.User;
-    const { title, content, workSpaceName } = req.body;
+    const { title, content, workSpaceName, category } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
     const maxpostId = await Post.findOne().sort({
@@ -208,6 +208,7 @@ async function postUpload(req, res, next) {
       userName,
       title,
       content,
+      category,
       createdTime,
     });
     return res.json({
