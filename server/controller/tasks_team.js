@@ -29,12 +29,16 @@ async function teamTaskUpload(req, res, next) {
 
     return res.json({
       result: createdTask,
-      ok: true,
+      success: true,
       message: '팀 일정 생성 성공',
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '팀 일정 생성 실패' });
+    return res.status(400).json({
+      success: false,
+      message: '팀 일정 생성 실패',
+      errorMessage: error.message,
+    });
   }
 }
 
@@ -52,13 +56,15 @@ async function teamTaskAll(req, res, next) {
         count: tasks.length,
         rows: tasks,
       },
-      ok: true,
+      success: true,
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(400)
-      .json({ ok: false, message: '전체 팀 일정 조회 실패' });
+    return res.status(400).json({
+      success: false,
+      message: '전체 팀 일정 조회 실패',
+      errorMessage: err.message,
+    });
   }
 }
 
@@ -79,13 +85,15 @@ async function teamTaskDetail(req, res, next) {
     return res.json({
       result: task,
       dayCount: -diff + 1, // 마감까지 D-day
-      ok: true,
+      success: true,
     });
   } catch (err) {
     console.error(err);
-    return res
-      .status(400)
-      .json({ ok: false, message: '팀 일정 상세 조회 실패' });
+    return res.status(400).json({
+      success: false,
+      message: '팀 일정 상세 조회 실패',
+      errorMessage: err.message,
+    });
   }
 }
 
@@ -103,7 +111,9 @@ async function teamTaskEdit(req, res, next) {
     const { startDate, endDate, title, desc, color } = req.body;
 
     if (!startDate || !endDate || !title) {
-      return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      return res
+        .status(400)
+        .json({ success: false, message: '빈값을 채워주세요' });
     }
 
     await TeamTask.updateOne(
@@ -112,14 +122,16 @@ async function teamTaskEdit(req, res, next) {
     );
     return res.status(200).json({
       result: await TeamTask.findOne({ taskId }),
-      ok: true,
+      success: true,
       message: '팀 일정 수정 성공',
     });
   } catch (err) {
     console.log('err: ', err);
-    return res
-      .status(400)
-      .json({ success: false, message: '팀 일정 수정 에러' });
+    return res.status(400).json({
+      success: false,
+      message: '팀 일정 수정 에러',
+      errorMessage: err.message,
+    });
   }
 }
 
@@ -135,15 +147,16 @@ async function teamTaskRemove(req, res, next) {
     if (!existTask) {
       return res
         .status(400)
-        .json({ ok: false, message: '없는 팀 일정입니다.' });
+        .json({ success: false, message: '없는 팀 일정입니다.' });
     }
 
     await TeamTask.deleteOne({ taskId });
-    return res.json({ ok: true, message: '팀 일정 삭제 성공' });
+    return res.json({ success: true, message: '팀 일정 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
-      ok: false,
+      success: false,
       message: '팀 일정 삭제 실패',
+      errorMessage: error.message,
     });
   }
 }
