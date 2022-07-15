@@ -36,7 +36,7 @@ router.post(
 );
 
 // 글 전체 조회(임시)
-router.get(
+router.post(
   '/post/workSpaceName',
   authMiddleware,
   isMember,

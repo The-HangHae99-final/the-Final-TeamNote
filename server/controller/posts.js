@@ -6,67 +6,6 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
-// const s3 = new AWS.S3({
-//   accessKeyId: process.env.accessKeyId,
-//   secretAccessKey: process.env.secretAccessKey,
-//   region: 'ap-northeast-2',
-// });
-
-// const upload = multer({
-//   storage: multerS3({
-//     s3: s3,
-//     bucket: 'kimha',
-//     contentType: multerS3.AUTO_CONTENT_TYPE,
-//     acl: 'public-read-write',
-//     key: function (req, file, cb) {
-//       cb(null, `uploads/${Date.now()}_${file.originalname}`);
-//     },
-//   }),
-// });
-
-// code : 101 , 소속 워크스페이스 공지용 , 채팅 X
-// async function postUpload(req, res, next) {
-//   // 글 작성하기
-//   //#swagger.tags= ['일반 게시글 API'];
-//   //#swagger.summary= '게시글 글 작성 API'
-//   //#swagger.description='-'
-//   try {
-//     const { userName } = res.locals.User;
-//     const { workSpaceName } = req.params;
-
-//     const { title, content } = req.body;
-//     const createdTime = new Date();
-//     console.log(createdTime);
-//     const maxpostId = await Post.findOne().sort({
-//       postId: -1,
-//     });
-//     // console.log(maxpostId)
-//     let postId = 1;
-//     if (maxpostId) {
-//       postId = maxpostId.postId + 1;
-//     }
-
-//     const createdPost = await Post.create({
-//       postId,
-//       workSpaceName,
-//       userName,
-//       title,
-//       content,
-//       createdTime,
-//     });
-//     return res.json({
-//       result: createdPost,
-//       ok: true,
-//       message: '게시물 작성 성공',
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res
-//       .status(400)
-//       .send({ error, errorMessage: '요청한 데이터 형식이 올바르지 않습니다.' });
-//   }
-// }
-
 // 일반 글 전체 조회
 
 async function postAllView(req, res, next) {

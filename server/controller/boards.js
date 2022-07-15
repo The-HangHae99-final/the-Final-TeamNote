@@ -8,7 +8,7 @@ const path = require('path');
 
 //글 작성하기
 // /board/:workSpaceName
-// code : 101 , 소속 워크스페이스 공지용 , 채팅 X
+// code : 101 , 소속 워크스페이스 공지용
 async function boardUpload(req, res, next) {
   // 글 작성하기
 
