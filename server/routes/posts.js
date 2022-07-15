@@ -37,7 +37,7 @@ router.post(
 
 // 글 전체 조회(임시)
 router.post(
-  '/post/workSpaceName',
+  '/post/workSpaceName/all',
   authMiddleware,
   isMember,
   postController.postAllView
