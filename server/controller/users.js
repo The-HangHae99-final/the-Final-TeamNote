@@ -199,10 +199,32 @@ async function all(req, res) {
   }
 }
 
+//유저 검색
+async function searchUser(req, res){
+  try{
+    const { userEmail } = req.body;
+    const existUser = await User.findOne({ userEmail });
+
+    if(existUser)
+    {
+      res.status(200).send({ email: existUser.userEmail, name: existUser.userName  });
+    } 
+    else{
+      res.status(400).send({ errorMessage: '존재하지 않는 유저입니다.'})
+    }
+  }
+  catch{
+    console.log(error);
+    res.status(400).send({ errorMessage: error + '에러가 발생했습니다..' });
+  }
+}
+
 module.exports = {
   signup,
   emailFirst,
   passwordSecond,
   deleteUser,
   all,
+
+
 };
