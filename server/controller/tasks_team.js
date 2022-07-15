@@ -7,10 +7,10 @@ async function teamTaskUpload(req, res, next) {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 알정 생성 API'
     //#swagger.description='-'
-    const { workSpaceName } = req.params;
+
     const { userEmail } = res.locals.User;
     // console.log((res.locals.user))
-    const { startDate, endDate, title, desc, color } = req.body;
+    const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await TeamTask.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
     if (maxTaskId) {
@@ -44,7 +44,7 @@ async function teamTaskAll(req, res, next) {
     //#swagger.tags= ['일정 API'];
     //#swagger.summary= '팀 전체 일정 조회 API'
     //#swagger.description='-'
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
     return res.json({
       result: {
@@ -90,7 +90,7 @@ async function teamTaskEdit(req, res, next) {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '일정 수정 API'
     //#swagger.description='-'
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const taskId = Number(req.params.taskId);
     const [existTask] = await TeamTask.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);

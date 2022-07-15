@@ -18,8 +18,8 @@ async function boardUpload(req, res, next) {
     //##swagger.description='-'
     const image = req.file.location;
     const { userName } = res.locals.User;
-    const { workSpaceName } = req.params;
-    const { title, content } = req.body;
+
+    const { title, content, workSpaceName } = req.body;
 
     const maxboardId = await Board.findOne().sort({
       boardId: -1,
@@ -62,7 +62,7 @@ async function boardAllView(req, res, next) {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 전체 조회 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const boards = await Board.find({ workSpaceName }).sort('-boardId');
     res.send({ boards, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
