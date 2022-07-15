@@ -114,16 +114,20 @@ async function boardEdit(req, res, next) {
     const { user } = res.locals;
     const { title, content } = req.body;
     if (user.userName !== existBoard.userName) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '작성자가 아닙니다.' });
     }
     if (!title || !content) {
-      return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      return res
+        .status(400)
+        .json({ success: false, message: '빈값을 채워주세요' });
     }
 
     await Board.updateOne({ boardId }, { $set: { title, content } });
     return res.status(200).json({
       result: await Board.findOne({ boardId }),
-      ok: true,
+      success: true,
       message: '게시글 수정 성공',
     });
   } catch (err) {
@@ -147,7 +151,7 @@ async function boardDelete(req, res, next) {
 
     if (userName !== targetBoard.userName) {
       return res.status(401).json({
-        ok: false,
+        success: false,
         message: '작성자가 아닙니다.',
       });
     }
@@ -155,7 +159,7 @@ async function boardDelete(req, res, next) {
     return res.json({ ok: true, message: '게시글 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
-      ok: false,
+      success: false,
       message: '게시글 삭제 실패',
     });
   }
