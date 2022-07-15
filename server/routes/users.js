@@ -18,4 +18,6 @@ router.post('/users/password', userController.passwordSecond);
 
 router.delete('/users/delete/:userEmail', userController.deleteUser);
 
+router.get('/users/search', userController.searchUser);
+
 module.exports = router;
