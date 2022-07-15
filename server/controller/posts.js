@@ -157,7 +157,11 @@ async function postUpload(req, res, next) {
     });
     res.json({ result: true });
   } catch (error) {
-    res.send({ errorMessage: error.message, success: false });
+    res.send({
+      category: category,
+      errorMessage: error.message,
+      success: false,
+    });
   }
 }
 
