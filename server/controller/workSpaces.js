@@ -52,7 +52,7 @@ async function memberAdd(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 멤버 추가 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const { userEmail } = req.body;
 
     const [myWorkSpace] = await workSpace.find({ name: workSpaceName });
@@ -94,7 +94,7 @@ async function deleteMember(req, res) {
     //#swagger.summary= '워크 스페이스 멤버 삭제 API'
     //##swagger.description='-'
     const authority = res.locals.User;
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const { memberEmail } = req.body;
     const myWorkSpace = await workSpace.findOne({ name: workSpaceName });
     const existMember = myWorkSpace.memberList.filter(
@@ -134,7 +134,7 @@ async function getMemberList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 멤버 조회 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     console.log(workSpaceName);
     const memberList = await workSpace.findOne({ name: workSpaceName });
     console.log('memberList: ', memberList);
@@ -156,7 +156,7 @@ async function workSpaceLeave(req, res) {
     //#swagger.summary= '워크 스페이스 탈퇴 API'
     //##swagger.description='-'
     const userEmail = res.locals.User.userEmail;
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
 
     const excepted = targetWorkSpace.memberList.filter(
@@ -181,7 +181,7 @@ async function workSpaceRemove(req, res) {
     //#swagger.summary= '워크 스페이스 삭제 API'
     //##swagger.description='-'
     const owner = res.locals.User.userEmail;
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
 
     if (targetWorkSpace.owner === owner) {
@@ -205,7 +205,7 @@ async function roomName(req, res) {
     //#swagger.summary= '방 이름 건네주기 API'
     //#swagger.description='-'
     const me = res.locals.User.userName;
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     const { opponent } = req.params;
 
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });

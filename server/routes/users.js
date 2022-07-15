@@ -10,17 +10,7 @@ const user = require('../schemas/user');
 //회원가입 - 개인
 router.post('/users/signup', userController.signup);
 
-//로그인
-// router.post('/users/login', userController.login);
-
-//소셜로그인
-// router.post(
-//   '/users/login',
-//   passport.authenticate('local', {
-//     session: false,
-//     failureRedirect: '/auth/fail',
-//   })
-// );
+router.get('/users', userController.all);
 
 router.post('/users/email', userController.emailFirst);
 

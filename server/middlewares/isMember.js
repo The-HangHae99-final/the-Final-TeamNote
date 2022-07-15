@@ -3,7 +3,7 @@ const workSpace = require('../schemas/workSpace');
 
 module.exports = async (req, res, next) => {
   try {
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = req.body;
     console.log('workSpaceName: ', workSpaceName);
     const userEmail = res.locals.User.userEmail;
     console.log('userEmail: ', userEmail);

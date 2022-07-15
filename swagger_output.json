@@ -9,18 +9,12 @@
   "basePath": "api",
   "schemes": ["http"],
   "paths": {
-    "/boards/{workSpaceName}": {
+    "/boards/workSpaceName": {
       "post": {
         "tags": ["공지글 API"],
         "summary": "공지글 등록 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -32,6 +26,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "title": {
                   "example": "any"
                 },
@@ -60,12 +57,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -84,18 +75,12 @@
         }
       }
     },
-    "/boards/{workSpaceName}/{boardId}": {
+    "/boards/workSpaceName/{boardId}": {
       "get": {
         "tags": ["공지글 API"],
         "summary": "공지글 한개 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -126,12 +111,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "boardId",
             "in": "path",
             "required": true,
@@ -148,6 +127,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "title": {
                   "example": "any"
                 },
@@ -171,19 +153,13 @@
         }
       }
     },
-    "/board/{workSpaceName}/{boardId}": {
+    "/board/workSpaceName/{boardId}": {
       "delete": {
         "tags": ["공지글 API"],
         "summary": "공지글 삭제 API",
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "boardId",
             "in": "path",
             "required": true,
@@ -208,181 +184,13 @@
         }
       }
     },
-    "/task": {
-      "post": {
-        "tags": ["일정 API"],
-        "summary": "일정 등록 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "start_date": {
-                  "example": "any"
-                },
-                "end_date": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "desc": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "get": {
-        "tags": ["일정 API"],
-        "summary": "일정 조회 API",
-        "description": "-",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/task/{task_id}": {
-      "get": {
-        "tags": ["일정 API"],
-        "summary": "일정 상세조회 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "put": {
-        "tags": ["일정 API"],
-        "summary": "일정 수정 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "start_date": {
-                  "example": "any"
-                },
-                "end_date": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "desc": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["일정 API"],
-        "summary": "일정 삭제 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/board/boardComment/{workSpaceName}/{boardId}": {
+    "/board/boardComment/workSpaceName/{boardId}": {
       "post": {
         "tags": ["공지 댓글 API"],
         "summary": "공지 댓글 작성 API",
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "boardId",
             "in": "path",
             "required": true,
@@ -399,6 +207,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "content": {
                   "example": "any"
                 }
@@ -419,18 +230,12 @@
         }
       }
     },
-    "/board/boardComment/{workSpaceName}/{boardId}/{commentId}": {
+    "/board/boardComment/workSpaceName/{boardId}/{commentId}": {
       "delete": {
         "tags": ["공지 댓글 API"],
         "summary": "공지 댓글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "boardId",
             "in": "path",
@@ -447,6 +252,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -467,12 +284,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "boardId",
             "in": "path",
             "required": true,
@@ -495,6 +306,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "content": {
                   "example": "any"
                 }
@@ -515,18 +329,12 @@
         }
       }
     },
-    "/post/postComment/{workSpaceName}/{postId}": {
+    "/post/postComment/workSpaceName/{postId}": {
       "post": {
         "tags": ["게시글 댓글 API"],
         "summary": "게시글 댓글 작성 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -544,6 +352,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "content": {
                   "example": "any"
                 }
@@ -564,18 +375,12 @@
         }
       }
     },
-    "/post/postComment/{workSpaceName}/{postId}/{commentId}": {
+    "/post/postComment/workSpaceName/{postId}/{commentId}": {
       "delete": {
         "tags": ["게시글 댓글 API"],
         "summary": "게시글 댓글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -592,6 +397,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -612,12 +429,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "postId",
             "in": "path",
             "required": true,
@@ -640,6 +451,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "content": {
                   "example": "any"
                 }
@@ -747,18 +561,12 @@
         }
       }
     },
-    "/board/post/like/{workSpaceName}/{postId}": {
+    "/board/post/like/workSpaceName/{postId}": {
       "put": {
         "tags": ["공지글 좋아요 API"],
         "summary": "공지글 좋아요 등록 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -769,6 +577,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -789,12 +609,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "postId",
             "in": "path",
             "required": true,
@@ -804,6 +618,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -819,18 +645,25 @@
         }
       }
     },
-    "/messages/edit/{workSpaceName}/{_id}": {
+    "/manito": {
+      "get": {
+        "tags": ["마니또 API"],
+        "summary": "마니또 API",
+        "description": "-",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/messages/edit/workSpaceName/{_id}": {
       "put": {
         "tags": ["메세지 API"],
         "summary": "메세지 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "_id",
             "in": "path",
@@ -848,6 +681,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "message": {
                   "example": "any"
                 }
@@ -868,18 +704,12 @@
         }
       }
     },
-    "/messages/delete/{workSpaceName}/{_id}": {
+    "/messages/delete/workSpaceName/{_id}": {
       "delete": {
         "tags": ["메세지 API"],
         "summary": "메세지 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "_id",
             "in": "path",
@@ -890,6 +720,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -905,18 +747,12 @@
         }
       }
     },
-    "/messages/view/{workSpaceName}/{_id}": {
+    "/messages/view/workSpaceName/{_id}": {
       "get": {
         "tags": ["메세지 API"],
         "summary": "메세지 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "_id",
             "in": "path",
@@ -1021,18 +857,12 @@
         }
       }
     },
-    "/post/{workSpaceName}": {
+    "/post/workSpaceName": {
       "post": {
-        "tags": ["공지용 API"],
-        "summary": "공지용 글 작성 API",
+        "tags": ["일반 게시글 API"],
+        "summary": "일반 게시글 등록 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1044,6 +874,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "title": {
                   "example": "any"
                 },
@@ -1067,16 +900,10 @@
         }
       },
       "get": {
-        "tags": ["공지글 API"],
-        "summary": "공지글 글 전체 조회 API",
+        "tags": ["일반 게시글 API"],
+        "summary": "게시글 글 전체 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1096,18 +923,12 @@
         }
       }
     },
-    "/post/{workSpaceName}/{postId}": {
+    "/post/workSpaceName/{postId}": {
       "get": {
-        "tags": ["공지용 API"],
-        "summary": "공지용 특정 글 조회 API",
+        "tags": ["일반 게시글 API"],
+        "summary": "일반게시글 특정 글 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -1133,16 +954,10 @@
         }
       },
       "put": {
-        "tags": ["공지글 API"],
-        "summary": "공지용 글 수정 API",
+        "tags": ["일반 게시글 API"],
+        "summary": "일반 게시글 글 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
             "in": "path",
@@ -1160,6 +975,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "title": {
                   "example": "any"
                 },
@@ -1183,49 +1001,12 @@
         }
       },
       "delete": {
-        "tags": ["공지용 API"],
-        "summary": "공지용 삭제 API",
+        "tags": ["일반 게시글 API"],
+        "summary": "일반 게시글 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "postId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/task/team/{workSpaceName}": {
-      "post": {
-        "tags": ["팀 일정 API"],
-        "summary": "팀 알정 생성 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "workSpaceName",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1241,6 +1022,46 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/task/team/workSpaceName": {
+      "post": {
+        "tags": ["팀 일정 API"],
+        "summary": "팀 알정 생성 API",
+        "description": "-",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "startDate": {
                   "example": "any"
                 },
@@ -1274,15 +1095,9 @@
       },
       "get": {
         "tags": ["일정 API"],
-        "summary": "팀 전체 일정 조회 API",
+        "summary": "팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1302,18 +1117,12 @@
         }
       }
     },
-    "/task/team/{workSpaceName}/{taskId}": {
+    "/task/team/workSpaceName/{taskId}": {
       "get": {
         "tags": ["팀 일정 API"],
         "summary": "팀 일정 상세조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -1340,15 +1149,9 @@
       },
       "put": {
         "tags": ["팀 일정 API"],
-        "summary": "일정 수정 API",
+        "summary": "일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -1366,6 +1169,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "startDate": {
                   "example": "any"
                 },
@@ -1403,44 +1209,7 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "taskId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/task/{workSpaceName}": {
-      "post": {
-        "tags": ["개인 일정 API"],
-        "summary": "개인 일정 생성 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "workSpaceName",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1456,6 +1225,46 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/task/work": {
+      "post": {
+        "tags": ["개인 일정 API"],
+        "summary": "개인 일정 생성 API",
+        "description": "-",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "startDate": {
                   "example": "any"
                 },
@@ -1486,18 +1295,14 @@
             "description": "Unauthorized"
           }
         }
-      },
+      }
+    },
+    "/task/workSpaceName": {
       "get": {
         "tags": ["개인 일정 API"],
         "summary": "개인 일정 전체조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1517,18 +1322,12 @@
         }
       }
     },
-    "/task/{workSpaceName}/{taskId}": {
+    "/task/workSpaceName/{taskId}": {
       "get": {
         "tags": ["개인 일정 API"],
         "summary": "개인 일정 상세 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -1558,12 +1357,6 @@
         "summary": "개인 일정 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -1618,12 +1411,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "taskId",
             "in": "path",
             "required": true,
@@ -1653,7 +1440,20 @@
         "tags": ["회원가입 API"],
         "summary": "회원가입 API",
         "description": "-",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -1663,6 +1463,22 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["회원 확인용 API"],
+        "summary": "회원 확인용 API",
+        "description": "-",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -1689,6 +1505,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -1785,18 +1604,12 @@
         }
       }
     },
-    "/workSpace/memberAdd/{workSpaceName}": {
+    "/workSpace/memberAdd/workSpaceName": {
       "put": {
         "tags": ["워크 스페이스 API"],
         "summary": "워크 스페이스 멤버 추가 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1808,6 +1621,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "userEmail": {
                   "example": "any"
                 }
@@ -1828,18 +1644,12 @@
         }
       }
     },
-    "/workSpace/getRoomName/{workSpaceName}/{opponent}": {
+    "/workSpace/getRoomName/workSpaceName/{opponent}": {
       "get": {
         "tags": ["워크 스페이스 API"],
         "summary": "방 이름 건네주기 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "opponent",
             "in": "path",
@@ -1865,18 +1675,12 @@
         }
       }
     },
-    "/workSpace/MemberList/{workSpaceName}": {
+    "/workSpace/MemberList/workSpaceName": {
       "get": {
         "tags": ["워크 스페이스 API"],
         "summary": "워크 스페이스 멤버 조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1896,18 +1700,12 @@
         }
       }
     },
-    "/workSpace/deleteMember/{workSpaceName}": {
+    "/workSpace/deleteMember/workSpaceName": {
       "put": {
         "tags": ["워크 스페이스 API"],
         "summary": "워크 스페이스 멤버 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1919,6 +1717,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                },
                 "memberEmail": {
                   "example": "any"
                 }
@@ -1939,22 +1740,28 @@
         }
       }
     },
-    "/workSpace/workSpaceLeave/{workSpaceName}": {
+    "/workSpace/workSpaceLeave/workSpaceName": {
       "put": {
         "tags": ["워크 스페이스 API"],
         "summary": "워크 스페이스 탈퇴 API",
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -1970,22 +1777,28 @@
         }
       }
     },
-    "/workSpace/workSpaceRemove/{workSpaceName}": {
+    "/workSpace/workSpaceRemove/workSpaceName": {
       "delete": {
         "tags": ["워크 스페이스 API"],
         "summary": "워크 스페이스 삭제 API",
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -2006,13 +1819,22 @@
         "tags": ["워크 스페이스 API"],
         "summary": "본인이 속한 워크 스페이스 목록 조회 API",
         "description": "-",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }

@@ -118,8 +118,6 @@ async function emailFirst(req, res) {
     console.log('userEmail: ', userEmail);
     const userFind = await User.findOne({ userEmail });
 
-    console.log('userFind----------- ', userFind);
-
     if (!userFind) {
       console.log(userFind);
       res.status(400).json({ success: false });
@@ -187,6 +185,19 @@ async function deleteUser(req, res) {
     res.status(400).send({ errorMessage: error + '에러가 발생했습니다..' });
   }
 }
+//가입된 유저 확인
+async function all(req, res) {
+  try {
+    //#swagger.tags= ['회원 확인용 API'];
+    //#swagger.summary= '회원 확인용 API'
+    //#swagger.description='-'
+
+    const userAll = await User.find({});
+    res.status(200).send({ userAll: userAll, success: false });
+  } catch (error) {
+    res.status(400).send({ errorMessage: error.message, success: false });
+  }
+}
 
 //유저 검색
 async function searchUser(req, res){
@@ -213,5 +224,7 @@ module.exports = {
   emailFirst,
   passwordSecond,
   deleteUser,
-  searchUser
+  all,
+
+
 };
