@@ -11,7 +11,7 @@
   "paths": {
     "/boards/{workSpaceName}": {
       "post": {
-        "tags": ["공지글 API_"],
+        "tags": ["공지글 API"],
         "summary": "공지글 등록 API",
         "description": "-",
         "parameters": [
@@ -1348,18 +1348,12 @@
         }
       }
     },
-    "/task/team/{workSpaceName}": {
+    "/task/team/workSpaceName": {
       "post": {
         "tags": ["팀 일정 API"],
         "summary": "팀 알정 생성 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1411,12 +1405,6 @@
         "description": "-",
         "parameters": [
           {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -1435,18 +1423,12 @@
         }
       }
     },
-    "/task/team/{workSpaceName}/{taskId}": {
+    "/task/team/workSpaceName/{taskId}": {
       "get": {
         "tags": ["팀 일정 API"],
         "summary": "팀 일정 상세조회 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -1476,12 +1458,6 @@
         "summary": "일정 수정 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -1538,12 +1514,6 @@
         "summary": "팀 일정 삭제 API",
         "description": "-",
         "parameters": [
-          {
-            "name": "workSpaceName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "taskId",
             "in": "path",
