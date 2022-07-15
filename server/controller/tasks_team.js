@@ -42,10 +42,11 @@ async function teamTaskUpload(req, res, next) {
 async function teamTaskAll(req, res, next) {
   try {
     //#swagger.tags= ['일정 API'];
-    //#swagger.summary= '팀 전체 일정 조회 API'
+    //#swagger.summary= '팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
+
     const { workSpaceName } = req.body;
-    tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
+    const tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
     return res.json({
       result: {
         count: tasks.length,
@@ -92,7 +93,7 @@ async function teamTaskDetail(req, res, next) {
 async function teamTaskEdit(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
-    //#swagger.summary= '일정 수정 API'
+    //#swagger.summary= '일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
     const { workSpaceName } = req.body;
     const taskId = Number(req.params.taskId);

@@ -214,186 +214,6 @@
         }
       }
     },
-    "/task": {
-      "post": {
-        "tags": ["일정 API"],
-        "summary": "일정 등록 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "workSpaceName": {
-                  "example": "any"
-                },
-                "start_date": {
-                  "example": "any"
-                },
-                "end_date": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "desc": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "get": {
-        "tags": ["일정 API"],
-        "summary": "일정 조회 API",
-        "description": "-",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/task/{task_id}": {
-      "get": {
-        "tags": ["일정 API"],
-        "summary": "일정 상세조회 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "put": {
-        "tags": ["일정 API"],
-        "summary": "일정 수정 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "workSpaceName": {
-                  "example": "any"
-                },
-                "start_date": {
-                  "example": "any"
-                },
-                "end_date": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "desc": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["일정 API"],
-        "summary": "일정 삭제 API",
-        "description": "-",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "workSpaceName": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
     "/board/boardComment/{workSpaceName}/{boardId}": {
       "post": {
         "tags": ["공지 댓글 API"],
@@ -1401,7 +1221,7 @@
       },
       "get": {
         "tags": ["일정 API"],
-        "summary": "팀 전체 일정 조회 API",
+        "summary": "팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.",
         "description": "-",
         "parameters": [
           {
@@ -1455,7 +1275,7 @@
       },
       "put": {
         "tags": ["팀 일정 API"],
-        "summary": "일정 수정 API",
+        "summary": "일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.",
         "description": "-",
         "parameters": [
           {
