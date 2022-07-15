@@ -11,7 +11,7 @@
   "paths": {
     "/boards/{workSpaceName}": {
       "post": {
-        "tags": ["공지글 API"],
+        "tags": ["공지글 API_"],
         "summary": "공지글 등록 API",
         "description": "-",
         "parameters": [
