@@ -27,6 +27,7 @@ const upload = multer({
   }),
 });
 
+//일반 게시글
 //글 작성
 router.post(
   '/post/workSpaceName',
@@ -43,7 +44,7 @@ router.post(
   postController.postAllView
 );
 
-// 글 한개 조회
+// 글 상세 조회
 router.get(
   '/post/workSpaceName/:postId',
   authMiddleware,
