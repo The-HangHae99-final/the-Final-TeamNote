@@ -151,6 +151,7 @@ async function postUpload(req, res, next) {
       createdTime,
     });
     return res.json({
+      category: category,
       result: createdPost,
       ok: true,
       message: '게시물 작성 성공',
