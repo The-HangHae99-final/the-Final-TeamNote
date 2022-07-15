@@ -5,6 +5,9 @@ const nodemailer = require('nodemailer');
 const { response } = require('express');
 
 async function manito_(req, res, next) {
+  //#swagger.tags= ['마니또 API'];
+  //#swagger.summary= '마니또 API'
+  //#swagger.description='-'
   try {
     const emailBox = [];
     const userFind = await User.find({});
