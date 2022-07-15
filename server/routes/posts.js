@@ -68,6 +68,6 @@ router.delete(
   postController.postDelete
 );
 
-router.post('/image', upload.single('image'), postController.postImage);
+// router.post('/image', upload.single('image'), postController.postImage);
 
 module.exports = router;
