@@ -9,7 +9,7 @@ router.post('/workSpace', authMiddleware, workSpaceController.create);
 
 //워크스페이스 탈퇴하기
 router.put(
-  '/workSpace/workSpaceLeave',
+  '/workSpace/leave',
   authMiddleware,
   isMember,
   workSpaceController.workSpaceLeave
@@ -17,7 +17,7 @@ router.put(
 
 //워크스페이스 삭제
 router.delete(
-  '/workSpace/workSpaceRemove',
+  '/workSpace',
   authMiddleware,
   isMember,
   workSpaceController.workSpaceRemove
