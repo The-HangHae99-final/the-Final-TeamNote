@@ -96,35 +96,7 @@ async function workSpaceRemove(req, res) {
   }
 }
 
-//방 이름 건네주기
-// router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, isMember, workSpaceController.roomName);
-async function roomName(req, res) {
-  try {
-    //#swagger.tags= ['워크 스페이스 API'];
-    //#swagger.summary= '방 이름 건네주기 API'
-    //#swagger.description='-'
-    const me = res.locals.User.userName;
-    const { workSpaceName } = req.body;
-    const { opponent } = req.params;
 
-    const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    for (let i = 0; i < existWorkSpace.memberList.length; i++) {
-      if (existWorkSpace.memberList[i].memberName === opponent) {
-        const roomId = [me, opponent];
-        roomId.sort();
-
-        return res.status(200).json({
-          result: roomId[0] + roomId[1],
-
-          ok: true,
-          message: '룸 이름 얻기 성공',
-        });
-      }
-    }
-  } catch (err) {
-    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
-  }
-}
 
 //본인 속한 워크스페이스 목록 조회
 // router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
@@ -173,7 +145,6 @@ async function everyWorkSpace(req, res) {
 
 module.exports = {
   create,
-  roomName,
   workSpaceLeave,
   workSpaceRemove,
   getWorkSpaceList,
