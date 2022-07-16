@@ -14,8 +14,8 @@ const path = require('path');
 var appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
-  userName: Joi.string().required().min(1).max(5),
-  password: Joi.string().required().min(6).max(30),
+  userName: Joi.string().required(),
+  password: Joi.string().required(),
   confirmPassword: Joi.string().required(),
 });
 
@@ -38,12 +38,10 @@ async function signup(req, res) {
     }
 
     if (password <= 5) {
-      res
-        .status(400)
-        .send({
-          success: false,
-          errorMessage: '6글자 이상으로 입력해주세요..',
-        });
+      res.status(400).send({
+        success: false,
+        errorMessage: '6글자 이상으로 입력해주세요..',
+      });
     }
     if (userName.length >= 6) {
       res
