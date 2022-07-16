@@ -200,7 +200,7 @@ async function all(req, res) {
 }
 
 //유저 검색
-async function searchUser(req, res){
+async function search(req, res){
   try{
     const { userEmail } = req.body;
     const existUser = await User.findOne({ userEmail });
@@ -225,6 +225,5 @@ module.exports = {
   passwordSecond,
   deleteUser,
   all,
-
-
+  search
 };
