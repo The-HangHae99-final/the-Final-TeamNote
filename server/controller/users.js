@@ -237,48 +237,45 @@ async function searchUser(req, res) {
 }
 
 async function mailing(req, res) {
-  const { smtpTransport } = require('../controller/util/email');
-  var generateRandom = function (min, max) {
-    var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    return ranNum;
-  };
+  min = Math.ceil(111111);
+  max = Math.floor(999999);
+  const number = Math.floor(Math.random() * (max - min)) + min;
+  const { userEmail } = req.body;
 
-  const auth = {
-    SendEmail: async (req, res, next) => {
-      const number = generateRandom(111111, 999999);
-
-      const sendEmail = req.body.userEmail;
-
-      const mailOptions = {
-        from: '팀노트 이메일 인증메일',
-        to: sendEmail,
-        subject: '[팀노트]인증 관련 이메일 입니다',
-        text: '오른쪽 숫자 6자리를 입력해주세요 : ' + number,
-      };
-      next();
-
-      const result = await smtpTransport.sendMail(
-        mailOptions,
-        (error, responses) => {
-          if (error) {
-            return res
-              .status(statusCode.OK)
-              .send(
-                util.fail(statusCode.BAD_REQUEST, responseMsg.AUTH_EMAIL_FAIL)
-              );
-          } else {
-            /* 클라이언트에게 인증 번호를 보내서 사용자가 맞게 입력하는지 확인! */
-            return res.status(statusCode.OK).send(
-              util.success(statusCode.OK, responseMsg.AUTH_EMAIL_SUCCESS, {
-                number: number,
-              })
-            );
-          }
-          smtpTransport.close();
-        }
-      );
+  let transporter = nodemailer.createTransport({
+    service: 'naver', // 메일 이용할 서비스
+    host: 'smtp.naver.com', // SMTP 서버명
+    port: 587, // SMTP 포트
+    auth: {
+      user: 'hanghae99@naver.com', // 사용자 이메일
+      pass: process.env.password, // 사용자 패스워드
     },
+  });
+
+  // 메일 옵션
+  let mailOptions = {
+    from: 'hanghae99@naver.com', // 메일 발신자
+    to: userEmail, // 메일 수신자
+
+    // 회원가입 완료하고 축하 메시지 전송할 시
+    // to: req.body.userid
+    subject: `고객님의 팀노트 회원가입을 축하합니다.`, // 메일 제목
+    html: `<h2>고객님의 팀 협업 행복을 응원합니다.</h2>
+          <br/>
+          <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
+          <p>팀노트 200% 활용법을 확인해 보세요.</p>
+          <p> 옆의 숫자를 입력해주세요.--- ${number} ---</p>
+          <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
   };
+  // 메일 발송
+  transporter.sendMail(mailOptions, function (err, success) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Email sent successfully!');
+    }
+  });
+  res.send({ number: number });
 }
 
 module.exports = {
