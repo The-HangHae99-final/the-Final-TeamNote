@@ -8,10 +8,8 @@ const path = require('path');
 
 //글 작성하기
 // /board/:workSpaceName
-// code : 101 , 소속 워크스페이스 공지용
+// 소속 워크스페이스 공지용
 async function boardUpload(req, res, next) {
-  // 글 작성하기
-
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 등록 API'
@@ -43,14 +41,16 @@ async function boardUpload(req, res, next) {
     });
     return res.json({
       result: createdBoard,
-      ok: true,
+      success: true,
       message: '게시물 작성 성공',
     });
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .send({ error, errorMessage: '요청한 데이터 형식이 올바르지 않습니다.' });
+    res.status(400).send({
+      success: false,
+      Message: '요청한 데이터 형식이 올바르지 않습니다.',
+      errorMessage: error.message,
+    });
   }
 }
 
@@ -67,13 +67,14 @@ async function boardAllView(req, res, next) {
     res.send({ boards, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ error, errMessage: '공지 조회에 실패 했습니다.' });
+    res.status(400).send({
+      Message: '공지 조회에 실패 했습니다.',
+      errorMessage: error.message,
+    });
   }
 }
 
 //글 하나 조회
-// 이 부분도 파라미터 값 받아야함
-
 // /board/:workSpaceName/:boardId
 async function boardView(req, res, next) {
   try {
@@ -85,7 +86,7 @@ async function boardView(req, res, next) {
     if (!existsBoard.length) {
       return res
         .status(400)
-        .json({ ok: false, errorMessage: '찾는 게시물 없음.' });
+        .json({ success: false, errorMessage: '찾는 게시물 없음.' });
     }
 
     const existsComment = await boardComment.find({ boardId }).sort({
@@ -95,14 +96,13 @@ async function boardView(req, res, next) {
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      Message: '요청한 데이터 형식이 올바르지 않습니다.',
+      errorMessage: err.message,
     });
   }
 }
 
 // 글 수정
-// 수정시간 넣기
-// 카테고리 빼기
 // /board/:workSpaceName/:boardId
 async function boardEdit(req, res, next) {
   try {
@@ -131,9 +131,11 @@ async function boardEdit(req, res, next) {
       message: '게시글 수정 성공',
     });
   } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false, message: '게시글 수정 에러' });
+    return res.status(400).json({
+      success: false,
+      message: '게시글 수정 에러',
+      errorMessage: err.message,
+    });
   }
 }
 
@@ -161,6 +163,7 @@ async function boardDelete(req, res, next) {
     return res.status(400).json({
       success: false,
       message: '게시글 삭제 실패',
+      errorMessage: error.message,
     });
   }
 }
