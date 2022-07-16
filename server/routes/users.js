@@ -20,4 +20,6 @@ router.delete('/users/delete/:userEmail', userController.deleteUser);
 
 router.get('/users/search', userController.searchUser);
 
+router.post('/users/mailing', userController.mailing);
+
 module.exports = router;

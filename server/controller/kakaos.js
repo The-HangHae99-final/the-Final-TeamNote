@@ -6,6 +6,11 @@ const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
 var User = require('../schemas/user');
+const { smtpTransport } = require('../controller/util/email');
+var generateRandom = function (min, max) {
+  var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
+  return ranNum;
+};
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 var express = require('express');
@@ -52,6 +57,7 @@ function kakao_callback(req, res, next) {
     console.log(message.err);
   }
 }
+
 // 프론트에게서 인가코드를 받는다 post_1
 // 서버에서 인가코드를 가지고 카톡에게서 토큰을 받는다.
 // 토큰을 클라이언트에게 보낸다.
@@ -128,7 +134,7 @@ async function kakao_parsing(req, res) {
       await social.update({ refresh_token }, { where: { userEmail } });
       res.send(token);
     } else {
-      // 다른 경우라면,
+      // 만약 디비에 user의 email이 있다면,
       // 기존에서 리프레시 토큰만 대체하기
       await double.update({ refresh_token }, { where: { userEmail } });
       res.send(token);
@@ -138,6 +144,7 @@ async function kakao_parsing(req, res) {
     console.log('error =' + error);
   }
 }
+
 module.exports = {
   kakao_callback,
   kakao_member,

@@ -9,11 +9,13 @@ const user = require('../schemas/user');
 const validator = require('email-validator');
 const { response } = require('express');
 const { error } = require('winston');
-
+const ejs = require('ejs');
+const path = require('path');
+var appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
-  userEmail: Joi.string().required().email(),
-  userName: Joi.string().required(),
-  password: Joi.string().required(),
+  userEmail: Joi.string().required(),
+  userName: Joi.string().required().min(1).max(5),
+  password: Joi.string().required().min(6).max(30),
   confirmPassword: Joi.string().required(),
 });
 
@@ -104,7 +106,7 @@ async function signup(req, res) {
   } catch (error) {
     res.status(401).send({
       success: false,
-      errorMessage: error + '특정할 수 없는 에러가 발생했습니다..',
+      errorMessage: error.message,
     });
   }
 }
@@ -234,6 +236,51 @@ async function searchUser(req, res) {
   }
 }
 
+async function mailing(req, res) {
+  const { smtpTransport } = require('../controller/util/email');
+  var generateRandom = function (min, max) {
+    var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    return ranNum;
+  };
+
+  const auth = {
+    SendEmail: async (req, res, next) => {
+      const number = generateRandom(111111, 999999);
+
+      const sendEmail = req.body.userEmail;
+
+      const mailOptions = {
+        from: '팀노트 이메일 인증메일',
+        to: sendEmail,
+        subject: '[팀노트]인증 관련 이메일 입니다',
+        text: '오른쪽 숫자 6자리를 입력해주세요 : ' + number,
+      };
+      next();
+
+      const result = await smtpTransport.sendMail(
+        mailOptions,
+        (error, responses) => {
+          if (error) {
+            return res
+              .status(statusCode.OK)
+              .send(
+                util.fail(statusCode.BAD_REQUEST, responseMsg.AUTH_EMAIL_FAIL)
+              );
+          } else {
+            /* 클라이언트에게 인증 번호를 보내서 사용자가 맞게 입력하는지 확인! */
+            return res.status(statusCode.OK).send(
+              util.success(statusCode.OK, responseMsg.AUTH_EMAIL_SUCCESS, {
+                number: number,
+              })
+            );
+          }
+          smtpTransport.close();
+        }
+      );
+    },
+  };
+}
+
 module.exports = {
   signup,
   emailFirst,
@@ -241,4 +288,5 @@ module.exports = {
   deleteUser,
   all,
   searchUser,
+  mailing,
 };
