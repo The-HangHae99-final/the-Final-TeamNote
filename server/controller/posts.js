@@ -18,7 +18,11 @@ async function postAllView(req, res, next) {
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ error, errMessage: '공지 조회에 실패 했습니다.' });
+    res.status(400).send({
+      success: false,
+      message: '공지 조회에 실패 했습니다.',
+      errorMessage: error.message,
+    });
   }
 }
 
@@ -41,11 +45,13 @@ async function postView(req, res, next) {
     const existsComment = await postComment.find({ postId }).sort({
       commentId: -1,
     });
-    res.json({ existsPost, existsComment });
-  } catch (err) {
-    console.log(err);
+    res.json({ success: true, existsPost, existsComment });
+  } catch (error) {
+    console.log(error);
     res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      success: false,
+      message: '요청한 데이터 형식이 올바르지 않습니다.',
+      errorMessage: error.message,
     });
   }
 }
@@ -80,9 +86,11 @@ async function postEdit(req, res, next) {
       message: '게시글 수정 성공',
     });
   } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false, message: '게시글 수정 에러' });
+    return res.status(400).json({
+      success: false,
+      message: '게시글 수정 에러',
+      errorMessage: err.message,
+    });
   }
 }
 
@@ -109,17 +117,18 @@ async function postDelete(req, res, next) {
     return res.status(400).json({
       success: false,
       message: '게시글 삭제 실패',
+      errorMessage: error.message,
     });
   }
 }
-// image 한개 업로드
+// image 1개 업로드 API
 async function postImage(req, res, next) {
   try {
     console.log('경로 정보입니다.', req.file.location);
     console.log('req.body정보', req.body.title);
-    res.json('hi');
+    res.json('이미지 업로드에 성공하였습니다.');
   } catch (error) {
-    res.json('bye');
+    res.json('이미지 업로드에 실패하였습니다.');
   }
 }
 
@@ -163,8 +172,8 @@ async function postUpload(req, res, next) {
     res.json({ result: true });
   } catch (error) {
     res.send({
-      errorMessage: error.message,
       success: false,
+      errorMessage: error.message,
     });
   }
 }
