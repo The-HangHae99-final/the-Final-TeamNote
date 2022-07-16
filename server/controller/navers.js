@@ -107,8 +107,12 @@ async function naver_parsing(req, res) {
       const social = new User({ userName, userEmail, site });
       social.save();
       res.send('저장에 성공하였습니다.');
+    } else if (double.userName == userName) {
+      //이름까지 같다면 통과
+      await double.update({ refresh_token }, { where: { userEmail } });
+      res.send({ token });
     } else {
-      res.send('이미 있는 유저입니다.');
+      res.status(400).send({ errorMessage: '에러가 발생했습니다.' });
     }
   } catch (err) {
     res.status(400).send('에러가 발생했습니다.');

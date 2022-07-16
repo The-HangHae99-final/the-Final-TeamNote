@@ -128,16 +128,21 @@ async function kakao_parsing(req, res) {
     // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new User({ userEmail, userName, site });
+      // 이메일 인증하기
+
+      const social = new User({ userEmail, userName, site, auth }); // auth는 false 디폴트
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { userEmail } });
-      res.send(token);
-    } else {
+      res.send({ token });
+    } else if (double.userName == userName) {
+      // 닉네임이 같다면 통과.
       // 만약 디비에 user의 email이 있다면,
       // 기존에서 리프레시 토큰만 대체하기
       await double.update({ refresh_token }, { where: { userEmail } });
-      res.send(token);
+      res.send({ token });
+    } else {
+      res.status(400).send('에러가 발생했습니다.');
     }
   } catch (error) {
     res.status(400).send('에러가 발생했습니다.');
