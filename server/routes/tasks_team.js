@@ -16,7 +16,6 @@ router.post(
 router.get(
   '/task/team/workSpaceName',
   authMiddleware,
-  isMember,
   taskController.teamTaskAll
 );
 
@@ -24,7 +23,6 @@ router.get(
 router.get(
   '/task/team/workSpaceName/:taskId',
   authMiddleware,
-  isMember,
   taskController.teamTaskDetail
 );
 

@@ -9,6 +9,7 @@ const postSchema = new Schema({
   content: { type: String, required: true }, //글 내용
   createdTime: { type: String, required: true },
   image: { type: String },
+  category: { type: String, required: true },
   // likes: { type: Number, default: 0 }, // 좋아요 수
 });
 
