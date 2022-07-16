@@ -5,8 +5,8 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "13.209.3.168:3001/",
-  "basePath": "api",
+  "host": "13.209.3.168:3001",
+  "basePath": "/api",
   "schemes": ["http"],
   "paths": {
     "/boards/workSpaceName": {
@@ -882,6 +882,9 @@
                 },
                 "content": {
                   "example": "any"
+                },
+                "category": {
+                  "example": "any"
                 }
               }
             }
@@ -898,8 +901,10 @@
             "description": "Unauthorized"
           }
         }
-      },
-      "get": {
+      }
+    },
+    "/post/workSpaceName/all": {
+      "post": {
         "tags": ["일반 게시글 API"],
         "summary": "게시글 글 전체 조회 API",
         "description": "-",
@@ -908,6 +913,18 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workSpaceName": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -1045,7 +1062,7 @@
     "/task/team/workSpaceName": {
       "post": {
         "tags": ["팀 일정 API"],
-        "summary": "팀 알정 생성 API",
+        "summary": "팀 일정 생성 API",
         "description": "-",
         "parameters": [
           {
@@ -1094,7 +1111,7 @@
         }
       },
       "get": {
-        "tags": ["일정 API"],
+        "tags": ["팀 일정 API"],
         "summary": "팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.",
         "description": "-",
         "parameters": [
@@ -1245,7 +1262,7 @@
         }
       }
     },
-    "/task/work": {
+    "/mytask/work": {
       "post": {
         "tags": ["개인 일정 API"],
         "summary": "개인 일정 생성 API",
@@ -1297,7 +1314,7 @@
         }
       }
     },
-    "/task/workSpaceName": {
+    "/mytask": {
       "get": {
         "tags": ["개인 일정 API"],
         "summary": "개인 일정 전체조회 API",
@@ -1322,7 +1339,7 @@
         }
       }
     },
-    "/task/workSpaceName/{taskId}": {
+    "/mytask/{taskId}": {
       "get": {
         "tags": ["개인 일정 API"],
         "summary": "개인 일정 상세 조회 API",
@@ -1406,7 +1423,7 @@
         }
       },
       "delete": {
-        "tags": ["일정 API"],
+        "tags": ["개인 일정 API"],
         "summary": "개인 일정 삭제 API",
         "description": "-",
         "parameters": [
@@ -1557,6 +1574,22 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/users/search": {
+      "get": {
+        "tags": [" 유저 검색 API"],
+        "summary": "유저 검색 API",
+        "description": "-",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
