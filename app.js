@@ -6,7 +6,8 @@ const connect = require('./server/schemas/db');
 const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
-const usersRouter = require('./server/routes/users');
+const userRouter = require('./server/routes/users');
+const memberRouter = require('./server/routes/members')
 const postsRouter = require('./server/routes/posts');
 const messageRouter = require('./server/routes/message');
 const commentsRouter = require('./server/routes/comments');
@@ -48,7 +49,7 @@ app.use(
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use('/api', [
-  usersRouter,
+  userRouter,
   postsRouter,
   messageRouter,
   commentsRouter,
@@ -60,6 +61,7 @@ app.use('/api', [
   tasksRouter,
   boardRouter,
   manitoRouter,
+  memberRouter
 ]);
 // app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');

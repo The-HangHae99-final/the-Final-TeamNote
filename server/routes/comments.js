@@ -7,7 +7,7 @@ const isMember = require('../middlewares/isMember');
 //보드 댓글 작성
 //댓글 작성
 router.post(
-  '/board/boardComment/workSpaceName/:boardId',
+  '/board/:boardId',
   authMiddleware,
   isMember,
   commentController.boardCommentUpload
@@ -15,7 +15,7 @@ router.post(
 
 //댓글 삭제 (수정여부 보류)
 router.delete(
-  '/board/boardComment/workSpaceName/:boardId/:commentId',
+  '/board/:boardId/:commentId',
   authMiddleware,
   isMember,
   commentController.boardCommentDelete
@@ -23,7 +23,7 @@ router.delete(
 
 //댓글 수정
 router.put(
-  '/board/boardComment/workSpaceName/:boardId/:commentId',
+  '/board/:boardId/:commentId',
   authMiddleware,
   isMember,
   commentController.boardCommentEdit
@@ -32,7 +32,7 @@ router.put(
 //포스트 댓글 작성
 //댓글 작성
 router.post(
-  '/post/postComment/workSpaceName/:postId',
+  '/post/:postId',
   authMiddleware,
   isMember,
   commentController.postCommentUpload
@@ -40,7 +40,7 @@ router.post(
 
 //댓글 삭제
 router.delete(
-  '/post/postComment/workSpaceName/:postId/:commentId',
+  '/post/:postId/:commentId',
   authMiddleware,
   isMember,
   commentController.postCommentDelete
@@ -48,7 +48,7 @@ router.delete(
 
 //댓글 수정
 router.put(
-  '/post/postComment/workSpaceName/:postId/:commentId',
+  '/post/:postId/:commentId',
   authMiddleware,
   isMember,
   commentController.postCommentEdit

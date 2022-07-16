@@ -30,13 +30,16 @@ const upload = multer({
 //일반 게시글
 //글 작성
 router.post(
-  '/post/workSpaceName',
+  '/post',
+  upload.single('img'),
+
   authMiddleware,
   isMember,
   postController.postUpload
 );
 
 // 글 전체 조회(임시)
+
 router.post(
   '/post/workSpaceName/all',
   authMiddleware,
@@ -46,7 +49,7 @@ router.post(
 
 // 글 상세 조회
 router.get(
-  '/post/workSpaceName/:postId',
+  '/post/:postId',
   authMiddleware,
   isMember,
   postController.postView
@@ -54,7 +57,7 @@ router.get(
 
 // 글 수정
 router.put(
-  '/post/workSpaceName/:postId',
+  '/post/:postId',
   authMiddleware,
   isMember,
   postController.postEdit
@@ -62,7 +65,7 @@ router.put(
 
 // 글 삭제
 router.delete(
-  '/post/workSpaceName/:postId',
+  '/post/:postId',
   authMiddleware,
   isMember,
   postController.postDelete

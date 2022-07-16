@@ -4,6 +4,7 @@ const postComment = require('../schemas/postComment');
 const boardComment = require('../schemas/boardComment');
 
 //code :102 공지 댓글 작성하기
+//  api/board/:boardId
 async function boardCommentUpload(req, res) {
   try {
     //#swagger.tags= ['공지 댓글 API'];
@@ -41,6 +42,7 @@ async function boardCommentUpload(req, res) {
   }
 }
 //댓글 삭제하기
+//  api/board/:boardId/:commentId
 async function boardCommentDelete(req, res) {
   try {
     //#swagger.tags= ['공지 댓글 API'];
@@ -75,6 +77,7 @@ async function boardCommentDelete(req, res) {
   }
 }
 //댓글 수정하기
+//  api/board/:boardId/:commentId
 async function boardCommentEdit(req, res) {
   //#swagger.tags= ['공지 댓글 API'];
   //#swagger.summary= '공지 댓글 수정 API'
@@ -102,6 +105,7 @@ async function boardCommentEdit(req, res) {
 }
 
 //포스트 댓글 작성
+//  api/post/:postId
 async function postCommentUpload(req, res) {
   try {
     //#swagger.tags= ['게시글 댓글 API'];
@@ -140,6 +144,7 @@ async function postCommentUpload(req, res) {
 }
 
 //포스트 댓글 수정하기
+//  api/post/:postId/:commentId
 async function postCommentEdit(req, res) {
   //#swagger.tags= ['게시글 댓글 API'];
   //#swagger.summary= '게시글 댓글 수정 API'
@@ -167,6 +172,7 @@ async function postCommentEdit(req, res) {
 }
 
 //포스트 댓글 삭제하기
+//  api/post/:postId/:commentId
 async function postCommentDelete(req, res) {
   try {
     //#swagger.tags= ['게시글 댓글 API'];
