@@ -142,7 +142,15 @@ async function kakao_parsing(req, res) {
       await double.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
     } else {
-      res.status(400).send('에러가 발생했습니다.');
+      // 랜덤난수 생성
+      min = Math.ceil(111111);
+      max = Math.floor(999999);
+      const number = Math.floor(Math.random() * (max - min)) + min;
+      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
+
+      userEmail = userEmail + number;
+      const social = new User({ userName, userEmail, site });
+      social.save();
     }
   } catch (error) {
     res.status(400).send('에러가 발생했습니다.');

@@ -108,11 +108,19 @@ async function naver_parsing(req, res) {
       social.save();
       res.send('저장에 성공하였습니다.');
     } else if (double.userName == userName) {
-      //이름까지 같다면 통과
+      //이름까지 같다면 통과, 리프레시 토큰만 대체
       await double.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
     } else {
-      res.status(400).send({ errorMessage: '에러가 발생했습니다.' });
+      // 랜덤난수 생성
+      min = Math.ceil(111111);
+      max = Math.floor(999999);
+      const number = Math.floor(Math.random() * (max - min)) + min;
+      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
+
+      userEmail = userEmail + number;
+      const social = new User({ userName, userEmail, site });
+      social.save();
     }
   } catch (err) {
     res.status(400).send('에러가 발생했습니다.');
