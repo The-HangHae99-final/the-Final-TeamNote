@@ -33,8 +33,22 @@ async function signup(req, res) {
 
     if (password !== confirmPassword) {
       return res.status(400).send({
-        errorMessage: '패스워드가 패스워드 확인란과 동일하지 않습니다.',
+        errorMessage: '비밀번호가 일치하지 않습니다.',
       });
+    }
+
+    if (password <= 5) {
+      res
+        .status(400)
+        .send({
+          success: false,
+          errorMessage: '6글자 이상으로 입력해주세요..',
+        });
+    }
+    if (userName.length >= 6) {
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '5글자 이내로 입력해주세요.' });
     }
 
     if (validator.validate(userEmail) == false) {
