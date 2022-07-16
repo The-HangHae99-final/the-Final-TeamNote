@@ -249,6 +249,10 @@ async function searchUser(req, res) {
 
 // 회원가입 - 인증코드 이메일로 보내기
 async function mailing(req, res) {
+  //#swagger.tags= [' 인증코드 메일링 API'];
+  //#swagger.summary= '인증코드 메일링 API'
+  //#swagger.description='-'
+
   min = Math.ceil(111111);
   max = Math.floor(999999);
   const number = Math.floor(Math.random() * (max - min)) + min;

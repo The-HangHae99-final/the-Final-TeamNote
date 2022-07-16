@@ -67,7 +67,7 @@ app.use('/api', [
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버');
+  res.send('실전 파이널 프로젝트 서버 - 킹하연');
 });
 
 module.exports = server;
