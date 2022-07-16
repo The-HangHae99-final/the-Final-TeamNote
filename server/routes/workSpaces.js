@@ -7,15 +7,6 @@ const isMember = require('../middlewares/isMember');
 //워크스페이스 생성
 router.post('/workSpace', authMiddleware, workSpaceController.create);
 
-//룸 이름 얻기
-router.get(
-  '/workSpace/RoomName/:opponent',
-  authMiddleware,
-  isMember,
-  workSpaceController.roomName
-);
-
-
 //워크스페이스 탈퇴하기
 router.put(
   '/workSpace/workSpaceLeave',

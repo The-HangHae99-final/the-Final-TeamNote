@@ -28,7 +28,7 @@ const upload = multer({
 });
 //글 작성
 router.post(
-  '/boards/workSpaceName',
+  '/boards',
   upload.single('img'),
   authMiddleware,
   isMember,
@@ -37,7 +37,7 @@ router.post(
 
 // 글 전체 조회(임시)
 router.get(
-  '/boards/workSpaceName',
+  '/boards',
   authMiddleware,
   isMember,
   boardController.boardAllView
@@ -45,7 +45,7 @@ router.get(
 
 // 글 한개 조회
 router.get(
-  '/boards/workSpaceName/:boardId',
+  '/boards/:boardId',
   authMiddleware,
   isMember,
   boardController.boardView
@@ -53,7 +53,7 @@ router.get(
 
 // 글 수정
 router.put(
-  '/boards/workSpaceName/:boardId',
+  '/boards/:boardId',
   authMiddleware,
   isMember,
   boardController.boardEdit
@@ -61,7 +61,7 @@ router.put(
 
 // 글 삭제
 router.delete(
-  '/board/workSpaceName/:boardId',
+  '/board/:boardId',
   authMiddleware,
   boardController.boardDelete
 );

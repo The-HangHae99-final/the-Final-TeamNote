@@ -1,6 +1,7 @@
 const Message = require('../schemas/message');
 
-// 메시지 수정(미완)
+// 메시지 수정
+// api/message/:_id
 async function messageEdit(req, res) {
   try {
     //#swagger.tags= ['메세지 API'];
@@ -29,7 +30,8 @@ async function messageEdit(req, res) {
       .json({ success: false, message: '메시지 수정 에러' });
   }
 }
-//메시지 삭제(미완)
+//메시지 삭제
+// api/message/:_id
 async function messageDelete(req, res) {
   try {
     //#swagger.tags= ['메세지 API'];
@@ -64,6 +66,7 @@ async function messageDelete(req, res) {
   }
 }
 //메시지 조회
+// api/message/:_id
 async function messagesView(req, res) {
   try {
     //#swagger.tags= ['메세지 API'];
@@ -83,8 +86,38 @@ async function messagesView(req, res) {
   }
 }
 
+//방 이름 건네주기
+// router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, isMember, workSpaceController.roomName);
+async function roomName(req, res) {
+  try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '방 이름 건네주기 API'
+    //#swagger.description='-'
+    const {userName} = res.locals.User;
+    const { workSpaceName } = req.body;
+    const { opponent } = req.params;
+
+    const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
+    for (let i = 0; i < existWorkSpace.memberList.length; i++) {
+      if (existWorkSpace.memberList[i].memberName === opponent) {
+        const roomId = [userName, opponent];
+        roomId.sort();
+
+        return res.status(200).json({
+          result: roomId[0] + roomId[1],
+
+          ok: true,
+          message: '룸 이름 얻기 성공',
+        });
+      }
+    }
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
+  }
+}
 module.exports = {
   messageEdit,
   messageDelete,
   messagesView,
+  roomName
 };
