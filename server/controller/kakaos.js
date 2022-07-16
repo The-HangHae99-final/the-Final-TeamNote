@@ -6,6 +6,11 @@ const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
 var User = require('../schemas/user');
+const { smtpTransport } = require('../controller/util/email');
+var generateRandom = function (min, max) {
+  var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
+  return ranNum;
+};
 // Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 var express = require('express');
@@ -52,6 +57,7 @@ function kakao_callback(req, res, next) {
     console.log(message.err);
   }
 }
+
 // 프론트에게서 인가코드를 받는다 post_1
 // 서버에서 인가코드를 가지고 카톡에게서 토큰을 받는다.
 // 토큰을 클라이언트에게 보낸다.
@@ -122,22 +128,36 @@ async function kakao_parsing(req, res) {
     // 만약 디비에 user의 email이 없다면,
 
     if (!double) {
-      const social = new User({ userEmail, userName, site });
+      // 이메일 인증하기
+
+      const social = new User({ userEmail, userName, site, auth }); // auth는 false 디폴트
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { userEmail } });
-      res.send(token);
-    } else {
-      // 다른 경우라면,
+      res.send({ token });
+    } else if (double.userName == userName) {
+      // 닉네임이 같다면 통과.
+      // 만약 디비에 user의 email이 있다면,
       // 기존에서 리프레시 토큰만 대체하기
       await double.update({ refresh_token }, { where: { userEmail } });
-      res.send(token);
+      res.send({ token });
+    } else {
+      // 랜덤난수 생성
+      min = Math.ceil(111111);
+      max = Math.floor(999999);
+      const number = Math.floor(Math.random() * (max - min)) + min;
+      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
+
+      userEmail = userEmail + number;
+      const social = new User({ userName, userEmail, site });
+      social.save();
     }
   } catch (error) {
     res.status(400).send('에러가 발생했습니다.');
     console.log('error =' + error);
   }
 }
+
 module.exports = {
   kakao_callback,
   kakao_member,
