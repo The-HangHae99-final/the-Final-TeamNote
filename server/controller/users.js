@@ -115,12 +115,19 @@ async function emailFirst(req, res) {
     //#swagger.summary= '로그인 이메일 API'
     //#swagger.description='-'
     const { userEmail } = req.body;
-    console.log('userEmail: ', userEmail);
     const userFind = await User.findOne({ userEmail });
+
+    if (validator.validate(userEmail) == false) {
+      return res
+        .status(400)
+        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
+    }
 
     if (!userFind) {
       console.log(userFind);
-      res.status(400).json({ success: false });
+      res
+        .status(400)
+        .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     } else {
       res.status(200).json({ success: true, errorMessage: error });
     }
@@ -209,15 +216,21 @@ async function searchUser(req, res) {
     const existUser = await User.findOne({ userEmail });
 
     if (existUser) {
-      res
-        .status(200)
-        .send({ email: existUser.userEmail, name: existUser.userName });
+      res.status(200).send({
+        success: true,
+        email: existUser.userEmail,
+        name: existUser.userName,
+      });
     } else {
-      res.status(400).send({ errorMessage: '존재하지 않는 유저입니다.' });
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     }
   } catch {
     console.log(error);
-    res.status(400).send({ errorMessage: error + '에러가 발생했습니다..' });
+    res
+      .status(400)
+      .send({ success: false, errorMessage: error + '에러가 발생했습니다..' });
   }
 }
 
