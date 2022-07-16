@@ -4,8 +4,6 @@ dotenv.config();
 const express = require('express');
 const router = express.Router();
 const userController = require('../controller/users');
-const passport = require('passport');
-const user = require('../schemas/user');
 
 //회원가입 - 개인
 router.post('/users/signup', userController.signup);
@@ -18,6 +16,6 @@ router.post('/users/password', userController.passwordSecond);
 
 router.delete('/users/delete/:userEmail', userController.deleteUser);
 
-router.get('/users/search', userController.searchUser);
+router.get('/users/search', userController.search);
 
 module.exports = router;
