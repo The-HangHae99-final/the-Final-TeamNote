@@ -19,12 +19,7 @@ router.post(
 );
 
 // 글 전체 조회(임시)
-router.post(
-  '/post/workSpaceName/all',
-  authMiddleware,
-  isMember,
-  postController.postAllView
-);
+router.post('/post/all', authMiddleware, isMember, postController.postAllView);
 
 // 글 상세 조회
 router.get('/post/:postId', authMiddleware, isMember, postController.postView);
