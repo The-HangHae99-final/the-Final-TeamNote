@@ -35,4 +35,5 @@ const teamTaskSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('TeamTask', teamTaskSchema);
+const TeamTask = mongoose.model('TeamTask', teamTaskSchema);
+module.exports = TeamTask;

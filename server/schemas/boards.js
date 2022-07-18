@@ -12,4 +12,5 @@ const boardSchema = new Schema({
   //   likes: { type: Number, default: 0 }, // 좋아요 수
 });
 
-module.exports = mongoose.model('Board', boardSchema);
+const Board = mongoose.model('Board', boardSchema);
+module.exports = Board;

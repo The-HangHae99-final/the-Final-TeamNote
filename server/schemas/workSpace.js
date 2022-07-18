@@ -12,4 +12,5 @@ const workSpaceSchema = new mongoose.Schema({
   memberList: [new mongoose.Schema({memberEmail: String, memberName: String})]
 });
 
-module.exports = mongoose.model("workSpace", workSpaceSchema);
+const workSpace = mongoose.model("workSpace", workSpaceSchema);
+module.exports = workSpace;
