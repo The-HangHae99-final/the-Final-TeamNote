@@ -6,13 +6,15 @@ services:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - '3001:80'
+      - '80:80'
 
   backend:
     build:
       dockerfile: Dockerfile
       context: ./
     container_name: app_backend
+    ports:
+      - 3001:3001
     volumes:
       - /app/node_modules
       - ./app

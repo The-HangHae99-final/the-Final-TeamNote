@@ -7,8 +7,7 @@
     "test": "jest",
     "prettify": "prettier --write *.js **/*.js",
     "start": "nodemon server.js",
-    "start-gendoc": "node swagger.js",
-    "prestart": "node ./swagger.js"
+  
   },
   "repository": {
     "type": "git",
