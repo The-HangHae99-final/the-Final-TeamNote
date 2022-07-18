@@ -8,18 +8,13 @@ const isMember = require('../middlewares/isMember');
 router.post('/workSpace', authMiddleware, workSpaceController.create);
 
 //워크스페이스 탈퇴하기
-router.put(
-  '/workSpace/leave',
-  authMiddleware,
-  isMember,
-  workSpaceController.workSpaceLeave
-);
+router.put('/workSpace/leave', isMember, workSpaceController.workSpaceLeave);
 
 //워크스페이스 삭제
 router.delete(
   '/workSpace',
   authMiddleware,
-  isMember,
+  //
   workSpaceController.workSpaceRemove
 );
 

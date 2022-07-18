@@ -8,7 +8,7 @@ const isMember = require('../middlewares/isMember');
 router.post(
   '/mytask/work',
   authMiddleware,
-  isMember,
+  //
   taskController.taskUpload
 );
 
@@ -19,7 +19,7 @@ router.get('/mytask', authMiddleware, taskController.taskAll);
 router.get(
   '/mytask/:taskId',
   authMiddleware,
-  isMember,
+  //
   taskController.taskDetail
 );
 

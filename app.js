@@ -7,7 +7,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const session = require('express-session');
 const userRouter = require('./server/routes/users');
-const memberRouter = require('./server/routes/members')
+const memberRouter = require('./server/routes/members');
 const postsRouter = require('./server/routes/posts');
 const messageRouter = require('./server/routes/message');
 const commentsRouter = require('./server/routes/comments');
@@ -61,13 +61,13 @@ app.use('/api', [
   tasksRouter,
   boardRouter,
   manitoRouter,
-  memberRouter
+  memberRouter,
 ]);
 // app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버---반영확인용');
+  res.send('실전 파이널 프로젝트 서버 - 킹하연');
 });
 
 module.exports = server;

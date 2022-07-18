@@ -36,12 +36,7 @@ router.post(
 );
 
 // 글 전체 조회(임시)
-router.get(
-  '/boards',
-  authMiddleware,
-  isMember,
-  boardController.boardAllView
-);
+router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
 
 // 글 한개 조회
 router.get(
@@ -60,10 +55,6 @@ router.put(
 );
 
 // 글 삭제
-router.delete(
-  '/board/:boardId',
-  authMiddleware,
-  boardController.boardDelete
-);
+router.delete('/board/:boardId', authMiddleware, boardController.boardDelete);
 
 module.exports = router;

@@ -6,6 +6,53 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
+// 글 작성 API
+// router.post('/post', upload.single('image'), async (req, res) => {
+async function postUpload(req, res, next) {
+  try {
+    //#swagger.tags= ['일반 게시글 API'];
+    //#swagger.summary= '일반 게시글 등록 API'
+    //#swagger.description='-'
+    // const image = req.file.location;
+
+    const { userName } = res.locals.User;
+    const { title, desc, label, assignees, workSpaceName } = req.body;
+    const createdTime = new Date();
+    console.log(createdTime);
+    const maxpostId = await Post.findOne().sort({
+      postId: -1,
+    });
+    // console.log(maxpostId)
+    let postId = 1;
+    if (maxpostId) {
+      postId = maxpostId.postId + 1;
+    }
+
+    const createdPost = await Post.create({
+      // image,
+      postId,
+      workSpaceName,
+      userName,
+      title,
+      createdTime,
+      desc,
+      label,
+      assignees,
+    });
+    return res.json({
+      result: createdPost,
+      success: true,
+      message: '게시물 작성 성공',
+    });
+    res.json({ result: true });
+  } catch (error) {
+    res.send({
+      success: false,
+      errorMessage: error.message,
+    });
+  }
+}
+
 // 일반 글 전체 조회
 
 async function postAllView(req, res, next) {
@@ -18,7 +65,11 @@ async function postAllView(req, res, next) {
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ error, errMessage: '공지 조회에 실패 했습니다.' });
+    res.status(400).send({
+      success: false,
+      message: '공지 조회에 실패 했습니다.',
+      errorMessage: error.message,
+    });
   }
 }
 
@@ -41,11 +92,13 @@ async function postView(req, res, next) {
     const existsComment = await postComment.find({ postId }).sort({
       commentId: -1,
     });
-    res.json({ existsPost, existsComment });
-  } catch (err) {
-    console.log(err);
+    res.json({ success: true, existsPost, existsComment });
+  } catch (error) {
+    console.log(error);
     res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      success: false,
+      message: '요청한 데이터 형식이 올바르지 않습니다.',
+      errorMessage: error.message,
     });
   }
 }
@@ -61,7 +114,7 @@ async function postEdit(req, res, next) {
     const postId = Number(req.params.postId);
     const [existPost] = await Post.find({ postId });
     const { user } = res.locals.User;
-    const { title, conten, category } = req.body;
+    const { title, desc, label, assignees } = req.body;
     if (user.userName !== existPost.userName) {
       return res
         .status(401)
@@ -73,16 +126,21 @@ async function postEdit(req, res, next) {
         .json({ success: false, message: '빈값을 채워주세요' });
     }
 
-    await Post.updateOne({ postId }, { $set: { title, content } });
+    await Post.updateOne(
+      { postId },
+      { $set: { title, desc, label, assignees } }
+    );
     return res.status(200).json({
       result: await Post.findOne({ postId }),
       success: true,
       message: '게시글 수정 성공',
     });
   } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false, message: '게시글 수정 에러' });
+    return res.status(400).json({
+      success: false,
+      message: '게시글 수정 에러',
+      errorMessage: err.message,
+    });
   }
 }
 
@@ -109,63 +167,18 @@ async function postDelete(req, res, next) {
     return res.status(400).json({
       success: false,
       message: '게시글 삭제 실패',
+      errorMessage: error.message,
     });
   }
 }
-// image 한개 업로드
+// image 1개 업로드 API
 async function postImage(req, res, next) {
   try {
     console.log('경로 정보입니다.', req.file.location);
     console.log('req.body정보', req.body.title);
-    res.json('hi');
+    res.json('이미지 업로드에 성공하였습니다.');
   } catch (error) {
-    res.json('bye');
-  }
-}
-
-// 글 작성 API
-// router.post('/post', upload.single('image'), async (req, res) => {
-async function postUpload(req, res, next) {
-  try {
-    //#swagger.tags= ['일반 게시글 API'];
-    //#swagger.summary= '일반 게시글 등록 API'
-    //#swagger.description='-'
-    // const image = req.file.location;
-
-    const { userName } = res.locals.User;
-    const { title, content, workSpaceName, category } = req.body;
-    const createdTime = new Date();
-    console.log(createdTime);
-    const maxpostId = await Post.findOne().sort({
-      postId: -1,
-    });
-    // console.log(maxpostId)
-    let postId = 1;
-    if (maxpostId) {
-      postId = maxpostId.postId + 1;
-    }
-
-    const createdPost = await Post.create({
-      // image,
-      postId,
-      workSpaceName,
-      userName,
-      title,
-      content,
-      category,
-      createdTime,
-    });
-    return res.json({
-      result: createdPost,
-      success: true,
-      message: '게시물 작성 성공',
-    });
-    res.json({ result: true });
-  } catch (error) {
-    res.send({
-      errorMessage: error.message,
-      success: false,
-    });
+    res.json('이미지 업로드에 실패하였습니다.');
   }
 }
 

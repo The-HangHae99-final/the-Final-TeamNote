@@ -87,13 +87,13 @@ async function messagesView(req, res) {
 }
 
 //방 이름 건네주기
-// router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, isMember, workSpaceController.roomName);
+// router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, // workSpaceController.roomName);
 async function roomName(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '방 이름 건네주기 API'
     //#swagger.description='-'
-    const {userName} = res.locals.User;
+    const { userName } = res.locals.User;
     const { workSpaceName } = req.body;
     const { opponent } = req.params;
 
@@ -119,5 +119,5 @@ module.exports = {
   messageEdit,
   messageDelete,
   messagesView,
-  roomName
+  roomName,
 };
