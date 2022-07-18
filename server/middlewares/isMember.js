@@ -12,8 +12,8 @@ module.exports = async (req, res, next) => {
 
     if (existWorkSpace === null) {
       res.status(400).send({
-        ok: false,
-        errorMessage: '해당 워크 스페이스는 존재하지 않습니다',
+        success: false,
+        message: '워크 스페이스가 존재하지 않습니다',
       });
       return;
     }
@@ -22,8 +22,8 @@ module.exports = async (req, res, next) => {
     );
     if (!existMember.length) {
       res.status(400).send({
-        ok: false,
-        errorMessage: '본 유저는 멤버가 아닙니다.',
+        success: false,
+        message: '본 유저는 멤버가 아닙니다.',
       });
       return;
     }
@@ -31,8 +31,9 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     console.log('member check error', error);
     res.status(400).send({
-      ok: false,
-      errorMessage: '서버에러: isMember 체크 실패',
+      success: false,
+      message: 'isMember 체크에 실패 했습니다.',
+      errorMessage: error.message,
     });
     return;
   }
