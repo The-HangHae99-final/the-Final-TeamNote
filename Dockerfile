@@ -1,8 +1,7 @@
-FROM node:14
+FROM node:12
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
-RUN npm install -g nodemon
+RUN npm install
 COPY . .
 EXPOSE 3001
-CMD [ "nodemon", "server.js" ]
+CMD [ "npm","run", "start" ]
