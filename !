@@ -12,12 +12,10 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./
-    volumes: 
-      - ./:/app
+    volumes: -.:.
     container_name: app_backend
     ports:
-      - 3001:3001
-  
+      - 3001:3001  
 
   mongo:
     image: mongo:latest
