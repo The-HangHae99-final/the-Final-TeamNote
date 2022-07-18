@@ -15,6 +15,6 @@ services:
     container_name: app_backend
     ports:
       - 3001:3001
-    volumes:
-      - /app/node_modules
-      - ./app
+    # volumes:
+    #   - /app/node_modules
+    #   - ./app
