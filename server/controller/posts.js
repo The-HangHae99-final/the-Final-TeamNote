@@ -60,7 +60,7 @@ async function postAllView(req, res, next) {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.body;
+    const { workSpaceName } = req.params;
     const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
