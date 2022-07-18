@@ -6,7 +6,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
-//글 작성하기
+//공지 글 작성하기
 // /board/:workSpaceName
 // 소속 워크스페이스 공지용
 async function boardUpload(req, res, next) {
