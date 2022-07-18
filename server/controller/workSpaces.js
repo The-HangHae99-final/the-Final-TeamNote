@@ -45,10 +45,8 @@ async function create(req, res) {
   }
 }
 
-
-
 //워크스페이스 탈퇴하기
-// router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceLeave);
+// router.put("/workSpace/workSpaceLeave/:workSpaceName", authMiddleware, // workSpaceController.workSpaceLeave);
 async function workSpaceLeave(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -73,7 +71,7 @@ async function workSpaceLeave(req, res) {
 }
 
 //워크스페이스 삭제
-// router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
+// router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, // workSpaceController.workSpaceRemove);
 async function workSpaceRemove(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -96,8 +94,6 @@ async function workSpaceRemove(req, res) {
   }
 }
 
-
-
 //본인 속한 워크스페이스 목록 조회
 // router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
 async function getWorkSpaceList(req, res) {
@@ -105,13 +101,15 @@ async function getWorkSpaceList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '본인이 속한 워크 스페이스 목록 조회 API'
     //#swagger.description='-'
-    const {userEmail} = res.locals.User;
+    const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
     console.log('workSpaceList: ', workSpaceList);
     const includedList = [];
 
     workSpaceList.map((Info) =>
-      Info.memberList.map((member) => member.memberEmail === userEmail ? includedList.push(Info): null)
+      Info.memberList.map((member) =>
+        member.memberEmail === userEmail ? includedList.push(Info) : null
+      )
     );
     return res.status(200).json({
       includedList,

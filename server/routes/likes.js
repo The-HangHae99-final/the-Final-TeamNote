@@ -8,14 +8,14 @@ const isMember = require('../middlewares/isMember');
 router.put(
   '/board/post/like/workSpaceName/:postId',
   authMiddleware,
-  isMember,
+  //
   likeController.like
 );
 //좋아요 취소
 router.delete(
   '/board/post/like/workSpaceName/:postId',
   authMiddleware,
-  isMember,
+  //
   likeController.unlike
 );
 

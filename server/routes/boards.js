@@ -31,7 +31,7 @@ router.post(
   '/boards',
   upload.single('img'),
   authMiddleware,
-  isMember,
+  //
   boardController.boardUpload
 );
 
@@ -39,7 +39,7 @@ router.post(
 router.get(
   '/boards',
   authMiddleware,
-  isMember,
+  //
   boardController.boardAllView
 );
 
@@ -47,7 +47,7 @@ router.get(
 router.get(
   '/boards/:boardId',
   authMiddleware,
-  isMember,
+  //
   boardController.boardView
 );
 
@@ -55,15 +55,11 @@ router.get(
 router.put(
   '/boards/:boardId',
   authMiddleware,
-  isMember,
+  //
   boardController.boardEdit
 );
 
 // 글 삭제
-router.delete(
-  '/board/:boardId',
-  authMiddleware,
-  boardController.boardDelete
-);
+router.delete('/board/:boardId', authMiddleware, boardController.boardDelete);
 
 module.exports = router;

@@ -1,30 +1,30 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const memberController = require("../controller/members");
-const authMiddleware = require("../middlewares/auth-middleware");
-const isMember = require("../middlewares/isMember");
+const memberController = require('../controller/members');
+const authMiddleware = require('../middlewares/auth-middleware');
+const isMember = require('../middlewares/isMember');
 
 //멤버 추가
 router.put(
-  "/memberIn",
+  '/memberIn',
   authMiddleware,
-  isMember,
+  //
   memberController.memberAdd
 );
 
 //멤버 목록 조회
 router.get(
-  "/member",
+  '/member',
   authMiddleware,
-  isMember,
+  //
   memberController.getMemberList
 );
 
 //멤버 삭제
 router.put(
-  "/memberOut",
+  '/memberOut',
   authMiddleware,
-  isMember,
+  //
   memberController.deleteMember
 );
 
