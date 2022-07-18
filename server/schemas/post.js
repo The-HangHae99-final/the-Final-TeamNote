@@ -6,10 +6,10 @@ const postSchema = new Schema({
   workSpaceName: { type: String, required: true },
   userName: { type: String, required: true }, // 유저 이름
   title: { type: String, required: true }, // 글 제목
-  content: { type: String, required: true }, //글 내용
   createdTime: { type: String, required: true },
-  image: { type: String },
-  category: { type: String, required: true },
+  desc: { type: String, required: true },
+  label: { type: String, required: true },
+  assignees: { type: String, required: true },
   // likes: { type: Number, default: 0 }, // 좋아요 수
 });
 

@@ -19,18 +19,13 @@ router.post(
 );
 
 // 글 전체 조회(임시)
-router.post(
-  '/post/workSpaceName/all',
-  authMiddleware,
-  isMember,
-  postController.postAllView
-);
+router.post('/post/workSpaceName/all', isMember, postController.postAllView);
 
 // 글 상세 조회
-router.get('/post/:postId', authMiddleware, isMember, postController.postView);
+router.get('/post/:postId', authMiddleware, postController.postView);
 
 // 글 수정
-router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
+router.put('/post/:postId', authMiddleware, postController.postEdit);
 
 // 글 삭제
 router.delete(

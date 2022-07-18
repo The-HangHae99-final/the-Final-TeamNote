@@ -50,7 +50,7 @@ router.delete(
 router.put(
   '/post/:postId/:commentId',
   authMiddleware,
-  isMember,
+  //
   commentController.postCommentEdit
 );
 
