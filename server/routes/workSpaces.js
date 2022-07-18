@@ -14,7 +14,7 @@ router.put('/workSpace/leave', isMember, workSpaceController.workSpaceLeave);
 router.delete(
   '/workSpace',
   authMiddleware,
-  isMember,
+  //
   workSpaceController.workSpaceRemove
 );
 

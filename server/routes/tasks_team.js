@@ -8,7 +8,7 @@ const authMiddleware = require('../middlewares/auth-middleware');
 router.post(
   '/task/team/workSpaceName',
   authMiddleware,
-  isMember,
+  //
   taskController.teamTaskUpload
 );
 
@@ -30,7 +30,7 @@ router.get(
 router.put(
   '/task/team/workSpaceName/:taskId',
   authMiddleware,
-  isMember,
+  //
   taskController.teamTaskEdit
 );
 
@@ -38,7 +38,7 @@ router.put(
 router.delete(
   '/task/team/workSpaceName/:taskId',
   authMiddleware,
-  isMember,
+  //
   taskController.teamTaskRemove
 );
 

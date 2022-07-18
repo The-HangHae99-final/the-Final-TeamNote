@@ -14,7 +14,7 @@ router.post(
   upload.single('img'),
 
   authMiddleware,
-  isMember,
+  //
   postController.postUpload
 );
 
@@ -31,7 +31,7 @@ router.put('/post/:postId', authMiddleware, postController.postEdit);
 router.delete(
   '/post/:postId',
   authMiddleware,
-  isMember,
+  //
   postController.postDelete
 );
 

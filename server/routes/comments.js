@@ -9,7 +9,7 @@ const isMember = require('../middlewares/isMember');
 router.post(
   '/board/:boardId',
   authMiddleware,
-  isMember,
+  //
   commentController.boardCommentUpload
 );
 
@@ -17,7 +17,7 @@ router.post(
 router.delete(
   '/board/:boardId/:commentId',
   authMiddleware,
-  isMember,
+  //
   commentController.boardCommentDelete
 );
 
@@ -25,7 +25,7 @@ router.delete(
 router.put(
   '/board/:boardId/:commentId',
   authMiddleware,
-  isMember,
+  //
   commentController.boardCommentEdit
 );
 
@@ -34,7 +34,7 @@ router.put(
 router.post(
   '/post/:postId',
   authMiddleware,
-  isMember,
+  //
   commentController.postCommentUpload
 );
 
@@ -42,7 +42,7 @@ router.post(
 router.delete(
   '/post/:postId/:commentId',
   authMiddleware,
-  isMember,
+  //
   commentController.postCommentDelete
 );
 

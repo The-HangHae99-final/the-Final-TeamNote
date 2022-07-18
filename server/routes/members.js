@@ -19,7 +19,7 @@ router.get('/member', authMiddleware, isMember, memberController.getMemberList);
 router.put(
   '/memberOut',
   authMiddleware,
-  isMember,
+  //
   memberController.deleteMember
 );
 
