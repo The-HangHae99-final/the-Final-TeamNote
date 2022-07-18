@@ -1,8 +1,8 @@
-const User = require("../schemas/user");
-const workSpace = require("../schemas/workSpace");
+const User = require('../schemas/user');
+const workSpace = require('../schemas/workSpace');
 
 //멤버 추가
-// router.put("/workSpace/memberAdd/:workSpaceName", authMiddleware,isMember, workSpaceController.memberAdd);
+// router.put("/workSpace/memberAdd/:workSpaceName", authMiddleware,// workSpaceController.memberAdd);
 async function memberAdd(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -20,11 +20,11 @@ async function memberAdd(req, res) {
     if (!existCheck) {
       return res
         .status(400)
-        .json({ ok: false, message: "존재하지 않는 유저입니다." });
+        .json({ ok: false, message: '존재하지 않는 유저입니다.' });
     } else if (existMember.length) {
       return res
         .status(400)
-        .json({ of: false, message: "이미 포함된 유저입니다." });
+        .json({ of: false, message: '이미 포함된 유저입니다.' });
     } else {
       myWorkSpace.memberList.push({
         memberEmail: existCheck.userEmail,
@@ -35,15 +35,15 @@ async function memberAdd(req, res) {
       return res.status(200).json({
         result: myWorkSpace,
         ok: true,
-        message: "멤버 추가 성공",
+        message: '멤버 추가 성공',
       });
     }
   } catch (err) {
-    return res.status(400).json({ ok: false, message: "멤버 추가 에러" });
+    return res.status(400).json({ ok: false, message: '멤버 추가 에러' });
   }
 }
 //멤버 삭제
-// router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, isMember, workSpaceController.deleteMember);
+// router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, // workSpaceController.deleteMember);
 async function deleteMember(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -59,11 +59,11 @@ async function deleteMember(req, res) {
     if (authority.userEmail !== myWorkSpace.owner) {
       return res
         .status(400)
-        .json({ ok: false, message: "오너만 멤버를 삭제할 수 있습니다." });
+        .json({ ok: false, message: '오너만 멤버를 삭제할 수 있습니다.' });
     } else if (!existMember.length) {
       return res
         .status(400)
-        .json({ ok: false, message: "해당 멤버가 없습니다." });
+        .json({ ok: false, message: '해당 멤버가 없습니다.' });
     } else {
       const filtered = myWorkSpace.memberList.filter(
         (memberInfo) => memberInfo.memberEmail !== memberEmail
@@ -72,19 +72,19 @@ async function deleteMember(req, res) {
         { name: workSpaceName },
         { $set: { memberList: filtered } }
       );
-      console.log("filtered: ", filtered);
+      console.log('filtered: ', filtered);
 
       return res.status(200).json({
         ok: true,
-        message: "멤버 삭제 성공",
+        message: '멤버 삭제 성공',
       });
     }
   } catch (err) {
-    return res.status(400).json({ ok: false, message: "멤버 삭제 에러" });
+    return res.status(400).json({ ok: false, message: '멤버 삭제 에러' });
   }
 }
 //멤버 목록 조회
-// router.get("/workSpace/MemberList/:workSpaceName", authMiddleware, isMember, workSpaceController.getMemberList);
+// router.get("/workSpace/MemberList/:workSpaceName", authMiddleware, // workSpaceController.getMemberList);
 async function getMemberList(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -93,14 +93,14 @@ async function getMemberList(req, res) {
     const { workSpaceName } = req.body;
     console.log(workSpaceName);
     const memberList = await workSpace.findOne({ name: workSpaceName });
-    console.log("memberList: ", memberList);
+    console.log('memberList: ', memberList);
     return res.status(200).json({
       result: memberList.memberList,
       ok: true,
-      message: "목록 조회 성공",
+      message: '목록 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: "멤버 목록 조회 에러" });
+    return res.status(400).json({ ok: false, message: '멤버 목록 조회 에러' });
   }
 }
 
