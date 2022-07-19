@@ -1,6 +1,6 @@
 const {
   validatePassword,
-} = require('/Users/hayeon/Desktop/full_final/server/controller/util/password-validation.ts');
+} = require('../server/controller/util/password-validation');
 
 test(`비밀번호를 입력했을때
         password와 passwordCheck가 일치할 때,
