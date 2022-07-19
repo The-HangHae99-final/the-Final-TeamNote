@@ -10,6 +10,7 @@ const postSchema = new Schema({
   desc: { type: String, required: true },
   label: { type: String, required: true },
   assignees: { type: String, required: true },
+  category: { type: String, required: true },
   // likes: { type: Number, default: 0 }, // 좋아요 수
 });
 
