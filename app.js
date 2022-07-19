@@ -66,10 +66,10 @@ app.use('/api', [
 // app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버 루트22');
+  res.send('실전 파이널 프로젝트 서버 루트');
 });
 app.get('/api', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버 /api22');
+  res.send('실전 파이널 프로젝트 서버 /api');
 });
 
 module.exports = server;
