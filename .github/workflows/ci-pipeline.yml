@@ -1,7 +1,9 @@
 name: ci-cd-pipeline
+on:
   push:
-    branches:
-      - [hayeon]
+    branches: [hayeon]
+  pull_request:
+    branches: [hayeon]
 jobs:
   build:
     needs: [run-test-code]
