@@ -52,7 +52,7 @@ jobs: ## job 들을 명시
           uses: appleboy/scp-action@master
           with:
             host: ${{ secrets.HOST}}
-            username: ec2-user
+            username: ubuntu
             key: ${{ secrets.PRIVATE_KEY}}
             port: 22
             source: 'docker-compose.yaml'
