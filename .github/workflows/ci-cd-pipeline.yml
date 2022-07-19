@@ -48,8 +48,8 @@ jobs:
       - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: hayeonkimm
-          key: ${{ secrets.PRIVATE_KEY }}
+          username: ubuntu
+          key: '172.31.32.243'
           port: 22
           script: |
             cd final_teamnote
