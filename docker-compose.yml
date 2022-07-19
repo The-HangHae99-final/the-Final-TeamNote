@@ -7,9 +7,7 @@ services:
       context: ./nginx
     ports:
       - '80:80'
-
   backend:
-    image: hayeonkimm/docker-team:latest
     build:
       dockerfile: Dockerfile
       context: ./
