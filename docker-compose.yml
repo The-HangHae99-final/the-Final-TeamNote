@@ -9,22 +9,22 @@ services:
       - '80:80'
 
   backend:
+    image: hayeonkimm/docker-team:latest
     build:
       dockerfile: Dockerfile
       context: ./
-    volumes: 
+    volumes:
       - ./:/app
     container_name: app_backend
     ports:
       - 3001:3001
-  
 
   mongo:
     image: mongo:latest
     volumes:
-     - mongo:/data/db/
+      - mongo:/data/db/
     ports:
-    - "27017:27017"
+      - '27017:27017'
 
 volumes:
   mongo:
