@@ -3,4 +3,4 @@ WORKDIR /app
 COPY ./package*.json ./
 RUN npm install
 COPY . .
-CMD [ "nodemon","server.js" ]
+CMD [ "node","server.js" ]
