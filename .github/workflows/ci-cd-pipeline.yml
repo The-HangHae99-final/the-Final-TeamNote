@@ -49,7 +49,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
-          key: '172.31.32.243'
+          key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
             cd final_teamnote
