@@ -12,7 +12,6 @@ services:
       dockerfile: Dockerfile
       context: ./
     volumes:
-      - ./final_teamnote/node_modules
       - ./:/app
     container_name: app_backend
     ports:
