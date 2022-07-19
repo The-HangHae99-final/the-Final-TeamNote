@@ -53,7 +53,5 @@ jobs:
           port: 22
           script: |
             cd root/final_teamnote 
-            docker rm -f $(docker ps -aq)
-            docker rmi -f $(docker images -q)
             docker pull hayeonkimm/docker-team:latest
             docker-compose up -d
