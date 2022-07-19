@@ -52,6 +52,4 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-            cd final_teamnote 
-            docker pull hayeonkimm/docker-team:latest
-            docker-compose up -d
+            cd final_teamnote

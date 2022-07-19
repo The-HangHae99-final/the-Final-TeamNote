@@ -73,3 +73,8 @@ app.get('/api', (req, res) => {
 });
 
 module.exports = server;
+
+// docker pull hayeonkimm/docker-team:latest
+// docker-compose up -d
+//             docker rm -f $(docker ps -aq)
+// docker rmi -f $(docker images -q)
