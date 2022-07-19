@@ -1,6 +1,6 @@
-FROM node:14
+FROM node:12
 WORKDIR /app
-COPY ./package*.json ./
-RUN npm install
+COPY ./package.json ./
+RUN npm install 
 COPY . .
-CMD [ "nodemon","server.js" ]
+CMD [ "npm","run","start" ]
