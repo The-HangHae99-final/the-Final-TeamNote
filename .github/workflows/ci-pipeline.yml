@@ -1,0 +1,23 @@
+name: Node CI-pipeline
+on:
+  push:
+    branches: ['hayeon']
+jobs: ## job 들을 명시
+  build: ## job id
+    runs-on: ubuntu-latest ## 해당 job의 구동 환경을 정의
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Npm Install, build and test
+        run: |
+          npm ci
+          npm run build --if-present
+          npm run test
+        env:
+          CI: true
