@@ -32,7 +32,7 @@ jobs: ## job 들을 명시
 
       - name: set up Docker buildx
         id: buildx
-        uses: docker/build-push-actions@v2
+        uses: docker/build-push-action@v2
         with:
           context: ./
           file: ./Dockerfile
