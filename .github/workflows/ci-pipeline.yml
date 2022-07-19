@@ -6,6 +6,7 @@ on:
     branches: [hayeon]
 jobs: ## job 들을 명시
   build: ## job id
+    needs: [run-test-code]
     runs-on: ubuntu-latest ## 해당 job의 구동 환경을 정의
     strategy:
       matrix:
@@ -64,4 +65,4 @@ jobs: ## job 들을 명시
             username: ubuntu
             key: ${{secrets.PRIVATE_KEY}}
             port: 22
-            script: 'docker-compose pull && docker-compose up'
+            script: 'docker-compose pull && docker-compose up -d'
