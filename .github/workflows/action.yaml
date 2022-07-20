@@ -40,14 +40,29 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-team:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-  deploy_to_VPS:
-    needs: build-image
+  # deploy_to_VPS:
+  #   needs: build-image
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{ secrets.HOST }}
+  #         username: ubuntu
+  #         key: ${{ secrets.PRIVATE_KEY }}
+  #         port: 22
+  #         script: docker-compose up --build
+
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v2
+      - name: Deploy Using Docker via SSH
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY}}
           port: 22
-          script: docker-compose up --build
+          script: |
+            git status
