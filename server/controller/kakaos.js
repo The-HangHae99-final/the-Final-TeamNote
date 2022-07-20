@@ -18,7 +18,7 @@ var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
+const KAKAO_REDIRECT_URL = 'http://localhost:3000/oauth/kakao/callback';
 // post- '/auth/login/kakao/callback'
 function kakao_callback(req, res, next) {
   try {
@@ -38,7 +38,7 @@ function kakao_callback(req, res, next) {
           }
         )
         .then((result) => {
-          console.log('korea' + result);
+          console.log('result-------------' + result);
           console.log('엑세스토큰------' + result.data['access_token']);
           res.send(result.data['access_token']);
           // 토큰을 활용한 로직을 적어주면된다.
