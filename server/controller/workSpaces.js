@@ -110,8 +110,8 @@ async function getWorkSpaceList(req, res) {
     console.log('userEmail: ', userEmail);
     const includedList = [];
     const workSpaceList = await workSpace.find({});
-    const workSpaceEmail = workSpaceList.memberEmail.filter(
-      memberEmail == userEmail
+    const workSpaceEmail = workSpaceList.filter(
+      (data) => data.email == userEmail
     );
     console.log('workSpaceEmail---------------' + workSpaceEmail);
     includedList.push(workSpaceEmail);
