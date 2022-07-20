@@ -112,7 +112,7 @@ async function getWorkSpaceList(req, res) {
     const includedList = [];
 
     workSpaceList.map((Info) =>
-      Info.memberList.map((member) =>
+      Info.memberList.filter((member) =>
         member === userEmail ? includedList.push(Info) : null
       )
     );
