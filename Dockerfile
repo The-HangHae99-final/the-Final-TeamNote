@@ -1,13 +1,21 @@
 FROM node:14
 
+ENV DOCKERIZE_VERSION v0.2.0
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \  
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+# Create app directory
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY ./package.json ./
-
+# Install dependencies
+COPY package.json .
 RUN npm install
 
-RUN npm install nodemon -g -D
-
+# Bundle app source
 COPY . .
 
-CMD ["nodemon", "server.js"]
+RUN chmod +x docker-entrypoint.sh  
+ENTRYPOINT ./docker-entrypoint.sh
+
+# Exports
+EXPOSE 3001
