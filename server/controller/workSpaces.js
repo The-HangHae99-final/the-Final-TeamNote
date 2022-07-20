@@ -110,7 +110,10 @@ async function getWorkSpaceList(req, res) {
     console.log('userEmail: ', userEmail);
     const includedList = [];
     const workSpaceList = await workSpace.find({ userEmail });
-    console.log('workSpaceList: ', workSpaceList);
+
+    if (!workSpaceList){
+      return res.status(201).json({'조회할 워크스페이스가 없습니다.'})
+    }
     includedList.push(workspaceList);
     // workSpaceList.map((Info) =>
     //   Info.memberList.map((member) =>
