@@ -130,7 +130,7 @@ async function kakao_parsing(req, res) {
     if (!double) {
       // 이메일 인증하기
 
-      const social = new User({ userEmail, userName, site, auth }); // auth는 false 디폴트
+      const social = new User({ userEmail, userName, site }); // auth는 false 디폴트
       // 저장하기
       social.save();
       await social.update({ refresh_token }, { where: { userEmail } });
