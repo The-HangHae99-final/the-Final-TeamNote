@@ -124,6 +124,7 @@ async function kakao_parsing(req, res) {
     const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
+    console.log('refresh_token---------------: ', refresh_token);
 
     // 만약 디비에 user의 email이 없다면,
 
