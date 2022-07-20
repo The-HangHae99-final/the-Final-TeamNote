@@ -89,7 +89,12 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   console.log('authorization-----------------------------: ', authorization);
   const [tokenType, tokenValue] = authorization.split(' ');
-  // console.log(tokenType, tokenValue);
+  console.log(
+    'tokenType---------------',
+    tokenType,
+    'tokenValue---------------',
+    tokenValue
+  );
 
   if (tokenType !== 'Bearer') {
     return res.status(401).send({

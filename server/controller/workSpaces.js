@@ -117,7 +117,11 @@ async function getWorkSpaceList(req, res) {
       message: '워크스페이스 목록 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
+    return res.status(400).json({
+      success: false,
+      message: ' 특정 할 수 없는 에러가 발생했습니다.',
+      errorMessage: err.message,
+    });
   }
 }
 
