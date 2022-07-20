@@ -108,11 +108,11 @@ async function naver_parsing(req, res) {
     const userName = user_info.user_name;
     const double = await User.findOne({ userEmail });
 
-    const token = jwt.sign({ userEmail }, 'secret', {
+    const token = jwt.sign(userEmail, 'secret', {
       expiresIn: '12000s',
     });
     console.log('token------114', token);
-    const refresh_token = jwt.sign({}, 'secret', {
+    const refresh_token = jwt.sign(userEmail, 'secret', {
       expiresIn: '14d',
     });
 
