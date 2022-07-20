@@ -117,8 +117,8 @@ async function getWorkSpaceList(req, res) {
     );
 
     res.status(200).json({
-      mem,
-      ok: true,
+      includedList,
+      success: true,
       message: '워크스페이스 목록 조회 성공',
     });
   } catch (error) {
