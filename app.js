@@ -1,4 +1,4 @@
-const dotenv = require('dotenv').config(); // 설정파일
+const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const connect = require('./server/schemas/db');
@@ -23,10 +23,10 @@ const tasksRouter = require('./server/routes/tasks_team');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 const manitoRouter = require('./server/routes/manito');
+const helmet = require('helmet');
 
-global.logger || (global.logger = require('./server/config/logger')); // → 전역에서 사용
+global.logger || (global.logger = require('./server/config/logger'));
 const morganMiddleware = require('./server/config/morganMiddleware');
-app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 
 connect();
 
@@ -48,6 +48,8 @@ app.use(
   session({ secret: 'MySecret', resave: false, saveUninitialized: true })
 );
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use(helmet()); // 보안성 향상
+app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 
 app.use('/api', [
   userRouter,
@@ -67,7 +69,7 @@ app.use('/api', [
 
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트 서버 루트경로입니다.');
+  res.send('실전 파이널 프로젝트 서버 루트 경로입니다.');
 });
 app.get('/api', (req, res) => {
   res.send('실전 파이널 프로젝트 서버 /api');
