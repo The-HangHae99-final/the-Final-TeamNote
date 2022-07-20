@@ -96,6 +96,10 @@ async function naver_parsing(req, res) {
     //#swagger.description='-'
     const site = 2; //naver
     const user_info = req.body;
+    console.log(
+      'user_info-----------------------------------------',
+      user_info
+    );
     // console.log(user_info);
     // console.log(user_info.user_name);
     const _user = user_info.user_id;
@@ -103,13 +107,21 @@ async function naver_parsing(req, res) {
     const userName = user_info.user_name;
     const double = await User.findOne({ userEmail });
 
+    const token = jwt.sign({ userEmail }, 'secret', {
+      expiresIn: '1200s',
+    });
+    console.log('token------114', token);
+    const refresh_token = jwt.sign({}, 'secret', {
+      expiresIn: '14d',
+    });
+
     if (!double) {
       const social = new User({ userName, userEmail, site });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else if (double.userName == userName) {
       //이름까지 같다면 통과, 리프레시 토큰만 대체
-      await double.update({ refresh_token }, { where: { userEmail } });
+      await double.update({ refresh_token }, { $: { userEmail } });
       res.send({ token });
     } else {
       // 랜덤난수 생성
