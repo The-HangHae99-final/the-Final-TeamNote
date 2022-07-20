@@ -28,17 +28,9 @@ async function create(req, res) {
       const createdWorkSpace = await workSpace.create({
         owner: owner.userEmail,
         name: `${owner.userEmail}+${name}`,
-      });
-
-      createdWorkSpace.memberList.push({
         memberEmail: owner.userEmail,
         memberName: owner.userName,
       });
-      console.log(owner.userEmail);
-      // console.log('memberEmail:', memberEmail);
-      console.log('memberName', memberName);
-
-      createdWorkSpace.save();
 
       return res.json({
         result: createdWorkSpace,
