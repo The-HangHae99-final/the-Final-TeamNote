@@ -119,9 +119,7 @@ async function getWorkSpaceList(req, res) {
       res.status(200).send({ success: true });
     }
   } catch (error) {
-    res
-      .status(400)
-      .send({ includedList, success: false, error: error.message });
+    res.status(400).send({ success: false, error: error.message });
   }
 }
 //전체 워크스페이스 조회
