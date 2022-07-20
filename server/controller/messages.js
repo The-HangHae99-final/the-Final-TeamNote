@@ -43,7 +43,7 @@ async function messageDelete(req, res) {
     //#swagger.summary= '메세지 삭제 API'
     //#swagger.description='-'
     const { _id } = req.params;
-    const author = res.locals.User.userName;
+    const { userName } = res.locals.User;
 
     const targetMessage = await Message.findById(_id);
 
@@ -52,7 +52,7 @@ async function messageDelete(req, res) {
         ok: false,
         message: "해당 메시지가 존재하지 않습니다.",
       });
-    } else if (targetMessage[0].author !== author) {
+    } else if (targetMessage[0].author !== userName) {
       return res.status(400).json({
         ok: false,
         message: "본인만 삭제 가능 합니다.",
