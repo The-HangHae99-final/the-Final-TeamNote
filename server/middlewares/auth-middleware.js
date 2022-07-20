@@ -107,7 +107,7 @@ module.exports = (req, res, next) => {
     const { userEmail } = jwt.verify(tokenValue, jwtSecret);
     console.log(userEmail);
     User.find({ userEmail }).then((user) => {
-      res.locals.user = user;
+      res.locals.User = user;
       next();
     });
   } catch (error) {
