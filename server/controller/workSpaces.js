@@ -109,15 +109,15 @@ async function getWorkSpaceList(req, res) {
     const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
     console.log('workSpaceList: ', workSpaceList);
-    const includedList = [];
+    let includedList = [];
 
     workSpaceList.map((Info) =>
       Info.memberList.filter((member) =>
-        member === userEmail ? includedList.push(Info) : null
+        member == userEmail ? includedList.push(Info) : null
       )
     );
 
-    return res.status(200).json({
+    res.status(200).json({
       includedList,
       ok: true,
       message: '워크스페이스 목록 조회 성공',
