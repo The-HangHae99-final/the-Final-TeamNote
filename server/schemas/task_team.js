@@ -29,6 +29,10 @@ const teamTaskSchema = mongoose.Schema(
     color: {
       type: String,
     },
+
+    workSpaceName: {
+      type: String,
+    },
   },
   {
     timestamps: true,

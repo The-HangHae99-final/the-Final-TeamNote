@@ -6,6 +6,8 @@ const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
 var User = require('../schemas/user');
+const jwtSecret = process.env.SECRET_KEY;
+
 const { smtpTransport } = require('../controller/util/email');
 var generateRandom = function (min, max) {
   var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -18,7 +20,7 @@ var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
+const KAKAO_REDIRECT_URL = 'http://localhost:3000/oauth/kakao/callback';
 // post- '/auth/login/kakao/callback'
 function kakao_callback(req, res, next) {
   try {
@@ -38,7 +40,7 @@ function kakao_callback(req, res, next) {
           }
         )
         .then((result) => {
-          console.log('korea' + result);
+          console.log('result-------------' + result);
           console.log('엑세스토큰------' + result.data['access_token']);
           res.send(result.data['access_token']);
           // 토큰을 활용한 로직을 적어주면된다.
@@ -117,12 +119,8 @@ async function kakao_parsing(req, res) {
 
     // userName로 토큰값 만들기
 
-    const token = jwt.sign({ userEmail }, 'secret', {
-      expiresIn: '1200s',
-    });
-    console.log('token------114', token);
-    const refresh_token = jwt.sign({}, 'secret', {
-      expiresIn: '14d',
+    var token = jwt.sign({ userEmail }, jwtSecret, {
+      expiresIn: '12000s',
     });
 
     // 만약 디비에 user의 email이 없다면,
@@ -130,28 +128,29 @@ async function kakao_parsing(req, res) {
     if (!double) {
       // 이메일 인증하기
 
-      const social = new User({ userEmail, userName, site, auth }); // auth는 false 디폴트
+      const social = new User({ userEmail, userName, site }); // auth는 false 디폴트
       // 저장하기
       social.save();
-      await social.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
-    } else if (double.userName == userName) {
+    } else {
+      double.userName == userName;
       // 닉네임이 같다면 통과.
       // 만약 디비에 user의 email이 있다면,
       // 기존에서 리프레시 토큰만 대체하기
-      await double.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
-    } else {
-      // 랜덤난수 생성
-      min = Math.ceil(111111);
-      max = Math.floor(999999);
-      const number = Math.floor(Math.random() * (max - min)) + min;
-      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
-
-      userEmail = userEmail + number;
-      const social = new User({ userName, userEmail, site });
-      social.save();
     }
+
+    // else {
+    //   // 랜덤난수 생성
+    //   min = Math.ceil(111111);
+    //   max = Math.floor(999999);
+    //   const number = Math.floor(Math.random() * (max - min)) + min; //아하...프론트에서제대로넣어주는지오쏠라션제대로넣어주는지난수랑어스미들웨어그거제대로일치하는지그거랑..
+    //   //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
+
+    //   userEmail = userEmail + number;
+    //   const social = new User({ userName, userEmail, site });
+    //   social.save();
+    // }
   } catch (error) {
     res.status(400).send('에러가 발생했습니다.');
     console.log('error =' + error);

@@ -1,5 +1,6 @@
 const TeamTask = require('../schemas/task_team');
 const moment = require('moment');
+const urlencode = require('urlencode');
 
 // 팀 일정 생성
 async function teamTaskUpload(req, res, next) {
@@ -49,13 +50,19 @@ async function teamTaskAll(req, res, next) {
     //#swagger.summary= '팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
 
+    // const { workSpaceName } = req.params;
     const { workSpaceName } = req.body;
+    console.log('workSpaceName-----------------:', workSpaceName);
+    if (!workSpaceName) {
+      return res
+        .status(400)
+        .send({ success: false, message: '워크 스페이스 네임이 없습니다.' });
+    }
+
     const tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
+    console.log(tasks);
     return res.json({
-      result: {
-        count: tasks.length,
-        rows: tasks,
-      },
+      result: tasks,
       success: true,
     });
   } catch (err) {

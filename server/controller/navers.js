@@ -9,6 +9,8 @@ var router = express.Router();
 var client_id = process.env.YOUR_CLIENT_ID;
 var client_secret = process.env.YOUR_CLIENT_SECRET;
 var state = 'teamnote';
+var jwt = require('jsonwebtoken');
+const jwtSecret = process.env.SECRET_KEY;
 var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
 // var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
@@ -96,6 +98,10 @@ async function naver_parsing(req, res) {
     //#swagger.description='-'
     const site = 2; //naver
     const user_info = req.body;
+    console.log(
+      'user_info-----------------------------------------',
+      user_info
+    );
     // console.log(user_info);
     // console.log(user_info.user_name);
     const _user = user_info.user_id;
@@ -103,14 +109,27 @@ async function naver_parsing(req, res) {
     const userName = user_info.user_name;
     const double = await User.findOne({ userEmail });
 
+    // 리프레시 토큰 생성
+
+    const token = jwt.sign({ userEmail }, jwtSecret, {
+      expiresIn: '12000s',
+    });
+
+    const refresh_token = jwt.sign({}, jwtSecret, {
+      expiresIn: '14d',
+    });
+
     if (!double) {
-      const social = new User({ userName, userEmail, site });
+      const social = new User({ userName, userEmail, site, refresh_token });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else if (double.userName == userName) {
       //이름까지 같다면 통과, 리프레시 토큰만 대체
-      await double.update({ refresh_token }, { where: { userEmail } });
-      res.send({ token });
+      await double.update({ refresh_token }, { $: { userEmail } });
+      res.status(200);
+      console
+        .log('token-----------------', token)
+        .json({ token, success: true, message: '리프레시 토큰 대체 성공' });
     } else {
       // 랜덤난수 생성
       min = Math.ceil(111111);
@@ -119,7 +138,7 @@ async function naver_parsing(req, res) {
       //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
 
       userEmail = userEmail + number;
-      const social = new User({ userName, userEmail, site });
+      const social = new User({ userName, userEmail, site, refresh_token });
       social.save();
     }
   } catch (err) {

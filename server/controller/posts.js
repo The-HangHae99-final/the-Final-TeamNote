@@ -16,7 +16,7 @@ async function postUpload(req, res, next) {
     // const image = req.file.location;
 
     const { userName } = res.locals.User;
-    const { title, desc, label, assignees, workSpaceName } = req.body;
+    const { title, desc, label, assignees, workSpaceName, category } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
     const maxpostId = await Post.findOne().sort({
@@ -38,6 +38,7 @@ async function postUpload(req, res, next) {
       desc,
       label,
       assignees,
+      category,
     });
     return res.json({
       result: createdPost,
@@ -114,7 +115,7 @@ async function postEdit(req, res, next) {
     const postId = Number(req.params.postId);
     const [existPost] = await Post.find({ postId });
     const { user } = res.locals.User;
-    const { title, desc, label, assignees } = req.body;
+    const { title, desc, label, assignees, category } = req.body;
     if (user.userName !== existPost.userName) {
       return res
         .status(401)
@@ -128,7 +129,7 @@ async function postEdit(req, res, next) {
 
     await Post.updateOne(
       { postId },
-      { $set: { title, desc, label, assignees } }
+      { $set: { title, desc, label, assignees, category } }
     );
     return res.status(200).json({
       result: await Post.findOne({ postId }),
