@@ -99,7 +99,7 @@ module.exports = (req, res, next) => {
 
   try {
     console.log(tokenValue);
-    const { userEmail } = jwt.verify(tokenValue, process.env.SECRET_KEY);
+    const { userEmail } = jwt.verify(tokenValue, jwtSecret);
     console.log(userEmail);
     User.find({ userEmail }).then((user) => {
       res.locals.user = user;
