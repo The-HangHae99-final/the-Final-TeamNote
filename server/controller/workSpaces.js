@@ -114,18 +114,11 @@ async function getWorkSpaceList(req, res) {
     );
     let includedList = [];
 
-    // workSpaceList.map((Info) =>
-    //   Info.memberList.filter((member) =>
-    //     member == userEmail ? includedList.push(Info) : null
-    //   )
-    // );
-
-    const mem = workSpaceList.map((data) => data.memberList == userEmail);
-    includedList.push(mem);
-
-    if (!mem) {
-      res.status(400).send({ message: '소속된 워크스페이스가 없습니다.' });
-    }
+    workSpaceList.map((Info) =>
+      Info.memberList.map((member) =>
+        member == userEmail ? includedList.push(Info) : null
+      )
+    );
 
     res.status(200).json({
       mem,
