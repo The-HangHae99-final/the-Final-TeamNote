@@ -110,9 +110,10 @@ async function getWorkSpaceList(req, res) {
     console.log('userEmail: ', userEmail);
     const includedList = [];
     const workSpaceList = await workSpace.find({ userEmail });
-    console.log(workSpaceList);
+    console.log('workSpaceList-------------------':workSpaceList);
+    includedList.push(workSpaceList)
   } catch (error) {
-    res.status(400).send({ success: false, error: error.message });
+    res.status(400).send({ includedList,success: false, error: error.message });
   }
 }
 //전체 워크스페이스 조회
