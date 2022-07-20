@@ -116,7 +116,7 @@ async function getWorkSpaceList(req, res) {
         .status(201)
         .json({ message: '조회할 워크스페이스가 없습니다.' });
     }
-    includedList.push(workspaceList);
+    includedList.push(workSpaceList);
     // workSpaceList.map((Info) =>
     //   Info.memberList.map((member) =>
     //     member.memberEmail === userEmail ? includedList.push(Info) : null
