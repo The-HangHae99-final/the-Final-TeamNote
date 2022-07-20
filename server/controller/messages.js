@@ -12,16 +12,20 @@ async function messageEdit(req, res) {
     const { user } = res.locals;
     const { message } = req.body;
     if (user.userName !== existMessage.author) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '작성자가 아닙니다.' });
     }
     if (!message) {
-      return res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      return res
+        .status(400)
+        .json({ success: false, message: '빈값을 채워주세요' });
     }
 
     await Message.updateOne({ _id }, { $set: { message } });
     return res.status(200).json({
       result: await Message.findOne({ _id }),
-      ok: true,
+      success: true,
       message: '메시지 수정 성공',
     });
   } catch (err) {
@@ -46,21 +50,21 @@ async function messageDelete(req, res) {
 
     if (!targetMessage.length) {
       return res.status(400).json({
-        ok: false,
+        success: false,
         message: '해당 메시지가 존재하지 않습니다.',
       });
     } else if (targetMessage[0].author !== author) {
       return res.status(400).json({
-        ok: false,
+        success: false,
         message: '본인만 삭제 가능 합니다.',
       });
     }
 
     await Message.findByIdAndDelete({ _id });
-    return res.status(200).json({ ok: true, message: '메시지 삭제 성공' });
+    return res.status(200).json({ success: true, message: '메시지 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
-      ok: false,
+      success: false,
       message: '메시지 삭제 실패',
     });
   }
@@ -78,11 +82,13 @@ async function messagesView(req, res) {
 
     return res.json({
       targetMessage,
-      ok: true,
+      success: true,
     });
   } catch (err) {
     console.error(err);
-    return res.status(400).json({ ok: false, message: '메시지 조회 실패' });
+    return res
+      .status(400)
+      .json({ success: false, message: '메시지 조회 실패' });
   }
 }
 
@@ -106,13 +112,13 @@ async function roomName(req, res) {
         return res.status(200).json({
           result: roomId[0] + roomId[1],
 
-          ok: true,
+          success: true,
           message: '룸 이름 얻기 성공',
         });
       }
     }
   } catch (err) {
-    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
+    return res.status(400).json({ success: false, message: ' 에러싫어에러' });
   }
 }
 module.exports = {
