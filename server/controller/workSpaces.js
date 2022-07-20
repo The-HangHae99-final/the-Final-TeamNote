@@ -131,7 +131,7 @@ async function getWorkSpaceList(req, res) {
       ok: true,
       message: '워크스페이스 목록 조회 성공',
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(400).json({
       success: false,
       message: ' 예외 에러가 발생했습니다.',
