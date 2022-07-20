@@ -137,23 +137,26 @@ async function kakao_parsing(req, res) {
       social.save();
       await social.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
-    } else if (double.userName == userName) {
+    } else {
+      double.userName == userName;
       // 닉네임이 같다면 통과.
       // 만약 디비에 user의 email이 있다면,
       // 기존에서 리프레시 토큰만 대체하기
       await double.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
-    } else {
-      // 랜덤난수 생성
-      min = Math.ceil(111111);
-      max = Math.floor(999999);
-      const number = Math.floor(Math.random() * (max - min)) + min;
-      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
-
-      userEmail = userEmail + number;
-      const social = new User({ userName, userEmail, site });
-      social.save();
     }
+
+    // else {
+    //   // 랜덤난수 생성
+    //   min = Math.ceil(111111);
+    //   max = Math.floor(999999);
+    //   const number = Math.floor(Math.random() * (max - min)) + min; //아하...프론트에서제대로넣어주는지오쏠라션제대로넣어주는지난수랑어스미들웨어그거제대로일치하는지그거랑..
+    //   //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
+
+    //   userEmail = userEmail + number;
+    //   const social = new User({ userName, userEmail, site });
+    //   social.save();
+    // }
   } catch (error) {
     res.status(400).send('에러가 발생했습니다.');
     console.log('error =' + error);
