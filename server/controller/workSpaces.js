@@ -130,31 +130,32 @@ async function getWorkSpaceList(req, res) {
       errorMessage: err.message,
     });
   }
+}
 
-  //전체 워크스페이스 조회
-  // router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
+//전체 워크스페이스 조회
+// router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
 
-  async function everyWorkSpace(req, res) {
-    try {
-      //#swagger.tags= ['워크 스페이스 API'];
-      //#swagger.summary= '전체 워크스페이스 조회(개발용) API'
-      //#swagger.description='-'
-      const workSpaceList = await workSpace.find();
+async function everyWorkSpace(req, res) {
+  try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '전체 워크스페이스 조회(개발용) API'
+    //#swagger.description='-'
+    const workSpaceList = await workSpace.find();
 
-      return res.status(200).json({
-        workSpaceList,
-        ok: true,
-        message: '전체 워크스페이스 조회 성공',
-      });
-    } catch (err) {
-      return res.status(400).json({
-        success: false,
-        message: '특정 할 수 없는 에러가 발생했습니다.',
-        errorMessage: err.message,
-      });
-    }
+    return res.status(200).json({
+      workSpaceList,
+      ok: true,
+      message: '전체 워크스페이스 조회 성공',
+    });
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: '특정 할 수 없는 에러가 발생했습니다.',
+      errorMessage: err.message,
+    });
   }
 }
+
 module.exports = {
   create,
   workSpaceLeave,
