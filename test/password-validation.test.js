@@ -3,7 +3,7 @@ const {
 } = require('../server/controller/util/password-validation');
 
 test(`비밀번호를 입력했을때
-        password와 passwordCheck가 일치할 때,
+        password와 passwordConfirm가 일치할 때,
         true를 반환한다.`, () => {
   expect(validatePassword('aaAA11!@', 'aaAA11!@')).toEqual(true);
   expect(validatePassword('aaaaaAAAAA!@#$%^', 'aaaaaAAAAA!@#$%^')).toEqual(
