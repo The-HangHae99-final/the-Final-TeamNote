@@ -6,7 +6,7 @@ async function createSpace(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 생성 API'
     //##swagger.description='-'
-    const user = res.locals.User;
+    const user = res.locals.User[0];
     const { name } = req.body;
     const workSpaceName = `${user.userEmail}+${name}`; //만든이가 다른경우 워크스페이스 이름 중복가능을 위함
     const memberList = [];
@@ -29,6 +29,7 @@ async function createSpace(req, res) {
     console.log(err);
     res.status(400).send({
       errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      error,
     });
   }
 }
@@ -43,13 +44,11 @@ async function workSpaceLeave(req, res) {
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
     if (targetWorkSpace.owner === userEmail) {
-      return res
-        .status(400)
-        .json({
-          ok: false,
-          message:
-            '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
-        });
+      return res.status(400).json({
+        ok: false,
+        message:
+          '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
+      });
     }
     const excepted = targetWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail !== userEmail
