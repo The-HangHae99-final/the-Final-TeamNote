@@ -8,20 +8,11 @@ async function create(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 생성 API'
     //##swagger.description='-'
-    const owner = res.locals.User[0];
-    console.log('owner: ', owner);
-
+    const owner = res.locals.User;
     const { name } = req.body;
-    console.log('name: ', name);
-
     const fullName = `${owner.userEmail}+${name}`;
-    console.log('fullName: ', fullName);
     const existName = await workSpace.find({ name: fullName });
-    console.log('existName: ', existName);
-
-    let memberList = [];
-    memberList.push(owner.userEmail);
-
+    console.log('owner.user--------' + owner.userEmail);
     if (existName.length) {
       if (existName[0].owner === owner.userEmail)
         return res
@@ -38,9 +29,11 @@ async function create(req, res) {
         memberName: owner.userName,
       });
 
+      createdWorkSpace.save();
+
       return res.json({
         result: createdWorkSpace,
-        success: true,
+        ok: true,
         message: '워크스페이스 생성 성공',
       });
     }
@@ -108,30 +101,26 @@ async function getWorkSpaceList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '본인이 속한 워크 스페이스 목록 조회 API'
     //#swagger.description='-'
-    const { userEmail } = res.locals.User[0];
-    console.log('유저이메일', userEmail);
+    const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
-    let includedList = [];
+    console.log('workSpaceList: ', workSpaceList);
+    const includedList = [];
 
     workSpaceList.map((Info) =>
       Info.memberList.map((member) =>
-        member.memberEmail == userEmail ? includedList.push(Info) : null
+        member.memberEmail === userEmail ? includedList.push(Info) : null
       )
     );
-
-    res.status(200).json({
+    return res.status(200).json({
       includedList,
-      success: true,
+      ok: true,
       message: '워크스페이스 목록 조회 성공',
     });
-  } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: ' 예외 에러가 발생했습니다.',
-      errorMessage: error.message,
-    });
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
   }
 }
+
 //전체 워크스페이스 조회
 // router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
 
@@ -148,11 +137,7 @@ async function everyWorkSpace(req, res) {
       message: '전체 워크스페이스 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: '특정 할 수 없는 에러가 발생했습니다.',
-      errorMessage: err.message,
-    });
+    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
   }
 }
 
