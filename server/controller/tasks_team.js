@@ -50,6 +50,13 @@ async function teamTaskAll(req, res, next) {
     //#swagger.description='-'
 
     const { workSpaceName } = req.body;
+
+    if (!workSpaceName) {
+      return res
+        .status(400)
+        .send({ success: false, message: '워크 스페이스 네임이 없습니다.' });
+    }
+
     const tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
     return res.json({
       result: {
