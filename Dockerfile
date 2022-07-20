@@ -6,6 +6,8 @@ COPY ./package.json ./
 
 RUN npm install
 
+RUN npm install nodemon -g -D
+
 COPY . .
 
-CMD ["node", "server.js"]
+CMD ["nodemon", "server.js"]
