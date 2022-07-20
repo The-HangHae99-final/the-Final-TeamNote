@@ -34,6 +34,7 @@ async function create(req, res) {
         memberEmail: owner.userEmail,
         memberName: owner.userName,
       });
+      console.log(owner.userEmail);
       console.log('memberEmail:', memberEmail);
       console.log('memberName', memberName);
 
