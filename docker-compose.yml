@@ -3,5 +3,3 @@ services:
   node:
     container_name: 'node'
     image: 'hayeonkimm/docker-team:latest'
-    ports:
-      - '3001:3001'
