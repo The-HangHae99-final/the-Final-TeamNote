@@ -29,10 +29,15 @@ const teamTaskSchema = mongoose.Schema(
     color: {
       type: String,
     },
+
+    workSpaceName: {
+      type: String,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('TeamTask', teamTaskSchema);
+const TeamTask = mongoose.model('TeamTask', teamTaskSchema);
+module.exports = TeamTask;

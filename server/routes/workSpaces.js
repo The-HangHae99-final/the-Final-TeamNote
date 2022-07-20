@@ -5,59 +5,21 @@ const authMiddleware = require('../middlewares/auth-middleware');
 const isMember = require('../middlewares/isMember');
 
 //워크스페이스 생성
-router.post('/workSpace/create', authMiddleware, workSpaceController.create);
-
-//워크스페이스 멤버 추가
-router.put(
-  '/workSpace/memberAdd/:workSpaceName',
-  authMiddleware,
-  isMember,
-  workSpaceController.memberAdd
-);
-
-//룸 이름 얻기
-router.get(
-  '/workSpace/getRoomName/:workSpaceName/:opponent',
-  authMiddleware,
-  isMember,
-  workSpaceController.roomName
-);
-
-//멤버 목록 조회
-router.get(
-  '/workSpace/MemberList/:workSpaceName',
-  authMiddleware,
-  isMember,
-  workSpaceController.getMemberList
-);
-
-//멤버 삭제
-router.put(
-  '/workSpace/deleteMember/:workSpaceName',
-  authMiddleware,
-  isMember,
-  workSpaceController.deleteMember
-);
+router.post('/workSpace', authMiddleware, workSpaceController.createSpace);
 
 //워크스페이스 탈퇴하기
-router.put(
-  '/workSpace/workSpaceLeave/:workSpaceName',
-  authMiddleware,
-  isMember,
-  workSpaceController.workSpaceLeave
-);
+router.put('/workSpace/leave',authMiddleware,isMember,workSpaceController.workSpaceLeave);
 
 //워크스페이스 삭제
-router.delete(
-  '/workSpace/workSpaceRemove/:workSpaceName',
-  authMiddleware,
-  isMember,
-  workSpaceController.workSpaceRemove
-);
+router.delete('/workSpace',authMiddleware,isMember,workSpaceController.deleteWorkSpace);
 
 //본인 속한 워크스페이스 목록 조회
-router.get('/workSpace/workSpaceList', authMiddleware, workSpaceController.getWorkSpaceList);
+router.get('/workSpace/list',authMiddleware,workSpaceController.getWorkSpaceList);
 
-router.get('/workSpace/everyWorkSpace', workSpaceController.everyWorkSpace);
+// 워크 스페이스 전체 조회
+router.get('/workSpace', workSpaceController.everyWorkSpace);
+
+//워크스페이스 검색
+router.get('/workSpaceOne', workSpaceController.getWorkSpaceByName);
 
 module.exports = router;

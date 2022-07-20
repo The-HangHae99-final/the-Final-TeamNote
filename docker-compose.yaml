@@ -3,6 +3,6 @@ version: "3.9"
 services:
   final_project:
     build:
-      context: .
+      context: teamnote
     ports:
     - 3000:3001

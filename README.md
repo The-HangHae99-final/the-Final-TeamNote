@@ -11,14 +11,6 @@
 
 ### 1. [프로젝트 소개](#-프로젝트-소개)
 
-
-실용적이고, 매력적인 UI로 협업에서 받는 스트레스를 줄여 드립니다!
-
-함께 프로젝트를 하는 사람들과 일정을 공유하고, 정리하고, 대화를 나눠보세요!
-
-Share your task ~!
-
-
 ### 2. [팀 구성](#-팀-구성)
 
 ### 3. [기술 스텍](#-기술스택-why)
@@ -38,13 +30,18 @@ Share your task ~!
 
 ## 📈 프로젝트 소개
 
-#### -----
+실용적이고, 매력적인 UI로 협업에서 받는 스트레스를 줄여 드립니다!
+
+함께 프로젝트를 하는 사람들과 일정을 공유하고, 정리하고, 대화를 나눠보세요!
+
+Share your task ~! Share your Idea !
+
 
 <br>
 
 ## 🗓 프로젝트 기간
 
-- 2022년 6월 --일 ~ 2022년 8월 --일
+- 2022년 6월  24일 ~ 2022년 8월 5일
 
 <br>
 
@@ -143,31 +140,18 @@ Share your task ~!
 
 | 라이브러리                                                                            |          설명          |
 | ------------------------------------------------------------------------------------- | :--------------------: |
-| <img src='https://img.shields.io/badge/artillery-1.7.9-lightgrey'>                    |    서버 부하 테스트    |
-| <img src='https://img.shields.io/badge/bcrypt-5.0.1-lightgrey'>                       |    비밀번호 암호화     |
-| <img src='https://img.shields.io/badge/compression-1.7.4-lightgrey'>                  |      데이터 압축       |
-| <img src='https://img.shields.io/badge/cors-2.8.5-lightgrey'>                         |    교차 리소스 공유    |
-| <img src='https://img.shields.io/badge/dotenv-10.0.0-lightgrey'>                      |     환경변수 관리      |
-| <img src='https://img.shields.io/badge/express-4.17.1-lightgrey'>                     |          서버          |
-| <img src='https://img.shields.io/badge/express--rate--limit-5.5.1-lightgrey'>         |     요청 횟수 제한     |
-| <img src='https://img.shields.io/badge/helmet-4.6.0-lightgrey'>                       |     HTTP 헤더 보안     |
-| <img src='https://img.shields.io/badge/ioredis-17.4.1-lightgrey'>                     |       redis 연결       |
-| <img src='https://img.shields.io/badge/joi-17.4.1-lightgrey'>                         |    입력데이터 검출     |
-| <img src='https://img.shields.io/badge/jest-27.3.1-lightgrey'>                        |      테스트 코드       |
-| <img src='https://img.shields.io/badge/jsonwebtoken-8.5.1-lightgrey'>                 |      서명 암호화       |
-| <img src='https://img.shields.io/badge/moment-2.29.1-lightgrey'>                      |    날짜 라이브러리     |
-| <img src='https://img.shields.io/badge/morgan-1.10.0-lightgrey'>                      |     Http Log 기록      |
-| <img src='https://img.shields.io/badge/mysql-2.3.2-lightgrey'>                        |         MySQL          |
-| <img src='https://img.shields.io/badge/node--schedule-2.0.0-lightgrey'>               |   스케쥴 업무 자동화   |
-| <img src='https://img.shields.io/badge/request--ip-2.1.3-lightgrey'>                  |     client ip 요청     |
-| <img src='https://img.shields.io/badge/sequelize-6.7.0-lightgrey'>                    |       MySQL ORM        |
-| <img src='https://img.shields.io/badge/sequelize--cli-6.2.0-lightgrey'>               |   MySQL ORM Console    |
-| <img src='https://img.shields.io/badge/swagger--ui--express-4.1.6-lightgrey'>         |       API 문서화       |
-| <img src='https://img.shields.io/badge/ts--node-10.4.0-lightgrey'>                    |    TypeScript 실행     |
-| <img src='https://img.shields.io/badge/tsc--watch-10.4.0-lightgrey'>                  | TypeScript 실행(watch) |
-| <img src='https://img.shields.io/badge/typescript-4.4.4-lightgrey'>                   |       TypeScript       |
-| <img src='https://img.shields.io/badge/winston-3.3.3-lightgrey'>                      |     Log 파일 생성      |
-| <img src='https://img.shields.io/badge/winston--daily--rotate--file-4.5.5-lightgrey'> |     Log 파일 관리      |
+| bcrypt                        |    비밀번호 암호화     |
+| cors                        |    교차 리소스 공유    |
+| dotenv                      |     환경변수 관리      |
+| express                     |          서버          |
+| helmet                       |     HTTP 헤더 보안     |
+| ioredis                     |       redis 연결       |
+| joi                        |    입력데이터 검출     |
+| jest                        |      테스트 코드       |
+| jsonwebtoken                 |      서명 암호화       |
+| moment                      |    날짜 라이브러리     |
+| morgan                      |     Http Log 기록      |
+| swagger--ui--express         |       API 문서화       |
 
 <br>
 

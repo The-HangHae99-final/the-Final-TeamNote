@@ -21,4 +21,6 @@ const postCommentSchema = new mongoose.Schema({
     required: true,
   },
 });
-module.exports = mongoose.model('postComment', postCommentSchema);
+
+const postComment = mongoose.model('postComment', postCommentSchema);
+module.exports = postComment;

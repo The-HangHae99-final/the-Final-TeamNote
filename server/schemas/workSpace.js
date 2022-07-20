@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
 const workSpaceSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,7 +8,10 @@ const workSpaceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  memberList: [new mongoose.Schema({memberEmail: String, memberName: String})]
+  memberList: [
+    new mongoose.Schema({ memberEmail: String, memberName: String }),
+  ],
 });
 
-module.exports = mongoose.model("workSpace", workSpaceSchema);
+const workSpace = mongoose.model('workSpace', workSpaceSchema);
+module.exports = workSpace;

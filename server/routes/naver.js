@@ -17,7 +17,9 @@ var router = express.Router();
 var client_id = process.env.YOUR_CLIENT_ID;
 var client_secret = process.env.YOUR_CLIENT_SECRET;
 var state = 'teamnote';
-var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
+var redirectURI = encodeURI(
+  'http://localhost:3000/api/auth/login/naver/callback'
+);
 // var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
 router.post('/naver', naverController.naver);

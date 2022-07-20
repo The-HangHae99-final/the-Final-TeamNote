@@ -7,4 +7,6 @@ const MypageSchema = new mongoose.Schema({
     type: Array,
   },
 });
-module.exports = mongoose.model('mypage', MypageSchema);
+
+const Mypage =  mongoose.model('mypage', MypageSchema);
+module.exports = Mypage;

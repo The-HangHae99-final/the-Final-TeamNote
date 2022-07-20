@@ -35,4 +35,5 @@ const taskSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Calendar', taskSchema);
+const Calendar = mongoose.model('Calendar', taskSchema);
+module.exports = Calendar;

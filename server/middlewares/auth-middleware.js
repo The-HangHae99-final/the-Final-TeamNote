@@ -1,12 +1,13 @@
 const dotenv = require('dotenv').config();
-
-const jwt = require('jsonwebtoken');
 const User = require('../schemas/user');
 const jwtSecret = process.env.SECRET_KEY;
+const jwt = require('jsonwebtoken');
+
 console.log('jwt secret:', jwtSecret);
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
+  console.log('authorization--------------------:', authorization);
 
   if (authorization == null) {
     console.log('authorization: ', authorization);
@@ -70,8 +71,8 @@ module.exports = (req, res, next) => {
   } catch (error) {
     console.log('error: ' + error);
     res.send({
-      errorMessage:
-        error + ' : 로그인이 필요합니다. -----------그외-----------',
+      errorMessage: '  로그인이 필요합니다. -----------그외-----------',
+      error: error,
     });
   }
 };
@@ -83,3 +84,37 @@ function verifyToken(token) {
     return error.message;
   }
 }
+
+
+
+// module.exports = (req, res, next) => {
+//   const { authorization } = req.headers;
+//   console.log('authorization-----------------------------: ', authorization);
+//   const [tokenType, tokenValue] = authorization.split(' ');
+//   console.log(
+//     'tokenType---------------',
+//     tokenType,
+//     'tokenValue---------------',
+//     tokenValue
+//   );
+
+//   if (tokenType !== 'Bearer') {
+//     return res.status(401).send({
+//       errorMessage: '로그인 후 사용하세요.',
+//     });
+//   }
+
+//   try {
+//     console.log(tokenValue);
+//     const { userEmail } = jwt.verify(tokenValue, jwtSecret);
+//     console.log(userEmail);
+//     User.find({ userEmail }).then((user) => {
+//       res.locals.User = user;
+//       next();
+//     });
+//   } catch (error) {
+//     return res.status(401).send({
+//       errorMessage: error.message,
+//     });
+//   }
+// };
