@@ -64,7 +64,7 @@ async function signup(req, res) {
         errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
-    // 해시화
+    // 비밀번호 해시화
     const salt = await Bcrypt.genSalt(Number(process.env.SaltKEY));
     const hashPassword = await Bcrypt.hash(password, salt);
     let site = 0;
@@ -81,7 +81,7 @@ async function signup(req, res) {
       msg: '회원가입을 성공하였습니다',
     });
 
-    // 메일 옵션
+    // 가입 축하  이메일 발송 기능
     let mailOptions = {
       from: 'hanghae99@naver.com', // 메일 발신자
       to: req.body.userEmail, // 메일 수신자
@@ -135,7 +135,10 @@ async function emailFirst(req, res) {
       res.status(200).json({ success: true, errorMessage: error });
     }
   } catch (error) {
-    res.send(401).send({ errorMessage: error });
+    res.send(401).send({
+      message: '예상치 못한 에러가 발생했습니다.',
+      errorMessage: error,
+    });
   }
 }
 
@@ -160,7 +163,7 @@ async function passwordSecond(req, res) {
     }
     //jwt token화
     const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '12000s',
+      expiresIn: '3600s',
     });
 
     // 리프레시 토큰 생성
@@ -179,9 +182,10 @@ async function passwordSecond(req, res) {
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
     console.error(error);
-    res
-      .status(400)
-      .send({ errorMessage: error + ' : 로그인에 실패 하였습니다.' });
+    res.status(400).send({
+      errorMessage: error.message,
+      message: '예상치 못한 이유로 로그인에 실패 하였습니다.',
+    });
   }
 }
 
@@ -197,9 +201,10 @@ async function deleteUser(req, res) {
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
-    res
-      .status(400)
-      .send({ errorMessage: error + '예상치 못한 에러가 발생했습니다.' });
+    res.status(400).send({
+      errorMessage: error.message,
+      message: '예상치 못한 에러가 발생했습니다.',
+    });
   }
 }
 //가입된 유저 확인
@@ -210,14 +215,13 @@ async function all(req, res) {
     //#swagger.description='-'
 
     const userAll = await User.find({});
-    res.status(200).send({ userAll: userAll, success: false });
+    res.status(200).send({ userAll: userAll, success: true });
   } catch (error) {
     res.status(400).send({ errorMessage: error.message, success: false });
   }
 }
 
-//유저 검색
-
+//유저 검색기능
 async function searchUser(req, res) {
   try {
     //#swagger.tags= [' 유저 검색 API'];
@@ -248,6 +252,7 @@ async function searchUser(req, res) {
 }
 
 // 회원가입 - 인증코드 이메일로 보내기
+// 보류
 async function mailing(req, res) {
   //#swagger.tags= [' 인증코드 메일링 API'];
   //#swagger.summary= '인증코드 메일링 API'
@@ -278,10 +283,10 @@ async function mailing(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log('Email sent successfully!');
+      console.log('이메일이 성공적으로 발송되었습니다!');
     }
   });
-  res.send({ number: number });
+  res.send({ number: number }); //인증번호 인증기능.
 }
 
 module.exports = {
