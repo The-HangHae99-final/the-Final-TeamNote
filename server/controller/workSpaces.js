@@ -110,23 +110,11 @@ async function getWorkSpaceList(req, res) {
     console.log('userEmail: ', userEmail);
     const includedList = [];
     const workSpaceList = await workSpace.find({ userEmail });
-    console.log('workSpaceList: ', workSpaceList);
-
-    includedList.push(workSpaceList);
-    return res.status(200).json({
-      includedList,
-      success: true,
-      message: '워크스페이스 목록 조회 성공',
-    });
-  } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: ' 특정 할 수 없는 에러가 발생했습니다.',
-      errorMessage: err.message,
-    });
+    console.log(workSpaceList);
+  } catch (error) {
+    res.status(400).send({ success: false, error: error.message });
   }
 }
-
 //전체 워크스페이스 조회
 // router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
 
