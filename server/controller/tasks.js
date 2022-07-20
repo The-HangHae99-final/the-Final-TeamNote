@@ -9,17 +9,9 @@ async function taskUpload(req, res, next) {
     //#swagger.description='-'
 
     const { userEmail } = res.locals.User;
-    // console.log(
-    //   'userEmail11111111111111--------------------------------------------------------',
-    //   userEmail
-    // );
-    // console.log((res.locals.user))
     const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await Task.findOne({ workSpaceName }).sort('-taskId');
-    // console.log(
-    //   'maxTaskId 222222222222222--------------------------------------------------------',
-    //   maxTaskId
-    // );
+
     let taskId = 1;
     if (maxTaskId) {
       taskId = maxTaskId.taskId + 1;
@@ -35,11 +27,6 @@ async function taskUpload(req, res, next) {
       color,
     });
 
-    // console.log(
-    //   'createdTask3333333333333333---------------------',
-    //   createdTask
-    // );
-
     return res.json({
       result: createdTask,
       success: true,
@@ -50,7 +37,7 @@ async function taskUpload(req, res, next) {
     return res.status(400).json({
       success: false,
       message: '개인 일정 생성 실패',
-      errorMeassage: error,
+      errorMeassage: error.message,
     });
   }
 }
@@ -64,12 +51,6 @@ async function taskAll(req, res, next) {
     const { userEmail } = res.locals.User;
 
     const tasks = await Task.find({ userEmail }).sort('-taskId');
-    // console.log('tasks: ', tasks[0].userEmail);
-    // if (tasks[0].userEmail !== userEmail) {
-    //   console.log('---------task[0].usermail-------' + tasks[0].userEmail);
-    //   console.log('----------userEmail-----' + userEmail);
-    //   return res.status(400).json({ ok: false, message: '본인이 아닙니다.' });
-    // }
     return res.json({
       result: {
         count: tasks.length,
@@ -128,17 +109,16 @@ async function taskEdit(req, res, next) {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 수정 API'
     //#swagger.description='-'
-
     const taskId = Number(req.params.taskId);
     const [existTask] = await Task.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);
     const { userEmail } = res.locals.User;
     const { startDate, endDate, title, desc, color } = req.body;
     if (userEmail !== existTask.userEmail) {
-      res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      res.status(401).json({ success: false, message: '작성자가 아닙니다.' });
     }
     if (!startDate || !endDate || !title) {
-      res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      res.status(400).json({ success: false, message: '빈값을 채워주세요' });
     }
 
     await Task.updateOne(
@@ -171,7 +151,9 @@ async function taskRemove(req, res, next) {
     const existTask = await Task.findOne({ taskId });
 
     if (userEmail !== existTask.userEmail) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '작성자가 아닙니다.' });
     }
 
     if (!existTask) {
