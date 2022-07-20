@@ -13,6 +13,14 @@ const workSpaceSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+  memberEmail: {
+    type: String,
+    required: true,
+  },
+  memberName: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('workSpace', workSpaceSchema);
