@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const workSpaceSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,5 +12,5 @@ const workSpaceSchema = new mongoose.Schema({
     new mongoose.Schema({ memberEmail: String, memberName: String }),
   ],
 });
-
-module.exports = mongoose.model('workSpace', workSpaceSchema);
+const workSpace = mongoose.model('workSpace', workSpaceSchema);
+module.exports = workSpace;
