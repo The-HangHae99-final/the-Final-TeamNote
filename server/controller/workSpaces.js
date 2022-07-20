@@ -7,8 +7,9 @@ async function createSpace(req, res) {
     //#swagger.summary= '워크 스페이스 생성 API'
     //##swagger.description='-'
     const user = res.locals.User[0];
-    console.log('user: ', user);
+    console.log('user-----------: ', user);
     const { name } = req.body;
+    console.log('name-------------: ', name);
     const workSpaceName = `${user.userEmail}+${name}`; //만든이가 다른경우 워크스페이스 이름 중복가능을 위함
     const memberList = [];
     memberList.push({ memberEmail: user.userEmail, memberName: user.userName }); //만든 사람 멤버리스트에 집어넣기
