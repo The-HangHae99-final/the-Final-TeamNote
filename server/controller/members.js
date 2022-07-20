@@ -2,22 +2,21 @@ const User = require("../schemas/user");
 const workSpace = require("../schemas/workSpace");
 
 //멤버 추가
-// router.put("/workSpace/memberAdd/:workSpaceName", authMiddleware,isMember, workSpaceController.memberAdd);
-async function memberAdd(req, res) {
+// router.put("/memberIn", authMiddleware,isMember, workSpaceController.addMember);
+async function addMember(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 멤버 추가 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.body;
-    const { userEmail } = req.body;
-
+    const { workSpaceName, userEmail } = req.body;
     const [myWorkSpace] = await workSpace.find({ name: workSpaceName });
-    const existCheck = await User.findOne({ userEmail: userEmail });
+    const existUser = await User.findOne({ userEmail: userEmail });
+    
     const existMember = myWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail === userEmail
-    );
+    ); //멤버리스트 내 존재 유무 확인
 
-    if (!existCheck) {
+    if (!existUser) {
       return res
         .status(400)
         .json({ ok: false, message: "존재하지 않는 유저입니다." });
@@ -27,10 +26,13 @@ async function memberAdd(req, res) {
         .json({ of: false, message: "이미 포함된 유저입니다." });
     } else {
       myWorkSpace.memberList.push({
-        memberEmail: existCheck.userEmail,
-        memberName: existCheck.userName,
+        memberEmail: existUser.userEmail,
+        memberName: existUser.userName,
       });
-      myWorkSpace.save();
+      await workSpace.updateOne(
+        { name: workSpaceName },
+        { $set: { memberList: myWorkSpace.memberList } }
+      );
 
       return res.status(200).json({
         result: myWorkSpace,
@@ -49,14 +51,14 @@ async function deleteMember(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 멤버 삭제 API'
     //##swagger.description='-'
-    const authority = res.locals.User;
-    const { workSpaceName } = req.body;
-    const { memberEmail } = req.body;
+    const { userEmail } = res.locals.User;
+    const { workSpaceName, memberEmail } = req.body;
     const myWorkSpace = await workSpace.findOne({ name: workSpaceName });
     const existMember = myWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail === memberEmail
     );
-    if (authority.userEmail !== myWorkSpace.owner) {
+    console.log('existMember: ', existMember);
+    if (userEmail !== myWorkSpace.owner) {
       return res
         .status(400)
         .json({ ok: false, message: "오너만 멤버를 삭제할 수 있습니다." });
@@ -84,7 +86,7 @@ async function deleteMember(req, res) {
   }
 }
 //멤버 목록 조회
-// router.get("/workSpace/MemberList/:workSpaceName", authMiddleware, isMember, workSpaceController.getMemberList);
+// router.get("/member",authMiddleware,isMember,memberController.getMemberList);
 async function getMemberList(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -105,7 +107,7 @@ async function getMemberList(req, res) {
 }
 
 module.exports = {
-  memberAdd,
+  addMember,
   getMemberList,
   deleteMember,
 };
