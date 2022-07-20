@@ -10,6 +10,7 @@ var client_id = process.env.YOUR_CLIENT_ID;
 var client_secret = process.env.YOUR_CLIENT_SECRET;
 var state = 'teamnote';
 var jwt = require('jsonwebtoken');
+const jwtSecret = process.env.SECRET_KEY;
 var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
 // var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
@@ -109,7 +110,12 @@ async function naver_parsing(req, res) {
     const double = await User.findOne({ userEmail });
 
     // 리프레시 토큰 생성
-    const refresh_token = jwt.sign({}, 'secret', {
+
+    const token = jwt.sign({ userEmail }, jwtSecret, {
+      expiresIn: '12000s',
+    });
+
+    const refresh_token = jwt.sign({}, jwtSecret, {
       expiresIn: '14d',
     });
 
@@ -120,7 +126,9 @@ async function naver_parsing(req, res) {
     } else if (double.userName == userName) {
       //이름까지 같다면 통과, 리프레시 토큰만 대체
       await double.update({ refresh_token }, { $: { userEmail } });
-      res.status(200).json({ success: true });
+      res
+        .status(200)
+        .json({ token, success: true, message: '리프레시 토큰 대체 성공' });
     } else {
       // 랜덤난수 생성
       min = Math.ceil(111111);
