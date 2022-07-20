@@ -1,4 +1,4 @@
-name: ci-cd-pipeline
+name: ci-pipeline
 on:
   push:
     branches: [main, hayeon]
