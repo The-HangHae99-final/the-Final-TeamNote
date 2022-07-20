@@ -106,23 +106,23 @@ async function getWorkSpaceList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '본인이 속한 워크 스페이스 목록 조회 API'
     //#swagger.description='-'
-    const { userEmail } = res.locals.User[0];
-    console.log('userEmail: ', userEmail);
-    const includedList = [];
+    const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
-    const workSpaceEmail = workSpaceList.filter(
-      (data) => data.email == userEmail
-    );
-    console.log('workSpaceEmail---------------' + workSpaceEmail);
-    includedList.push(workSpaceEmail);
+    console.log('workSpaceList: ', workSpaceList);
+    const includedList = [];
 
-    if (!includedList) {
-      res.status(400).send({ success: false });
-    } else {
-      res.status(200).send({ data: workSpaceEmail, success: true });
-    }
-  } catch (error) {
-    res.status(400).send({ success: false, error: error.message });
+    workSpaceList.map((Info) =>
+      Info.memberList.map((member) =>
+        member.memberEmail === userEmail ? includedList.push(Info) : null
+      )
+    );
+    return res.status(200).json({
+      includedList,
+      ok: true,
+      message: '워크스페이스 목록 조회 성공',
+    });
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
   }
 }
 //전체 워크스페이스 조회
