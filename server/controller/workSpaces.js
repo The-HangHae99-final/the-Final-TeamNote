@@ -120,7 +120,7 @@ async function getWorkSpaceList(req, res) {
     //   )
     // );
 
-    const mem = workSpaceList.memberList.filter(
+    const mem = workSpaceList.memberList.map(
       (data) => data.memberEmail == userEmail
     );
     includedList.push(mem);
