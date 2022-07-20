@@ -50,5 +50,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
-          script: |
-            docker-compose up --build
+          script: docker-compose up --build
