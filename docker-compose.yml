@@ -2,14 +2,8 @@ version: '3.9'
 services:
   node:
     container_name: 'node'
-    build:
-      # velog directory를 root로 사용
-      context: .
-      # ./velog/Dockerfile을 사용해서 build
-      dockerfile: Dockerfile
-
+    image: 'hayeonkimm/docker-team:latest'
     ports:
       - '3001:3001'
-
     volumes:
       - ./:/usr/src/app/
