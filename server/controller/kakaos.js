@@ -6,6 +6,8 @@ const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
 var User = require('../schemas/user');
+const jwtSecret = process.env.SECRET_KEY;
+
 const { smtpTransport } = require('../controller/util/email');
 var generateRandom = function (min, max) {
   var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -117,12 +119,12 @@ async function kakao_parsing(req, res) {
 
     // userName로 토큰값 만들기
 
-    var token = jwt.sign({ userEmail }, 'secret', {
+    var token = jwt.sign({ userEmail }, jwtSecret, {
       expiresIn: '1200s',
     });
     var token = String(token);
     console.log('token------114', token);
-    var refresh_token = jwt.sign({}, 'secret', {
+    var refresh_token = jwt.sign({}, jwtSecret, {
       expiresIn: '14d',
     });
     console.log('refresh_token---------------: ', refresh_token);
