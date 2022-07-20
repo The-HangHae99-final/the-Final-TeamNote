@@ -18,7 +18,7 @@ async function createSpace(req, res) {
       if (existName[0].owner === user.userEmail)
         return res
           .status(400)
-          .send({ errorMessage: "이미 존재하는 이름입니다." });
+          .send({ errorMessage: '이미 존재하는 이름입니다.' });
     } else {
       const createdWorkSpace = await workSpace.create({
         owner: user.userEmail,
@@ -30,19 +30,11 @@ async function createSpace(req, res) {
   } catch (err) {
     console.log(err);
     res.status(400).send({
-<<<<<<< HEAD
       errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
       error,
     });
   }
 }
-=======
-      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
-    });
-  }
-}
-
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
 //워크스페이스 탈퇴하기
 // router.put('/workSpace/leave',authMiddleware,isMember,workSpaceController.workSpaceLeave);
 async function workSpaceLeave(req, res) {
@@ -53,21 +45,17 @@ async function workSpaceLeave(req, res) {
     const { userEmail } = res.locals.User;
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
-<<<<<<< HEAD
+
     if (targetWorkSpace.owner === userEmail) {
-      return res.status(400).json({
-        ok: false,
-        message:
-          '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
-      });
-    }
-=======
-
-    if(targetWorkSpace.owner === userEmail){ 
-    return res.status(400).json({ ok: false, message: "본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)" });
+      return res
+        .status(400)
+        .json({
+          ok: false,
+          message:
+            '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
+        });
     }
 
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
     const excepted = targetWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail !== userEmail
     );
@@ -75,9 +63,9 @@ async function workSpaceLeave(req, res) {
       { name: workSpaceName },
       { $set: { memberList: excepted } }
     );
-    return res.status(200).json({ ok: true, message: "탈퇴 성공" });
+    return res.status(200).json({ ok: true, message: '탈퇴 성공' });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: "탈퇴 에러" });
+    return res.status(400).json({ ok: false, message: '탈퇴 에러' });
   }
 }
 //워크스페이스 삭제
@@ -90,26 +78,18 @@ async function deleteWorkSpace(req, res) {
     const { userEmail } = res.locals.User;
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
-<<<<<<< HEAD
-=======
-
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
     if (targetWorkSpace.owner === userEmail) {
       await workSpace.deleteOne({ name: workSpaceName });
       return res
         .status(200)
-        .json({ ok: true, message: "워크스페이스가 삭제되었습니다." });
+        .json({ ok: true, message: '워크스페이스가 삭제되었습니다.' });
     }
   } catch (err) {
     return res
       .status(400)
-      .json({ ok: false, message: "워크스페이스 삭제 에러" });
+      .json({ ok: false, message: '워크스페이스 삭제 에러' });
   }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
 //본인 속한 워크스페이스 목록 조회
 // router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
 async function getWorkSpaceList(req, res) {
@@ -120,11 +100,6 @@ async function getWorkSpaceList(req, res) {
     const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
     const includedList = [];
-<<<<<<< HEAD
-=======
-    
-
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
     workSpaceList.map((Info) =>
       Info.memberList.map((member) =>
         member.memberEmail === userEmail ? includedList.push(Info) : null
@@ -135,16 +110,12 @@ async function getWorkSpaceList(req, res) {
     return res.status(200).json({
       includedList,
       ok: true,
-      message: "워크스페이스 목록 조회 성공",
+      message: '워크스페이스 목록 조회 성공',
     });
   } catch (err) {
     return res
       .status(400)
-<<<<<<< HEAD
       .json({ ok: false, message: '소속 워크스페이스 목록 조회 실패' });
-=======
-      .json({ ok: false, message: "소속 워크스페이스 목록 조회 실패" });
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
   }
 }
 //전체 워크스페이스 조회
@@ -155,10 +126,6 @@ async function everyWorkSpace(req, res) {
     //#swagger.summary= '전체 워크스페이스 조회(개발용) API'
     //#swagger.description='-'
     const workSpaceList = await workSpace.find({});
-<<<<<<< HEAD
-=======
-
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
     return res.status(200).json(
       workSpaceList
       // ok: true,
@@ -167,16 +134,10 @@ async function everyWorkSpace(req, res) {
   } catch (err) {
     return res
       .status(400)
-<<<<<<< HEAD
       .json({ ok: false, message: '전체 워크스페이스 조회 실패' });
   }
 }
-=======
-      .json({ ok: false, message: "전체 워크스페이스 조회 실패" });
-  }
-}
 
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
 //워크스페이스 검색
 async function getWorkSpaceByName(req, res, next) {
   try {
@@ -190,11 +151,7 @@ async function getWorkSpaceByName(req, res, next) {
   } catch (error) {
     return res
       .status(400)
-<<<<<<< HEAD
       .json({ ok: false, message: '워크스페이스 검색 실패' });
-=======
-      .json({ ok: false, message: "워크스페이스 검색 실패" });
->>>>>>> dbec0061c7009df892b1d5af3d3e9748731f3727
   }
 }
 module.exports = {
