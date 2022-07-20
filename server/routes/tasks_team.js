@@ -13,7 +13,7 @@ router.post(
 );
 
 // 팀 전체 일정 조회
-router.get(
+router.post(
   '/task/team/workSpaceName',
   authMiddleware,
   isMember,
