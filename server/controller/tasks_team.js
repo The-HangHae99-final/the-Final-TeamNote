@@ -50,7 +50,7 @@ async function teamTaskAll(req, res, next) {
     //#swagger.description='-'
 
     const { workSpaceName } = req.body;
-    console.log('workSpaceName-----------------:', workSpaceName)
+    console.log('workSpaceName-----------------:', workSpaceName);
     if (!workSpaceName) {
       return res
         .status(400)
@@ -58,11 +58,9 @@ async function teamTaskAll(req, res, next) {
     }
 
     const tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');
+    console.log(tasks);
     return res.json({
-      result: {
-        count: tasks.length,
-        rows: tasks,
-      },
+      result: tasks,
       success: true,
     });
   } catch (err) {
