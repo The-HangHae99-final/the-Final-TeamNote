@@ -9,10 +9,16 @@ async function create(req, res) {
     //#swagger.summary= '워크 스페이스 생성 API'
     //##swagger.description='-'
     const owner = res.locals.User;
+    console.log('owner: ', owner);
+
     const { name } = req.body;
+    console.log('name: ', name);
+
     const fullName = `${owner.userEmail}+${name}`;
+    console.log('fullName: ', fullName);
     const existName = await workSpace.find({ name: fullName });
-    console.log('owner.user--------' + owner.userEmail);
+    console.log('existName: ', existName);
+
     if (existName.length) {
       if (existName[0].owner === owner.userEmail)
         return res
@@ -28,6 +34,8 @@ async function create(req, res) {
         memberEmail: owner.userEmail,
         memberName: owner.userName,
       });
+      console.log('memberEmail:', memberEmail);
+      console.log('memberName', memberName);
 
       createdWorkSpace.save();
 
@@ -141,7 +149,11 @@ async function everyWorkSpace(req, res) {
       message: '전체 워크스페이스 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: ' 에러싫어에러' });
+    return res.status(400).json({
+      success: false,
+      message: '특정 할 수 없는 에러가 발생했습니다.',
+      errorMessage: err.message,
+    });
   }
 }
 
