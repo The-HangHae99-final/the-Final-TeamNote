@@ -8,7 +8,7 @@ async function create(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 생성 API'
     //##swagger.description='-'
-    const owner = res.locals.User;
+    const owner = res.locals.User[0];
     console.log('owner: ', owner);
 
     const { name } = req.body;
