@@ -109,12 +109,12 @@ async function naver_parsing(req, res) {
     const double = await User.findOne({ userEmail });
 
     //jwt token화
-    const token = jwt.sign({ userEmail }, jwtSecret, {
+    const token = jwt.sign({ userEmail }, 'secret', {
       expiresIn: '12000s',
     });
 
     // 리프레시 토큰 생성
-    const refresh_token = jwt.sign({}, jwtSecret, {
+    const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
 
