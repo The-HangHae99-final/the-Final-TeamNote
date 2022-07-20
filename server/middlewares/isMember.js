@@ -4,11 +4,11 @@ const workSpace = require('../schemas/workSpace');
 module.exports = async (req, res, next) => {
   try {
     const { workSpaceName } = req.body;
-    console.log('workSpaceName: ', workSpaceName);
-    const userEmail = res.locals.User.userEmail;
-    console.log('userEmail: ', userEmail);
+    // console.log("workSpaceName: ", workSpaceName);
+    const { userEmail } = res.locals.User;
+    // console.log("userEmail: ", userEmail);
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    console.log('existWorkSpace: ', existWorkSpace);
+    // console.log("existWorkSpace: ", existWorkSpace);
 
     if (existWorkSpace === null) {
       res.status(400).send({
@@ -26,8 +26,12 @@ module.exports = async (req, res, next) => {
         message: '본 유저는 멤버가 아닙니다.',
       });
       return;
+    } else {
+      workSpace.findOne({ name: workSpaceName }).then((WS) => {
+        res.locals.workSpace = WS;
+        next();
+      });
     }
-    next();
   } catch (error) {
     console.log('member check error', error);
     res.status(400).send({

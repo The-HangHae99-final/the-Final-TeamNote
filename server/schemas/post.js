@@ -14,4 +14,5 @@ const postSchema = new Schema({
   // likes: { type: Number, default: 0 }, // 좋아요 수
 });
 
-module.exports = mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema);
+module.exports = Post;

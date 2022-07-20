@@ -5,12 +5,7 @@ const authMiddleware = require('../middlewares/auth-middleware');
 const isMember = require('../middlewares/isMember');
 
 //멤버 추가
-router.put(
-  '/memberIn',
-  authMiddleware,
-  //
-  memberController.memberAdd
-);
+router.put('/memberIn', authMiddleware, isMember, memberController.addMember);
 
 //멤버 목록 조회
 router.get('/member', authMiddleware, isMember, memberController.getMemberList);
