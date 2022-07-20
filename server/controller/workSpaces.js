@@ -35,7 +35,7 @@ async function create(req, res) {
         memberName: owner.userName,
       });
       console.log(owner.userEmail);
-      console.log('memberEmail:', memberEmail);
+      // console.log('memberEmail:', memberEmail);
       console.log('memberName', memberName);
 
       createdWorkSpace.save();
