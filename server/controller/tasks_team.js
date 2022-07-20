@@ -50,7 +50,7 @@ async function teamTaskAll(req, res, next) {
     //#swagger.description='-'
 
     const { workSpaceName } = req.body;
-
+    console.log('workSpaceName-----------------:', workSpaceName)
     if (!workSpaceName) {
       return res
         .status(400)
