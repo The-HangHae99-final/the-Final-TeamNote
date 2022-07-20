@@ -113,9 +113,11 @@ async function getWorkSpaceList(req, res) {
     const workSpaceList = await workSpace.find({});
     let includedList = [];
 
-    workSpaceList.map((Info) =>
+    const hey = workSpaceList.map((Info) =>
       Info.memberList.map((member) => member.memberEmail == userEmail)
     );
+
+    includedList.push(hey);
 
     res.status(200).json({
       includedList,
