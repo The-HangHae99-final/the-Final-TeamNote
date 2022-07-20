@@ -119,7 +119,7 @@ async function getWorkSpaceList(req, res) {
     if (!includedList) {
       res.status(400).send({ success: false });
     } else {
-      res.status(200).send({ success: true });
+      res.status(200).send({ data: workSpaceEmail, success: true });
     }
   } catch (error) {
     res.status(400).send({ success: false, error: error.message });
