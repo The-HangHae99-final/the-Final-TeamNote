@@ -112,6 +112,12 @@ async function getWorkSpaceList(req, res) {
     const workSpaceList = await workSpace.memberEmail.find({ userEmail });
     console.log('workSpaceList-------------------' + workSpaceList);
     includedList.push(workSpaceList);
+
+    if (!includedList) {
+      res.status(400).send({ success: false });
+    } else {
+      res.status(200).send({ success: true });
+    }
   } catch (error) {
     res
       .status(400)
