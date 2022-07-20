@@ -49,7 +49,7 @@ async function teamTaskAll(req, res, next) {
     //#swagger.summary= '팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
 
-    const { workSpaceName } = req.body;
+    const { workSpaceName } = req.params;
     console.log('workSpaceName-----------------:', workSpaceName);
     if (!workSpaceName) {
       return res
