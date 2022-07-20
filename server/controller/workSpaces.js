@@ -107,7 +107,10 @@ async function getWorkSpaceList(req, res) {
     //#swagger.summary= '본인이 속한 워크 스페이스 목록 조회 API'
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
-    const workSpaceList = await workSpace.find({});
+    console.log('userEmail: ', userEmail);
+
+    const workSpaceList = await workSpace.find();
+
     console.log('workSpaceList: ', workSpaceList);
     const includedList = [];
 
@@ -118,7 +121,7 @@ async function getWorkSpaceList(req, res) {
     );
     return res.status(200).json({
       includedList,
-      ok: true,
+      success: true,
       message: '워크스페이스 목록 조회 성공',
     });
   } catch (err) {
