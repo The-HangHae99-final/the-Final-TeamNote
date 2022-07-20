@@ -126,8 +126,9 @@ async function naver_parsing(req, res) {
     } else if (double.userName == userName) {
       //이름까지 같다면 통과, 리프레시 토큰만 대체
       await double.update({ refresh_token }, { $: { userEmail } });
-      res
-        .status(200)
+      res.status(200);
+      console
+        .log('token-----------------', token)
         .json({ token, success: true, message: '리프레시 토큰 대체 성공' });
     } else {
       // 랜덤난수 생성
