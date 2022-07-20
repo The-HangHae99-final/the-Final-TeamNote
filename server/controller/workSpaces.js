@@ -46,6 +46,10 @@ async function workSpaceLeave(req, res) {
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
 
+    if(targetWorkSpace.owner === userEmail){ 
+    return res.status(400).json({ ok: false, message: "본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)" });
+    }
+
     const excepted = targetWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail !== userEmail
     );
@@ -61,21 +65,18 @@ async function workSpaceLeave(req, res) {
 }
 
 //워크스페이스 삭제
-// router.delete("/workSpace/workSpaceRemove/:workSpaceName", authMiddleware, isMember, workSpaceController.workSpaceRemove);
+// router.delete('/workSpace',authMiddleware,isMember,workSpaceController.deleteWorkSpace);
 async function deleteWorkSpace(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 삭제 API'
     //##swagger.description='-'
     const { userEmail } = res.locals.User;
-    const workSpaceName = res.locals.workSpace.name;
-    console.log('isMember 통과하면서 받는 워크스페이스 이름: ', workSpaceName);
-    // const { workSpaceName } = req.body;
+    const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    console.log('targetWorkSpace: ', targetWorkSpace.owner);
 
     if (targetWorkSpace.owner === userEmail) {
-      await workSpace.delete({ name: workSpaceName });
+      await workSpace.deleteOne({ name: workSpaceName });
       return res
         .status(200)
         .json({ ok: true, message: "워크스페이스가 삭제되었습니다." });
@@ -138,7 +139,7 @@ async function everyWorkSpace(req, res) {
 }
 
 //워크스페이스 검색
-async function getWorkSpaceByName(req, res) {
+async function getWorkSpaceByName(req, res, next) {
   try {
     const workSpaceName = req.body;
     const existWorkSpace = await workSpace.findOne(workSpaceName);
