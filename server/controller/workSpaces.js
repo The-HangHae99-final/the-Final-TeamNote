@@ -108,7 +108,7 @@ async function getWorkSpaceList(req, res) {
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
-    console.log('workSpaceList: ', workSpaceList);
+    console.log('workSpaceList:-----------------------', workSpaceList);
     let includedList = [];
 
     // workSpaceList.map((Info) =>
