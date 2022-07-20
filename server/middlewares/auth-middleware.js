@@ -1,6 +1,7 @@
 const dotenv = require('dotenv').config();
 const User = require('../schemas/user');
 const jwtSecret = process.env.SECRET_KEY;
+//
 // console.log('jwt secret:', jwtSecret);
 
 // module.exports = (req, res, next) => {
