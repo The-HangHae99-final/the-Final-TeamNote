@@ -108,9 +108,6 @@ async function naver_parsing(req, res) {
     const userName = user_info.user_name;
     const double = await User.findOne({ userEmail });
 
-    //jwt token화
-    const token = req.body.token;
-
     // 리프레시 토큰 생성
     const refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
@@ -123,7 +120,7 @@ async function naver_parsing(req, res) {
     } else if (double.userName == userName) {
       //이름까지 같다면 통과, 리프레시 토큰만 대체
       await double.update({ refresh_token }, { $: { userEmail } });
-      res.status(200).json({ success: true, token: token });
+      res.status(200).json({ success: true });
     } else {
       // 랜덤난수 생성
       min = Math.ceil(111111);
