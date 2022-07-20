@@ -119,15 +119,9 @@ async function kakao_parsing(req, res) {
 
     // userName로 토큰값 만들기
 
-    var token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '1200s',
-    });
-    var token = String(token);
-    console.log('token------114', token);
-    var refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '14d',
-    });
-    console.log('refresh_token---------------: ', refresh_token);
+    // var token = jwt.sign({ userEmail }, jwtSecret, {
+    //   expiresIn: '1200s',
+    // });
 
     // 만약 디비에 user의 email이 없다면,
 
@@ -137,14 +131,12 @@ async function kakao_parsing(req, res) {
       const social = new User({ userEmail, userName, site }); // auth는 false 디폴트
       // 저장하기
       social.save();
-      await social.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
     } else {
       double.userName == userName;
       // 닉네임이 같다면 통과.
       // 만약 디비에 user의 email이 있다면,
       // 기존에서 리프레시 토큰만 대체하기
-      await double.update({ refresh_token }, { where: { userEmail } });
       res.send({ token });
     }
 
