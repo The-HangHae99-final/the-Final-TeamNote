@@ -14,7 +14,7 @@ router.post(
 
 // 팀 전체 일정 조회
 router.post(
-  '/task/team/workSpaceName',
+  '/task/team/workSpaceName/all',
   authMiddleware,
   isMember,
   taskController.teamTaskAll
