@@ -109,7 +109,7 @@ async function getWorkSpaceList(req, res) {
     const { userEmail } = res.locals.User[0];
     console.log('userEmail: ', userEmail);
     const includedList = [];
-    const workSpaceList = await workSpace.find({ userEmail });
+    const workSpaceList = await workSpace.memberEmail.find({ userEmail });
     console.log('workSpaceList-------------------' + workSpaceList);
     includedList.push(workSpaceList);
   } catch (error) {
