@@ -19,6 +19,9 @@ async function create(req, res) {
     const existName = await workSpace.find({ name: fullName });
     console.log('existName: ', existName);
 
+    let memberList = [];
+    memberList.push(owner.userEmail);
+
     if (existName.length) {
       if (existName[0].owner === owner.userEmail)
         return res
@@ -30,6 +33,7 @@ async function create(req, res) {
         name: `${owner.userEmail}+${name}`,
         memberEmail: owner.userEmail,
         memberName: owner.userName,
+        memberList: memberList,
       });
 
       return res.json({
