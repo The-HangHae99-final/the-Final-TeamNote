@@ -9,18 +9,9 @@ const workSpaceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  memberList: {
-    type: Array,
-    required: true,
-  },
-  memberEmail: {
-    type: String,
-    required: true,
-  },
-  memberName: {
-    type: String,
-    required: true,
-  },
+  memberList: [
+    new mongoose.Schema({ memberEmail: String, memberName: String }),
+  ],
 });
 
 module.exports = mongoose.model('workSpace', workSpaceSchema);
