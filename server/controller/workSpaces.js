@@ -38,7 +38,7 @@ async function create(req, res) {
 
       return res.json({
         result: createdWorkSpace,
-        ok: true,
+        success: true,
         message: '워크스페이스 생성 성공',
       });
     }
@@ -108,17 +108,15 @@ async function getWorkSpaceList(req, res) {
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
     console.log('userEmail: ', userEmail);
-
-    const workSpaceList = await workSpace.find();
-
-    console.log('workSpaceList: ', workSpaceList);
     const includedList = [];
-
-    workSpaceList.map((Info) =>
-      Info.memberList.map((member) =>
-        member.memberEmail === userEmail ? includedList.push(Info) : null
-      )
-    );
+    const workSpaceList = await workSpace.find({ userEmail });
+    console.log('workSpaceList: ', workSpaceList);
+    includedList.push(workspaceList);
+    // workSpaceList.map((Info) =>
+    //   Info.memberList.map((member) =>
+    //     member.memberEmail === userEmail ? includedList.push(Info) : null
+    //   )
+    // );
     return res.status(200).json({
       includedList,
       success: true,
