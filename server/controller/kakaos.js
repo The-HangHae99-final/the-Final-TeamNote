@@ -117,11 +117,12 @@ async function kakao_parsing(req, res) {
 
     // userName로 토큰값 만들기
 
-    const token = jwt.sign({ userEmail }, 'secret', {
+    var token = jwt.sign({ userEmail }, 'secret', {
       expiresIn: '1200s',
     });
+    var token = String(token);
     console.log('token------114', token);
-    const refresh_token = jwt.sign({}, 'secret', {
+    var refresh_token = jwt.sign({}, 'secret', {
       expiresIn: '14d',
     });
     console.log('refresh_token---------------: ', refresh_token);
