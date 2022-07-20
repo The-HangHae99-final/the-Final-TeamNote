@@ -1,5 +1,4 @@
 const dotenv = require('dotenv').config();
-
 const User = require('../schemas/user');
 const jwtSecret = process.env.SECRET_KEY;
 // console.log('jwt secret:', jwtSecret);
@@ -88,6 +87,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
+  console.log('authorization-----------------------------: ', authorization);
   const [tokenType, tokenValue] = authorization.split(' ');
   // console.log(tokenType, tokenValue);
 
