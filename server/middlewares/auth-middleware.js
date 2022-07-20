@@ -7,6 +7,7 @@ console.log('jwt secret:', jwtSecret);
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
+  console.log(authorizations);
 
   if (authorization == null) {
     console.log('authorization: ', authorization);
