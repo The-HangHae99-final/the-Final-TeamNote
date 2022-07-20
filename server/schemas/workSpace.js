@@ -10,7 +10,6 @@ const workSpaceSchema = new mongoose.Schema({
     required: true,
   },
   memberList: {
-    type: array,
     required: true,
   },
 });
