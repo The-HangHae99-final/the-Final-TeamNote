@@ -1,5 +1,4 @@
-const dotenv = require('dotenv'); // 설정파일
-dotenv.config();
+const dotenv = require('dotenv').config(); // 설정파일
 const express = require('express');
 const app = express();
 const connect = require('./server/schemas/db');
@@ -35,7 +34,9 @@ const moment = require('moment');
 require('moment-timezone');
 moment.tz.setDefault('Asia/seoul');
 const createdAt = moment().format('HH:mm');
-console.log('현재 시각은 ' + createdAt + ' 입니다.');
+console.log(
+  '현재 시각은 ' + createdAt + ' 입니다. 오늘도 즐거운 코딩하세요 -!'
+);
 
 app.use(morgan('combined'));
 app.use(cors());
@@ -63,6 +64,7 @@ app.use('/api', [
   manitoRouter,
   memberRouter,
 ]);
+
 // app.use('/', [kakaoRouter, dayRouter, naverRouter, taskRouter]);
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
@@ -72,11 +74,4 @@ app.get('/api', (req, res) => {
   res.send('실전 파이널 프로젝트 서버 /api');
 });
 
-//
-
 module.exports = server;
-
-// docker pull hayeonkimm/docker-team:latest
-// docker-compose up -d
-//             docker rm -f $(docker ps -aq)
-// docker rmi -f $(docker images -q)
