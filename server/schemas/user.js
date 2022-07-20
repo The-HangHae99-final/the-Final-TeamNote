@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   refresh_token: {
-    default: 0,
+    type: String,
   },
 
   site: {

@@ -109,9 +109,7 @@ async function naver_parsing(req, res) {
     const double = await User.findOne({ userEmail });
 
     //jwt token화
-    const token = jwt.sign({ userEmail }, 'secret', {
-      expiresIn: '12000s',
-    });
+    const token = req.body.token;
 
     // 리프레시 토큰 생성
     const refresh_token = jwt.sign({}, 'secret', {
@@ -119,7 +117,7 @@ async function naver_parsing(req, res) {
     });
 
     if (!double) {
-      const social = new User({ userName, userEmail, site });
+      const social = new User({ userName, userEmail, site, refresh_token });
       social.save();
       res.send('저장에 성공하였습니다.');
     } else if (double.userName == userName) {
@@ -134,7 +132,7 @@ async function naver_parsing(req, res) {
       //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
 
       userEmail = userEmail + number;
-      const social = new User({ userName, userEmail, site });
+      const social = new User({ userName, userEmail, site, refresh_token });
       social.save();
     }
   } catch (err) {
