@@ -289,7 +289,7 @@ async function mailing(req, res) {
           <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
           <p>팀노트 200% 활용법을 확인해 보세요.</p>
           <p> 옆의 숫자를 입력해주세요.--- ${number} ---</p>
-          <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
+          <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
   };
   // 메일 발송
   transporter.sendMail(mailOptions, function (err, success) {
