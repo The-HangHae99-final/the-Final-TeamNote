@@ -87,34 +87,3 @@ function verifyToken(token) {
 
 
 
-// module.exports = (req, res, next) => {
-//   const { authorization } = req.headers;
-//   console.log('authorization-----------------------------: ', authorization);
-//   const [tokenType, tokenValue] = authorization.split(' ');
-//   console.log(
-//     'tokenType---------------',
-//     tokenType,
-//     'tokenValue---------------',
-//     tokenValue
-//   );
-
-//   if (tokenType !== 'Bearer') {
-//     return res.status(401).send({
-//       errorMessage: '로그인 후 사용하세요.',
-//     });
-//   }
-
-//   try {
-//     console.log(tokenValue);
-//     const { userEmail } = jwt.verify(tokenValue, jwtSecret);
-//     console.log(userEmail);
-//     User.find({ userEmail }).then((user) => {
-//       res.locals.User = user;
-//       next();
-//     });
-//   } catch (error) {
-//     return res.status(401).send({
-//       errorMessage: error.message,
-//     });
-//   }
-// };

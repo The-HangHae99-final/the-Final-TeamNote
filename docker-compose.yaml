@@ -1,8 +1,15 @@
-version: "3.9"
+version: "3"
 
 services:
   final_project:
     build:
-      context: teamnote
+      context: .
     ports:
     - 3000:3001
+  nginx:
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 3000:80
