@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 const Message = require('../schemas/message');
 const express = require('express');
 const router = express.Router();
+=======
+const Message = require("../schemas/message");
+// const workSpace = require("../schemas/workSpace")
+>>>>>>> 2fc638dfa041e2c3dfe5cd96c38ebfca36bab9b8
 
 // 메시지 수정
 // api/message/:_id
@@ -96,36 +101,27 @@ async function messagesView(req, res) {
   }
 }
 
-//방 이름 건네주기
-// router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, // workSpaceController.roomName);
-async function getRoomId(req, res) {
-  try {
-    //#swagger.tags= ['워크 스페이스 API'];
-    //#swagger.summary= '방 이름 건네주기 API'
-    //#swagger.description='-'
-    const { userName } = res.locals.User;
-    const { workSpaceName, opponent } = req.body;
+// //방 이름 건네주기
+// // router.get("/workSpace/getRoomName/:workSpaceName/:opponent", authMiddleware, // workSpaceController.roomName);
+// async function getRoomId(req, res) {
+//   try {
+//     //#swagger.tags= ['워크 스페이스 API'];
+//     //#swagger.summary= '방 이름 건네주기 API'
+//     //#swagger.description='-'
+//     const { workSpaceName, opponent } = req.params;
+//     console.log('opponent: ', opponent);
+//     console.log('workSpaceName: ', workSpaceName);
+//     const { userName } = res.locals.User;
+//     console.log('userName: ', userName);
+    
+//     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
+//     console.log('existWorkSpace: ', existWorkSpace);
+//     for (let i = 0; i < existWorkSpace.memberList.length; i++) {
+//       if (existWorkSpace.memberList[i].memberName === opponent) {
+//         const temp = [userName, opponent];
+//         temp.sort();
+//         const roomId = temp[0] + temp[1]
 
-    const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    for (let i = 0; i < existWorkSpace.memberList.length; i++) {
-      if (existWorkSpace.memberList[i].memberName === opponent) {
-        const temp = [userName, opponent];
-        temp.sort();
-        const roomId = temp[0] + temp[1];
-
-        return res.status(200).json({
-          result: roomId,
-          sucesss: true,
-          message: '룸 이름 얻기 성공',
-        });
-      }
-    }
-  } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false, message: '에러가 발생했습니다.' });
-  }
-}
 
 module.exports = {
   messageEdit,
