@@ -10,7 +10,6 @@ async function teamTaskUpload(req, res, next) {
     //#swagger.description='-'
 
     const { userEmail } = res.locals.User;
-    // console.log((res.locals.user))
     const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await TeamTask.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
@@ -49,8 +48,6 @@ async function teamTaskAll(req, res, next) {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
-
-    // const { workSpaceName } = req.params;
     const { workSpaceName } = req.body;
     console.log('workSpaceName-----------------:', workSpaceName);
     if (!workSpaceName) {
@@ -109,7 +106,6 @@ async function teamTaskEdit(req, res, next) {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
-
     const taskId = Number(req.params.taskId);
     const [existTask] = await TeamTask.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);
@@ -121,7 +117,6 @@ async function teamTaskEdit(req, res, next) {
         .status(400)
         .json({ success: false, message: '빈값을 채워주세요' });
     }
-
     await TeamTask.updateOne(
       { taskId },
       { $set: { startDate, endDate, title, desc } }
