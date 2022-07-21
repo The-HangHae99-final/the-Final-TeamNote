@@ -12,11 +12,19 @@ var state = 'teamnote';
 var jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
-// var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
 
-// router.post('/naver',
+// 프론트에게서 인가코드를 받는다 post_1
+// 서버에서 인가코드를 가지고 카톡에게서 토큰을 받는다.
+// 토큰을 클라이언트에게 보낸다.
+// 클라이언트가 토큰을 바디에 담아서 다시 post 요청을 한다. post_2
+// 백엔드에서 토큰을 가지고 다시 카톡에게 정보를 요청한다.
+// 정보를 클라이언트에게 보낸다.
+// 클라이언트가 받고 데이터를 파싱해서 다시 보낸다.post_3  // 데이터 파싱문제!!
+// 백엔드가 받아서 DB에 저장한다.
+// router.post('/naver', authmiddleware)
 
+// 프론트에게서 인가코드 받고 액세스 토큰 발급받기.
 function naver(req, res) {
   try {
     //#swagger.tags= ['네이버 API'];
@@ -42,23 +50,26 @@ function naver(req, res) {
         'X-Naver-Client-Secret': client_secret,
       },
     };
+    // 액세스 토큰 프론트에게 다시 건네주기
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
         res.end(body);
-        console.log('res:', res);
       } else {
         res.status(response.statusCode).end();
-        console.log('error = ' + response.statusCode);
       }
     });
-  } catch (err) {
-    res.status(400).send('오류가 발생했습니다.');
-    console.log('error +', err);
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      errorMessage: error.message,
+      message: '오류가 발생했습니다.',
+    });
   }
 }
 
-// router.post('/member'
+// router.post('/member')
+// 프론트에게 건너준 토큰을 다시 받고, 네이버에 정보요청하기.
 function naver_member(req, res) {
   try {
     //#swagger.tags= ['네이버 API'];
@@ -70,7 +81,7 @@ function naver_member(req, res) {
     var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
     var options = {
       url: api_url,
-      headers: { Authorization: header },
+      headers: { Authorization: header }, // 헤더 중요
     };
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -84,13 +95,18 @@ function naver_member(req, res) {
         }
       }
     });
-  } catch (err) {
-    res.status(400).send('에러가 발생했습니다');
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      errorMessage: error.message,
+      message: '에러가 발생했습니다',
+    });
     console.log(err);
   }
 }
 
-// router.post('/parsing',
+// router.post('/parsing')
+// 프론트에서 파싱한 데이터 받고, DB에 유저정보 저장하기
 async function naver_parsing(req, res) {
   try {
     //#swagger.tags= ['네이버 API'];
@@ -102,8 +118,6 @@ async function naver_parsing(req, res) {
       'user_info-----------------------------------------',
       user_info
     );
-    // console.log(user_info);
-    // console.log(user_info.user_name);
     const _user = user_info.user_id;
     const userEmail = user_info.user_email;
     const userName = user_info.user_name;
@@ -141,12 +155,14 @@ async function naver_parsing(req, res) {
       const social = new User({ userName, userEmail, site, refresh_token });
       social.save();
     }
-  } catch (err) {
-    res.status(400).send('에러가 발생했습니다.');
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      errorMessage: error.message,
+      message: '에러가 발생했습니다.',
+    });
     console.log('error =' + err);
   }
-
-  // 예외조건넣기. 유저가 디비에 있으면 저장하지않기.
 }
 
 module.exports = {
