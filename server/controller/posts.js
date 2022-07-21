@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 글 작성 API
-// router.post('/post', upload.single('image'), async (req, res) => {
+// router.post('/post', upload.single('image')
 async function postUpload(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -55,7 +55,7 @@ async function postUpload(req, res, next) {
 }
 
 // 일반 글 전체 조회
-
+// router.post('/post/all', authMiddleware, isMember, postController.postAllView);
 async function postAllView(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -74,8 +74,9 @@ async function postAllView(req, res, next) {
   }
 }
 
-//글 상세 조회
-// 이 부분도 파라미터 값 받아야함
+// 글 상세 조회 API
+// 파라미터 값 받아야함
+// router.get('/post/:postId', authMiddleware, isMember, postController.postView);
 async function postView(req, res, next) {
   try {
     // 글 작성하기
@@ -87,7 +88,7 @@ async function postView(req, res, next) {
     if (!existsPost.length) {
       return res
         .status(400)
-        .json({ success: false, errorMessage: '찾는 게시물 없음.' });
+        .json({ success: false, errorMessage: '찾는 게시물이 없습니다.' });
     }
 
     const existsComment = await postComment.find({ postId }).sort({
@@ -105,8 +106,7 @@ async function postView(req, res, next) {
 }
 
 // 글 수정
-// 수정시간 넣기
-// 카테고리 빼기
+// router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
 async function postEdit(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -134,18 +134,24 @@ async function postEdit(req, res, next) {
     return res.status(200).json({
       result: await Post.findOne({ postId }),
       success: true,
-      message: '게시글 수정 성공',
+      message: '게시글 수정 성공하였습니다.',
     });
   } catch (err) {
     return res.status(400).json({
       success: false,
-      message: '게시글 수정 에러',
+      message: '게시글 수정에 에러가 발생했습니다.',
       errorMessage: err.message,
     });
   }
 }
 
-// 글 삭제
+// 글 삭제 API
+// router.delete(
+//   '/post/:postId',
+//   authMiddleware,
+//   isMember,
+//   postController.postDelete
+// );
 async function postDelete(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -163,16 +169,19 @@ async function postDelete(req, res, next) {
       });
     }
     await Post.deleteOne({ postId });
-    return res.json({ success: true, message: '게시글 삭제 성공' });
+    return res.json({
+      success: true,
+      message: '게시글 작성을 성공하였습니다.',
+    });
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: '게시글 삭제 실패',
+      message: '게시글 삭제가 실패 하였습니다.',
       errorMessage: error.message,
     });
   }
 }
-// image 1개 업로드 API
+// image 단일 업로드 API
 async function postImage(req, res, next) {
   try {
     console.log('경로 정보입니다.', req.file.location);

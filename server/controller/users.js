@@ -21,6 +21,7 @@ const usersSchema = Joi.object({
 const transporter = require('../controller/util/email');
 
 //회원가입 API
+// router.post('/users/signup', userController.signup);
 async function signup(req, res) {
   try {
     //#swagger.tags= ['회원가입 API'];
@@ -111,7 +112,8 @@ async function signup(req, res) {
   }
 }
 
-// 이메일부터 DB에 있는지 검사한다.
+// 이메일부터 DB에 있는지 먼저 검사한다.
+// router.post('/users/email', userController.emailFirst);
 async function emailFirst(req, res) {
   try {
     //#swagger.tags= ['로그인 API'];
@@ -143,6 +145,7 @@ async function emailFirst(req, res) {
 }
 
 // 이메일과 비밀번호를 body값으로 받고 로그인
+// router.post('/users/password', userController.passwordSecond);
 async function passwordSecond(req, res) {
   try {
     //#swagger.tags= ['로그인 API'];
@@ -172,7 +175,7 @@ async function passwordSecond(req, res) {
     });
 
     //userEmail이 일치하는 값에 리프레시 토큰 업데이트
-    await userFind.update({ refresh_token }, { where: { userEmail } });
+    await userFind.update({ refresh_token }, { $set: { userEmail } });
     res.status(200).send({
       success: true,
       token,
@@ -190,6 +193,7 @@ async function passwordSecond(req, res) {
 }
 
 //회원 탈퇴 기능
+// router.delete('/users/delete/:userEmail', userController.deleteUser);
 async function deleteUser(req, res) {
   try {
     //#swagger.tags= ['탈퇴 API'];
@@ -208,6 +212,7 @@ async function deleteUser(req, res) {
   }
 }
 //가입된 유저 확인
+// router.get('/users', userController.all);
 async function all(req, res) {
   try {
     //#swagger.tags= ['회원 확인용 API'];
@@ -222,6 +227,7 @@ async function all(req, res) {
 }
 
 //유저 검색기능
+// router.get('/users/search', userController.searchUser);
 async function searchUser(req, res) {
   try {
     //#swagger.tags= [' 유저 검색 API'];
@@ -251,8 +257,8 @@ async function searchUser(req, res) {
   }
 }
 
-// 회원가입 - 인증코드 이메일로 보내기
-// 보류
+// 회원가입 - 인증코드 이메일로 보내기 - 보류
+// router.post('/users/mailing', userController.mailing);
 async function mailing(req, res) {
   //#swagger.tags= [' 인증코드 메일링 API'];
   //#swagger.summary= '인증코드 메일링 API'
