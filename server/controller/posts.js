@@ -88,7 +88,7 @@ async function postView(req, res, next) {
     if (!existsPost.length) {
       return res
         .status(400)
-        .json({ success: false, errorMessage: '찾는 게시물 없음.' });
+        .json({ success: false, errorMessage: '찾는 게시물이 없습니다.' });
     }
 
     const existsComment = await postComment.find({ postId }).sort({
@@ -134,12 +134,12 @@ async function postEdit(req, res, next) {
     return res.status(200).json({
       result: await Post.findOne({ postId }),
       success: true,
-      message: '게시글 수정 성공',
+      message: '게시글 수정 성공하였습니다.',
     });
   } catch (err) {
     return res.status(400).json({
       success: false,
-      message: '게시글 수정 에러',
+      message: '게시글 수정에 에러가 발생했습니다.',
       errorMessage: err.message,
     });
   }
@@ -169,11 +169,14 @@ async function postDelete(req, res, next) {
       });
     }
     await Post.deleteOne({ postId });
-    return res.json({ success: true, message: '게시글 삭제 성공' });
+    return res.json({
+      success: true,
+      message: '게시글 작성을 성공하였습니다.',
+    });
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: '게시글 삭제 실패',
+      message: '게시글 삭제가 실패 하였습니다.',
       errorMessage: error.message,
     });
   }
