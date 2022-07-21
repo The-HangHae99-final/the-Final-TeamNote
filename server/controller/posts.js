@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 글 작성 API
-// router.post('/post', upload.single('image'), async (req, res) => {
+// router.post('/post', upload.single('image')
 async function postUpload(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -55,7 +55,7 @@ async function postUpload(req, res, next) {
 }
 
 // 일반 글 전체 조회
-
+// router.post('/post/all', authMiddleware, isMember, postController.postAllView);
 async function postAllView(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -74,8 +74,9 @@ async function postAllView(req, res, next) {
   }
 }
 
-//글 상세 조회
-// 이 부분도 파라미터 값 받아야함
+// 글 상세 조회 API
+// 파라미터 값 받아야함
+// router.get('/post/:postId', authMiddleware, isMember, postController.postView);
 async function postView(req, res, next) {
   try {
     // 글 작성하기
@@ -105,8 +106,7 @@ async function postView(req, res, next) {
 }
 
 // 글 수정
-// 수정시간 넣기
-// 카테고리 빼기
+// router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
 async function postEdit(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -145,7 +145,13 @@ async function postEdit(req, res, next) {
   }
 }
 
-// 글 삭제
+// 글 삭제 API
+// router.delete(
+//   '/post/:postId',
+//   authMiddleware,
+//   isMember,
+//   postController.postDelete
+// );
 async function postDelete(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -172,7 +178,7 @@ async function postDelete(req, res, next) {
     });
   }
 }
-// image 1개 업로드 API
+// image 단일 업로드 API
 async function postImage(req, res, next) {
   try {
     console.log('경로 정보입니다.', req.file.location);
