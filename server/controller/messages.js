@@ -1,4 +1,6 @@
-const Message = require("../schemas/message");
+const Message = require('../schemas/message');
+const express = require('express');
+const router = express.Router();
 
 // 메시지 수정
 // api/message/:_id
@@ -13,15 +15,15 @@ async function messageEdit(req, res) {
     const { message } = req.body;
 
     if (userName !== existMessage.author) {
-      return res.status(401).json({ ok: false, message: "작성자가 아닙니다." });
-
+      return res
+        .status(401)
+        .json({ success: false, message: '작성자가 아닙니다.' });
     }
     if (!message) {
       return res
         .status(400)
 
-        .json({ success: false, message: "내용을 입력해주세요." });
-
+        .json({ success: false, message: '내용을 입력해주세요.' });
     }
 
     const editedMessage = await Message.updateOne(
@@ -29,15 +31,14 @@ async function messageEdit(req, res) {
       { $set: { message } }
     );
     return res.status(200).json({
-
       result: editedMessage,
       success: true,
-      message: "메시지 수정 성공",
+      message: '메시지 수정 성공',
     });
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: "메시지 수정 에러" });
+      .json({ success: false, message: '메시지 수정 에러' });
   }
 }
 //메시지 삭제
@@ -54,7 +55,6 @@ async function messageDelete(req, res) {
 
     if (!targetMessage.length) {
       return res.status(400).json({
-
         success: false,
         message: '해당 메시지가 존재하지 않습니다.',
       });
@@ -71,7 +71,6 @@ async function messageDelete(req, res) {
     return res.status(400).json({
       success: false,
       message: '메시지 삭제 실패',
-
     });
   }
 }
@@ -93,8 +92,7 @@ async function messagesView(req, res) {
   } catch (err) {
     console.error(err);
 
-    return res.status(400).json({ ok: false, message: "메시지 조회 실패" });
-
+    return res.status(400).json({ ok: false, message: '메시지 조회 실패' });
   }
 }
 
@@ -113,22 +111,22 @@ async function getRoomId(req, res) {
       if (existWorkSpace.memberList[i].memberName === opponent) {
         const temp = [userName, opponent];
         temp.sort();
-        const roomId = temp[0] + temp[1]
+        const roomId = temp[0] + temp[1];
 
         return res.status(200).json({
-
           result: roomId,
-          ok: true,
-          message: "룸 이름 얻기 성공",
-
+          sucesss: true,
+          message: '룸 이름 얻기 성공',
         });
       }
     }
   } catch (err) {
-
-    return res.status(400).json({ ok: false, message: " 에러가 발생했습니다. });
+    return res
+      .status(400)
+      .json({ success: false, message: '에러가 발생했습니다.' });
   }
 }
+
 module.exports = {
   messageEdit,
   messageDelete,
