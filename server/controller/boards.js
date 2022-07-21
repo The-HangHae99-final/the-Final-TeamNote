@@ -69,7 +69,6 @@ async function boardUpload(req, res, next) {
 // 공지 글 전체 조회
 // 워크스페이스 파라미터 값
 // router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
-router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
 async function boardAllView(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
