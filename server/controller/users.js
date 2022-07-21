@@ -42,7 +42,7 @@ async function signup(req, res) {
     if (password <= 5) {
       res.status(400).send({
         success: false,
-        errorMessage: '6글자 이상으로 입력해주세요.',
+        errorMessage: '비밀번호는 6글자 이상으로 입력해주세요.',
       });
     }
     // userName의 length가 6글자 이상인 경우.
@@ -154,8 +154,11 @@ async function passwordSecond(req, res) {
     const { userEmail, password } = req.body;
     const userFind = await User.findOne({ userEmail });
     var validPassword;
+
+    // 유저가 DB에 존재하고,
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
+
       // 유효하지 않은 비밀번호라면
       if (!validPassword) {
         res.status(400).send({
@@ -186,6 +189,7 @@ async function passwordSecond(req, res) {
     // 에러가 뜰 경우 잡아서 리턴한다.
     console.error(error);
     res.status(400).send({
+      success: false,
       errorMessage: error.message,
       message: '예상치 못한 이유로 로그인에 실패 하였습니다.',
     });
@@ -193,7 +197,7 @@ async function passwordSecond(req, res) {
 }
 
 //회원 탈퇴 기능
-// router.delete('/users/delete/:userEmail', userController.deleteUser);
+// router.delete('/users/delete/:userEmail', userController.deleteUser)
 async function deleteUser(req, res) {
   try {
     //#swagger.tags= ['탈퇴 API'];
@@ -206,11 +210,13 @@ async function deleteUser(req, res) {
   } catch {
     console.log(error);
     res.status(400).send({
+      succss: false,
       errorMessage: error.message,
       message: '예상치 못한 에러가 발생했습니다.',
     });
   }
 }
+
 //가입된 유저 확인
 // router.get('/users', userController.all);
 async function all(req, res) {
@@ -252,7 +258,8 @@ async function searchUser(req, res) {
     console.log(error);
     res.status(400).send({
       success: false,
-      errorMessage: error.message + '예상치 못한 에러가 발생했습니다.',
+      errorMessage: error.message,
+      message: '예상치 못한 에러가 발생했습니다.',
     });
   }
 }
@@ -292,7 +299,7 @@ async function mailing(req, res) {
       console.log('이메일이 성공적으로 발송되었습니다!');
     }
   });
-  res.send({ number: number }); //인증번호 인증기능.
+  res.send({ success: true, number: number }); //인증번호 인증기능.
 }
 
 module.exports = {
