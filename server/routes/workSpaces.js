@@ -22,4 +22,7 @@ router.get('/workSpace', workSpaceController.everyWorkSpace);
 //워크스페이스 검색
 router.get('/workSpaceOne', workSpaceController.getWorkSpaceByName);
 
+// 워크스페이스 초대
+router.get('/workSpaceInviting', workSpaceController.workInviting);
+
 module.exports = router;

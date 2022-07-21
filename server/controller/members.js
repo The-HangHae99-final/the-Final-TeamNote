@@ -19,7 +19,7 @@ async function addMember(req, res) {
     if (!existUser) {
       return res
         .status(400)
-        .json({ ok: false, message: '존재하지 않는 유저입니다.' });
+        .json({ success: false, message: '존재하지 않는 유저입니다.' });
     } else if (existMember.length) {
       return res
         .status(400)
@@ -36,12 +36,12 @@ async function addMember(req, res) {
 
       return res.status(200).json({
         result: myWorkSpace,
-        ok: true,
+        success: true,
         message: '멤버 추가 성공',
       });
     }
   } catch (err) {
-    return res.status(400).json({ ok: false, message: '멤버 추가 에러' });
+    return res.status(400).json({ success: false, message: '멤버 추가 에러' });
   }
 }
 //멤버 삭제
@@ -61,11 +61,11 @@ async function deleteMember(req, res) {
     if (userEmail !== myWorkSpace.owner) {
       return res
         .status(400)
-        .json({ ok: false, message: '오너만 멤버를 삭제할 수 있습니다.' });
+        .json({ success: false, message: '오너만 멤버를 삭제할 수 있습니다.' });
     } else if (!existMember.length) {
       return res
         .status(400)
-        .json({ ok: false, message: '해당 멤버가 없습니다.' });
+        .json({ success: false, message: '해당 멤버가 없습니다.' });
     } else {
       const filtered = myWorkSpace.memberList.filter(
         (memberInfo) => memberInfo.memberEmail !== memberEmail
@@ -77,12 +77,12 @@ async function deleteMember(req, res) {
       console.log('filtered: ', filtered);
 
       return res.status(200).json({
-        ok: true,
+        success: true,
         message: '멤버 삭제 성공',
       });
     }
   } catch (err) {
-    return res.status(400).json({ ok: false, message: '멤버 삭제 에러' });
+    return res.status(400).json({ success: false, message: '멤버 삭제 에러' });
   }
 }
 //멤버 목록 조회
@@ -98,11 +98,13 @@ async function getMemberList(req, res) {
     console.log('memberList: ', memberList);
     return res.status(200).json({
       result: memberList.memberList,
-      ok: true,
+      success: true,
       message: '목록 조회 성공',
     });
   } catch (err) {
-    return res.status(400).json({ ok: false, message: '멤버 목록 조회 에러' });
+    return res
+      .status(400)
+      .json({ success: false, message: '멤버 목록 조회 에러' });
   }
 }
 
