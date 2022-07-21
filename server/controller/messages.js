@@ -1,4 +1,5 @@
 const Message = require("../schemas/message");
+const workSpace = require("../schemas/workSpace")
 
 // 메시지 수정
 // api/message/:_id
@@ -43,7 +44,7 @@ async function messageDelete(req, res) {
     //#swagger.summary= '메세지 삭제 API'
     //#swagger.description='-'
     const { _id } = req.params;
-    const { userName } = res.locals.User;
+    const author = res.locals.User.userName;
 
     const targetMessage = await Message.findById(_id);
 
@@ -52,7 +53,7 @@ async function messageDelete(req, res) {
         ok: false,
         message: "해당 메시지가 존재하지 않습니다.",
       });
-    } else if (targetMessage[0].author !== userName) {
+    } else if (targetMessage[0].author !== author) {
       return res.status(400).json({
         ok: false,
         message: "본인만 삭제 가능 합니다.",
@@ -96,10 +97,14 @@ async function getRoomId(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '방 이름 건네주기 API'
     //#swagger.description='-'
+    const { workSpaceName, opponent } = req.params;
+    console.log('opponent: ', opponent);
+    console.log('workSpaceName: ', workSpaceName);
     const { userName } = res.locals.User;
-    const { workSpaceName, opponent } = req.body;
-
+    console.log('userName: ', userName);
+    
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
+    console.log('existWorkSpace: ', existWorkSpace);
     for (let i = 0; i < existWorkSpace.memberList.length; i++) {
       if (existWorkSpace.memberList[i].memberName === opponent) {
         const temp = [userName, opponent];
@@ -114,7 +119,7 @@ async function getRoomId(req, res) {
       }
     }
   } catch (err) {
-    return res.status(400).json({ ok: false, message: " 에러싫어에러" });
+    return res.status(400).json({ ok: false, message: " 방이름실패!" });
   }
 }
 module.exports = {
