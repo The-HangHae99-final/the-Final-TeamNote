@@ -130,7 +130,7 @@ async function kakao_parsing(req, res) {
     // userName로 토큰값 만들기
 
     var token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '12000s',
+      expiresIn: '1h',
     });
 
     // 만약 디비에 user의 email이 없다면,

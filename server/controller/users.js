@@ -18,7 +18,20 @@ const usersSchema = Joi.object({
   password: Joi.string().required(),
   confirmPassword: Joi.string().required(),
 });
-const transporter = require('../controller/util/email');
+
+const transporter = nodemailer.createTransport({
+  service: 'naver', // 메일 이용할 서비스
+  host: 'smtp.naver.com', // SMTP 서버명
+  port: 587, // SMTP 포트
+  auth: {
+    user: 'hanghae99@naver.com', // 사용자 이메일
+    pass: process.env.password, // 사용자 패스워드
+  },
+});
+
+module.exports = {
+  transporter,
+};
 
 //회원가입 API
 // router.post('/users/signup', userController.signup);
@@ -27,14 +40,11 @@ async function signup(req, res) {
     //#swagger.tags= ['회원가입 API'];
     //#swagger.summary= '회원가입 API'
     //#swagger.description='-'
-    // const { userEmail, userName, password, confirmPassword } =
     const { userEmail, userName, password, confirmPassword } =
-      await usersSchema.validateAsync(
-        req.body // 임시로 테스트를 위해 로그인을 간편하기 위해
-      );
+      await usersSchema.validateAsync(req.body);
     // 비밀번호와 확인 비밀번호가 틀린 경우
     if (password !== confirmPassword) {
-      return res.status(400).send({
+      res.status(400).send({
         errorMessage: '비밀번호가 일치하지 않습니다.',
       });
     }
@@ -52,7 +62,7 @@ async function signup(req, res) {
         .send({ success: false, errorMessage: '5글자 이내로 입력해주세요.' });
     }
     // email validator 라이브러리로 이메일 검사.
-    if (validator.validate(userEmail) == false) {
+    if (!validator.validate(userEmail)) {
       return res
         .status(400)
         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
@@ -60,8 +70,8 @@ async function signup(req, res) {
 
     // 가입하고자 하는 이메일이 존재하는 경우
     const exitstUsers = await User.findOne({ userEmail });
-    if (exitstUsers) {
-      return res.status(400).send({
+    if (exitstUsers.length) {
+      res.status(400).send({
         errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
@@ -75,12 +85,6 @@ async function signup(req, res) {
       password: hashPassword,
       site,
     });
-    // DB에 저장
-    await user.save();
-    res.status(201).send({
-      success: true,
-      msg: '회원가입을 성공하였습니다',
-    });
 
     // 가입 축하  이메일 발송 기능
     let mailOptions = {
@@ -93,8 +97,8 @@ async function signup(req, res) {
       html: `<h2>${req.body.userName}님의 팀 협업 행복을 응원합니다.</h2>
             <br/>
             <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
-            <p>팀노트 200% 활용법을 확인해 보세요.</p>
-            <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
+            <p>팀노트 200% 활용법을 확인해 보세요.</p><br>
+            <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
     };
     // 메일 발송
     transporter.sendMail(mailOptions, function (err, success) {
@@ -103,6 +107,13 @@ async function signup(req, res) {
       } else {
         console.log('이메일 발송을 완료했습니다.!');
       }
+    });
+
+    // DB에 저장
+    await user.save();
+    res.status(201).send({
+      success: true,
+      message: '회원가입을 성공하였습니다',
     });
   } catch (error) {
     res.status(401).send({
@@ -174,7 +185,7 @@ async function passwordSecond(req, res) {
 
     // 리프레시 토큰 생성
     const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '14d',
+      expiresIn: '1h',
     });
 
     //userEmail이 일치하는 값에 리프레시 토큰 업데이트
@@ -289,7 +300,7 @@ async function mailing(req, res) {
           <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
           <p>팀노트 200% 활용법을 확인해 보세요.</p>
           <p> 옆의 숫자를 입력해주세요.--- ${number} ---</p>
-          <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
+          <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
   };
   // 메일 발송
   transporter.sendMail(mailOptions, function (err, success) {

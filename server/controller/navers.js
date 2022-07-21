@@ -126,7 +126,7 @@ async function naver_parsing(req, res) {
     // 리프레시 토큰 생성
 
     const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '12000s',
+      expiresIn: '1h',
     });
 
     const refresh_token = jwt.sign({}, jwtSecret, {
