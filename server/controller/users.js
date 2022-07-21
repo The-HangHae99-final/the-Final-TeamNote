@@ -174,7 +174,7 @@ async function passwordSecond(req, res) {
 
     // 리프레시 토큰 생성
     const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '14d',
+      expiresIn: '1h',
     });
 
     //userEmail이 일치하는 값에 리프레시 토큰 업데이트
