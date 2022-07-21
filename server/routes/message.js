@@ -23,7 +23,7 @@ router.get(
   messageController.messagesView
 );
 
-//룸 이름 얻기
-router.get('/roomId', authMiddleware, isMember, messageController.getRoomId);
+// //룸 이름 얻기
+// router.get('/roomId/:workSpaceName/:opponent', authMiddleware, isMember, messageController.getRoomId);
 
 module.exports = router;

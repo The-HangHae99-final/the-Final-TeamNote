@@ -92,12 +92,14 @@ async function getMemberList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 멤버 조회 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.body;
-    console.log(workSpaceName);
-    const memberList = await workSpace.findOne({ name: workSpaceName });
-    console.log('memberList: ', memberList);
+    const { workSpaceName } = req.params;
+    const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
+    console.log('existWorkSpace: ', existWorkSpace);
+    const memberList = existWorkSpace.memberList
     return res.status(200).json({
-      result: memberList.memberList,
+
+      result: memberList,
+
       success: true,
       message: '목록 조회 성공',
     });
