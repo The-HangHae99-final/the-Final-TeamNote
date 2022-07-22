@@ -164,7 +164,7 @@ async function getWorkSpaceByName(req, res, next) {
 }
 
 // 회원가입 - 인증코드 이메일로 보내기 - 보류
-// router.post('/users/mailing', userController.mailing);
+
 async function workInviting(req, res) {
   //#swagger.tags= [' 인증코드 메일링 API'];
   //#swagger.summary= '인증코드 메일링 API'
