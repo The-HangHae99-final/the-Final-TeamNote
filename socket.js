@@ -1,11 +1,11 @@
-const http = require('./app');
-const socketIo = require('socket.io');
-const Message = require('./server/schemas/message');
+const http = require("./app");
+const socketIo = require("socket.io");
+const Message = require("./server/schemas/message");
 
 const io = socketIo(http, {
   cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
+    origin: "*",
+    methods: ["GET", "POST"],
   },
 });
 const chatspace = io.of('/chat');
@@ -17,6 +17,7 @@ chatspace.on("connection", (socket) => {
     console.log("room: ", `${room}에 입장.`);
     const chat_list = await Message.find({ room });
     socket.emit("chat_list", chat_list);
+
 
   });
 

@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "54.180.29.68/",
+  "host": "0jun.shop/",
   "basePath": "api",
   "schemes": ["http"],
   "paths": {

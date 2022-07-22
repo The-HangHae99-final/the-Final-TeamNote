@@ -9,6 +9,13 @@ const path = require('path');
 //공지 글 작성하기
 // /board/:workSpaceName
 // 소속 워크스페이스 공지용
+// router.post(
+//   '/boards',
+//   upload.single('img'),
+//   authMiddleware,
+//   isMember,
+//   boardController.boardUpload
+// );
 async function boardUpload(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
@@ -16,20 +23,25 @@ async function boardUpload(req, res, next) {
     //##swagger.description='-'
     const image = req.file.location;
     const { userName } = res.locals.User;
-
     const { title, content, workSpaceName } = req.body;
-
     const maxboardId = await Board.findOne().sort({
       boardId: -1,
     });
-    // console.log(maxboardId)
+
     let boardId = 1;
     if (maxboardId) {
       boardId = maxboardId.boardId + 1;
     }
-    const createdTime = new Date();
-    console.log(createdTime);
+    if (!userName) {
+      res
+        .status(400)
+        .send({ success: false, message: '유저 이름이 없습니다.' });
+    }
+    if (!image) {
+      res.status(400).send({ success: false, message: '이미지가 없습니다.' });
+    }
 
+    const createdTime = new Date();
     const createdBoard = await Board.create({
       image,
       boardId,
@@ -56,7 +68,7 @@ async function boardUpload(req, res, next) {
 
 // 공지 글 전체 조회
 // 워크스페이스 파라미터 값
-// /board/:workSpaceName
+// router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
 async function boardAllView(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
@@ -64,18 +76,32 @@ async function boardAllView(req, res, next) {
     //##swagger.description='-'
     const { workSpaceName } = req.body;
     const boards = await Board.find({ workSpaceName }).sort('-boardId');
+
+    if (!workSpaceName) {
+      res
+        .status(400)
+        .send({ success: false, message: '워크 스페이스 네임이 없습니다.' });
+    }
+
     res.send({ boards, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
     res.status(400).send({
+      success: false,
       Message: '공지 조회에 실패 했습니다.',
       errorMessage: error.message,
     });
   }
 }
 
-//글 하나 조회
+//글 한개 조회
 // /board/:workSpaceName/:boardId
+// router.get(
+//   '/boards/:boardId',
+//   authMiddleware,
+//   isMember,
+//   boardController.boardView
+// );
 async function boardView(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
@@ -86,7 +112,12 @@ async function boardView(req, res, next) {
     if (!existsBoard.length) {
       return res
         .status(400)
-        .json({ success: false, errorMessage: '찾는 게시물 없음.' });
+        .json({ success: false, errorMessage: '찾는 게시물이 없습니다.' });
+    }
+    if (!boardId) {
+      res
+        .status(400)
+        .send({ success: false, message: '공지 아이디가 없습니다.' });
     }
 
     const existsComment = await boardComment.find({ boardId }).sort({
@@ -96,6 +127,7 @@ async function boardView(req, res, next) {
   } catch (err) {
     console.log(err);
     res.status(400).send({
+      success: false,
       Message: '요청한 데이터 형식이 올바르지 않습니다.',
       errorMessage: err.message,
     });
@@ -103,7 +135,12 @@ async function boardView(req, res, next) {
 }
 
 // 글 수정
-// /board/:workSpaceName/:boardId
+// router.put(
+//   '/boards/:boardId',
+//   authMiddleware,
+//   isMember,
+//   boardController.boardEdit
+// );
 async function boardEdit(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
@@ -113,6 +150,17 @@ async function boardEdit(req, res, next) {
     const [existBoard] = await Board.find({ boardId });
     const { user } = res.locals;
     const { title, content } = req.body;
+
+    if (!boardId) {
+      res
+        .status(400)
+        .send({ success: false, message: '공지 아이디가 없습니다.' });
+    }
+
+    if (!user) {
+    }
+    res.status(400).send({ success: false, message: '유저 정보가 없습니다.' });
+
     if (user.userName !== existBoard.userName) {
       return res
         .status(401)
@@ -140,16 +188,25 @@ async function boardEdit(req, res, next) {
 }
 
 // 글 삭제
-// /board/:workSpaceName/:boardId
+// router.delete('/board/:boardId', authMiddleware, boardController.boardDelete);
 async function boardDelete(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 삭제 API'
     //##swagger.description='-'
     const boardId = Number(req.params.boardId);
-    console.log('boardId: ', boardId);
     const [targetBoard] = await Board.find({ boardId });
     const { userName } = res.locals.User;
+
+    if (!boardId) {
+      res
+        .status(400)
+        .send({ success: false, message: '공지 아이디가 없습니다.' });
+    }
+
+    if (!userName) {
+    }
+    res.status(400).send({ success: false, message: '유저 이름이 없습니다.' });
 
     if (userName !== targetBoard.userName) {
       return res.status(401).json({
