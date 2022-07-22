@@ -13,7 +13,5 @@ router.delete('/message/:_id',authMiddleware,messageController.messageDelete);
 //메시지 조회
 router.get('/message/:_id', authMiddleware, isMember, messageController.messagesView);
 
-// //룸 이름 얻기
-// router.get('/roomId/:workSpaceName/:opponent', authMiddleware, isMember, messageController.getRoomId);
 
 module.exports = router;

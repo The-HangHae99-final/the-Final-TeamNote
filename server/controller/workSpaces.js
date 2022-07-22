@@ -98,7 +98,6 @@ async function getWorkSpaceList(req, res) {
     const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
     const includedList = [];
-
     workSpaceList.map((Info) =>
       Info.memberList.map((member) =>
         member.memberEmail === userEmail ? includedList.push(Info) : null
