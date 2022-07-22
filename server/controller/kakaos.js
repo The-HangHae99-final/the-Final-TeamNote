@@ -7,13 +7,11 @@ const { request } = require('express');
 const jwt = require('jsonwebtoken');
 var User = require('../schemas/user');
 const jwtSecret = process.env.SECRET_KEY;
-
 const { smtpTransport } = require('../controller/util/email');
 var generateRandom = function (min, max) {
   var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
   return ranNum;
 };
-// Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 var express = require('express');
 var router = express.Router();
@@ -76,9 +74,9 @@ function kakao_member(req, res) {
     //#swagger.summary= '카카오 정보요청 API'
     //##swagger.description='-'
     var api_url = 'https://kapi.kakao.com/v2/user/me';
-    var request = require('request');
     var token = req.body.token;
     console.log(token);
+    var request = require('request');
     var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
     console.log('header: ' + header);
     var options = {
