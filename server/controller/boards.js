@@ -158,7 +158,7 @@ async function boardDelete(req, res, next) {
       });
     }
     await Board.deleteOne({ boardId });
-    return res.json({ ok: true, message: '게시글 삭제 성공' });
+    return res.json({ success: true, message: '게시글 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
       success: false,
