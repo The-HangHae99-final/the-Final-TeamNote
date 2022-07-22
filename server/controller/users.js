@@ -169,7 +169,7 @@ async function passwordSecond(req, res) {
     // 유저가 DB에 존재하고,
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-
+      console.log('-------------' + validPassword);
       // 유효하지 않은 비밀번호라면
       if (!validPassword) {
         res.status(400).send({

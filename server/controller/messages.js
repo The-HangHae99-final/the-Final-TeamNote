@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 const Message = require('../schemas/message');
 const express = require('express');
 const router = express.Router();
-=======
-const Message = require("../schemas/message");
-// const workSpace = require("../schemas/workSpace")
->>>>>>> 2fc638dfa041e2c3dfe5cd96c38ebfca36bab9b8
 
 // 메시지 수정
 // api/message/:_id
@@ -113,7 +108,7 @@ async function messagesView(req, res) {
 //     console.log('workSpaceName: ', workSpaceName);
 //     const { userName } = res.locals.User;
 //     console.log('userName: ', userName);
-    
+
 //     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
 //     console.log('existWorkSpace: ', existWorkSpace);
 //     for (let i = 0; i < existWorkSpace.memberList.length; i++) {
@@ -122,10 +117,8 @@ async function messagesView(req, res) {
 //         temp.sort();
 //         const roomId = temp[0] + temp[1]
 
-
 module.exports = {
   messageEdit,
   messageDelete,
   messagesView,
-  getRoomId,
 };
