@@ -97,11 +97,7 @@ async function getMemberList(req, res) {
     console.log('existWorkSpace: ', existWorkSpace);
     const memberList = existWorkSpace.memberList;
     return res.status(200).json({
-<<<<<<< HEAD
       result: memberList,
-=======
-      result: memberList.memberList,
->>>>>>> be9920c38a26e3ecfe235aac71da24ceccac32a7
       success: true,
       message: '목록 조회 성공',
     });
