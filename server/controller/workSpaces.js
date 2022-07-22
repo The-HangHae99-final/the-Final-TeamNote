@@ -35,7 +35,6 @@ async function createSpace(req, res) {
     });
   }
 }
-
 //워크스페이스 탈퇴하기
 // router.put('/workSpace/leave',authMiddleware,isMember,workSpaceController.workSpaceLeave);
 async function workSpaceLeave(req, res) {
@@ -46,7 +45,6 @@ async function workSpaceLeave(req, res) {
     const { userEmail } = res.locals.User;
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
-
     if (targetWorkSpace.owner === userEmail) {
       return res.status(400).json({
         success: false,
@@ -54,7 +52,6 @@ async function workSpaceLeave(req, res) {
           '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
       });
     }
-
     const excepted = targetWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail !== userEmail
     );
@@ -79,7 +76,6 @@ async function deleteWorkSpace(req, res) {
     const { userEmail } = res.locals.User;
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
-
     if (targetWorkSpace.owner === userEmail) {
       await workSpace.deleteOne({ name: workSpaceName });
       return res
@@ -92,7 +88,6 @@ async function deleteWorkSpace(req, res) {
       .json({ success: false, message: '워크스페이스 삭제 에러' });
   }
 }
-
 //본인 속한 워크스페이스 목록 조회
 // router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
 async function getWorkSpaceList(req, res) {
@@ -103,7 +98,6 @@ async function getWorkSpaceList(req, res) {
     const { userEmail } = res.locals.User;
     const workSpaceList = await workSpace.find({});
     const includedList = [];
-
     workSpaceList.map((Info) =>
       Info.memberList.map((member) =>
         member.memberEmail === userEmail ? includedList.push(Info) : null
@@ -117,7 +111,6 @@ async function getWorkSpaceList(req, res) {
   } catch (err) {
     return res
       .status(400)
-
       .json({ success: false, message: '소속 워크스페이스 목록 조회 실패' });
   }
 }
@@ -131,7 +124,6 @@ async function everyWorkSpace(req, res) {
     //#swagger.summary= '전체 워크스페이스 조회(개발용) API'
     //#swagger.description='-'
     const workSpaceList = await workSpace.find({});
-
     return res.status(200).json(
       workSpaceList
       // success: true,
@@ -140,11 +132,9 @@ async function everyWorkSpace(req, res) {
   } catch (err) {
     return res
       .status(400)
-
       .json({ success: false, message: '전체 워크스페이스 조회 실패' });
   }
 }
-
 //워크스페이스 검색
 async function getWorkSpaceByName(req, res, next) {
   try {
@@ -158,7 +148,6 @@ async function getWorkSpaceByName(req, res, next) {
   } catch (error) {
     return res
       .status(400)
-
       .json({ success: false, message: '워크스페이스 검색 실패' });
   }
 }

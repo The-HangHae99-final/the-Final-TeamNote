@@ -11,7 +11,8 @@ var client_secret = process.env.YOUR_CLIENT_SECRET;
 var state = 'teamnote';
 var jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
-var redirectURI = encodeURI('http://52.78.168.151:3000/auth/login/callback');
+var redirectURI = encodeURI('https://0jun.shop/auth/login/callback');
+// var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
 
 // 프론트에게서 인가코드를 받는다 post_1
@@ -78,6 +79,7 @@ function naver_member(req, res) {
     var api_url = 'https://openapi.naver.com/v1/nid/me';
     var request = require('request');
     var token = req.body.token;
+    console.log('---------------------토큰', token);
     var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
     var options = {
       url: api_url,
