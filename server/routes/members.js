@@ -8,7 +8,7 @@ const isMember = require('../middlewares/isMember');
 router.put('/memberIn', authMiddleware, isMember, memberController.addMember);
 
 //멤버 목록 조회
-router.get('/member', authMiddleware, isMember, memberController.getMemberList);
+router.get('/member/:workSpaceName', authMiddleware, isMember, memberController.getMemberList);
 
 //멤버 삭제
 router.put(

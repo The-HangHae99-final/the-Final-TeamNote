@@ -22,7 +22,7 @@ router.post(
 router.post('/post/all', authMiddleware, isMember, postController.postAllView);
 
 // 글 상세 조회
-router.get('/post/:postId', authMiddleware, isMember, postController.postView);
+router.get('/post/:workSpaceName/:postId', authMiddleware, isMember, postController.postView);
 
 // 글 수정
 router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
