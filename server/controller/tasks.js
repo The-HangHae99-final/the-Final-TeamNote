@@ -68,7 +68,7 @@ async function taskAll(req, res, next) {
     // if (tasks[0].userEmail !== userEmail) {
     //   console.log('---------task[0].usermail-------' + tasks[0].userEmail);
     //   console.log('----------userEmail-----' + userEmail);
-    //   return res.status(400).json({ ok: false, message: '본인이 아닙니다.' });
+    //   return res.status(400).json({ success: false, message: '본인이 아닙니다.' });
     // }
     return res.json({
       result: {
@@ -135,10 +135,10 @@ async function taskEdit(req, res, next) {
     const { userEmail } = res.locals.User;
     const { startDate, endDate, title, desc, color } = req.body;
     if (userEmail !== existTask.userEmail) {
-      res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      res.status(401).json({ success: false, message: '작성자가 아닙니다.' });
     }
     if (!startDate || !endDate || !title) {
-      res.status(400).json({ ok: false, message: '빈값을 채워주세요' });
+      res.status(400).json({ success: false, message: '빈값을 채워주세요' });
     }
 
     await Task.updateOne(
@@ -171,7 +171,9 @@ async function taskRemove(req, res, next) {
     const existTask = await Task.findOne({ taskId });
 
     if (userEmail !== existTask.userEmail) {
-      return res.status(401).json({ ok: false, message: '작성자가 아닙니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '작성자가 아닙니다.' });
     }
 
     if (!existTask) {
