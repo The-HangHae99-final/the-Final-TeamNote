@@ -1,7 +1,7 @@
 const dotenv = require('dotenv').config();
 const nodemailer = require('nodemailer');
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'naver', // 메일 이용할 서비스
   host: 'smtp.naver.com', // SMTP 서버명
   port: 587, // SMTP 포트
@@ -10,3 +10,7 @@ let transporter = nodemailer.createTransport({
     pass: process.env.password, // 사용자 패스워드
   },
 });
+
+module.exports = {
+  transporter,
+};

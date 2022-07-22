@@ -21,7 +21,6 @@
   "homepage": "https://github.com/selim-jo/backend-clonePro#readme",
   "dependencies": {
     "ajax": "^0.0.4",
-    "artillery": "^2.0.0-20",
     "aws-sdk": "^2.1174.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
@@ -33,6 +32,7 @@
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "google-login": "^1.0.3",
+    "helmet": "^5.1.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.3",
@@ -59,6 +59,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
+    "artillery": "^2.0.0-21",
     "chai": "^4.3.6",
     "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",

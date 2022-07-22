@@ -17,7 +17,6 @@ const skip = () => {
   return env !== 'development';
 };
 
-// https://jeonghwan-kim.github.io/morgan-helper/
 morgan.token('status', function (req, res) {
   let color;
 
@@ -30,7 +29,6 @@ morgan.token('status', function (req, res) {
   return color + res.statusCode + '\033[35m' /*보라색*/;
 });
 
-// https://jeonghwan-kim.github.io/morgan-helper/
 morgan.token('request', function (req, res) {
   return 'Request_' + JSON.stringify(req.body);
 });

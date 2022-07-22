@@ -95,9 +95,9 @@ async function getMemberList(req, res) {
     const { workSpaceName } = req.params;
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
     console.log('existWorkSpace: ', existWorkSpace);
-    const memberList = existWorkSpace.memberList
+    const memberList = existWorkSpace.memberList;
     return res.status(200).json({
-      result: memberList,
+      result: memberList.memberList,
       success: true,
       message: '목록 조회 성공',
     });

@@ -5,13 +5,23 @@ const messageController = require('../controller/messages');
 const isMember = require('../middlewares/isMember');
 
 //메시지 수정
-router.put('/message/:_id',authMiddleware, isMember, messageController.messageEdit);
+router.put(
+  '/message/:_id',
+  authMiddleware,
+  isMember,
+  messageController.messageEdit
+);
 
 //메시지 삭제
-router.delete('/message/:_id',authMiddleware,messageController.messageDelete);
+router.delete('/message/:_id', authMiddleware, messageController.messageDelete);
 
 //메시지 조회
-router.get('/message/:_id', authMiddleware, isMember, messageController.messagesView);
+router.get(
+  '/message/:_id',
+  authMiddleware,
+  isMember,
+  messageController.messagesView
+);
 
 
 module.exports = router;
