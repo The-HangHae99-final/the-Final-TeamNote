@@ -9,17 +9,9 @@ async function taskUpload(req, res, next) {
     //#swagger.description='-'
 
     const { userEmail } = res.locals.User;
-    // console.log(
-    //   'userEmail11111111111111--------------------------------------------------------',
-    //   userEmail
-    // );
-    // console.log((res.locals.user))
     const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await Task.findOne({ workSpaceName }).sort('-taskId');
-    // console.log(
-    //   'maxTaskId 222222222222222--------------------------------------------------------',
-    //   maxTaskId
-    // );
+
     let taskId = 1;
     if (maxTaskId) {
       taskId = maxTaskId.taskId + 1;
@@ -35,11 +27,6 @@ async function taskUpload(req, res, next) {
       color,
     });
 
-    // console.log(
-    //   'createdTask3333333333333333---------------------',
-    //   createdTask
-    // );
-
     return res.json({
       result: createdTask,
       success: true,
@@ -50,7 +37,7 @@ async function taskUpload(req, res, next) {
     return res.status(400).json({
       success: false,
       message: '개인 일정 생성 실패',
-      errorMeassage: error,
+      errorMeassage: error.message,
     });
   }
 }
@@ -128,7 +115,6 @@ async function taskEdit(req, res, next) {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 수정 API'
     //#swagger.description='-'
-
     const taskId = Number(req.params.taskId);
     const [existTask] = await Task.find({ taskId, workSpaceName });
     console.log('existTask: ', existTask);

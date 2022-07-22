@@ -31,7 +31,7 @@ router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
 router.delete(
   '/post/:postId',
   authMiddleware,
-  //
+  isMember,
   postController.postDelete
 );
 
