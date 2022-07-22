@@ -51,7 +51,7 @@ describe("workSpace Controller Create", () => {
   
 });
 
-describe("workSpace Controller 전체조회", () => {
+describe("워크스페이스 전체조회", () => {
   it("should have a getworkSpaces function", () => {
     expect(typeof workSpaceController.everyWorkSpace).toBe("function");
   });
@@ -67,7 +67,7 @@ describe("workSpace Controller 전체조회", () => {
   it("should return json body in response", async () => {
     workSpace.find.mockReturnValue(workSpaceList);
     await workSpaceController.everyWorkSpace(req, res, next);
-    expect(res._getJSONData()).toStrictEqual({workSpaceList: workSpaceList});
+    expect(res._getJSONData()).toStrictEqual(workSpaceList);
   });
 });
 
