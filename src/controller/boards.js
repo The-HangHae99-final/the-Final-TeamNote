@@ -1,10 +1,5 @@
-const Board = require('../schemas/boards');
+const Board = require('../schemas/board');
 const boardComment = require('../schemas/boardComment');
-const AWS = require('aws-sdk');
-const multerS3 = require('multer-s3');
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
 
 //공지 글 작성하기
 // /board/:workSpaceName
@@ -16,7 +11,7 @@ const path = require('path');
 //   isMember,
 //   boardController.boardUpload
 // );
-async function boardUpload(req, res, next) {
+async function createBoard(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 등록 API'
@@ -72,7 +67,7 @@ async function boardUpload(req, res, next) {
 // 공지 글 전체 조회
 // 워크스페이스 파라미터 값
 // router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
-async function boardAllView(req, res, next) {
+async function showBoards(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 전체 조회 API'
@@ -105,7 +100,7 @@ async function boardAllView(req, res, next) {
 //   isMember,
 //   boardController.boardView
 // );
-async function boardView(req, res, next) {
+async function showBoardOne(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 한개 조회 API'
@@ -144,7 +139,7 @@ async function boardView(req, res, next) {
 //   isMember,
 //   boardController.boardEdit
 // );
-async function boardEdit(req, res, next) {
+async function editBoard(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 수정 API'
@@ -192,7 +187,7 @@ async function boardEdit(req, res, next) {
 
 // 글 삭제
 // router.delete('/board/:boardId', authMiddleware, boardController.boardDelete);
-async function boardDelete(req, res, next) {
+async function deleteBoard(req, res, next) {
   try {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 삭제 API'
@@ -229,9 +224,9 @@ async function boardDelete(req, res, next) {
 }
 
 module.exports = {
-  boardUpload,
-  boardAllView,
-  boardView,
-  boardEdit,
-  boardDelete,
+  createBoard,
+  showBoards,
+  showBoardOne,
+  editBoard,
+  deleteBoard,
 };

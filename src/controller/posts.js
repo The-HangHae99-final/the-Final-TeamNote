@@ -8,7 +8,7 @@ const path = require('path');
 
 // 글 작성 API
 // router.post('/post', upload.single('image')
-async function postUpload(req, res, next) {
+async function createPost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '일반 게시글 등록 API'
@@ -57,7 +57,7 @@ async function postUpload(req, res, next) {
 
 // 일반 글 전체 조회
 // router.post('/post/all', authMiddleware, isMember, postController.postAllView);
-async function postAllView(req, res, next) {
+async function showPosts(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '게시글 글 전체 조회 API'
@@ -78,7 +78,7 @@ async function postAllView(req, res, next) {
 // 글 상세 조회 API
 // 파라미터 값 받아야함
 // router.get('/post/:postId', authMiddleware, isMember, postController.postView);
-async function postView(req, res, next) {
+async function showPostDetail(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '일반게시글 특정 글 조회 API'
@@ -115,7 +115,7 @@ async function postView(req, res, next) {
 
 // 글 수정
 // router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
-async function postEdit(req, res, next) {
+async function editPost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '일반 게시글 글 수정 API'
@@ -161,7 +161,7 @@ async function postEdit(req, res, next) {
 //   isMember,
 //   postController.postDelete
 // );
-async function postDelete(req, res, next) {
+async function deletePost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '일반 게시글 삭제 API'
@@ -228,10 +228,10 @@ async function postImage(req, res, next) {
 }
 
 module.exports = {
-  postUpload,
-  postAllView,
-  postView,
-  postEdit,
-  postDelete,
+  createPost,
+  showPosts,
+  showPostDetail,
+  editPost,
+  deletePost,
   postImage,
 };

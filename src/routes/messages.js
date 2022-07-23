@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/auth-middleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 const messageController = require('../controller/messages');
 const isMember = require('../middlewares/isMember');
 
 //메시지 수정
 router.put(
-  '/message/:_id',
+  '/:_id',
   authMiddleware,
   isMember,
-  messageController.messageEdit
+  messageController.editMessage
 );
 
 //메시지 삭제
-router.delete('/message/:_id', authMiddleware, messageController.messageDelete);
+router.delete('/:_id', authMiddleware, messageController.deleteMessage);
 
 //메시지 조회
 router.get(
-  '/message/:_id',
+  '/:_id',
   authMiddleware,
   isMember,
-  messageController.messagesView
+  messageController.showMessage
 );
 
 
