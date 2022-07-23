@@ -19,7 +19,8 @@ router.post(
 );
 
 // 글 전체 조회(임시)
-router.post('/all', authMiddleware, isMember, postController.showPosts);
+
+router.get('/', authMiddleware, isMember, postController.showPosts);
 
 // 글 상세 조회
 router.get('/:postId', authMiddleware, isMember, postController.showPostDetail);
