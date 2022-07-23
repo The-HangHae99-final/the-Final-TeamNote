@@ -91,12 +91,14 @@ async function messagesView(req, res) {
     });
   } catch (err) {
     console.error(err);
+
     return res
       .status(400)
       .json({ success: false, message: '메시지 조회 실패' });
   }
 }
   
+
 module.exports = {
   messageEdit,
   messageDelete,

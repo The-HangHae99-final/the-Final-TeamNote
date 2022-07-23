@@ -12,11 +12,13 @@ const chatspace = io.of('/chat');
 chatspace.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`); //연결에 사용되는 소켓 정보
 
+
   socket.on("change_room", async (now, next) => {
     socket.leave(now);
     socket.join(next);
     const chat_list = await Message.find({ next });
     socket.emit("chat_list", chat_list);
+
   });
 
   socket.on("send_message", async (messageData) => {
@@ -27,6 +29,18 @@ chatspace.on("connection", (socket) => {
     //data: 방 이름, 쓴 사람, 메시지 내용, 작성 시간
     socket.to(messageData.room).emit("receive_message", messageData);
     console.log("방이름이 여기에", messageData.room);
+
+  });
+  //방 떠나면서 채팅내역 저장하게 할것임. (조회해보고 방 정보가 같으면 그쪽 데이터를 갱신해주는 방식으로 수정해야할듯.)
+  socket.on("leave_room", (room, messageList) => {
+    console.log("room: ", `${room}을 떠남.`);
+    socket.leave(room);
+  });
+
+  socket.on("change_room", (now, next) => {
+    socket.leave(now);
+    socket.join(next);
+
   });
 
   socket.on("disconnect", () => {

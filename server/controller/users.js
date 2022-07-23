@@ -11,7 +11,7 @@ const { response } = require('express');
 const { error } = require('winston');
 const ejs = require('ejs');
 const path = require('path');
-var appDir = path.dirname(require.main.filename);
+let appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
   userName: Joi.string().required(),
@@ -44,20 +44,20 @@ async function signup(req, res) {
       await usersSchema.validateAsync(req.body);
     // 비밀번호와 확인 비밀번호가 틀린 경우
     if (password !== confirmPassword) {
-      res.status(400).send({
+      return res.status(400).send({
         errorMessage: '비밀번호가 일치하지 않습니다.',
       });
     }
     // 비밀번호가 5글자 이하인 경우
     if (password <= 5) {
-      res.status(400).send({
+      return res.status(400).send({
         success: false,
         errorMessage: '비밀번호는 6글자 이상으로 입력해주세요.',
       });
     }
     // userName의 length가 6글자 이상인 경우.
     if (userName.length >= 6) {
-      res
+      return res
         .status(400)
         .send({ success: false, errorMessage: '5글자 이내로 입력해주세요.' });
     }
@@ -71,7 +71,7 @@ async function signup(req, res) {
     // 가입하고자 하는 이메일이 존재하는 경우
     const exitstUsers = await User.findOne({ userEmail });
     if (exitstUsers.length) {
-      res.status(400).send({
+      return res.status(400).send({
         errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
@@ -93,14 +93,14 @@ async function signup(req, res) {
 
       // 회원가입 완료하고 축하 메시지 전송할 시
       // to: req.body.userid
-      subject: `${req.body.userName}님 팀노트 회원가입을 축하합니다.`, // 메일 제목
-      html: `<h2>${req.body.userName}님의 팀 협업 행복을 응원합니다.</h2>
+      subject: `${req.body.userName}님 팀노트 회원가입을 축하합니다.`, // 메일 제목, 템플릿
+      html: `<h2>${req.body.userName}님의 팀 협업 행복을 응원합니다.</h2> 
             <br/>
             <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
             <p>팀노트 200% 활용법을 확인해 보세요.</p><br>
             <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
     };
-    // 메일 발송
+    //메일 발송
     transporter.sendMail(mailOptions, function (err, success) {
       if (err) {
         console.log(err);
@@ -169,7 +169,7 @@ async function passwordSecond(req, res) {
     // 유저가 DB에 존재하고,
     if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-
+      console.log('-------------' + validPassword);
       // 유효하지 않은 비밀번호라면
       if (!validPassword) {
         res.status(400).send({
@@ -208,7 +208,7 @@ async function passwordSecond(req, res) {
 }
 
 //회원 탈퇴 기능
-// router.delete('/users/delete/:userEmail', userController.deleteUser)
+// router.delete('/users/delete/:userEmail', userController.deleteUser')
 async function deleteUser(req, res) {
   try {
     //#swagger.tags= ['탈퇴 API'];

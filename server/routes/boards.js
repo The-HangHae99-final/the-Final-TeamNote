@@ -55,6 +55,6 @@ router.put(
 );
 
 // 글 삭제
-router.delete('/board/:boardId', authMiddleware, boardController.boardDelete);
+router.delete('/boards/:boardId', authMiddleware, boardController.boardDelete);
 
 module.exports = router;
