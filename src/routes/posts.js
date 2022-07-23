@@ -1,3 +1,4 @@
+
 const dotenv = require("dotenv").config();
 const express = require("express");
 const router = express.Router();
@@ -7,11 +8,14 @@ const isMember = require("../middlewares/isMember");
 const { s3 } = require("../controller/util/aws-s3");
 const { upload } = require("../controller/util/aws-s3");
 
+
 //일반 게시글
 //글 작성
 router.post(
+
   "/",
   upload.single("img"),
+
 
   authMiddleware,
   //
@@ -19,6 +23,7 @@ router.post(
 );
 
 // 글 전체 조회(임시)
+
 router.get("/", authMiddleware, isMember, postController.showPosts);
 
 // 글 상세 조회

@@ -1,3 +1,4 @@
+
 const express = require("express");
 const router = express.Router();
 const taskController = require("../controller/tasks");
@@ -13,17 +14,20 @@ router.post(
 );
 
 // 전체 일정 조회
+
 router.get("/", authMiddleware, taskController.showTasks);
 
 // 일정 상세 조회
 router.get(
   "/:taskId",
+
   authMiddleware,
   //
   taskController.showTaskDetail
 );
 
 // 일정 수정
+
 router.put("/:taskId", authMiddleware, taskController.editTask);
 
 // 일정 삭제
