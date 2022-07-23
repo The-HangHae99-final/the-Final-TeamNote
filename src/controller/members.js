@@ -108,8 +108,47 @@ async function getMemberList(req, res) {
   }
 }
 
+// 회원가입 - 인증코드 이메일로 보내기 - 보류
+// router.post('/users/mailing', userController.mailing);
+async function inviteMember(req, res) {
+  //#swagger.tags= [' 인증코드 메일링 API'];
+  //#swagger.summary= '인증코드 메일링 API'
+  //#swagger.description='-'
+
+  min = Math.ceil(111111);
+  max = Math.floor(999999);
+  const number = Math.floor(Math.random() * (max - min)) + min;
+  const { userEmail } = req.body;
+
+  // 메일 옵션
+  let mailOptions = {
+    from: 'hanghae99@naver.com', // 메일 발신자
+    to: userEmail, // 메일 수신자
+
+    // 회원가입 완료하고 축하 메시지 전송할 시
+    // to: req.body.userid
+    subject: `고객님의 팀노트 회원가입을 축하합니다.`, // 메일 제목
+    html: `<h2>고객님의 팀 협업 행복을 응원합니다.</h2>
+          <br/>
+          <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
+          <p>팀노트 200% 활용법을 확인해 보세요.</p>
+          <p> 워크 스페이스 가입을 위해 옆의 숫자를 입력해주세요.--- ${number} ---</p>
+          <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
+  };
+  // 메일 발송
+  transporter.sendMail(mailOptions, function (err, success) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('이메일이 성공적으로 발송되었습니다!');
+    }
+  });
+  res.send({ number: number }); //인증번호 인증기능.
+}
+
 module.exports = {
   addMember,
   getMemberList,
   deleteMember,
+  inviteMember
 };

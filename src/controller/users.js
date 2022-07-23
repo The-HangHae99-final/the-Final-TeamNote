@@ -5,7 +5,6 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
-const user = require('../schemas/user');
 const validator = require('email-validator');
 const { response } = require('express');
 const { error } = require('winston');

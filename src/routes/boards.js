@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const boardController = require('../controller/boards');
-const authMiddleware = require('../middlewares/auth-middleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 const isMember = require('../middlewares/isMember');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
@@ -28,33 +28,33 @@ const upload = multer({
 });
 //글 작성
 router.post(
-  '/boards',
+  '/',
   upload.single('img'),
   authMiddleware,
   isMember,
-  boardController.boardUpload
+  boardController.createBoard
 );
 
 // 글 전체 조회(임시)
-router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
+router.get('/', authMiddleware, isMember, boardController.showBoards);
 
 // 글 한개 조회
 router.get(
-  '/boards/:boardId',
+  '/:boardId',
   authMiddleware,
   isMember,
-  boardController.boardView
+  boardController.showBoardOne
 );
 
 // 글 수정
 router.put(
-  '/boards/:boardId',
+  '/:boardId',
   authMiddleware,
   isMember,
-  boardController.boardEdit
+  boardController.editBoard
 );
 
 // 글 삭제
-router.delete('/board/:boardId', authMiddleware, boardController.boardDelete);
+router.delete('/:boardId', authMiddleware, boardController.deleteBoard);
 
 module.exports = router;

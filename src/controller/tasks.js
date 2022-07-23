@@ -2,7 +2,7 @@ const Task = require('../schemas/task');
 const moment = require('moment');
 
 // 일정 생성
-async function taskUpload(req, res, next) {
+async function createTask(req, res, next) {
   try {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 생성 API'
@@ -43,7 +43,7 @@ async function taskUpload(req, res, next) {
 }
 
 // 전체 일정 조회
-async function taskAll(req, res, next) {
+async function showTasks(req, res, next) {
   try {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 전체조회 API'
@@ -75,7 +75,7 @@ async function taskAll(req, res, next) {
 }
 
 // 일정 상세 조회
-async function taskDetail(req, res, next) {
+async function showTaskDetail(req, res, next) {
   try {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 상세 조회 API'
@@ -110,7 +110,7 @@ async function taskDetail(req, res, next) {
 }
 
 // 일정 수정
-async function taskEdit(req, res, next) {
+async function editTask(req, res, next) {
   try {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 수정 API'
@@ -148,7 +148,7 @@ async function taskEdit(req, res, next) {
 }
 
 // 일정 삭제
-async function taskRemove(req, res, next) {
+async function deleteTask(req, res, next) {
   try {
     //#swagger.tags= ['개인 일정 API'];
     //#swagger.summary= '개인 일정 삭제 API'
@@ -180,9 +180,9 @@ async function taskRemove(req, res, next) {
 }
 
 module.exports = {
-  taskUpload,
-  taskAll,
-  taskDetail,
-  taskEdit,
-  taskRemove,
+  createTask,
+  showTasks,
+  showTaskDetail,
+  editTask,
+  deleteTask,
 };

@@ -5,7 +5,7 @@ const Message = require("../schemas/message");
 
 // 메시지 수정
 // api/message/:_id
-async function messageEdit(req, res) {
+async function editMessage(req, res) {
   try {
     //#swagger.tags= ['메세지 API'];
     //#swagger.summary= '메세지 수정 API'
@@ -43,7 +43,7 @@ async function messageEdit(req, res) {
 }
 //메시지 삭제
 // api/message/:_id
-async function messageDelete(req, res) {
+async function deleteMessage(req, res) {
   try {
     //#swagger.tags= ['메세지 API'];
     //#swagger.summary= '메세지 삭제 API'
@@ -76,7 +76,7 @@ async function messageDelete(req, res) {
 }
 //메시지 조회
 // api/message/:_id
-async function messagesView(req, res) {
+async function showMessage(req, res) {
   try {
     //#swagger.tags= ['메세지 API'];
     //#swagger.summary= '메세지 조회 API'
@@ -98,7 +98,7 @@ async function messagesView(req, res) {
 }
   
 module.exports = {
-  messageEdit,
-  messageDelete,
-  messagesView,
+  editMessage,
+  deleteMessage,
+  showMessage,
 };
