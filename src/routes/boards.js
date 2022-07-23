@@ -39,12 +39,13 @@ router.post(
 router.get("/", authMiddleware, isMember, boardController.showBoards);
 
 // 글 한개 조회
-router.get("/:boardId", authMiddleware, isMember, boardController.showBoardOne);
+
+router.get('/:boardId', authMiddleware, isMember, boardController.showBoardOne);
 
 // 글 수정
-router.put("/:boardId", authMiddleware, isMember, boardController.editBoard);
+router.put('/:boardId', authMiddleware, isMember, boardController.editBoard);
 
-// 글 삭제
-router.delete("/:boardId", authMiddleware, boardController.deleteBoard);
+router.delete('/:boardId', authMiddleware, boardController.deleteBoard);
+
 
 module.exports = router;

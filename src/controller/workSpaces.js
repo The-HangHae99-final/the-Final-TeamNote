@@ -152,8 +152,6 @@ async function searchWorkSpace(req, res, next) {
   }
 }
 
-
-
 module.exports = {
   createWorkSpace,
   leaveWorkSpace,

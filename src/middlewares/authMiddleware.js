@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
 
   if (tokenType !== 'Bearer') {
     console.log('tokenType: ', tokenType);
-    res.status(401).send({
+    res.status(400).send({
       errorMessage:
         error.message + '로그인이 필요합니다.---------Bearer----------',
     });
@@ -56,7 +56,6 @@ module.exports = (req, res, next) => {
           const myNewToken = jwt.sign({ userEmail: u.userEmail }, jwtSecret, {
             expiresIn: '1h',
           });
-          console.log('3333333333myNewToken3333333333: ', myNewToken);
           res.send({ message: 'new token', myNewToken });
         }
       });
