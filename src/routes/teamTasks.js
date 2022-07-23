@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 // 팀 일정 생성
 router.post(
-  '/workSpaceName',
+  '/',
   authMiddleware,
   isMember,
   taskController.createTeamTask
@@ -14,7 +14,7 @@ router.post(
 
 // 팀 전체 일정 조회
 router.get(
-  '/workSpaceName/all',
+  '/',
   authMiddleware,
   isMember,
   taskController.showTeamTasks
@@ -22,7 +22,7 @@ router.get(
 
 // 팀 일정 상세 조회
 router.get(
-  '/workSpaceName/:taskId',
+  '/:taskId',
   authMiddleware,
   isMember,
   taskController.showTeamTaskDetail
@@ -30,7 +30,7 @@ router.get(
 
 // 팀 일정 수정
 router.put(
-  '/workSpaceName/:taskId',
+  '/:taskId',
   authMiddleware,
   isMember,
   taskController.editTeamTask
@@ -38,7 +38,7 @@ router.put(
 
 // 팀 일정 삭제
 router.delete(
-  '/workSpaceName/:taskId',
+  '/:taskId',
   authMiddleware,
   isMember,
   taskController.delteteTeamTask

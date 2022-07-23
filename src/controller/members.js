@@ -2,7 +2,6 @@ const User = require('../schemas/user');
 const workSpace = require('../schemas/workSpace');
 
 //멤버 추가
-// router.put("/memberIn", authMiddleware,isMember, workSpaceController.addMember);
 async function addMember(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -45,7 +44,6 @@ async function addMember(req, res) {
   }
 }
 //멤버 삭제
-// router.put("/workSpace/deleteMember/:workSpaceName", authMiddleware, // workSpaceController.deleteMember);
 async function deleteMember(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -86,7 +84,6 @@ async function deleteMember(req, res) {
   }
 }
 //멤버 목록 조회
-// router.get("/member",authMiddleware,isMember,memberController.getMemberList);
 async function getMemberList(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
@@ -109,7 +106,6 @@ async function getMemberList(req, res) {
 }
 
 // 회원가입 - 인증코드 이메일로 보내기 - 보류
-// router.post('/users/mailing', userController.mailing);
 async function inviteMember(req, res) {
   //#swagger.tags= [' 인증코드 메일링 API'];
   //#swagger.summary= '인증코드 메일링 API'

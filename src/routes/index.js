@@ -17,17 +17,17 @@ const teamTasksRouter = require('./teamTasks');
 const manitoRouter = require('./manito');
 
 router.use('/users', userRouter);
-router.use('/members', memberRouter);
-router.use('/posts', postsRouter);
-router.use('/messages', messageRouter);
-router.use('/workSpaces', workSpaceRouter);
-router.use('/boards', boardRouter);
-router.use('/tasks', taskRouter);
-router.use('/teamTasks', teamTasksRouter);
+router.use('/member', memberRouter);
+router.use('/post', postsRouter);
+router.use('/message', messageRouter);
+router.use('/workSpace', workSpaceRouter);
+router.use('/board', boardRouter);
+router.use('/task', taskRouter);
+router.use('/teamTask', teamTasksRouter);
 router.use('/manito', manitoRouter);
 router.use('/', kakaoRouter);
 router.use('/', naverRouter);
-router.use('/posts', postCommentRouter);
-router.use('/boards', boardCommentRouter);
+router.use('/post', postCommentRouter);
+router.use('/board', boardCommentRouter);
 
 module.exports = router;
