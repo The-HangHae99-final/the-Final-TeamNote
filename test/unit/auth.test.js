@@ -5,6 +5,9 @@ const {
 const request = require('supertest');
 const app = require('../../app');
 
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
+
 test(`비밀번호를 입력했을때
           password와 passwordConfirm가 일치할 때,
           true를 반환한다.`, () => {
