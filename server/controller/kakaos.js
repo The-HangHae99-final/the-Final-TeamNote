@@ -22,14 +22,13 @@ var generateRandom = function (min, max) {
   var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
   return ranNum;
 };
-// Rediect URI : http://localhost:3000/auth/login/kakao/callback
 //로직
 var express = require('express');
 var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-const KAKAO_REDIRECT_URL = 'http://localhost:3000/oauth/kakao/callback';
+const KAKAO_REDIRECT_URL = 'http://localhost:3000/api/oauth/login/kakao/callback';
 // post- '/auth/login/kakao/callback'
 // 프론트에게 인가코드 받고, 엑세스 토큰 발급받아 프론트에게 다시 넘겨주기.
 function kakao_callback(req, res, next) {
@@ -81,9 +80,9 @@ function kakao_member(req, res) {
     //#swagger.summary= '카카오 정보요청 API'
     //##swagger.description='-'
     var api_url = 'https://kapi.kakao.com/v2/user/me';
-    var request = require('request');
     var token = req.body.token;
-    console.log('token------------', token);
+    console.log(token);
+    var request = require('request');
     var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
     console.log('header: ' + header);
     var options = {
