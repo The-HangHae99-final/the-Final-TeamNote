@@ -1,15 +1,25 @@
 const dotenv = require('dotenv').config();
 const request = require('supertest');
 const app = require('../../app');
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
 
-describe('post /user/email', function () {
-  it('responds with json', function (done) {
+describe('POST /api/signup 회원가입', function () {
+  it('/api/users/signup', function (done) {
     request(app)
-      .post('/api/users/email')
-      .set('Accept', 'application/json')
-      .expect(200, done);
+      .post('/api/users/signup')
+      .set('Authorization', `Bearer ${TOKEN}`)
+      .send({
+        userEmail: 'email@email.com',
+        userName: 'user',
+        password: '123456',
+        confirmPassword: '123456',
+      })
+      .expect(201, done);
   });
 });
+
+// expect(res.body).toEqual('Post not found');
 
 describe('post api/user/email', function () {
   it('responds with json', function (done) {
