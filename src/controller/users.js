@@ -5,7 +5,6 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 const nodemailer = require('nodemailer');
-const user = require('../schemas/user');
 const validator = require('email-validator');
 const { response } = require('express');
 const { error } = require('winston');
@@ -71,7 +70,9 @@ async function signup(req, res) {
 
     // 가입하고자 하는 이메일이 존재하는 경우
     const exitstUsers = await User.findOne({ userEmail });
-    if (exitstUsers.length) {
+
+    if (exitstUsers) {
+
       return res.status(400).send({
         errorMessage: '중복된 이메일이 존재합니다.',
       });

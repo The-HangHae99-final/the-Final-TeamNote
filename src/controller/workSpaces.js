@@ -2,7 +2,7 @@ const workSpace = require('../schemas/workSpace');
 
 //워크스페이스 생성
 // router.post('/workSpace', authMiddleware, workSpaceController.createSpace);
-async function createSpace(req, res) {
+async function createWorkSpace(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 생성 API'
@@ -37,7 +37,7 @@ async function createSpace(req, res) {
 }
 //워크스페이스 탈퇴하기
 // router.put('/workSpace/leave',authMiddleware,isMember,workSpaceController.workSpaceLeave);
-async function workSpaceLeave(req, res) {
+async function leaveWorkSpace(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 탈퇴 API'
@@ -90,7 +90,7 @@ async function deleteWorkSpace(req, res) {
 }
 //본인 속한 워크스페이스 목록 조회
 // router.get("/workSpace/workSpaceList", authMiddleware, workSpaceController.getWorkSpaceList);
-async function getWorkSpaceList(req, res) {
+async function showMyWorkSpaceList(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '본인이 속한 워크 스페이스 목록 조회 API'
@@ -118,7 +118,7 @@ async function getWorkSpaceList(req, res) {
 //전체 워크스페이스 조회
 // router.get("/workSpace/everyWorkSpace", workSpaceController.everyWorkSpace);
 
-async function everyWorkSpace(req, res) {
+async function showWorkSpaces(req, res) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '전체 워크스페이스 조회(개발용) API'
@@ -136,9 +136,9 @@ async function everyWorkSpace(req, res) {
   }
 }
 //워크스페이스 검색
-async function getWorkSpaceByName(req, res, next) {
+async function searchWorkSpace(req, res, next) {
   try {
-    const workSpaceName = req.body;
+    const { workSpaceName } = req.params;
     const existWorkSpace = await workSpace.findOne(workSpaceName);
     if (existWorkSpace) {
       res.status(200).json(existWorkSpace);
@@ -152,50 +152,11 @@ async function getWorkSpaceByName(req, res, next) {
   }
 }
 
-// 회원가입 - 인증코드 이메일로 보내기 - 보류
-
-async function workInviting(req, res) {
-  //#swagger.tags= [' 인증코드 메일링 API'];
-  //#swagger.summary= '인증코드 메일링 API'
-  //#swagger.description='-'
-
-  min = Math.ceil(111111);
-  max = Math.floor(999999);
-  const number = Math.floor(Math.random() * (max - min)) + min;
-  const { userEmail } = req.body;
-
-  // 메일 옵션
-  let mailOptions = {
-    from: 'hanghae99@naver.com', // 메일 발신자
-    to: userEmail, // 메일 수신자
-
-    // 회원가입 완료하고 축하 메시지 전송할 시
-    // to: req.body.userid
-    subject: `고객님의 팀노트 회원가입을 축하합니다.`, // 메일 제목
-    html: `<h2>고객님의 팀 협업 행복을 응원합니다.</h2>
-          <br/>
-          <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
-          <p>팀노트 200% 활용법을 확인해 보세요.</p>
-          <p> 워크 스페이스 가입을 위해 옆의 숫자를 입력해주세요.--- ${number} ---</p>
-          <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
-  };
-  // 메일 발송
-  transporter.sendMail(mailOptions, function (err, success) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('이메일이 성공적으로 발송되었습니다!');
-    }
-  });
-  res.send({ number: number }); //인증번호 인증기능.
-}
-
 module.exports = {
-  createSpace,
-  workSpaceLeave,
+  createWorkSpace,
+  leaveWorkSpace,
   deleteWorkSpace,
-  getWorkSpaceList,
-  everyWorkSpace,
-  getWorkSpaceByName,
-  workInviting,
+  showMyWorkSpaceList,
+  showWorkSpaces,
+  searchWorkSpace,
 };

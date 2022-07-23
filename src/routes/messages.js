@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const boardController = require('../controller/boards');
-const authMiddleware = require('../middlewares/auth-middleware');
+const authMiddleware = require('../middlewares/authMiddleware');
+const messageController = require('../controller/messages');
 const isMember = require('../middlewares/isMember');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-
 const s3 = new AWS.S3({
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey,
   region: 'ap-northeast-2',
 });
-
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -26,35 +24,20 @@ const upload = multer({
     },
   }),
 });
-//글 작성
-router.post(
-  '/boards',
-  upload.single('img'),
-  authMiddleware,
-  isMember,
-  boardController.boardUpload
-);
 
-// 글 전체 조회(임시)
-router.get('/boards', authMiddleware, isMember, boardController.boardAllView);
+//메시지 수정
+router.put('/:_id', authMiddleware, isMember, messageController.editMessage);
 
-// 글 한개 조회
-router.get(
-  '/boards/:boardId',
-  authMiddleware,
-  isMember,
-  boardController.boardView
-);
+//메시지 삭제
+router.delete('/:_id', authMiddleware, messageController.deleteMessage);
 
-// 글 수정
-router.put(
-  '/boards/:boardId',
-  authMiddleware,
-  isMember,
-  boardController.boardEdit
-);
+//메시지 조회
+router.get('/:_id', authMiddleware, isMember, messageController.showMessage);
 
-// 글 삭제
-router.delete('/boards/:boardId', authMiddleware, boardController.boardDelete);
+// 단일 이미지 업로드
+router.post('/image', upload.single('image'), messageController.postImage);
+
+// //룸 이름 얻기
+// router.get('/roomId/:workSpaceName/:opponent', authMiddleware, isMember, messageController.getRoomId);
 
 module.exports = router;

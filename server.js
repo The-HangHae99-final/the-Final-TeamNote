@@ -1,8 +1,7 @@
 const server = require('./app');
-require('dotenv').config();
 require('./socket');
+require('dotenv').config();
 const port = process.env.PORT;
-
 
 /*
 app.js의 역할은 서버가 아니라 API 구현의 역할이다. 그래서 분리한 것.

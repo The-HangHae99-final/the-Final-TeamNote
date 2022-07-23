@@ -11,7 +11,7 @@ const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
 console.log('client_id: ' + client_id);
-const KAKAO_REDIRECT_URL = 'http://localhost:3000/api/oauth/login/kakao/callback';
+const KAKAO_REDIRECT_URL = 'http://localhost:3000/auth/login/kakao/callback';
 const kakaoController = require('../controller/kakaos');
 
 router.post('/auth/login/kakao/callback', kakaoController.kakao_callback);
