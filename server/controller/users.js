@@ -49,7 +49,7 @@ async function signup(req, res) {
       });
     }
     // 비밀번호가 5글자 이하인 경우
-    if (password <= 5) {
+    if (password.length <= 5) {
       return res.status(400).send({
         success: false,
         errorMessage: '비밀번호는 6글자 이상으로 입력해주세요.',
@@ -57,9 +57,10 @@ async function signup(req, res) {
     }
     // userName의 length가 6글자 이상인 경우.
     if (userName.length >= 6) {
-      return res
-        .status(400)
-        .send({ success: false, errorMessage: '5글자 이내로 입력해주세요.' });
+      return res.status(400).send({
+        success: false,
+        errorMessage: '닉네임은 5글자 이내로 입력해주세요.',
+      });
     }
     // email validator 라이브러리로 이메일 검사.
     if (!validator.validate(userEmail)) {
@@ -101,11 +102,11 @@ async function signup(req, res) {
             <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
     };
     //메일 발송
-    transporter.sendMail(mailOptions, function (err, success) {
+    transporter.sendMail(mailOptions, async function (next, err, success) {
       if (err) {
-        console.log(err);
+        return err;
       } else {
-        console.log('이메일 발송을 완료했습니다.!');
+        next();
       }
     });
 
@@ -145,7 +146,7 @@ async function emailFirst(req, res) {
         .status(400)
         .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     } else {
-      res.status(200).json({ success: true, errorMessage: error });
+      res.status(200).json({ success: true, message: '존재하는 유저입니다.' });
     }
   } catch (error) {
     res.send(401).send({
@@ -167,11 +168,10 @@ async function passwordSecond(req, res) {
     var validPassword;
 
     // 유저가 DB에 존재하고,
-    if (userFind) {
+    if (userFind.length) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-      console.log('-------------' + validPassword);
       // 유효하지 않은 비밀번호라면
-      if (!validPassword) {
+      if (!validPassword.length) {
         res.status(400).send({
           success: true,
           errorMessage: '유효하지 않은 비밀번호입니다.',
@@ -180,12 +180,12 @@ async function passwordSecond(req, res) {
     }
     //jwt token화
     const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '3600s',
+      expiresIn: '1h',
     });
 
     // 리프레시 토큰 생성
     const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '1h',
+      expiresIn: '1d',
     });
 
     //userEmail이 일치하는 값에 리프레시 토큰 업데이트
@@ -194,11 +194,10 @@ async function passwordSecond(req, res) {
       success: true,
       token,
       email: userEmail,
-      name: userFind.userName,
     });
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
-    console.error(error);
+    console.log('error----' + error);
     res.status(400).send({
       success: false,
       errorMessage: error.message,
