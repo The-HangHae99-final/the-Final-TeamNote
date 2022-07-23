@@ -14,7 +14,7 @@ router.post('/email', userController.emailFirst);
 
 router.post('/password', userController.passwordSecond);
 
-router.delete('/delete/:userEmail', userController.deleteUser);
+router.delete('/:userEmail', userController.deleteUser);
 
 router.get('/search', userController.searchUser);
 

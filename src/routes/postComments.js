@@ -1,15 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware');
-const commentController = require('../controller/postComments');
-const isMember = require('../middlewares/isMember');
-
-
+const authMiddleware = require("../middlewares/authMiddleware");
+const commentController = require("../controller/postComments");
+const isMember = require("../middlewares/isMember");
 
 //포스트 댓글 작성
 //댓글 작성
 router.post(
-  '/:postId',
+  "/:postId",
   authMiddleware,
   isMember,
   commentController.createPostComment
@@ -17,7 +15,7 @@ router.post(
 
 //댓글 삭제
 router.delete(
-  '/:postId/:commentId',
+  "/:postId/:commentId",
   authMiddleware,
   isMember,
   commentController.deletePostComment
@@ -25,7 +23,7 @@ router.delete(
 
 //댓글 수정
 router.put(
-  '/:postId/:commentId',
+  "/:postId/:commentId",
   authMiddleware,
   isMember,
   commentController.editPostComment

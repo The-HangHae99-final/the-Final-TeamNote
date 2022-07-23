@@ -19,6 +19,6 @@ router.put(
 );
 
 // 멤버 초대
-router.get("/inviting", memberController.inviteMember);
+router.get("/invite", memberController.inviteMember);
 
 module.exports = router;
