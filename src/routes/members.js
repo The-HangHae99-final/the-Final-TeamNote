@@ -18,9 +18,16 @@ router.put(
   memberController.deleteMember
 );
 
-// 멤버 초대
-
-router.get("/invite", memberController.inviteMember);
-
-
+// 멤버 초대(web)
+router.post('/invite', authMiddleware, isMember, memberController.inviteMemberWEB);
+// 초대 조회
+router.get('/invite/:userEmail', authMiddleware, memberController.showInviting);
+//초대 수락
+router.put('/invite', authMiddleware, memberController.acceptInviting);
+//초대 거절
+router.delete('/invite', authMiddleware, memberController.refuseInviting);
 module.exports = router;
+
+
+// 멤버 초대
+// router.get("/invite", memberController.inviteMember);
