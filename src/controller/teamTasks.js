@@ -1,9 +1,9 @@
-const TeamTask = require('../schemas/task_team');
+const TeamTask = require('../schemas/teamTask');
 const moment = require('moment');
 const urlencode = require('urlencode');
 
 // 팀 일정 생성
-async function teamTaskUpload(req, res, next) {
+async function createTeamTask(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 알정 생성 API'
@@ -43,7 +43,7 @@ async function teamTaskUpload(req, res, next) {
 }
 
 // 팀 전체 일정 조회
-async function teamTaskAll(req, res, next) {
+async function showTeamTasks(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 전체 일정 조회 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
@@ -73,7 +73,7 @@ async function teamTaskAll(req, res, next) {
 }
 
 // 팀 일정 상세 조회
-async function teamTaskDetail(req, res, next) {
+async function showTeamTaskDetail(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 일정 상세조회  API'
@@ -101,7 +101,7 @@ async function teamTaskDetail(req, res, next) {
 }
 
 // 팀 일정 수정
-async function teamTaskEdit(req, res, next) {
+async function editTeamTask(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
@@ -138,7 +138,7 @@ async function teamTaskEdit(req, res, next) {
 }
 
 // 팀 일정 삭제
-async function teamTaskRemove(req, res, next) {
+async function delteteTeamTask(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 일정 삭제 API'
@@ -164,9 +164,9 @@ async function teamTaskRemove(req, res, next) {
 }
 
 module.exports = {
-  teamTaskUpload,
-  teamTaskAll,
-  teamTaskDetail,
-  teamTaskEdit,
-  teamTaskRemove,
+  createTeamTask,
+  showTeamTasks,
+  showTeamTaskDetail,
+  editTeamTask,
+  delteteTeamTask,
 };
