@@ -36,9 +36,28 @@ chatspace.on("connection", (socket) => {
   socket.on("change_room", (now, next) => {
     socket.leave(now);
     socket.join(next);
+
   });
 
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
 });
+
+
+
+// socket.on("join_room", async (room) => {
+  //   socket.join(room);
+  //   console.log("room: ", `${room}에 입장.`);
+
+  //   const chat_list = await Message.find({ room });
+  //   socket.emit("chat_list", chat_list);
+  //   //data : 방 이름
+
+  //   // socket.emit("welcome_msg", username, room);
+  // });
+
+// socket.on("leave_room", (room) => {
+  //   console.log("room: ", `${room}을 떠남.`);
+  //   socket.leave(room);
+  // });

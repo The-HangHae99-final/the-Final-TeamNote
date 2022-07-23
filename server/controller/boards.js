@@ -32,13 +32,16 @@ async function boardUpload(req, res, next) {
     if (maxboardId) {
       boardId = maxboardId.boardId + 1;
     }
-    if (!userName) {
-      res
-        .status(400)
-        .send({ success: false, message: '유저 이름이 없습니다.' });
+    if (!userName || !boardId || title || content || workSpaceName) {
+      res.status(400).send({
+        success: false,
+        errorMessage: '필요한 항목을 모두 입력해주세요.',
+      });
     }
     if (!image) {
-      res.status(400).send({ success: false, message: '이미지가 없습니다.' });
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '이미지가 없습니다.' });
     }
 
     const createdTime = new Date();
@@ -60,7 +63,7 @@ async function boardUpload(req, res, next) {
     console.log(error);
     res.status(400).send({
       success: false,
-      Message: '요청한 데이터 형식이 올바르지 않습니다.',
+      message: '요청한 데이터 형식이 올바르지 않습니다.',
       errorMessage: error.message,
     });
   }

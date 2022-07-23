@@ -24,16 +24,15 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 const manitoRouter = require('./server/routes/manito');
 const helmet = require('helmet');
-
-global.logger || (global.logger = require('./server/config/logger'));
+const moment = require('moment');
+const createdAt = moment().format('HH:mm');
 const morganMiddleware = require('./server/config/morganMiddleware');
+require('moment-timezone');
+global.logger || (global.logger = require('./server/config/logger'));
 
 connect();
 
-const moment = require('moment');
-require('moment-timezone');
 moment.tz.setDefault('Asia/seoul');
-const createdAt = moment().format('HH:mm');
 console.log(
   '현재 시각은 ' + createdAt + ' 입니다. 오늘도 즐거운 코딩하세요 -!'
 );

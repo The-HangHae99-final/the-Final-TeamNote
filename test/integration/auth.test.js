@@ -1,44 +1,43 @@
 const dotenv = require('dotenv').config();
 const request = require('supertest');
 const app = require('../../app');
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
 
-describe('post /user/email', function () {
-  it('responds with json', function (done) {
+//===============회원가입======================
+describe('POST /api/signup 회원가입', function () {
+  test('조건에 맞다면 회원가입 성공', function (done) {
     request(app)
-      .post('/api/users/email')
-      .set('Accept', 'application/json')
-      .expect(200, done);
+      .post('/api/users/signup')
+      .send({
+        userEmail: 'email@email.com',
+        userName: 'user',
+        password: '123456',
+        confirmPassword: '123456',
+      })
+      .expect(201, done);
   });
 });
-
-describe('post api/user/email', function () {
-  it('responds with json', function (done) {
-    request(app)
-      .post('/api/users/email')
-      .send({ userEmail: 'test@test.com' })
-      .set('Accept', 'application/json')
-      .expect(400, done);
-  });
-});
-
-describe('post /users/email', function () {
-  it('responds with json', function (done) {
+//===============이메일======================
+describe('POST /api/email 이메일 먼저 조회', function () {
+  test('이메일이 존재한다면 조회 성공', function (done) {
     request(app)
       .post('/api/users/email')
       .send({
-        userEmail: 'testq112@test.com',
-        password: '123456',
+        userEmail: 'email@email.com',
       })
-      .set('Accept', 'application/json')
       .expect(200, done);
   });
 });
-
-describe('post /users/delete', function () {
-  it('responds with json', function (done) {
+//===============로그인======================
+describe('POST /api/password 로그인', function () {
+  test('이메일, 비밀번호가 맞다면 로그인 성공', function (done) {
     request(app)
-      .delete('/api/users/delete/test@test.com')
-      .set('Accept', 'application/json')
+      .post('/api/users/password')
+      .send({
+        userEmail: 'email@email.com',
+        password: '123456',
+      })
       .expect(200, done);
   });
 });

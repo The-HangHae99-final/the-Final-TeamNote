@@ -92,9 +92,14 @@ async function messagesView(req, res) {
 
     return res
       .status(400)
+<<<<<<< HEAD
       .json({ success: false, message: "메시지 조회 실패" });
+=======
+      .json({ success: false, message: '메시지 조회 실패' });
+>>>>>>> 6c3caa7007c3162f9bca0acf15297e22c259f0c1
   }
 }
+  
 
 module.exports = {
   messageEdit,

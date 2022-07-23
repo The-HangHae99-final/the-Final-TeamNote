@@ -23,5 +23,12 @@ router.get(
   messageController.messagesView
 );
 
+<<<<<<< HEAD
+=======
+
+// //룸 이름 얻기
+// router.get('/roomId/:workSpaceName/:opponent', authMiddleware, isMember, messageController.getRoomId);
+>>>>>>> 6c3caa7007c3162f9bca0acf15297e22c259f0c1
+
 
 module.exports = router;
