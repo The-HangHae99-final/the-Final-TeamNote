@@ -208,7 +208,7 @@ async function passwordSecond(req, res) {
 }
 
 //회원 탈퇴 기능
-// router.delete('/users/delete/:userEmail', userController.deleteUser)
+// router.delete('/users/delete/:userEmail', userController.deleteUser')
 async function deleteUser(req, res) {
   try {
     //#swagger.tags= ['탈퇴 API'];
