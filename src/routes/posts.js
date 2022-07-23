@@ -28,14 +28,9 @@ router.get('/:postId', authMiddleware, isMember, postController.showPostDetail);
 router.put('/:postId', authMiddleware, isMember, postController.editPost);
 
 // 글 삭제
-router.delete(
-  '/:postId',
-  authMiddleware,
-  isMember,
-  postController.deletePost
-);
+router.delete('/:postId', authMiddleware, isMember, postController.deletePost);
 
 // 이미지 단일 업로드 router, 보류로 주석처리.
-// router.post('/image', upload.single('image'), postController.postImage);
+router.post('/image', upload.single('image'), postController.postImage);
 
 module.exports = router;
