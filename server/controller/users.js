@@ -101,11 +101,11 @@ async function signup(req, res) {
             <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
     };
     //메일 발송
-    transporter.sendMail(mailOptions, function (err, success) {
+    transporter.sendMail(mailOptions, async function (next, err, success) {
       if (err) {
-        console.log(err);
+        return err;
       } else {
-        console.log('이메일 발송을 완료했습니다.!');
+        next();
       }
     });
 
