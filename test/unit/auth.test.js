@@ -12,7 +12,7 @@ User.find = jest.fn();
 User.findById = jest.fn();
 User.findByIdAndUpdate = jest.fn();
 User.findByIdAndDelete = jest.fn();
-
+User.create = jest.fn();
 let req, res, next;
 
 beforeEach(() => {
@@ -45,7 +45,7 @@ describe('test 회원가입 API ', () => {
   beforeEach(() => {
     req.body = userData;
   });
-  it('should signup 은 함수여야 한다.', () => {
+  it('should signup은 함수여야 한다.', () => {
     expect(typeof userController.signup).toBe('function');
   });
   it('should call userModel.create을 호출한다.', async () => {
@@ -97,7 +97,7 @@ describe('test 회원삭제 API', () => {
   });
   it('should deleteUser 성공값은 status 200을 반환해야한다. ', async () => {
     let deletedProduct = {
-      userEmail: 'deletedProduct',
+      userEmail: 'test@test.com',
     };
     User.findByIdAndDelete.mockReturnValue(deletedProduct);
     await userController.deleteUser(req, res, next);

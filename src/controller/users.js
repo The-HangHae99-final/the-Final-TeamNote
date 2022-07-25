@@ -159,43 +159,50 @@ async function emailFirst(req, res) {
 
 // 이메일과 비밀번호를 body값으로 받고 로그인
 // router.post('/users/password', userController.passwordSecond);
-async function passwordSecond(req, res) {
+async function passwordSecond(req, res, next) {
   try {
     //#swagger.tags= ['로그인 API'];
     //#swagger.summary= '로그인 패스워드 API'
     //#swagger.description='-'
     const { userEmail, password } = req.body;
     const userFind = await User.findOne({ userEmail });
-    var validPassword;
+    let validPassword;
+
+    if (!userEmail || !password) {
+      res.status(400).send({
+        success: false,
+        errorMessage: '이메일 혹은 비밀번호가 입력되지 않았습니다.',
+      });
+    }
+
+    if (!userFind) {
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
+    }
 
     // 유저가 DB에 존재하고,
-    if (userFind.length) {
-      validPassword = await Bcrypt.compare(password, userFind.password);
-      // 유효하지 않은 비밀번호라면
-      if (!validPassword.length) {
-        res.status(400).send({
+    if (userFind) {
+      validPassword = Bcrypt.compare(password, userFind.password);
+
+      if (validPassword) {
+        //jwt token화
+        const token = jwt.sign({ userEmail }, jwtSecret, {
+          expiresIn: '1h',
+        });
+
+        // 리프레시 토큰 생성
+        const refresh_token = jwt.sign({}, jwtSecret, {
+          expiresIn: '1d',
+        });
+        await userFind.update({ refresh_token }, { $where: { userEmail } });
+        res.status(200).send({
           success: true,
-          errorMessage: '유효하지 않은 비밀번호입니다.',
+          message: '로그인에 성공하였습니다.',
+          token,
         });
       }
     }
-    //jwt token화
-    const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '1h',
-    });
-
-    // 리프레시 토큰 생성
-    const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '1d',
-    });
-
-    //userEmail이 일치하는 값에 리프레시 토큰 업데이트
-    await userFind.update({ refresh_token }, { $set: { userEmail } });
-    res.status(200).send({
-      success: true,
-      token,
-      email: userEmail,
-    });
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
     console.log('error----' + error);
