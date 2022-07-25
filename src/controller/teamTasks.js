@@ -32,8 +32,8 @@ async function createTeamTask(req, res, next) {
       success: true,
       message: '팀 일정 생성 성공',
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     return res.status(400).json({
       success: false,
       message: '팀 일정 생성 실패',
@@ -138,7 +138,7 @@ async function editTeamTask(req, res, next) {
 }
 
 // 팀 일정 삭제
-async function delteteTeamTask(req, res, next) {
+async function deleteTeamTask(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 일정 삭제 API'
@@ -168,5 +168,5 @@ module.exports = {
   showTeamTasks,
   showTeamTaskDetail,
   editTeamTask,
-  delteteTeamTask,
+  deleteTeamTask,
 };
