@@ -63,6 +63,7 @@ async function signup(req, res, next) {
     }
     // email validator 라이브러리로 이메일 검사.
     if (!validator.validate(userEmail)) {
+      console.log(!validator.validate(userEmail));
       return res
         .status(400)
         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
@@ -194,6 +195,8 @@ async function passwordSecond(req, res, next) {
           success: true,
           message: '로그인에 성공하였습니다.',
           token,
+          userEmail: userEmail,
+          userName: userFind.userName,
         });
       }
     }
