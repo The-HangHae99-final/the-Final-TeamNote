@@ -20,7 +20,6 @@ const morganMiddleware = require('./src/config/morganMiddleware');
 
 connect();
 
-
 app.use(cors(), helmet());
 app.use(morgan('combined'));
 app.use(express.static('static'));

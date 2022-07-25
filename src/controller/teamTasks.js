@@ -32,8 +32,8 @@ async function createTeamTask(req, res, next) {
       success: true,
       message: '팀 일정 생성 성공',
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     return res.status(400).json({
       success: false,
       message: '팀 일정 생성 실패',

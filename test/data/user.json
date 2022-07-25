@@ -1,5 +1,6 @@
 {
-    "password": "abcd1234",
-    "userName": "apple" ,
-    "userEmail": "apple@email.com"
+  "userName": "김하연2",
+  "userEmail": "test12@test.com",
+  "password": "123456",
+  "confirmPassword": "123456"
 }

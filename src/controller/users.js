@@ -34,7 +34,7 @@ module.exports = {
 
 //회원가입 API
 // router.post('/users/signup', userController.signup);
-async function signup(req, res) {
+async function signup(req, res, next) {
   try {
     //#swagger.tags= ['회원가입 API'];
     //#swagger.summary= '회원가입 API'
@@ -72,7 +72,6 @@ async function signup(req, res) {
     const exitstUsers = await User.findOne({ userEmail });
 
     if (exitstUsers) {
-
       return res.status(400).send({
         errorMessage: '중복된 이메일이 존재합니다.',
       });
@@ -112,8 +111,9 @@ async function signup(req, res) {
     });
 
     // DB에 저장
-    await user.save();
-    res.status(201).send({
+    const createdUser = await user.save();
+    res.status(201).json({
+      createdUser,
       success: true,
       message: '회원가입을 성공하였습니다',
     });
@@ -135,7 +135,7 @@ async function emailFirst(req, res) {
     const { userEmail } = req.body;
     const userFind = await User.findOne({ userEmail });
 
-    if (validator.validate(userEmail) == false) {
+    if (!validator.validate(userEmail)) {
       return res
         .status(400)
         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
@@ -159,44 +159,43 @@ async function emailFirst(req, res) {
 
 // 이메일과 비밀번호를 body값으로 받고 로그인
 // router.post('/users/password', userController.passwordSecond);
-async function passwordSecond(req, res) {
+async function passwordSecond(req, res, next) {
   try {
     //#swagger.tags= ['로그인 API'];
     //#swagger.summary= '로그인 패스워드 API'
     //#swagger.description='-'
     const { userEmail, password } = req.body;
     const userFind = await User.findOne({ userEmail });
-    var validPassword;
+    let validPassword;
+
+    if (!userFind) {
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
+    }
 
     // 유저가 DB에 존재하고,
-    if (userFind.length) {
-      validPassword = await Bcrypt.compare(password, userFind.password);
-      // 유효하지 않은 비밀번호라면
-      if (!validPassword.length) {
-        res.status(400).send({
+    if (userFind) {
+      validPassword = Bcrypt.compare(password, userFind.password);
+
+      if (validPassword) {
+        //jwt token화
+        const token = jwt.sign({ userEmail }, jwtSecret, {
+          expiresIn: '1h',
+        });
+
+        // 리프레시 토큰 생성
+        const refresh_token = jwt.sign({}, jwtSecret, {
+          expiresIn: '1d',
+        });
+        await userFind.update({ refresh_token }, { $where: { userEmail } });
+        res.status(200).send({
           success: true,
-          errorMessage: '유효하지 않은 비밀번호입니다.',
+          message: '로그인에 성공하였습니다.',
+          token,
         });
       }
     }
-    //jwt token화
-    const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: '1h',
-    });
-
-    // 리프레시 토큰 생성
-    const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '1d',
-    });
-
-    //userEmail이 일치하는 값에 리프레시 토큰 업데이트
-    await userFind.update({ refresh_token }, { $set: { userEmail } });
-    res.status(200).send({
-      success: true,
-      token,
-      email: userEmail,
-      name: userFind.userName
-    });
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
     console.log('error----' + error);
@@ -216,7 +215,12 @@ async function deleteUser(req, res) {
     //#swagger.summary= '탈퇴 API'
     //#swagger.description='-'
     const { userEmail } = req.params;
-    console.log(userEmail);
+    if (!userEmail) {
+      res.status(404).json({
+        success: false,
+        errorMessage: '입력된 유저 이메일 값이 없습니다.',
+      });
+    }
     await User.deleteOne({ userEmail });
     res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
@@ -254,6 +258,13 @@ async function searchUser(req, res) {
 
     const { userEmail } = req.body;
     const existUser = await User.findOne({ userEmail });
+
+    if (!userEmail) {
+      res.status(404).json({
+        success: false,
+        errorMessage: '입력된 유저 이메일 값이 없습니다.',
+      });
+    }
 
     if (existUser) {
       res.status(200).send({
@@ -304,9 +315,9 @@ async function mailing(req, res) {
           <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
   };
   // 메일 발송
-  transporter.sendMail(mailOptions, function (err, success) {
-    if (err) {
-      console.log(err);
+  transporter.sendMail(mailOptions, function (error, success) {
+    if (error) {
+      console.log(error);
     } else {
       console.log('이메일이 성공적으로 발송되었습니다!');
     }
