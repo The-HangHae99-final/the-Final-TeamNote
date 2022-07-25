@@ -1,33 +1,58 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const memberController = require('../controller/members');
-const authMiddleware = require('../middlewares/authMiddleware');
-const isMember = require('../middlewares/isMember');
+const memberController = require("../controller/members");
+const userController = require("../controller/users");
+const workSpaceController = require("../controller/workSpaces");
+const isMember = require("../middlewares/isMember");
 
 //멤버 추가
-router.put('/in', authMiddleware, isMember, memberController.addMember);
+router.post(
+  "/in",
+  isMember,
+  userController.findUser,
+  memberController.searchMember,
+  memberController.addMember
+);
 
 //멤버 목록 조회
-router.get('/:workSpaceName', authMiddleware, isMember, memberController.getMemberList);
+router.get("/:workSpaceName", isMember, memberController.getMemberList);
 
 //멤버 삭제
-router.put(
-  '/out',
-  authMiddleware,
-  //
+router.delete(
+  "/out",
+  isMember,
+  workSpaceController.searchWorkSpace,
+  memberController.searchMember,
   memberController.deleteMember
 );
 
-// 멤버 초대(web)
-router.post('/invite', authMiddleware, isMember, memberController.inviteMemberWEB);
-// 초대 조회
-router.get('/invite/:userEmail', authMiddleware, memberController.showInviting);
-//초대 수락
-router.put('/invite', authMiddleware, memberController.acceptInviting);
-//초대 거절
-router.delete('/invite', authMiddleware, memberController.refuseInviting);
-module.exports = router;
+//본인 속한 워크스페이스 목록 조회
+router.get("/lists", memberController.showMyWorkSpaceList);
 
+// 멤버 초대(web)
+router.post(
+  "/invite",
+  isMember,
+  userController.findUser,
+  memberController.inviteMember
+);
+
+//초대 조회
+router.get("/invite/:userEmail", memberController.showInviting);
+
+//초대 수락
+router.post(
+  "/invite/accept",
+  workSpaceController.searchWorkSpace,
+  memberController.searchMember,
+  memberController.acceptInviting,
+  memberController.deleteInviting
+);
+
+//초대 삭제
+router.delete("/invite", memberController.deleteInviting);
+
+module.exports = router;
 
 // 멤버 초대
 // router.get("/invite", memberController.inviteMember);
