@@ -1,5 +1,5 @@
-const User = require('../schemas/user');
-const workSpace = require('../schemas/workSpace');
+const User = require('../model/user');
+const workSpace = require('../model/workSpace');
 
 //멤버 추가
 async function addMember(req, res) {
@@ -146,5 +146,5 @@ module.exports = {
   addMember,
   getMemberList,
   deleteMember,
-  inviteMember
+  inviteMember,
 };

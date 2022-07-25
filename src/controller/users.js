@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-const User = require('../schemas/user');
+const User = require('../model/user');
 const Bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -167,8 +167,16 @@ async function passwordSecond(req, res, next) {
     //#swagger.summary= '로그인 패스워드 API'
     //#swagger.description='-'
     const { userEmail, password } = req.body;
+    console.log('userEmail,password', userEmail, password);
     const userFind = await User.findOne({ userEmail });
     let validPassword;
+
+    if (!userEmail || !password) {
+      res.status(400).send({
+        success: false,
+        errorMessage: '이메일 또는 비밀번호가 입력되지 않았습니다.',
+      });
+    }
 
     if (!userFind) {
       res
@@ -178,12 +186,12 @@ async function passwordSecond(req, res, next) {
 
     // 유저가 DB에 존재하고,
     if (userFind) {
-      validPassword = Bcrypt.compare(password, userFind.password);
+      validPassword = await Bcrypt.compare(password, userFind.password);
 
       if (validPassword) {
         //jwt token화
         const token = jwt.sign({ userEmail }, jwtSecret, {
-          expiresIn: '1h',
+          expiresIn: '30m',
         });
 
         // 리프레시 토큰 생성
@@ -198,6 +206,10 @@ async function passwordSecond(req, res, next) {
           userEmail: userEmail,
           userName: userFind.userName,
         });
+      } else {
+        res
+          .status(400)
+          .send({ success: false, errorMessage: '비밀번호가 틀렸습니다.' });
       }
     }
   } catch (error) {

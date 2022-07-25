@@ -1,5 +1,5 @@
-const Post = require('../schemas/post');
-const postComment = require('../schemas/postComment');
+const Post = require('../model/post');
+const postComment = require('../model/postComment');
 
 //포스트 댓글 작성
 //  api/post/:postId
@@ -105,8 +105,7 @@ async function deletePostComment(req, res) {
 }
 
 module.exports = {
-    createPostComment,
-    deletePostComment,
-    editPostComment
-  };
-  
+  createPostComment,
+  deletePostComment,
+  editPostComment,
+};

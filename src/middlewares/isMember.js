@@ -1,5 +1,5 @@
 //클라이언트에서 API콜을 받았을때 현재 접속해있는 유저가 해당 워크스페이스의 멤버인지 아닌지를 판별하는 middleware 함수입니다.
-const workSpace = require('../schemas/workSpace');
+const workSpace = require('../model/workSpace');
 
 module.exports = async (req, res, next) => {
   try {

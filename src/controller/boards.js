@@ -1,5 +1,5 @@
-const Board = require('../schemas/board');
-const boardComment = require('../schemas/boardComment');
+const Board = require('../model/board');
+const boardComment = require('../model/boardComment');
 
 //공지 글 작성하기
 // /board/:workSpaceName
