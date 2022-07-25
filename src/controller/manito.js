@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../schemas/user');
+const User = require('../model/user');
 const nodemailer = require('nodemailer');
 const { response } = require('express');
 

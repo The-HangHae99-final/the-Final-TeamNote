@@ -1,7 +1,7 @@
 const dotenv = require('dotenv').config();
 const axios = require('axios');
 const { request } = require('express');
-var User = require('../schemas/user');
+var User = require('../model/user');
 
 //로직
 

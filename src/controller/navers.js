@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 var axios = require('axios');
 var request = require('request');
-var User = require('../schemas/user');
+var User = require('../model/user');
 var express = require('express');
 var app = express();
 var router = express.Router();

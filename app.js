@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const connect = require('./src/schemas/db');
+const connect = require('./src/model/db');
 const morgan = require('morgan');
 //보안
 const cors = require('cors');

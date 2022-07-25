@@ -1,7 +1,4 @@
-
-const Message = require("../schemas/message");
-
-
+const Message = require('../model/message');
 
 // 메시지 수정
 // api/message/:_id
@@ -97,7 +94,6 @@ async function showMessage(req, res) {
       .json({ success: false, message: '메시지 조회 실패' });
   }
 }
-  
 
 module.exports = {
   editMessage,

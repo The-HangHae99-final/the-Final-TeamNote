@@ -1,4 +1,4 @@
-const workSpace = require('../schemas/workSpace');
+const workSpace = require('../model/workSpace');
 
 //워크스페이스 생성
 // router.post('/workSpace', authMiddleware, workSpaceController.createSpace);
