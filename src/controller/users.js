@@ -150,6 +150,7 @@ async function emailFirst(req, res) {
       res.status(200).json({ success: true, message: '존재하는 유저입니다.' });
     }
   } catch (error) {
+    console.log(error);
     res.send(401).send({
       message: '예상치 못한 에러가 발생했습니다.',
       errorMessage: error,
