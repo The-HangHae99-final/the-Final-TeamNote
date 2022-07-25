@@ -17,27 +17,65 @@ describe('POST /api/signup 회원가입', function () {
       })
       .expect(201, done);
   });
-});
-//===============이메일======================
-describe('POST /api/email 이메일 먼저 조회', function () {
-  test('이메일이 존재한다면 조회 성공', function (done) {
-    request(app)
-      .post('/api/users/email')
-      .send({
-        userEmail: 'email@email.com',
-      })
-      .expect(200, done);
+
+  test('비밀번호 조건이 틀리다면 에러 발생', async () => {
+    const passInvalid = await request(app).post('/api/users/signup').send({
+      userEmail: 'email@email.com',
+      userName: 'user',
+      password: '1234',
+      confirmPassword: '1234',
+    });
+    expect(passInvalid.body.errorMessage).toBe(
+      '비밀번호는 6글자 이상으로 입력해주세요.'
+    );
+  });
+
+  test('닉네임 조건이 틀리다면 에러 발생', async () => {
+    const passInvalid = await request(app).post('/api/users/signup').send({
+      userEmail: 'email@email.com',
+      userName: '여섯글자초과',
+      password: '123456',
+      confirmPassword: '123456',
+    });
+    expect(passInvalid.body.errorMessage).toBe(
+      '닉네임은 5글자 이내로 입력해주세요.'
+    );
   });
 });
-//===============로그인======================
-describe('POST /api/password 로그인', function () {
-  test('이메일, 비밀번호가 맞다면 로그인 성공', function (done) {
-    request(app)
-      .post('/api/users/password')
-      .send({
-        userEmail: 'email@email.com',
-        password: '123456',
-      })
-      .expect(200, done);
+//===============이메일======================
+
+// expect(res.body).toEqual('Post not found');
+describe('POST /api/email', function () {
+  test('이메일 조건이 맞다면 통과', async () => {
+    const emailInvalid = await request(app).post('/api/users/email').send({
+      userEmail: 'email@email.com',
+    });
+    expect(passInvalid.body.message).toBe('존재하는 유저입니다.');
+  });
+  test('이메일이 없다면 에러 발생', async () => {
+    const emailInvalid = await request(app).post('/api/users/email').send({
+      userEmail: 'email119@email.com',
+    });
+    expect(emailnvalid.body.message).toBe('존재하지 않는 유저입니다.');
+  });
+});
+
+//===============최종 로그인======================
+
+describe('POST /api/password', function () {
+  test('이메일 비밀번호 맞다면 통과', async () => {
+    const loginInvalid = await request(app).post('/api/users/password').send({
+      userEmail: 'email@email.com',
+      password: '123456',
+    });
+    expect(loginInvalid.body.message).toBe('존재하는 유저입니다.');
+  });
+  test('이메일이나 비밀번호가 없다면 에러 발생', async () => {
+    const loginInvalid = await request(app).post('/api/users/password').send({
+      userEmail: 'email@email.com',
+    });
+    expect(loginInvalid.body.errorMessage).toBe(
+      'data and hash arguments required'
+    );
   });
 });
