@@ -101,7 +101,7 @@ describe('POST /api/boards 일반 게시물 작성', function () {
       '로그인이 필요합니다.----------null------------'
     );
   });
-  test('비밀번호 조건이 틀리다면 에러 발생', async () => {
+  test('워크스페이스에 소속되지 않고 글을 쓴다면 에러 발생', async () => {
     const passInvalid = await request(app)
       .get('/api/boards')
       .send({
@@ -109,7 +109,7 @@ describe('POST /api/boards 일반 게시물 작성', function () {
       })
       .set('Authorization', `Bearer ${TOKEN}`);
     expect(passInvalid.body.errorMessage).toBe(
-      '비밀번호는 6글자 이상으로 입력해주세요.'
+      '로그인이 필요합니다. -----------그외-----------'
     );
   });
 

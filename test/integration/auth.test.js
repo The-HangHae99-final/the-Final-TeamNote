@@ -20,7 +20,7 @@ describe('POST /api/signup 회원가입', function () {
 
   test('비밀번호 조건이 틀리다면 에러 발생', async () => {
     const passInvalid = await request(app).post('/api/users/signup').send({
-      userEmail: 'email@email.com',
+      userEmail: 'email12@email.com',
       userName: 'user',
       password: '1234',
       confirmPassword: '1234',
@@ -68,15 +68,13 @@ describe('POST /api/password', function () {
       userEmail: 'email@email.com',
       password: '123456',
     });
-    expect(loginInvalid.body.message).toBe('존재하는 유저입니다.');
+    expect(loginInvalid.body.message).toBe('로그인에 성공하였습니다.');
   });
   test('이메일이 없다면 에러 발생', async () => {
     const loginInvalid = await request(app)
       .post('/api/users/password')
       .send({});
     console.log(loginInvalid.body);
-    expect(loginInvalid.body.errorMessage).toBe(
-      "Cannot read properties of null (reading 'length')"
-    );
+    expect(loginInvalid.body.errorMessage).toBe('일치하는 이메일이 없습니다.');
   });
 });
