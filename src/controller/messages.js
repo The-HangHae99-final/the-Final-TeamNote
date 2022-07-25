@@ -1,4 +1,30 @@
+
 const Message = require('../model/message');
+
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+// s3 for multer
+const s3 = new AWS.S3({
+  accessKeyId: process.env.accessKeyId,
+  secretAccessKey: process.env.secretAccessKey,
+  region: 'ap-northeast-2',
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'kimha',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read-write',
+    key: function (req, file, cb) {
+      cb(null, `uploads/${Date.now()}_${file.originalname}`);
+    },
+  }),
+});
+
 
 // 메시지 수정
 // api/message/:_id
@@ -95,8 +121,25 @@ async function showMessage(req, res) {
   }
 }
 
+
+async function postImage(req, res, next) {
+  try {
+    console.log('경로 정보입니다.', req.file.location);
+    console.log('req.body정보', req.body.title);
+    res.json({ success: true, message: '이미지 업로드에 성공하였습니다.' });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: '이미지 업로드에 예상치 못한 에러로 실패하였습니다.',
+      errorMessage: error.message,
+    });
+  }
+}
+
+
 module.exports = {
   editMessage,
   deleteMessage,
   showMessage,
+  postImage,
 };

@@ -18,7 +18,6 @@ const s3 = new AWS.S3({
   region: "ap-northeast-2",
 
 });
-
 const upload = multer({
   storage: multerS3({
     s3: s3,
