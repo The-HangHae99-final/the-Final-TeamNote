@@ -18,11 +18,6 @@ const swaggerFile = require('./swagger_output.json');
 global.logger || (global.logger = require('./src/config/logger'));
 const morganMiddleware = require('./src/config/morganMiddleware');
 
-
-global.logger || (global.logger = require('./src/config/logger'));
-const morganMiddleware = require('./src/config/morganMiddleware');
-
-
 connect();
 
 

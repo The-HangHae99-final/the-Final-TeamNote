@@ -138,7 +138,7 @@ async function editTeamTask(req, res, next) {
 }
 
 // 팀 일정 삭제
-async function delteteTeamTask(req, res, next) {
+async function deleteTeamTask(req, res, next) {
   try {
     //#swagger.tags= ['팀 일정 API'];
     //#swagger.summary= '팀 일정 삭제 API'
@@ -168,5 +168,5 @@ module.exports = {
   showTeamTasks,
   showTeamTaskDetail,
   editTeamTask,
-  delteteTeamTask,
+  deleteTeamTask,
 };

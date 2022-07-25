@@ -195,6 +195,7 @@ async function passwordSecond(req, res) {
       success: true,
       token,
       email: userEmail,
+      name: userFind.userName
     });
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.

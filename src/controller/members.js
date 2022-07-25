@@ -1,5 +1,5 @@
-const User = require('../schemas/user');
-const workSpace = require('../schemas/workSpace');
+const User = require("../schemas/user");
+const workSpace = require("../schemas/workSpace");
 
 //멤버 추가
 async function addMember(req, res) {
@@ -17,12 +17,12 @@ async function addMember(req, res) {
 
     if (!existUser) {
       return res
-        .status(400)
-        .json({ success: false, message: '존재하지 않는 유저입니다.' });
+        .status(409)
+        .json({ success: false, message: "존재하지 않는 유저입니다." });
     } else if (existMember.length) {
       return res
-        .status(400)
-        .json({ of: false, message: '이미 포함된 유저입니다.' });
+        .status(409)
+        .json({ of: false, message: "이미 포함된 유저입니다." });
     } else {
       myWorkSpace.memberList.push({
         memberEmail: existUser.userEmail,
@@ -36,11 +36,11 @@ async function addMember(req, res) {
       return res.status(200).json({
         result: myWorkSpace,
         success: true,
-        message: '멤버 추가 성공',
+        message: "멤버 추가 성공",
       });
     }
   } catch (err) {
-    return res.status(400).json({ success: false, message: '멤버 추가 에러' });
+    return res.status(400).json({ success: false, message: "멤버 추가 에러" });
   }
 }
 //멤버 삭제
@@ -55,15 +55,15 @@ async function deleteMember(req, res) {
     const existMember = myWorkSpace.memberList.filter(
       (memberInfo) => memberInfo.memberEmail === memberEmail
     );
-    console.log('existMember: ', existMember);
+    console.log("existMember: ", existMember);
     if (userEmail !== myWorkSpace.owner) {
       return res
-        .status(400)
-        .json({ success: false, message: '오너만 멤버를 삭제할 수 있습니다.' });
+        .status(401)
+        .json({ success: false, message: "오너만 멤버를 삭제할 수 있습니다." });
     } else if (!existMember.length) {
       return res
-        .status(400)
-        .json({ success: false, message: '해당 멤버가 없습니다.' });
+        .status(409)
+        .json({ success: false, message: "해당 멤버가 없습니다." });
     } else {
       const filtered = myWorkSpace.memberList.filter(
         (memberInfo) => memberInfo.memberEmail !== memberEmail
@@ -72,15 +72,15 @@ async function deleteMember(req, res) {
         { name: workSpaceName },
         { $set: { memberList: filtered } }
       );
-      console.log('filtered: ', filtered);
+      console.log("filtered: ", filtered);
 
-      return res.status(200).json({
+      return res.status(204).json({
         success: true,
-        message: '멤버 삭제 성공',
+        message: "멤버 삭제 성공",
       });
     }
   } catch (err) {
-    return res.status(400).json({ success: false, message: '멤버 삭제 에러' });
+    return res.status(400).json({ success: false, message: "멤버 삭제 에러" });
   }
 }
 //멤버 목록 조회
@@ -89,20 +89,35 @@ async function getMemberList(req, res) {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '워크 스페이스 멤버 조회 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.params;
+    const { workSpaceName } = res.locals.workSpace;
+    console.log('멤버 목록 조회에서 받아오는 네임값: ', workSpaceName);
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    console.log('existWorkSpace: ', existWorkSpace);
+    console.log("existWorkSpace: ", existWorkSpace);
     const memberList = existWorkSpace.memberList;
     return res.status(200).json({
       result: memberList,
       success: true,
-      message: '목록 조회 성공',
+      message: "목록 조회 성공",
     });
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: '멤버 목록 조회 에러' });
+      .json({ success: false, message: "멤버 목록 조회 에러" });
   }
+}
+
+//멤버 초대
+async function inviteMemberWEB(req, res) {
+  try {
+    const { userEmail } = req.body;
+    const existUser = await User.findOne({ userEmail: userEmail });
+
+    if (!existUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "존재하지 않는 유저입니다." });
+    }
+  } catch {}
 }
 
 // 회원가입 - 인증코드 이메일로 보내기 - 보류
@@ -118,7 +133,7 @@ async function inviteMember(req, res) {
 
   // 메일 옵션
   let mailOptions = {
-    from: 'hanghae99@naver.com', // 메일 발신자
+    from: "hanghae99@naver.com", // 메일 발신자
     to: userEmail, // 메일 수신자
 
     // 회원가입 완료하고 축하 메시지 전송할 시
@@ -136,7 +151,7 @@ async function inviteMember(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log('이메일이 성공적으로 발송되었습니다!');
+      console.log("이메일이 성공적으로 발송되었습니다!");
     }
   });
   res.send({ number: number }); //인증번호 인증기능.
@@ -146,5 +161,5 @@ module.exports = {
   addMember,
   getMemberList,
   deleteMember,
-  inviteMember
+  inviteMember,
 };

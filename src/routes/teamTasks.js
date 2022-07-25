@@ -28,7 +28,7 @@ router.delete(
   "/:taskId",
   authMiddleware,
   isMember,
-  taskController.delteteTeamTask
+  taskController.deleteTeamTask
 );
 
 module.exports = router;

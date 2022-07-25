@@ -74,19 +74,19 @@ async function deleteMessage(req, res) {
     const targetMessage = await Message.findById(_id);
 
     if (!targetMessage.length) {
-      return res.status(400).json({
+      return res.status(409).json({
         success: false,
         message: '해당 메시지가 존재하지 않습니다.',
       });
     } else if (targetMessage[0].author !== author) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message: '본인만 삭제 가능 합니다.',
       });
     }
 
     await Message.findByIdAndDelete({ _id });
-    return res.status(200).json({ success: true, message: '메시지 삭제 성공' });
+    return res.status(204).json({ success: true, message: '메시지 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
       success: false,

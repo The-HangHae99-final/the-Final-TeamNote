@@ -17,7 +17,7 @@ async function createWorkSpace(req, res) {
     if (existName.length) {
       if (existName[0].owner === user.userEmail)
         return res
-          .status(400)
+          .status(409)
           .send({ errorMessage: '이미 존재하는 이름입니다.' });
     } else {
       const createdWorkSpace = await workSpace.create({
@@ -25,7 +25,7 @@ async function createWorkSpace(req, res) {
         name: workSpaceName,
         memberList: memberList,
       });
-      return res.json({ createdWorkSpace });
+      return res.status(201).json({ createdWorkSpace });
     }
   } catch (err) {
     console.log(err);
@@ -46,7 +46,7 @@ async function leaveWorkSpace(req, res) {
     const { workSpaceName } = req.body;
     const targetWorkSpace = await workSpace.findOne({ name: workSpaceName });
     if (targetWorkSpace.owner === userEmail) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message:
           '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
@@ -79,7 +79,7 @@ async function deleteWorkSpace(req, res) {
     if (targetWorkSpace.owner === userEmail) {
       await workSpace.deleteOne({ name: workSpaceName });
       return res
-        .status(200)
+        .status(204)
         .json({ success: true, message: '워크스페이스가 삭제되었습니다.' });
     }
   } catch (err) {
