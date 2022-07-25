@@ -168,13 +168,6 @@ async function passwordSecond(req, res, next) {
     const userFind = await User.findOne({ userEmail });
     let validPassword;
 
-    if (!userEmail || !password) {
-      res.status(400).send({
-        success: false,
-        errorMessage: '이메일 혹은 비밀번호가 입력되지 않았습니다.',
-      });
-    }
-
     if (!userFind) {
       res
         .status(400)
