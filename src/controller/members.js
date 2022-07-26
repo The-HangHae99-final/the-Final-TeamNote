@@ -190,19 +190,21 @@ async function acceptInviting(req, res, next) {
   try {
     const user = res.locals.User;
     const existWorkSpace = res.locals.workSpace;
-    const existMember = res.locals.existMember;
+    console.log('초대수락에서 나오는 워크스페이스여부: ', existWorkSpace);
+    const { existMember } = res.locals;
+    console.log('초대수락에서 나오는 멤버여부: ', existMember);
 
-    if (existMember === null) {
-      await member
-        .create({
-          memberEmail: user.userEmail,
-          memberName: user.userName,
-          workSpace: existWorkSpace.name,
-        })
-        .then((m) => {
-          res.locals.member = m;
-        });
+    if (!existMember) {
+      const createdMember = await member.create({
+        memberEmail: user.userEmail,
+        memberName: user.userName,
+        workSpace: existWorkSpace.name,
+      });
+      res.locals.createdMember = createdMember;
       next();
+    }
+    else{
+      return res.status(400).json({ success: false, message: "이미 멤버로 존재합니다." });
     }
   } catch (err) {
     console.log("err: ", err);
@@ -214,7 +216,7 @@ async function acceptInviting(req, res, next) {
 async function deleteInviting(req, res) {
   try {
     const { userEmail } = res.locals.User;
-    const createdMember = res.locals.member;
+    const { createdMember } = res.locals;
     await Inviting.deleteOne({ userEmail });
     if (createdMember) {
       res.status(200).json({
