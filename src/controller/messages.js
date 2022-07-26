@@ -1,4 +1,5 @@
-const Message = require('../schemas/message');
+const Message = require('../models/message');
+
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const multer = require('multer');
@@ -30,8 +31,8 @@ async function editMessage(req, res) {
     //#swagger.tags= ['메세지 API'];
     //#swagger.summary= '메세지 수정 API'
     //#swagger.description='-'
-    const { _id } = req.params;
-    const [existMessage] = await Message.findById(_id);
+    const { messageId } = req.params._id;
+    const [existMessage] = await Message.findById(messageId);
     const { userName } = res.locals.User;
     const { message } = req.body;
 
@@ -68,10 +69,10 @@ async function deleteMessage(req, res) {
     //#swagger.tags= ['메세지 API'];
     //#swagger.summary= '메세지 삭제 API'
     //#swagger.description='-'
-    const { _id } = req.params;
+    const { messageId } = req.params._id;
     const author = res.locals.User.userName;
 
-    const targetMessage = await Message.findById(_id);
+    const targetMessage = await Message.findById(messageId);
 
     if (!targetMessage.length) {
       return res.status(409).json({
@@ -85,8 +86,8 @@ async function deleteMessage(req, res) {
       });
     }
 
-    await Message.findByIdAndDelete({ _id });
-    return res.status(204).json({ success: true, message: '메시지 삭제 성공' });
+    await Message.findByIdAndDelete({ messageId });
+    return res.status(200).json({ success: true, message: '메시지 삭제 성공' });
   } catch (error) {
     return res.status(400).json({
       success: false,
@@ -101,9 +102,9 @@ async function showMessage(req, res) {
     //#swagger.tags= ['메세지 API'];
     //#swagger.summary= '메세지 조회 API'
     //#swagger.description='-'
-    const { _id } = req.params;
+    const { messageId } = req.params._id;
 
-    const targetMessage = await Message.findById(_id);
+    const targetMessage = await Message.findById(messageId);
 
     return res.json({
       targetMessage,

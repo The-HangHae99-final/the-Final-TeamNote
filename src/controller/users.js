@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-const User = require('../schemas/user');
+const User = require('../models/user');
 const Bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -167,8 +167,16 @@ async function passwordSecond(req, res, next) {
     //#swagger.summary= '로그인 패스워드 API'
     //#swagger.description='-'
     const { userEmail, password } = req.body;
+    console.log('userEmail,password', userEmail, password);
     const userFind = await User.findOne({ userEmail });
     let validPassword;
+
+    if (!userEmail || !password) {
+      res.status(400).send({
+        success: false,
+        errorMessage: '이메일 또는 비밀번호가 입력되지 않았습니다.',
+      });
+    }
 
     if (!userFind) {
       res
@@ -178,12 +186,12 @@ async function passwordSecond(req, res, next) {
 
     // 유저가 DB에 존재하고,
     if (userFind) {
-      validPassword = Bcrypt.compare(password, userFind.password);
+      validPassword = await Bcrypt.compare(password, userFind.password);
 
       if (validPassword) {
         //jwt token화
         const token = jwt.sign({ userEmail }, jwtSecret, {
-          expiresIn: '1h',
+          expiresIn: '30m',
         });
 
         // 리프레시 토큰 생성
@@ -198,6 +206,10 @@ async function passwordSecond(req, res, next) {
           userEmail: userEmail,
           userName: userFind.userName,
         });
+      } else {
+        res
+          .status(400)
+          .send({ success: false, errorMessage: '비밀번호가 틀렸습니다.' });
       }
     }
   } catch (error) {
@@ -329,6 +341,31 @@ async function mailing(req, res) {
   res.send({ success: true, number: number }); //인증번호 인증기능.
 }
 
+async function findUser(req, res, next) {
+  try {
+    const { userEmail } = req.body;
+    const existUser = await User.findOne({ userEmail });
+
+    if (existUser) {
+      await User.findOne({ userEmail }).then((u) => {
+        res.locals.existUser = u;
+        next();
+      });
+    } else {
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+    }
+  } catch {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      errorMessage: error.message,
+      message: '유저검색 에러가 발생했습니다.',
+    });
+  }
+}
+
 module.exports = {
   signup,
   emailFirst,
@@ -337,4 +374,5 @@ module.exports = {
   all,
   searchUser,
   mailing,
+  findUser,
 };

@@ -1,10 +1,10 @@
-// const Acess_ = require('../schemas/access_token');
+// const Acess_ = require('../models/access_token');
 var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
-var User = require('../schemas/user');
+var User = require('../models/user');
 const jwtSecret = process.env.SECRET_KEY;
 const { smtpTransport } = require('./util/email');
 
@@ -27,7 +27,8 @@ var router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
-const KAKAO_REDIRECT_URL = 'http://localhost:3000/api/oauth/login/kakao/callback';
+const KAKAO_REDIRECT_URL =
+  'http://localhost:3000/api/oauth/login/kakao/callback';
 // post- '/auth/login/kakao/callback'
 // 프론트에게 인가코드 받고, 엑세스 토큰 발급받아 프론트에게 다시 넘겨주기.
 function kakao_callback(req, res, next) {

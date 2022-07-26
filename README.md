@@ -36,12 +36,11 @@
 
 Share your task ~! Share your Idea !
 
-
 <br>
 
 ## 🗓 프로젝트 기간
 
-- 2022년 6월  24일 ~ 2022년 8월 5일
+- 2022년 6월 24일 ~ 2022년 8월 5일
 
 <br>
 
@@ -124,34 +123,34 @@ Share your task ~! Share your Idea !
 
 ## 🛠 기술스택 ([WHY?](https://sprout-dress-47a.notion.site/2d490dffed3f486ca5af157a68a64970))
 
-| 기술스택 |        설명         |
-| -------- | :-----------------: |
-| Node.js  | 자바스크립트 런타임 |
-| Express  |    웹 프레임워크    |
-| Git Action  |      CI/CD 툴       |
-| Nginx    |     Proxy 서버      |
-| Docker   |       Docker        |
-| MongoDB  |   NoSQL 비관계형 DB |
-| VsCode   |        소스 코드 편집기            |
+| 기술스택   |        설명         |
+| ---------- | :-----------------: |
+| Node.js    | 자바스크립트 런타임 |
+| Express    |    웹 프레임워크    |
+| Git Action |      CI/CD 툴       |
+| Nginx      |     Proxy 서버      |
+| Docker     |       Docker        |
+| MongoDB    |  NoSQL 비관계형 DB  |
+| VsCode     |  소스 코드 편집기   |
 
 <br>
 
 ## 📖 라이브러리 ([WHY?](https://spark-stove-6bf.notion.site/9064e96f94854aaca56925f80d978bdb))
 
-| 라이브러리                                                                            |          설명          |
-| ------------------------------------------------------------------------------------- | :--------------------: |
-| bcrypt                        |    비밀번호 암호화     |
-| cors                        |    교차 리소스 공유    |
-| dotenv                      |     환경변수 관리      |
-| express                     |          서버          |
-| helmet                       |     HTTP 헤더 보안     |
-| ioredis                     |       redis 연결       |
-| joi                        |    입력데이터 검출     |
-| jest                        |      테스트 코드       |
-| jsonwebtoken                 |      서명 암호화       |
-| moment                      |    날짜 라이브러리     |
-| morgan                      |     Http Log 기록      |
-| swagger--ui--express         |       API 문서화       |
+| 라이브러리           |       설명       |
+| -------------------- | :--------------: |
+| bcrypt               | 비밀번호 암호화  |
+| cors                 | 교차 리소스 공유 |
+| dotenv               |  환경변수 관리   |
+| express              |       서버       |
+| helmet               |  HTTP 헤더 보안  |
+| ioredis              |    redis 연결    |
+| joi                  | 입력데이터 검출  |
+| jest                 |   테스트 코드    |
+| jsonwebtoken         |   서명 암호화    |
+| moment               | 날짜 라이브러리  |
+| morgan               |  Http Log 기록   |
+| swagger--ui--express |    API 문서화    |
 
 <br>
 
@@ -237,7 +236,7 @@ Share your task ~! Share your Idea !
 ## ✍ Code Convention
 
 - api url : dash case
-- model : camel case
+- models : camel case
 - file : dash case
 - 변수 : lower case camel case
 - function: camel case, 동사+명사

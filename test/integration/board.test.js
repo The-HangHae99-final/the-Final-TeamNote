@@ -3,7 +3,8 @@ const request = require('supertest');
 const app = require('../../app');
 const url = 'https://0jun.shop';
 
-const TOKEN = '';
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
 
 describe('POST /api/boards 일반 게시물 전체조회', function () {
   it('/api/boards', function (done) {
