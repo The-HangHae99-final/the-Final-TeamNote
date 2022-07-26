@@ -74,7 +74,7 @@ async function showMyWorkSpaceList(req, res) {
   try {
     const { userEmail } = res.locals.User;
     const includedList = await member.find({ memberEmail: userEmail });
-    console.log('workSpaceList: ', workSpaceList);
+    console.log('includedList: ', includedList);
 
     return res.status(200).json({
       includedList,
