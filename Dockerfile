@@ -6,7 +6,7 @@ COPY ["package.json", "pm2.json", "package-lock.json*","./"]
 
 RUN npm --verbose install
 
-RUN npm install -g pm2
+RUN npm install --force
 
 COPY . .
 
