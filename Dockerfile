@@ -1,10 +1,10 @@
-FROM node:16
+FROM node:14
 
 WORKDIR /app
 
 COPY ["package.json", "pm2.json", "package-lock.json*","./"]
 
-RUN npm install --force
+RUN npm ci
 
 RUN npm install -g pm2
 
