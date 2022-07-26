@@ -1,12 +1,12 @@
-FROM node:16-alpine
+FROM node:16
 
 WORKDIR /app
 
 COPY ["package.json", "pm2.json", "package-lock.json*","./"]
 
-RUN npm --verbose install
+RUN npm install
 
-RUN npm install --force
+RUN npm install -g pm2
 
 COPY . .
 
