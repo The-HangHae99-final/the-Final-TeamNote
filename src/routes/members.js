@@ -37,6 +37,7 @@ router.post(
   "/inviting",
   isMember,
   userController.findUser,
+  memberController.searchMember,
   memberController.inviteMember
 );
 
