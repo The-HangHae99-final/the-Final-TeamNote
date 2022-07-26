@@ -1,8 +1,13 @@
-FROM node:14
+FROM node:16-alpine
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-RUN npm install -g nodemon
+
+COPY ["package.json", "pm2.json", "package-lock.json*","./"]
+
+RUN npm install
+
+RUN npm install -g pm2
+
 COPY . .
-EXPOSE 3001
-CMD [ "nodemon", "server.js" ]
+
+CMD ["pm2-runtime","start","pm2.json"]
