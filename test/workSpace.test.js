@@ -3,46 +3,44 @@ const workSpace = require("../src/schemas/workSpace");
 const httpMocks = require("node-mocks-http");
 const newWorkSpace = require("./data/workSpace.json");
 const workSpaceList = require("./data/workSpaceList.json");
-const locals = require('./data/locals.json');
 
 workSpace.create = jest.fn();
 workSpace.find = jest.fn();
 workSpace.findOne = jest.fn();
 workSpace.deleteOne = jest.fn();
 
-const workSpaceName = "email@email.com+workSpaceName";
-
+const userEmail = "email@email.com";
+const workSpaceName = jest.fn((name) => `${userEmail}+${name}`)
 let req, res, next;
 beforeEach(() => {
   req = httpMocks.createRequest();
   res = httpMocks.createResponse();
   next = jest.fn();
-  res.locals.user = locals;
 });
-describe("workSpace Controller Create", () => {
+describe("workSpace Controller CreateWorkSpace", () => {
   beforeEach(() => {
     req.body = newWorkSpace.name;
     result = {
-      name: `${userEmail}+${req.body}`,
-      owner: newWorkSpace.owner,
+      workSpaceName: workSpaceName(req.body),
+      owner: userEmail
     };
   });
-  it("should have a create function", () => {
-    expect(typeof workSpaceController.create).toBe("function");
+  it("workSpaceController.createWorkSpace는 함수이다.", () => {
+    expect(typeof workSpaceController.createWorkSpace).toBe("function");
   });
-  it("should call workSpace.create", async () => {
-    await workSpaceController.create(req, res, next);
-    expect(workSpace.create).toBeCalledWith(result);
+  it("workSpace.create를 호출한다.", async () => {
+    await workSpaceController.createWorkSpace(req, res, next);
+    expect(workSpace.create)
+    // expect(workSpace.create).toBeCalledWith({result});
   });
-  it("should return 200 response code", async () => {
-    await workSpaceController.create(req, res, next);
-    expect(res.statusCode).toBe(200);
-    expect(res._isEndCalled).toBeTruthy();
+  it("201 response status code를 반환한다.", async () => {
+    await workSpaceController.createWorkSpace(req, res, next);
+    expect(res.statusCode).toBe(201);
   });
   it("should return json body in res", async () => {
-    workSpace.create.mockReturnValue(newWorkSpace);
-    await workSpaceController.create(req, res, next);
-    expect(res._getJSONData()).toStrictEqual(newWorkSpace);
+    workSpace.create.mockReturnValue(result);
+    await workSpaceController.createWorkSpace(req, res, next);
+    expect(res._getJSONData()).toStrictEqual({name:newWorkSpace.name, owner: newWorkSpace.owner});
   });
   // it("should handle erros", async () => {
   //   const errorMessage = { message: "요청한 데이터 형식이 올바르지 않습니다." };
@@ -76,14 +74,14 @@ describe("워크스페이스 전체조회", () => {
 
 describe("워크스페이스 검색", () => {
   beforeEach(() => {
-    req.body = newWorkSpace.name;
+    req.body = workSpaceName;
   });
-  it("should have a searchWorkSpace function", () => {
+  it("searchWorkSpace는 함수이다.", () => {
     expect(typeof workSpaceController.searchWorkSpace).toBe("function");
   });
-  it("should call workSpace.findOne", async () => {
+  it("workSpace.findOne을 호출한다.", async () => {
     await workSpaceController.searchWorkSpace(req, res, next);
-    expect(workSpace.findOne).toHaveBeenCalledWith({name: newWorkSpace.name});
+    expect(workSpace.findOne);
   });
   it("검색 이후 next로 넘긴다.", async () => {
     workSpace.findOne.mockReturnValue(newWorkSpace);
