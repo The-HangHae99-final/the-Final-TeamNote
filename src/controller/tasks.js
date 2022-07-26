@@ -1,4 +1,4 @@
-const Task = require('../model/task');
+const Task = require('../models/task');
 const moment = require('moment');
 
 // 일정 생성

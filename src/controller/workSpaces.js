@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-const workSpace = require('../model/workSpace');
-=======
-const workSpace = require("../schemas/workSpace");
-const member = require("../schemas/member");
->>>>>>> c37d27231d9918214a572d570e683f01c7a22493
+const workSpace = require('../models/workSpace');
+const member = require('../models/member');
 
 //워크스페이스 생성
 async function createWorkSpace(req, res) {
@@ -16,7 +12,7 @@ async function createWorkSpace(req, res) {
     if (existWorkSpace) {
       return res
         .status(400)
-        .send({ errorMessage: "이미 존재하는 이름입니다." });
+        .send({ errorMessage: '이미 존재하는 이름입니다.' });
     } else {
       const createdWorkSpace = await workSpace.create({
         owner: user.userEmail,
@@ -32,12 +28,11 @@ async function createWorkSpace(req, res) {
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
       error,
     });
   }
 }
-
 
 //워크스페이스 삭제
 async function deleteWorkSpace(req, res) {
@@ -47,24 +42,25 @@ async function deleteWorkSpace(req, res) {
     if (existWorkSpace === undefined) {
       res
         .status(404)
-        .json({ success: false, message: "워크스페이스가 존재하지 않습니다." });
+        .json({ success: false, message: '워크스페이스가 존재하지 않습니다.' });
     }
     if (existWorkSpace.owner === userEmail) {
       const result = await workSpace.deleteOne({ name: existWorkSpace.name });
-      const deletedMember = await member.deleteMany({ workSpace: existWorkSpace.name});
+      const deletedMember = await member.deleteMany({
+        workSpace: existWorkSpace.name,
+      });
       return res.status(200).json({
-        result: {result, deletedMember},
+        result: { result, deletedMember },
         success: true,
-        message: "워크스페이스가 삭제되었습니다.",
+        message: '워크스페이스가 삭제되었습니다.',
       });
     }
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: "워크스페이스 삭제 에러" });
+      .json({ success: false, message: '워크스페이스 삭제 에러' });
   }
 }
-
 
 //전체 워크스페이스 조회
 async function showWorkSpaces(req, res) {
@@ -81,7 +77,7 @@ async function showWorkSpaces(req, res) {
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: "전체 워크스페이스 조회 실패" });
+      .json({ success: false, message: '전체 워크스페이스 조회 실패' });
   }
 }
 //워크스페이스 검색
@@ -89,7 +85,7 @@ const searchWorkSpace = async (req, res, next) => {
   try {
     const { workSpaceName } = req.body;
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    console.log("워크스페이스 검색 결과: ", existWorkSpace);
+    console.log('워크스페이스 검색 결과: ', existWorkSpace);
     if (existWorkSpace) {
       await workSpace.findOne({ name: workSpaceName }).then((ws) => {
         res.locals.workSpace = ws;
@@ -101,7 +97,7 @@ const searchWorkSpace = async (req, res, next) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "워크스페이스 검색 에러",
+      message: '워크스페이스 검색 에러',
       errorMessage: error.message,
     });
   }

@@ -10,4 +10,4 @@ const likesSchema = new mongoose.Schema({
 });
 
 const Like = mongoose.model('likes', likesSchema);
-module.exports =  Like;
+module.exports = Like;

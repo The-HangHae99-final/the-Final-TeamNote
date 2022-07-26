@@ -1,6 +1,6 @@
 const http = require('./app');
 const socketIo = require('socket.io');
-const Message = require('./src/model/message');
+const Message = require('./src/models/message');
 
 const io = socketIo(http, {
   cors: {

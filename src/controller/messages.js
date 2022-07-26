@@ -1,5 +1,4 @@
-
-const Message = require('../model/message');
+const Message = require('../models/message');
 
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
@@ -24,7 +23,6 @@ const upload = multer({
     },
   }),
 });
-
 
 // 메시지 수정
 // api/message/:_id
@@ -121,7 +119,6 @@ async function showMessage(req, res) {
   }
 }
 
-
 async function postImage(req, res, next) {
   try {
     console.log('경로 정보입니다.', req.file.location);
@@ -135,7 +132,6 @@ async function postImage(req, res, next) {
     });
   }
 }
-
 
 module.exports = {
   editMessage,

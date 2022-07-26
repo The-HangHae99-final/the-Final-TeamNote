@@ -1,10 +1,10 @@
-// const Acess_ = require('../model/access_token');
+// const Acess_ = require('../models/access_token');
 var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
-var User = require('../model/user');
+var User = require('../models/user');
 const jwtSecret = process.env.SECRET_KEY;
 const { smtpTransport } = require('./util/email');
 

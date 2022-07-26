@@ -1,7 +1,7 @@
-const User = require('../model/user');
-const workSpace = require('../model/workSpace');
-const Inviting = require('../model/inviting');
-const member = require('../model/member');
+const User = require('../models/user');
+const workSpace = require('../models/workSpace');
+const Inviting = require('../models/inviting');
+const member = require('../models/member');
 
 //멤버 추가(개발용)
 async function addMember(req, res) {

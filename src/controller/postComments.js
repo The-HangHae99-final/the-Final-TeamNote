@@ -1,5 +1,5 @@
-const Post = require('../model/post');
-const postComment = require('../model/postComment');
+const Post = require('../models/post');
+const postComment = require('../models/postComment');
 
 //포스트 댓글 작성
 //  api/post/:postId
