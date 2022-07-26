@@ -87,6 +87,42 @@ async function showMyWorkSpaceList(req, res) {
       .json({ success: false, message: "소속 워크스페이스 목록 조회 실패" });
   }
 }
+//멤버 찾기
+const searchMember = async (req, res, next) => {
+  try {
+    const { userEmail, workSpaceName } = req.body;
+    await member
+      .findOne({ workSpace: workSpaceName, memberEmail: userEmail })
+      .then((m) => {
+        res.locals.existMember = m;
+      });
+    next();
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: "멤버 찾기 에러" });
+  }
+}
+//워크스페이스 탈퇴하기
+async function leaveWorkSpace(req, res) {
+  try {
+    const { userEmail } = res.locals.User;
+    const targetWorkSpace = res.locals.workSpace;
+    if (targetWorkSpace.owner === userEmail) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)",
+      });
+    }
+
+    await member.deleteOne({ memberEmail: userEmail });
+    return res.status(200).json({ success: true, message: "탈퇴 성공" });
+  } catch (err) {
+    return res.status(400).json({ success: false, message: "탈퇴 에러" });
+  }
+}
+
 
 //멤버 초대
 async function inviteMember(req, res) {
@@ -195,22 +231,7 @@ async function deleteInviting(req, res) {
   }
 }
 
-//멤버 찾기
-const searchMember = async (req, res, next) => {
-  try {
-    const { userEmail, workSpaceName } = req.body;
-    await member
-      .findOne({ workSpace: workSpaceName, memberEmail: userEmail })
-      .then((m) => {
-        res.locals.existMember = m;
-      });
-    next();
-  } catch (err) {
-    return res
-      .status(400)
-      .json({ success: false, message: "멤버 찾기 에러" });
-  }
-}
+
 
 module.exports = {
   addMember,
@@ -220,6 +241,7 @@ module.exports = {
   inviteMember,
   acceptInviting,
   deleteInviting,
+  leaveWorkSpace,
   showInviting,
   searchMember,
 };

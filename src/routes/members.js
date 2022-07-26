@@ -26,6 +26,9 @@ router.delete(
   memberController.deleteMember
 );
 
+//워크스페이스 탈퇴하기
+router.delete("/leave",isMember,memberController.leaveWorkSpace);
+
 //본인 속한 워크스페이스 목록 조회
 router.get("/lists", memberController.showMyWorkSpaceList);
 
