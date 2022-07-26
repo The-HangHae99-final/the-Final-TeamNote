@@ -1,3 +1,5 @@
+const authMiddleware = require("../middlewares/authMiddleware");
+const isMember = require("../middlewares/isMember");
 
 const express = require("express");
 const router = express.Router();
@@ -17,17 +19,17 @@ const teamTasksRouter = require("./teamTasks");
 const manitoRouter = require("./manito");
 
 router.use("/users", userRouter);
-router.use("/members", memberRouter);
-router.use("/posts", postsRouter);
-router.use("/messages", messageRouter);
-router.use("/work-spaces", workSpaceRouter);
-router.use("/boards", boardRouter);
-router.use("/tasks", taskRouter);
-router.use("/team-tasks", teamTasksRouter);
+router.use("/members", authMiddleware, memberRouter);
+router.use("/posts", authMiddleware, isMember, postsRouter);
+router.use("/messages", authMiddleware, isMember, messageRouter);
+router.use("/work-spaces", authMiddleware, workSpaceRouter);
+router.use("/boards", authMiddleware, isMember, boardRouter);
+router.use("/tasks", authMiddleware, isMember, taskRouter);
+router.use("/team-tasks", authMiddleware, isMember, teamTasksRouter);
 router.use("/manito", manitoRouter);
 router.use("/", kakaoRouter);
 router.use("/", naverRouter);
-router.use("/posts", postCommentRouter);
-router.use("/boards", boardCommentRouter);
+router.use("/posts", authMiddleware, isMember, postCommentRouter);
+router.use("/boards", authMiddleware, isMember, boardCommentRouter);
 
 module.exports = router;

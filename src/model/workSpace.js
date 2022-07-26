@@ -7,11 +7,9 @@ const workSpaceSchema = new mongoose.Schema({
   owner: {
     type: String,
     required: true,
-  },
-  memberList: [
-    new mongoose.Schema({ memberEmail: String, memberName: String }),
-  ],
+  }
 });
 
 const workSpace = mongoose.model('workSpace', workSpaceSchema);
-module.exports = workSpace;
+module.exports = workSpace
+
