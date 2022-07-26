@@ -1,43 +1,27 @@
 const User = require('../model/user');
 const workSpace = require('../model/workSpace');
+const Inviting = require('../model/inviting');
+const member = require('../model/member');
 
-//멤버 추가
+//멤버 추가(개발용)
 async function addMember(req, res) {
   try {
-    //#swagger.tags= ['워크 스페이스 API'];
-    //#swagger.summary= '워크 스페이스 멤버 추가 API'
-    //##swagger.description='-'
-    const { workSpaceName, userEmail } = req.body;
-    const [myWorkSpace] = await workSpace.find({ name: workSpaceName });
-    const existUser = await User.findOne({ userEmail: userEmail });
+    const existUser = res.locals.existUser;
+    const { workSpaceName } = req.body;
+    const existMember = res.locals.existMember;
+    console.log('existMember: ', existMember);
 
-    const existMember = myWorkSpace.memberList.filter(
-      (memberInfo) => memberInfo.memberEmail === userEmail
-    ); //멤버리스트 내 존재 유무 확인
-
-    if (!existUser) {
-      return res
-        .status(400)
-        .json({ success: false, message: '존재하지 않는 유저입니다.' });
-    } else if (existMember.length) {
+    if (existMember) {
       return res
         .status(400)
         .json({ of: false, message: '이미 포함된 유저입니다.' });
     } else {
-      myWorkSpace.memberList.push({
+      const addedMember = await member.create({
         memberEmail: existUser.userEmail,
         memberName: existUser.userName,
+        workSpace: workSpaceName,
       });
-      await workSpace.updateOne(
-        { name: workSpaceName },
-        { $set: { memberList: myWorkSpace.memberList } }
-      );
-
-      return res.status(200).json({
-        result: myWorkSpace,
-        success: true,
-        message: '멤버 추가 성공',
-      });
+      return res.status(201).json({ addedMember });
     }
   } catch (err) {
     return res.status(400).json({ success: false, message: '멤버 추가 에러' });
@@ -46,34 +30,20 @@ async function addMember(req, res) {
 //멤버 삭제
 async function deleteMember(req, res) {
   try {
-    //#swagger.tags= ['워크 스페이스 API'];
-    //#swagger.summary= '워크 스페이스 멤버 삭제 API'
-    //##swagger.description='-'
-    const { userEmail } = res.locals.User;
-    const { workSpaceName, memberEmail } = req.body;
-    const myWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    const existMember = myWorkSpace.memberList.filter(
-      (memberInfo) => memberInfo.memberEmail === memberEmail
-    );
-    console.log('existMember: ', existMember);
-    if (userEmail !== myWorkSpace.owner) {
+    const { owner } = res.locals.User;
+    const myWorkSpace = res.locals.workSpace;
+    const existMember = res.locals.existMember;
+    if (owner.userEmail !== myWorkSpace.owner) {
       return res
         .status(400)
         .json({ success: false, message: '오너만 멤버를 삭제할 수 있습니다.' });
-    } else if (!existMember.length) {
+    }
+    if (!existMember) {
       return res
         .status(400)
         .json({ success: false, message: '해당 멤버가 없습니다.' });
     } else {
-      const filtered = myWorkSpace.memberList.filter(
-        (memberInfo) => memberInfo.memberEmail !== memberEmail
-      );
-      await workSpace.updateOne(
-        { name: workSpaceName },
-        { $set: { memberList: filtered } }
-      );
-      console.log('filtered: ', filtered);
-
+      await member.deleteOne({ memberEmail, workSpace: workSpaceName });
       return res.status(200).json({
         success: true,
         message: '멤버 삭제 성공',
@@ -83,16 +53,11 @@ async function deleteMember(req, res) {
     return res.status(400).json({ success: false, message: '멤버 삭제 에러' });
   }
 }
-//멤버 목록 조회
+//멤버 조회
 async function getMemberList(req, res) {
   try {
-    //#swagger.tags= ['워크 스페이스 API'];
-    //#swagger.summary= '워크 스페이스 멤버 조회 API'
-    //##swagger.description='-'
     const { workSpaceName } = req.params;
-    const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
-    console.log('existWorkSpace: ', existWorkSpace);
-    const memberList = existWorkSpace.memberList;
+    const memberList = await member.find({ workSpace: workSpaceName });
     return res.status(200).json({
       result: memberList,
       success: true,
@@ -104,47 +69,174 @@ async function getMemberList(req, res) {
       .json({ success: false, message: '멤버 목록 조회 에러' });
   }
 }
+//본인 속한 워크스페이스 목록 조회
+async function showMyWorkSpaceList(req, res) {
+  try {
+    const { userEmail } = res.locals.User;
+    const includedList = await member.find({ memberEmail: userEmail });
+    console.log('workSpaceList: ', workSpaceList);
 
-// 회원가입 - 인증코드 이메일로 보내기 - 보류
-async function inviteMember(req, res) {
-  //#swagger.tags= [' 인증코드 메일링 API'];
-  //#swagger.summary= '인증코드 메일링 API'
-  //#swagger.description='-'
-
-  min = Math.ceil(111111);
-  max = Math.floor(999999);
-  const number = Math.floor(Math.random() * (max - min)) + min;
-  const { userEmail } = req.body;
-
-  // 메일 옵션
-  let mailOptions = {
-    from: 'hanghae99@naver.com', // 메일 발신자
-    to: userEmail, // 메일 수신자
-
-    // 회원가입 완료하고 축하 메시지 전송할 시
-    // to: req.body.userid
-    subject: `고객님의 팀노트 회원가입을 축하합니다.`, // 메일 제목
-    html: `<h2>고객님의 팀 협업 행복을 응원합니다.</h2>
-          <br/>
-          <p>협업, 일정등록부터 커리어 성장, 사이드 프로젝트까지!</p>
-          <p>팀노트 200% 활용법을 확인해 보세요.</p>
-          <p> 워크 스페이스 가입을 위해 옆의 숫자를 입력해주세요.--- ${number} ---</p>
-          <p><img src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK0SAoLYOpmnAffwHHWCELREMb2jmrNKAlbA&usqp=CAU'width=400, height=200/></p>`,
-  };
-  // 메일 발송
-  transporter.sendMail(mailOptions, function (err, success) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('이메일이 성공적으로 발송되었습니다!');
+    return res.status(200).json({
+      includedList,
+      success: true,
+      message: '워크스페이스 목록 조회 성공',
+    });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: '소속 워크스페이스 목록 조회 실패' });
+  }
+}
+//멤버 찾기
+const searchMember = async (req, res, next) => {
+  try {
+    const { userEmail, workSpaceName } = req.body;
+    await member
+      .findOne({ workSpace: workSpaceName, memberEmail: userEmail })
+      .then((m) => {
+        res.locals.existMember = m;
+      });
+    next();
+  } catch (err) {
+    return res.status(400).json({ success: false, message: '멤버 찾기 에러' });
+  }
+};
+//워크스페이스 탈퇴하기
+async function leaveWorkSpace(req, res) {
+  try {
+    const { userEmail } = res.locals.User;
+    const targetWorkSpace = res.locals.workSpace;
+    if (targetWorkSpace.owner === userEmail) {
+      return res.status(400).json({
+        success: false,
+        message:
+          '본인이 만든 워크스페이스는 탈퇴할 수 없습니다.(단, 삭제 가능)',
+      });
     }
-  });
-  res.send({ number: number }); //인증번호 인증기능.
+
+    await member.deleteOne({ memberEmail: userEmail });
+    return res.status(200).json({ success: true, message: '탈퇴 성공' });
+  } catch (err) {
+    return res.status(400).json({ success: false, message: '탈퇴 에러' });
+  }
+}
+
+//멤버 초대
+async function inviteMember(req, res) {
+  try {
+    const { userEmail, workSpaceName } = req.body;
+    const existUser = res.locals.existUser;
+    const invitedUser = await Inviting.findOne({ userEmail, workSpaceName });
+
+    if (invitedUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: '이미 초대한 상대입니다.' });
+    }
+    if (existUser) {
+      const invitedUser = await Inviting.create({ userEmail, workSpaceName });
+      return res.status(201).json({
+        result: invitedUser,
+        success: true,
+        message: `${userEmail}를 초대하였습니다.`,
+      });
+    }
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: '초대에 실패하였습니다.' });
+  }
+}
+
+//초대 조회
+async function showInviting(req, res) {
+  try {
+    const { userEmail } = req.params;
+
+    const invitedUser = await Inviting.findOne({ userEmail });
+
+    if (invitedUser) {
+      return res.status(200).json({
+        result: invitedUser.workSpaceName,
+        success: true,
+        message: '초대 조회 성공',
+      });
+    }
+    if (!invitedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: '초대 내역에 없습니다.' });
+    }
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: '초대 조회에 실패하였습니다.' });
+  }
+}
+//초대 수락
+async function acceptInviting(req, res, next) {
+  try {
+    const user = res.locals.User;
+    const existWorkSpace = res.locals.workSpace;
+    const existMember = res.locals.existMember;
+
+    if (existMember === null) {
+      await member
+        .create({
+          memberEmail: user.userEmail,
+          memberName: user.userName,
+          workSpace: existWorkSpace.name,
+        })
+        .then((m) => {
+          res.locals.member = m;
+        });
+      next();
+    } else {
+      res
+        .status(400)
+        .json({ success: false, message: '이미 포함된 유저입니다.' });
+    }
+  } catch (err) {
+    console.log('err: ', err);
+    return res.status(400).json({ success: false, message: '초대 수락 에러' });
+  }
+}
+
+//초대장 삭제
+async function deleteInviting(req, res) {
+  try {
+    const { userEmail } = res.locals.User;
+    const createdMember = res.locals.member;
+    await Inviting.deleteOne({ userEmail });
+    if (createdMember) {
+      res.status(200).json({
+        createdMember,
+        success: true,
+        message: '초대 성공',
+      });
+    } else {
+      res.status(200).json({
+        createdMember,
+        success: true,
+        message: '초대 거절 성공',
+      });
+    }
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: '초대 삭제에 실패하였습니다.' });
+  }
 }
 
 module.exports = {
   addMember,
   getMemberList,
   deleteMember,
+  showMyWorkSpaceList,
   inviteMember,
+  acceptInviting,
+  deleteInviting,
+  leaveWorkSpace,
+  showInviting,
+  searchMember,
 };

@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware');
 const messageController = require('../controller/messages');
-const isMember = require('../middlewares/isMember');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const multer = require('multer');
@@ -26,18 +24,16 @@ const upload = multer({
 });
 
 //메시지 수정
-router.put('/:_id', authMiddleware, isMember, messageController.editMessage);
+router.put('/:messageId', messageController.editMessage);
 
 //메시지 삭제
-router.delete('/:_id', authMiddleware, messageController.deleteMessage);
+router.delete('/:messageId', messageController.deleteMessage);
 
 //메시지 조회
-router.get('/:_id', authMiddleware, isMember, messageController.showMessage);
+router.get('/:messageId', messageController.showMessage);
 
 // 단일 이미지 업로드
 router.post('/image', upload.single('image'), messageController.postImage);
 
-// //룸 이름 얻기
-// router.get('/roomId/:workSpaceName/:opponent', authMiddleware, isMember, messageController.getRoomId);
 
 module.exports = router;

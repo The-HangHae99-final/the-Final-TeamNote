@@ -341,6 +341,31 @@ async function mailing(req, res) {
   res.send({ success: true, number: number }); //인증번호 인증기능.
 }
 
+async function findUser(req, res, next) {
+  try {
+    const { userEmail } = req.body;
+    const existUser = await User.findOne({ userEmail });
+
+    if (existUser) {
+      await User.findOne({ userEmail }).then((u) => {
+        res.locals.existUser = u;
+        next();
+      });
+    } else {
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+    }
+  } catch {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      errorMessage: error.message,
+      message: '유저검색 에러가 발생했습니다.',
+    });
+  }
+}
+
 module.exports = {
   signup,
   emailFirst,
@@ -349,4 +374,5 @@ module.exports = {
   all,
   searchUser,
   mailing,
+  findUser,
 };
