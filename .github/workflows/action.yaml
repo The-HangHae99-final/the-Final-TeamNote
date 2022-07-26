@@ -42,4 +42,4 @@ jobs:
           script: |
             cd /home/ubuntu/
             docker rm -f $(docker ps -aq) && docker image rm -f $(docker image ls -q)
-            docker pull hayeonkimm/docker-team:latest && docker run --env-file /home/ubuntu/.env -d -i -p 3000:3001 hayeonkimm/docker-team:latest
+            docker pull hayeonkimm/docker-team:latest && docker run -p 3000:3001 hayeonkimm/docker-team:latest
