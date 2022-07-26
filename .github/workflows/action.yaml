@@ -1,7 +1,7 @@
 name: ci-cd-pipeline
 on:
   push:
-    branches: [hayeon, main]
+    branches: [hayeon]
 jobs:
   build-image:
     runs-on: ubuntu-latest
