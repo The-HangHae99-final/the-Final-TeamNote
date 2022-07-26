@@ -7,7 +7,7 @@ const invitingSchema = new mongoose.Schema({
   userEmail: {
     type: String,
     required: true,
-  }
+  },
 });
 
 const inviting = mongoose.model('inviting', invitingSchema);

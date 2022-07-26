@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const msgSchema = new mongoose.Schema({
   // _id: {
   //   type: String,
@@ -18,7 +18,7 @@ const msgSchema = new mongoose.Schema({
   time: {
     type: String,
     required: true,
-  }
+  },
 });
 
 const Message = mongoose.model('msg', msgSchema);

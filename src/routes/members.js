@@ -37,7 +37,6 @@ router.post(
   "/inviting",
   isMember,
   userController.findUser,
-  memberController.searchMember,
   memberController.inviteMember
 );
 
@@ -58,4 +57,5 @@ router.delete("/inviting", memberController.deleteInviting);
 
 module.exports = router;
 
-
+// 멤버 초대
+// router.get("/invite", memberController.inviteMember);

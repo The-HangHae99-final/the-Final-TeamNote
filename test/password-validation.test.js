@@ -1,6 +1,6 @@
 const {
   validatePassword,
-} = require('../server/controller/util/password-validation');
+} = require('../src/controller/util/password-validation');
 
 test(`비밀번호를 입력했을때
         password와 passwordConfirm가 일치할 때,

@@ -1,121 +1,107 @@
-const userController = require('../../server/controller/users');
+const userController = require('../../src/controller/users');
 const {
   validatePassword,
-} = require('../../server/controller/util/password-validation');
+} = require('../../src/controller/util/password-validation');
 const request = require('supertest');
 const app = require('../../app');
+const httpMocks = require('node-mocks-http');
+const userData = require('../data/user.json');
+const User = require('../../src/models/user');
+const userEmail = 'test@test.com';
+User.find = jest.fn();
+User.findById = jest.fn();
+User.findByIdAndUpdate = jest.fn();
+User.findByIdAndDelete = jest.fn();
+User.create = jest.fn();
+let req, res, next;
 
-const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
+beforeEach(() => {
+  req = httpMocks.createRequest();
+  res = httpMocks.createResponse();
+  next = jest.fn();
+});
 
-test(`비밀번호를 입력했을때
+//===============비밀번호 유효성 검사======================
+
+describe('should 비밀번호 유효성 검사 ', () => {
+  test(`비밀번호를 입력했을때
           password와 passwordConfirm가 일치할 때,
           true를 반환한다.`, () => {
-  expect(validatePassword('aaAA11!@', 'aaAA11!@')).toEqual(true);
-  expect(validatePassword('aaaaaAAAAA!@#$%^', 'aaaaaAAAAA!@#$%^')).toEqual(
-    true
-  );
-});
+    expect(validatePassword('aaAA11!@', 'aaAA11!@')).toEqual(true);
+    expect(validatePassword('aaaaaAAAAA!@#$%^', 'aaaaaAAAAA!@#$%^')).toEqual(
+      true
+    );
+  });
 
-test('비밀번호를 입력했을때 password와 passwordcheck가 일치하지 않으면 false를 반환한다.', () => {
-  expect(validatePassword('aaAA11!@', 'aaAA11!@aaAA11!@')).toEqual(false);
-  expect(validatePassword('aaAA11!@', 'aaAA11!@#')).toEqual(false);
-  expect(validatePassword('aaAA11!@', 'aaaaabbb')).toEqual(false);
-});
-
-describe('user Controller 함수 테스트', () => {
-  it('should have a user signup function', () => {
-    expect(typeof userController.signup).toBe('function');
-  });
-  it('should have a user emailFirst function', () => {
-    expect(typeof userController.emailFirst).toBe('function');
-  });
-  it('should have a user passwordSecond function', () => {
-    expect(typeof userController.passwordSecond).toBe('function');
-  });
-  it('should have a user deleteUser function', () => {
-    expect(typeof userController.deleteUser).toBe('function');
-  });
-  it('should have a user searchUser function', () => {
-    expect(typeof userController.searchUser).toBe('function');
-  });
-  it('should have a user mailing function', () => {
-    expect(typeof userController.mailing).toBe('function');
+  test('비밀번호를 입력했을때 password와 passwordcheck가 일치하지 않으면 false를 반환한다.', () => {
+    expect(validatePassword('aaAA11!@', 'aaAA11!@aaAA11!@')).toEqual(false);
+    expect(validatePassword('aaAA11!@', 'aaAA11!@#')).toEqual(false);
+    expect(validatePassword('aaAA11!@', 'aaaaabbb')).toEqual(false);
   });
 });
 
 //===============회원가입======================
-describe('POST /api/signup 회원가입', function () {
-  test('조건에 맞다면 회원가입 성공', function (done) {
-    request(app)
-      .post('/api/users/signup')
-      .send({
-        userEmail: 'email@email.com',
-        userName: 'user',
-        password: '123456',
-        confirmPassword: '123456',
-      })
-      .expect(201, done);
+describe('test 회원가입 API ', () => {
+  beforeEach(() => {
+    req.body = userData;
   });
-
-  test('비밀번호 조건이 틀리다면 에러 발생', async () => {
-    const passInvalid = await request(app).post('/api/users/signup').send({
-      userEmail: 'email@email.com',
-      userName: 'user',
-      password: '1234',
-      confirmPassword: '1234',
-    });
-    expect(passInvalid.body.errorMessage).toBe(
-      '비밀번호는 6글자 이상으로 입력해주세요.'
-    );
+  it('should signup은 함수여야 한다.', () => {
+    expect(typeof userController.signup).toBe('function');
   });
-
-  test('닉네임 조건이 틀리다면 에러 발생', async () => {
-    const passInvalid = await request(app).post('/api/users/signup').send({
-      userEmail: 'email@email.com',
-      userName: '여섯글자초과',
-      password: '123456',
-      confirmPassword: '123456',
-    });
-    expect(passInvalid.body.errorMessage).toBe(
-      '닉네임은 5글자 이내로 입력해주세요.'
-    );
+  it('should call userModel.create을 호출한다.', async () => {
+    await userController.signup(req, res, next);
+    expect(User.create);
   });
-});
-//===============이메일======================
-
-// expect(res.body).toEqual('Post not found');
-describe('POST /api/email', function () {
-  test('이메일 조건이 맞다면 통과', async () => {
-    const emailInvalid = await request(app).post('/api/users/email').send({
-      userEmail: 'email@email.com',
-    });
-    expect(passInvalid.body.message).toBe('존재하는 유저입니다.');
-  });
-  test('이메일이 없다면 에러 발생', async () => {
-    const emailInvalid = await request(app).post('/api/users/email').send({
-      userEmail: 'email119@email.com',
-    });
-    expect(emailnvalid.body.message).toBe('존재하지 않는 유저입니다.');
+  it('should 응답값으로 object 값을 반환한다.', async () => {
+    User.create.mockReturnValue(userData);
+    await userController.signup(req, res, next);
+    expect(typeof res._getData()).toBe('object');
   });
 });
 
-//===============최종 로그인======================
-
-describe('POST /api/password', function () {
-  test('이메일 비밀번호 맞다면 통과', async () => {
-    const loginInvalid = await request(app).post('/api/users/password').send({
-      userEmail: 'email@email.com',
-      password: '123456',
-    });
-    expect(loginInvalid.body.message).toBe('존재하는 유저입니다.');
+//===============로그인======================
+describe('test 로그인 API', () => {
+  it('should have a getProducts function', () => {
+    expect(typeof userController.emailFirst).toBe('function');
   });
-  test('이메일이나 비밀번호가 없다면 에러 발생', async () => {
-    const loginInvalid = await request(app).post('/api/users/password').send({
-      userEmail: 'email@email.com',
+
+  it('should emailFirst 는 응답값으로 object 값을 반환한다.', async () => {
+    User.find.mockReturnValue(userData);
+    await userController.emailFirst(req, res, next);
+    expect(typeof res._getData()).toBe('object');
+  });
+
+  describe('should passwordSecond는 함수여야 한다.', () => {
+    it('should have a getProducts function', () => {
+      expect(typeof userController.passwordSecond).toBe('function');
     });
-    expect(loginInvalid.body.errorMessage).toBe(
-      'data and hash arguments required'
-    );
+
+    it('should 응답값으로 object 값을 반환한다.', async () => {
+      User.find.mockReturnValue(userData);
+      await userController.passwordSecond(req, res, next);
+      expect(typeof res._getData()).toBe('object');
+    });
+  });
+});
+
+//===============회원삭제======================
+
+describe('test 회원삭제 API', () => {
+  it('should deleteUser타입은 함수여야 한다..', () => {
+    expect(typeof userController.deleteUser).toBe('function');
+  });
+  it('deleteUser의 결과값은 object를 반환해야 한다.', async () => {
+    req.params.userEmail = userEmail;
+    await userController.deleteUser(req, res, next);
+    expect(typeof res._getData()).toBe('object');
+  });
+  it('should deleteUser 성공값은 status 200을 반환해야한다. ', async () => {
+    let deletedProduct = {
+      userEmail: 'test@test.com',
+    };
+    User.findByIdAndDelete.mockReturnValue(deletedProduct);
+    await userController.deleteUser(req, res, next);
+    expect(res.statusCode).toBe(200);
+    expect(res._isEndCalled()).toBeTruthy();
   });
 });

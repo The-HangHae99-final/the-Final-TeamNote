@@ -1,4 +1,5 @@
-const Message = require('../schemas/message');
+const Message = require('../models/message');
+
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const multer = require('multer');
@@ -74,12 +75,12 @@ async function deleteMessage(req, res) {
     const targetMessage = await Message.findById(messageId);
 
     if (!targetMessage.length) {
-      return res.status(400).json({
+      return res.status(409).json({
         success: false,
         message: '해당 메시지가 존재하지 않습니다.',
       });
     } else if (targetMessage[0].author !== author) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message: '본인만 삭제 가능 합니다.',
       });

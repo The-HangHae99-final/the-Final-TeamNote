@@ -1,6 +1,6 @@
 //클라이언트에서 API콜을 받았을때 현재 접속해있는 유저가 해당 워크스페이스의 멤버인지 아닌지를 판별하는 middleware 함수입니다.
-const workSpace = require('../schemas/workSpace');
-const Member = require("../schemas/member");
+const workSpace = require('../models/workSpace');
+const Member = require('../models/member');
 
 module.exports = async (req, res, next) => {
   try {
@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
       });
       return;
     }
-    const existMember = await Member.findOne({memberEmail: userEmail});
+    const existMember = await Member.findOne({ memberEmail: userEmail });
     if (!existMember) {
       res.status(400).send({
         success: false,

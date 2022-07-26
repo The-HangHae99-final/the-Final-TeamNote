@@ -1,15 +1,15 @@
-const dotenv = require("dotenv").config();
-const User = require("../schemas/user");
-const Bcrypt = require("bcrypt");
-const Joi = require("joi");
-const jwt = require("jsonwebtoken");
+const dotenv = require('dotenv').config();
+const User = require('../models/user');
+const Bcrypt = require('bcrypt');
+const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
-const nodemailer = require("nodemailer");
-const validator = require("email-validator");
-const { response } = require("express");
-const { error } = require("winston");
-const ejs = require("ejs");
-const path = require("path");
+const nodemailer = require('nodemailer');
+const validator = require('email-validator');
+const { response } = require('express');
+const { error } = require('winston');
+const ejs = require('ejs');
+const path = require('path');
 let appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -19,11 +19,11 @@ const usersSchema = Joi.object({
 });
 
 const transporter = nodemailer.createTransport({
-  service: "naver", // 메일 이용할 서비스
-  host: "smtp.naver.com", // SMTP 서버명
+  service: 'naver', // 메일 이용할 서비스
+  host: 'smtp.naver.com', // SMTP 서버명
   port: 587, // SMTP 포트
   auth: {
-    user: "hanghae99@naver.com", // 사용자 이메일
+    user: 'hanghae99@naver.com', // 사용자 이메일
     pass: process.env.password, // 사용자 패스워드
   },
 });
@@ -34,7 +34,7 @@ module.exports = {
 
 //회원가입 API
 // router.post('/users/signup', userController.signup);
-async function signup(req, res) {
+async function signup(req, res, next) {
   try {
     //#swagger.tags= ['회원가입 API'];
     //#swagger.summary= '회원가입 API'
@@ -44,28 +44,29 @@ async function signup(req, res) {
     // 비밀번호와 확인 비밀번호가 틀린 경우
     if (password !== confirmPassword) {
       return res.status(400).send({
-        errorMessage: "비밀번호가 일치하지 않습니다.",
+        errorMessage: '비밀번호가 일치하지 않습니다.',
       });
     }
     // 비밀번호가 5글자 이하인 경우
     if (password.length <= 5) {
       return res.status(400).send({
         success: false,
-        errorMessage: "비밀번호는 6글자 이상으로 입력해주세요.",
+        errorMessage: '비밀번호는 6글자 이상으로 입력해주세요.',
       });
     }
     // userName의 length가 6글자 이상인 경우.
     if (userName.length >= 6) {
       return res.status(400).send({
         success: false,
-        errorMessage: "닉네임은 5글자 이내로 입력해주세요.",
+        errorMessage: '닉네임은 5글자 이내로 입력해주세요.',
       });
     }
     // email validator 라이브러리로 이메일 검사.
     if (!validator.validate(userEmail)) {
+      console.log(!validator.validate(userEmail));
       return res
         .status(400)
-        .send({ success: false, errorMessage: "이메일 형식이 틀렸습니다." });
+        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
     }
 
     // 가입하고자 하는 이메일이 존재하는 경우
@@ -73,7 +74,7 @@ async function signup(req, res) {
 
     if (exitstUsers) {
       return res.status(400).send({
-        errorMessage: "중복된 이메일이 존재합니다.",
+        errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
     // 비밀번호 해시화
@@ -89,7 +90,7 @@ async function signup(req, res) {
 
     // 가입 축하  이메일 발송 기능
     let mailOptions = {
-      from: "hanghae99@naver.com", // 메일 발신자
+      from: 'hanghae99@naver.com', // 메일 발신자
       to: req.body.userEmail, // 메일 수신자
 
       // 회원가입 완료하고 축하 메시지 전송할 시
@@ -111,10 +112,11 @@ async function signup(req, res) {
     });
 
     // DB에 저장
-    await user.save();
-    res.status(201).send({
+    const createdUser = await user.save();
+    res.status(201).json({
+      createdUser,
       success: true,
-      message: "회원가입을 성공하였습니다",
+      message: '회원가입을 성공하였습니다',
     });
   } catch (error) {
     res.status(401).send({
@@ -134,23 +136,24 @@ async function emailFirst(req, res) {
     const { userEmail } = req.body;
     const userFind = await User.findOne({ userEmail });
 
-    if (validator.validate(userEmail) == false) {
+    if (!validator.validate(userEmail)) {
       return res
         .status(400)
-        .send({ success: false, errorMessage: "이메일 형식이 틀렸습니다." });
+        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
     }
     // userFind값이 없다면 == DB에 userEmail값이 없다면.
     if (!userFind) {
       console.log(userFind);
       res
         .status(400)
-        .json({ success: false, errorMessage: "존재하지 않는 유저입니다." });
+        .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     } else {
-      res.status(200).json({ success: true, message: "존재하는 유저입니다." });
+      res.status(200).json({ success: true, message: '존재하는 유저입니다.' });
     }
   } catch (error) {
+    console.log(error);
     res.send(401).send({
-      message: "예상치 못한 에러가 발생했습니다.",
+      message: '예상치 못한 에러가 발생했습니다.',
       errorMessage: error,
     });
   }
@@ -158,50 +161,64 @@ async function emailFirst(req, res) {
 
 // 이메일과 비밀번호를 body값으로 받고 로그인
 // router.post('/users/password', userController.passwordSecond);
-async function passwordSecond(req, res) {
+async function passwordSecond(req, res, next) {
   try {
     //#swagger.tags= ['로그인 API'];
     //#swagger.summary= '로그인 패스워드 API'
     //#swagger.description='-'
     const { userEmail, password } = req.body;
+    console.log('userEmail,password', userEmail, password);
     const userFind = await User.findOne({ userEmail });
-    var validPassword;
+    let validPassword;
+
+    if (!userEmail || !password) {
+      res.status(400).send({
+        success: false,
+        errorMessage: '이메일 또는 비밀번호가 입력되지 않았습니다.',
+      });
+    }
+
+    if (!userFind) {
+      res
+        .status(400)
+        .send({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
+    }
 
     // 유저가 DB에 존재하고,
-    if (userFind.length) {
+    if (userFind) {
       validPassword = await Bcrypt.compare(password, userFind.password);
-      // 유효하지 않은 비밀번호라면
-      if (!validPassword.length) {
-        res.status(400).send({
-          success: true,
-          errorMessage: "유효하지 않은 비밀번호입니다.",
+
+      if (validPassword) {
+        //jwt token화
+        const token = jwt.sign({ userEmail }, jwtSecret, {
+          expiresIn: '30m',
         });
+
+        // 리프레시 토큰 생성
+        const refresh_token = jwt.sign({}, jwtSecret, {
+          expiresIn: '1d',
+        });
+        await userFind.update({ refresh_token }, { $where: { userEmail } });
+        res.status(200).send({
+          success: true,
+          message: '로그인에 성공하였습니다.',
+          token,
+          userEmail: userEmail,
+          userName: userFind.userName,
+        });
+      } else {
+        res
+          .status(400)
+          .send({ success: false, errorMessage: '비밀번호가 틀렸습니다.' });
       }
     }
-    //jwt token화
-    const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: "1h",
-    });
-
-    // 리프레시 토큰 생성
-    const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: "1d",
-    });
-
-    //userEmail이 일치하는 값에 리프레시 토큰 업데이트
-    await userFind.update({ refresh_token }, { $set: { userEmail } });
-    res.status(200).send({
-      success: true,
-      token,
-      email: userEmail,
-    });
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
-    console.log("error----" + error);
+    console.log('error----' + error);
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: "예상치 못한 이유로 로그인에 실패 하였습니다.",
+      message: '예상치 못한 이유로 로그인에 실패 하였습니다.',
     });
   }
 }
@@ -214,15 +231,20 @@ async function deleteUser(req, res) {
     //#swagger.summary= '탈퇴 API'
     //#swagger.description='-'
     const { userEmail } = req.params;
-    console.log(userEmail);
+    if (!userEmail) {
+      res.status(404).json({
+        success: false,
+        errorMessage: '입력된 유저 이메일 값이 없습니다.',
+      });
+    }
     await User.deleteOne({ userEmail });
-    res.status(200).send({ success: "탈퇴에 성공하였습니다." });
+    res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
     res.status(400).send({
       succss: false,
       errorMessage: error.message,
-      message: "예상치 못한 에러가 발생했습니다.",
+      message: '예상치 못한 에러가 발생했습니다.',
     });
   }
 }
@@ -253,6 +275,13 @@ async function searchUser(req, res) {
     const { userEmail } = req.body;
     const existUser = await User.findOne({ userEmail });
 
+    if (!userEmail) {
+      res.status(404).json({
+        success: false,
+        errorMessage: '입력된 유저 이메일 값이 없습니다.',
+      });
+    }
+
     if (existUser) {
       res.status(200).send({
         success: true,
@@ -262,14 +291,14 @@ async function searchUser(req, res) {
     } else {
       res
         .status(400)
-        .send({ success: false, errorMessage: "존재하지 않는 유저입니다." });
+        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     }
   } catch {
     console.log(error);
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: "예상치 못한 에러가 발생했습니다.",
+      message: '예상치 못한 에러가 발생했습니다.',
     });
   }
 }
@@ -288,7 +317,7 @@ async function mailing(req, res) {
 
   // 메일 옵션
   let mailOptions = {
-    from: "hanghae99@naver.com", // 메일 발신자
+    from: 'hanghae99@naver.com', // 메일 발신자
     to: userEmail, // 메일 수신자
 
     // 회원가입 완료하고 축하 메시지 전송할 시
@@ -302,11 +331,11 @@ async function mailing(req, res) {
           <p><img src= 'https://user-images.githubusercontent.com/85288036/180214057-40f5be9a-fef7-4251-b45c-59f1d5e5d9a7.png'width=400, height=200/></p>`,
   };
   // 메일 발송
-  transporter.sendMail(mailOptions, function (err, success) {
-    if (err) {
-      console.log(err);
+  transporter.sendMail(mailOptions, function (error, success) {
+    if (error) {
+      console.log(error);
     } else {
-      console.log("이메일이 성공적으로 발송되었습니다!");
+      console.log('이메일이 성공적으로 발송되었습니다!');
     }
   });
   res.send({ success: true, number: number }); //인증번호 인증기능.
@@ -316,23 +345,23 @@ async function findUser(req, res, next) {
   try {
     const { userEmail } = req.body;
     const existUser = await User.findOne({ userEmail });
-    res.locals.existUser = existUser;
 
     if (existUser) {
-      
+      await User.findOne({ userEmail }).then((u) => {
+        res.locals.existUser = u;
         next();
-      ;
+      });
     } else {
       res
         .status(400)
-        .send({ success: false, errorMessage: "존재하지 않는 유저입니다." });
+        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     }
   } catch {
     console.log(error);
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: "유저검색 에러가 발생했습니다.",
+      message: '유저검색 에러가 발생했습니다.',
     });
   }
 }

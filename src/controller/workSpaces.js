@@ -1,5 +1,5 @@
-const workSpace = require("../schemas/workSpace");
-const member = require("../schemas/member");
+const workSpace = require('../models/workSpace');
+const member = require('../models/member');
 
 //워크스페이스 생성
 async function createWorkSpace(req, res) {
@@ -12,23 +12,24 @@ async function createWorkSpace(req, res) {
     if (existWorkSpace) {
       return res
         .status(400)
-        .send({ errorMessage: "이미 존재하는 이름입니다." });
+        .send({ errorMessage: '이미 존재하는 이름입니다.' });
     } else {
       const createdWorkSpace = await workSpace.create({
         owner: user.userEmail,
         name: workSpaceName,
       });
-      await member.create({
+      const addedOwner = await member.create({
         memberEmail: user.userEmail,
         memberName: user.userName,
         workSpace: workSpaceName,
       });
-      return res.status(201).json({ createdWorkSpace });
+      return res.json({ createdWorkSpace, addedOwner });
     }
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
+      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+      error,
     });
   }
 }
@@ -41,7 +42,7 @@ async function deleteWorkSpace(req, res) {
     if (existWorkSpace === undefined) {
       res
         .status(404)
-        .json({ success: false, message: "워크스페이스가 존재하지 않습니다." });
+        .json({ success: false, message: '워크스페이스가 존재하지 않습니다.' });
     }
     if (existWorkSpace.owner === userEmail) {
       const result = await workSpace.deleteOne({ name: existWorkSpace.name });
@@ -51,13 +52,13 @@ async function deleteWorkSpace(req, res) {
       return res.status(200).json({
         result: { result, deletedMember },
         success: true,
-        message: "워크스페이스가 삭제되었습니다.",
+        message: '워크스페이스가 삭제되었습니다.',
       });
     }
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: "워크스페이스 삭제 에러" });
+      .json({ success: false, message: '워크스페이스 삭제 에러' });
   }
 }
 
@@ -76,7 +77,7 @@ async function showWorkSpaces(req, res) {
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: "전체 워크스페이스 조회 실패" });
+      .json({ success: false, message: '전체 워크스페이스 조회 실패' });
   }
 }
 //워크스페이스 검색

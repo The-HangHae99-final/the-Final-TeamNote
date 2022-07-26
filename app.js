@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const connect = require('./src/schemas/db');
+const connect = require('./src/models/db');
 const morgan = require('morgan');
 //보안
 const cors = require('cors');
@@ -19,7 +19,6 @@ global.logger || (global.logger = require('./src/config/logger'));
 const morganMiddleware = require('./src/config/morganMiddleware');
 
 connect();
-
 
 app.use(cors(), helmet());
 app.use(morgan('combined'));

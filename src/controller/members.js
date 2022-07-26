@@ -1,7 +1,7 @@
-const User = require("../schemas/user");
-const workSpace = require("../schemas/workSpace");
-const Inviting = require("../schemas/inviting");
-const member = require("../schemas/member");
+const User = require('../models/user');
+const workSpace = require('../models/workSpace');
+const Inviting = require('../models/inviting');
+const member = require('../models/member');
 
 //멤버 추가(개발용)
 async function addMember(req, res) {

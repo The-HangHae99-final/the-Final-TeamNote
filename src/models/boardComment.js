@@ -23,4 +23,4 @@ const boardCommentSchema = new mongoose.Schema({
 });
 
 const BoardComment = mongoose.model('boardComment', boardCommentSchema);
-module.exports =  BoardComment;
+module.exports = BoardComment;

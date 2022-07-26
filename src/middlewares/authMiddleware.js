@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-const User = require('../schemas/user');
+const User = require('../models/user');
 const jwtSecret = process.env.SECRET_KEY;
 const jwt = require('jsonwebtoken');
 
@@ -70,7 +70,7 @@ module.exports = (req, res, next) => {
   } catch (error) {
     console.log('error: ' + error);
     res.send({
-      errorMessage: '  로그인이 필요합니다. -----------그외-----------',
+      errorMessage: '로그인이 필요합니다. -----------그외-----------',
       error: error,
     });
   }
