@@ -127,15 +127,17 @@ async function leaveWorkSpace(req, res) {
   }
 }
 
-//멤버 초대
+//초대 하기
 async function inviteMember(req, res) {
   try {
+    const inviter = res.locals.User.userName;
+    console.log('inviter: ', inviter);
     const { userEmail, workSpaceName } = req.body;
     const { existMember } = res.locals;
     const { existUser } = res.locals;
-    const invitedUser = await Inviting.findOne({ userEmail, workSpaceName });
+    const existInviting = await Inviting.findOne({ userEmail, workSpaceName });
 
-    if (invitedUser) {
+    if (existInviting) {
       return res
         .status(400)
         .json({ success: false, message: "이미 초대한 상대입니다." });
@@ -146,11 +148,11 @@ async function inviteMember(req, res) {
         .json({ success: false, message: "이미 워크스페이스 멤버입니다." });
     }
     if (existUser) {
-      const invitedUser = await Inviting.create({ userEmail, workSpaceName });
+      const invitedUser = await Inviting.create({ userEmail, workSpaceName, inviter });
       return res.status(201).json({
         result: invitedUser,
         success: true,
-        message: `${userEmail}를 초대하였습니다.`,
+        message: `${inviter}님이 ${userEmail}를 초대하였습니다.`,
       });
     }
   } catch (err) {
@@ -169,7 +171,7 @@ async function showInviting(req, res) {
 
     if (invitedUser) {
       return res.status(200).json({
-        result: invitedUser.workSpaceName,
+        result: invitedUser,
         success: true,
         message: "초대 조회 성공",
       });
