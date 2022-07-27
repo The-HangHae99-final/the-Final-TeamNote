@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
     "prettify": "prettier --write *.js **/*.js",
     "start": "nodemon server.js"
   },
