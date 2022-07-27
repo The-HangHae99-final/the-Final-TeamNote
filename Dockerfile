@@ -1,13 +1,7 @@
-FROM node:16
-
+FROM node:14
 WORKDIR /app
-
-COPY ./ ./
-
-RUN npm install
-
+COPY package*.json ./
+RUN npm ci
 RUN npm install -g nodemon
-
 COPY . .
-
-CMD ["nodemon", "server.js"]
+CMD [ "nodemon", "server.js" ]
