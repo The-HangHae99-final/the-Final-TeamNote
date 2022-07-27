@@ -1,4 +1,4 @@
-name: ci-cd-pipeline
+name: ci-pipeline
 on:
   push:
     branches: [hayeon]
@@ -27,19 +27,19 @@ jobs:
           tags: hayeonkimm/docker-team:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-  cd-pipeline:
-    needs: build-image
-    name: continuos deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: hayeonkimm
-          key: ${{ secrets.PRIVATE_KEY}}
-          port: 3000
-          script: |
-            cd /home/ubuntu/
-            docker rm -f $(docker ps -aq) && docker image rm -f $(docker image ls -q)
-            docker pull hayeonkimm/docker-team:latest && docker run --env-file /home/ubuntu/.env -d -i -p 8000:8000 hayeonkimm/docker-team:latest
+#   cd-pipeline:
+#     needs: build-image
+#     name: continuos deploy
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: executing remote ssh commands using password
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: hayeonkimm
+#           key: ${{ secrets.PRIVATE_KEY}}
+#           port: 3000
+#           script: |
+#             cd /home/ubuntu/
+#             docker rm -f $(docker ps -aq) && docker image rm -f $(docker image ls -q)
+#             docker pull hayeonkimm/docker-team:latest && docker run --env-file /home/ubuntu/.env -d -i -p 8000:8000 hayeonkimm/docker-team:latest
