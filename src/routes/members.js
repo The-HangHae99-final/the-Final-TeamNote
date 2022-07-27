@@ -15,7 +15,7 @@ router.post(
 );
 
 //멤버 목록 조회
-router.get("/:workSpaceName", isMember, memberController.getMemberList);
+router.get("/lists/:workSpaceName", isMember, memberController.getMemberList);
 
 //멤버 삭제
 router.delete(
@@ -27,25 +27,25 @@ router.delete(
 );
 
 //워크스페이스 탈퇴하기
-router.delete("/leave",isMember,memberController.leaveWorkSpace);
+router.delete("/leaving",isMember,memberController.leaveWorkSpace);
 
 //본인 속한 워크스페이스 목록 조회
-router.get("/lists", memberController.showMyWorkSpaceList);
+router.get("/spaceLists", memberController.showMyWorkSpaceList);
 
 // 멤버 초대(web)
 router.post(
-  "/invite",
+  "/inviting",
   isMember,
   userController.findUser,
   memberController.inviteMember
 );
 
 //초대 조회
-router.get("/invite/:userEmail", memberController.showInviting);
+router.get("/inviting", memberController.showInviting);
 
 //초대 수락
 router.post(
-  "/invite/accept",
+  "/inviting/accepting",
   workSpaceController.searchWorkSpace,
   memberController.searchMember,
   memberController.acceptInviting,
@@ -53,7 +53,7 @@ router.post(
 );
 
 //초대 삭제
-router.delete("/invite", memberController.deleteInviting);
+router.delete("/inviting", memberController.deleteInviting);
 
 module.exports = router;
 

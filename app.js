@@ -20,8 +20,7 @@ const morganMiddleware = require('./src/config/morganMiddleware');
 
 connect();
 
-app.use(cors());
-app.use(helmet());
+app.use(cors(), helmet());
 app.use(morgan('combined'));
 app.use(express.static('static'));
 app.use(express.json());
@@ -43,5 +42,5 @@ app.get('/', (req, res) => {
 app.get('/api', (req, res) => {
   res.send('실전 파이널 프로젝트 서버 /api');
 });
-
+//
 module.exports = server;
