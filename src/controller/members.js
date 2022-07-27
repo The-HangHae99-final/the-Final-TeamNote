@@ -6,6 +6,9 @@ const member = require('../models/member');
 //멤버 추가(개발용)
 async function addMember(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '멤버 추가(개발용) API'
+    //#swagger.description='-'
     const existUser = res.locals.existUser;
     const { workSpaceName } = req.body;
     const existMember = res.locals.existMember;
@@ -30,6 +33,9 @@ async function addMember(req, res) {
 //멤버 삭제
 async function deleteMember(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '멤버 삭제 API'
+    //#swagger.description='-'
     const { owner } = res.locals.User;
     const myWorkSpace = res.locals.workSpace;
     const existMember = res.locals.existMember;
@@ -56,6 +62,9 @@ async function deleteMember(req, res) {
 //멤버 조회
 async function getMemberList(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '멤버 조회 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.params;
     const memberList = await member.find({ workSpace: workSpaceName });
     return res.status(200).json({
@@ -72,6 +81,9 @@ async function getMemberList(req, res) {
 //본인 속한 워크스페이스 목록 조회
 async function showMyWorkSpaceList(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '본인 속한 워크스페이스 목록 조회 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const includedList = await member.find({ memberEmail: userEmail });
     console.log('workSpaceList: ', workSpaceList);
@@ -90,6 +102,9 @@ async function showMyWorkSpaceList(req, res) {
 //멤버 찾기
 const searchMember = async (req, res, next) => {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '멤버 찾기 API'
+    //#swagger.description='-'
     const { userEmail, workSpaceName } = req.body;
     await member
       .findOne({ workSpace: workSpaceName, memberEmail: userEmail })
@@ -104,6 +119,9 @@ const searchMember = async (req, res, next) => {
 //워크스페이스 탈퇴하기
 async function leaveWorkSpace(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '워크스페이스 탈퇴 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const targetWorkSpace = res.locals.workSpace;
     if (targetWorkSpace.owner === userEmail) {
@@ -124,6 +142,9 @@ async function leaveWorkSpace(req, res) {
 //멤버 초대
 async function inviteMember(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 멤버 API'];
+    //#swagger.summary= '멤버 초대 API'
+    //#swagger.description='-'
     const { userEmail, workSpaceName } = req.body;
     const existUser = res.locals.existUser;
     const invitedUser = await Inviting.findOne({ userEmail, workSpaceName });
@@ -151,6 +172,9 @@ async function inviteMember(req, res) {
 //초대 조회
 async function showInviting(req, res) {
   try {
+    //#swagger.tags= ['초대 API'];
+    //#swagger.summary= '초대 조회 API'
+    //#swagger.description='-'
     const { userEmail } = req.params;
 
     const invitedUser = await Inviting.findOne({ userEmail });
@@ -176,6 +200,9 @@ async function showInviting(req, res) {
 //초대 수락
 async function acceptInviting(req, res, next) {
   try {
+    //#swagger.tags= ['초대 API'];
+    //#swagger.summary= '초대 수락 API'
+    //#swagger.description='-'
     const user = res.locals.User;
     const existWorkSpace = res.locals.workSpace;
     const existMember = res.locals.existMember;
@@ -205,6 +232,9 @@ async function acceptInviting(req, res, next) {
 //초대장 삭제
 async function deleteInviting(req, res) {
   try {
+    //#swagger.tags= ['초대 API'];
+    //#swagger.summary= '초대장 삭제 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const createdMember = res.locals.member;
     await Inviting.deleteOne({ userEmail });

@@ -8,13 +8,11 @@ const doc = {
       version: '3.0.0',
       description: 'Test API with express',
     },
-    // host: '3.36.78.173:3001',
-    // basePath: '/api',
   },
-  apis: ['./routes/*.js', './swagger/*'],
+  apis: ['./src/routes/*.js', './swagger/*'],
 };
 const outputFile = './swagger_output.json'; // swagger-autogen이 실행 후 생성될 파일 위치와 이름
-const endpointsFiles = ['./server/routes/*']; // 읽어올 Router가 정의되어 있는 js파일들
+const endpointsFiles = ['./src/routes/*']; // 읽어올 Router가 정의되어 있는 js파일들
 
 const options = {
   swaggerDefinition: {
@@ -26,7 +24,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://52.79.82.195:3001/api',
+        url: '0jun.shop/api',
       },
     ],
   },

@@ -121,6 +121,9 @@ async function showMessage(req, res) {
 
 async function postImage(req, res, next) {
   try {
+    //#swagger.tags= ['메세지 API'];
+    //#swagger.summary= '메세지 사진 업로드 API'
+    //#swagger.description='-'
     console.log('경로 정보입니다.', req.file.location);
     console.log('req.body정보', req.body.title);
     res.json({ success: true, message: '이미지 업로드에 성공하였습니다.' });

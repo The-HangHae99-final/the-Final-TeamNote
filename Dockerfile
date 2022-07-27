@@ -2,12 +2,12 @@ FROM node:16-alpine
 
 WORKDIR /app
 
-COPY ["package.json", "pm2.json", "package-lock.json*","./"]
+COPY ["package.json", "package-lock.json*","./"]
 
 RUN npm install
 
-RUN npm install -g pm2
+RUN npm install -g nodemon
 
 COPY . .
 
-CMD ["pm2-runtime","start","pm2.json"]
+CMD ["nodemon", "server.js"]

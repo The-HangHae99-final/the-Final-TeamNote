@@ -215,6 +215,9 @@ async function deletePost(req, res, next) {
 // image 단일 업로드 API
 async function postImage(req, res, next) {
   try {
+    //#swagger.tags= ['일반 게시글 API'];
+    //#swagger.summary= '일반 게시글 단일 이미지 업로드 API'
+    //#swagger.description='-'
     console.log('경로 정보입니다.', req.file.location);
     console.log('req.body정보', req.body.title);
     res.json({ success: true, message: '이미지 업로드에 성공하였습니다.' });

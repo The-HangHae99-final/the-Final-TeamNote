@@ -4,6 +4,9 @@ const member = require('../models/member');
 //워크스페이스 생성
 async function createWorkSpace(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '전체 워크스페이스 생성 API'
+    //#swagger.description='-'
     const existWorkSpace = res.locals.workSpace;
     const user = res.locals.User;
     const { name } = req.body;
@@ -37,6 +40,9 @@ async function createWorkSpace(req, res) {
 //워크스페이스 삭제
 async function deleteWorkSpace(req, res) {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '전체 워크스페이스 삭제 API'
+    //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const existWorkSpace = res.locals.workSpace;
     if (existWorkSpace === undefined) {
@@ -83,6 +89,9 @@ async function showWorkSpaces(req, res) {
 //워크스페이스 검색
 const searchWorkSpace = async (req, res, next) => {
   try {
+    //#swagger.tags= ['워크 스페이스 API'];
+    //#swagger.summary= '전체 워크스페이스 검색 API'
+    //#swagger.description='-'
     const { workSpaceName } = req.body;
     const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
     console.log('워크스페이스 검색 결과: ', existWorkSpace);
