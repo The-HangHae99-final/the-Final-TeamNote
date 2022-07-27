@@ -86,7 +86,7 @@ async function showMyWorkSpaceList(req, res) {
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
     const includedList = await member.find({ memberEmail: userEmail });
-    console.log('workSpaceList: ', workSpaceList);
+    console.log('workSpaceList: ', includedList);
 
     return res.status(200).json({
       includedList,
@@ -106,12 +106,18 @@ const searchMember = async (req, res, next) => {
     //#swagger.summary= '멤버 찾기 API'
     //#swagger.description='-'
     const { userEmail, workSpaceName } = req.body;
-    await member
-      .findOne({ workSpace: workSpaceName, memberEmail: userEmail })
-      .then((m) => {
-        res.locals.existMember = m;
-      });
-    next();
+    const existMember = await member.findOne({
+      workSpace: workSpaceName,
+      memberEmail: userEmail,
+    });
+    console.log('멤버찾기에서 : ', existMember);
+    if (existMember) {
+      res.locals.existMember = existMember;
+      next();
+    }
+    if (existMember === null) {
+      next();
+    }
   } catch (err) {
     return res.status(400).json({ success: false, message: '멤버 찾기 에러' });
   }
@@ -146,13 +152,19 @@ async function inviteMember(req, res) {
     //#swagger.summary= '멤버 초대 API'
     //#swagger.description='-'
     const { userEmail, workSpaceName } = req.body;
-    const existUser = res.locals.existUser;
+    const { existMember } = res.locals;
+    const { existUser } = res.locals;
     const invitedUser = await Inviting.findOne({ userEmail, workSpaceName });
 
     if (invitedUser) {
       return res
         .status(400)
         .json({ success: false, message: '이미 초대한 상대입니다.' });
+    }
+    if (existMember) {
+      return res
+        .status(400)
+        .json({ success: false, message: '이미 워크스페이스 멤버입니다.' });
     }
     if (existUser) {
       const invitedUser = await Inviting.create({ userEmail, workSpaceName });
@@ -175,9 +187,10 @@ async function showInviting(req, res) {
     //#swagger.tags= ['초대 API'];
     //#swagger.summary= '초대 조회 API'
     //#swagger.description='-'
-    const { userEmail } = req.params;
 
-    const invitedUser = await Inviting.findOne({ userEmail });
+    const { userEmail } = res.locals.User;
+
+    const invitedUser = await Inviting.find({ userEmail: userEmail });
 
     if (invitedUser) {
       return res.status(200).json({
@@ -205,23 +218,22 @@ async function acceptInviting(req, res, next) {
     //#swagger.description='-'
     const user = res.locals.User;
     const existWorkSpace = res.locals.workSpace;
-    const existMember = res.locals.existMember;
+    console.log('초대수락에서 나오는 워크스페이스여부: ', existWorkSpace);
+    const { existMember } = res.locals;
+    console.log('초대수락에서 나오는 멤버여부: ', existMember);
 
-    if (existMember === null) {
-      await member
-        .create({
-          memberEmail: user.userEmail,
-          memberName: user.userName,
-          workSpace: existWorkSpace.name,
-        })
-        .then((m) => {
-          res.locals.member = m;
-        });
+    if (!existMember) {
+      const createdMember = await member.create({
+        memberEmail: user.userEmail,
+        memberName: user.userName,
+        workSpace: existWorkSpace.name,
+      });
+      res.locals.createdMember = createdMember;
       next();
     } else {
-      res
+      return res
         .status(400)
-        .json({ success: false, message: '이미 포함된 유저입니다.' });
+        .json({ success: false, message: '이미 멤버로 존재합니다.' });
     }
   } catch (err) {
     console.log('err: ', err);
@@ -236,7 +248,7 @@ async function deleteInviting(req, res) {
     //#swagger.summary= '초대장 삭제 API'
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
-    const createdMember = res.locals.member;
+    const { createdMember } = res.locals;
     await Inviting.deleteOne({ userEmail });
     if (createdMember) {
       res.status(200).json({
