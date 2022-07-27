@@ -1,13 +1,7 @@
-FROM node:16-alpine
-
+FROM node:14
 WORKDIR /app
-
-COPY ["package.json", "package-lock.json*","./"]
-
+COPY package*.json ./
 RUN npm install
-
 RUN npm install -g nodemon
-
 COPY . .
-
-CMD ["nodemon", "server.js"]
+CMD [ "nodemon", "server.js" ]
