@@ -163,9 +163,9 @@ async function inviteMember(req, res) {
 //초대 조회
 async function showInviting(req, res) {
   try {
-    const { userEmail } = req.params;
+    const { userEmail } = res.locals.User;
 
-    const invitedUser = await Inviting.findOne({ userEmail });
+    const invitedUser = await Inviting.find({ userEmail: userEmail });
 
     if (invitedUser) {
       return res.status(200).json({

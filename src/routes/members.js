@@ -41,7 +41,7 @@ router.post(
 );
 
 //초대 조회
-router.get("/inviting/:userEmail", memberController.showInviting);
+router.get("/inviting", memberController.showInviting);
 
 //초대 수락
 router.post(
