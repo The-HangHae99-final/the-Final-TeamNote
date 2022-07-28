@@ -63,8 +63,8 @@ async function showPosts(req, res, next) {
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
     const { workSpaceName } = req.body;
-    const posts = await Post.find({ workSpaceName }).sort('-postId');
-    res.send({ posts, message: '공지 조회에 성공 했습니다.' });
+    const posts = await Post.findOne({ workSpaceName }).sort('-postId');
+    res.status(200).send({ posts, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
     res.status(400).send({
