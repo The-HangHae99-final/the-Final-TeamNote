@@ -7,7 +7,7 @@ const { upload } = require("../controller/util/aws-s3");
 
 //일반 게시글
 //글 작성
-router.post("/", upload.single("img"), postController.createPost);
+router.post("/", upload.single("image"), postController.createPost);
 
 // 글 전체 조회(임시)
 router.post("/list", postController.showPosts);
