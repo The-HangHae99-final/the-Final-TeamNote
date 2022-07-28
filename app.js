@@ -33,6 +33,12 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(morganMiddleware); // 콘솔창에 통신결과 나오게 해주는 것
 
+app.use((error, req, res, next) => {
+  console.log('에러 미들웨어의 응답')
+  res.status(500).json({ message: error.message })
+  next();
+})
+
 app.use('/api', Router);
 
 app.set('view engine', 'ejs');

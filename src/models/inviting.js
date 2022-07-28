@@ -8,6 +8,10 @@ const invitingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  inviter: {
+    type: String,
+    required: true
+  }
 });
 
 const inviting = mongoose.model('inviting', invitingSchema);
