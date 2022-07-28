@@ -128,40 +128,40 @@ async function signup(req, res, next) {
 
 // 이메일부터 DB에 있는지 먼저 검사한다.
 // router.post('/users/email', userController.emailFirst);
-async function emailFirst(req, res) {
-  try {
-    //#swagger.tags= ['로그인 API'];
-    //#swagger.summary= '로그인 이메일 API'
-    //#swagger.description='-'
-    const { userEmail } = req.body;
-    const userFind = await User.findOne({ userEmail });
+// async function emailFirst(req, res) {
+//   try {
+//     //#swagger.tags= ['로그인 API'];
+//     //#swagger.summary= '로그인 이메일 API'
+//     //#swagger.description='-'
+//     const { userEmail } = req.body;
+//     const userFind = await User.findOne({ userEmail });
 
-    if (!validator.validate(userEmail)) {
-      return res
-        .status(400)
-        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
-    }
-    // userFind값이 없다면 == DB에 userEmail값이 없다면.
-    if (!userFind) {
-      console.log(userFind);
-      res
-        .status(400)
-        .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
-    } else {
-      res.status(200).json({ success: true, message: '존재하는 유저입니다.' });
-    }
-  } catch (error) {
-    console.log(error);
-    res.send(401).send({
-      message: '예상치 못한 에러가 발생했습니다.',
-      errorMessage: error,
-    });
-  }
-}
+//     if (!validator.validate(userEmail)) {
+//       return res
+//         .status(400)
+//         .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
+//     }
+//     // userFind값이 없다면 == DB에 userEmail값이 없다면.
+//     if (!userFind) {
+//       console.log(userFind);
+//       res
+//         .status(400)
+//         .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+//     } else {
+//       res.status(200).json({ success: true, message: '존재하는 유저입니다.' });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.send(401).send({
+//       message: '예상치 못한 에러가 발생했습니다.',
+//       errorMessage: error,
+//     });
+//   }
+// }
 
 // 이메일과 비밀번호를 body값으로 받고 로그인
 // router.post('/users/password', userController.passwordSecond);
-async function passwordSecond(req, res, next) {
+async function login(req, res, next) {
   try {
     //#swagger.tags= ['로그인 API'];
     //#swagger.summary= '로그인 패스워드 API'
@@ -369,7 +369,7 @@ async function findUser(req, res, next) {
 module.exports = {
   signup,
   emailFirst,
-  passwordSecond,
+  login,
   deleteUser,
   all,
   searchUser,
