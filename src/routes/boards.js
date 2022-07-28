@@ -6,6 +6,8 @@ const multerS3 = require("multer-s3");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const isMember = require("../middlewares/isMember");
+
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.accessKeyId,
@@ -27,18 +29,18 @@ const upload = multer({
   }),
 });
 //글 작성
-router.post("/", upload.single("img"), boardController.createBoard);
+router.post("/", upload.single("img"), isMember,boardController.createBoard);
 
 // 글 전체 조회(임시)
-router.get("/", boardController.showBoards);
+router.get("/:workSpaceName", boardController.showBoards);
 
 // 글 한개 조회
-router.get("/:boardId", boardController.showBoardOne);
+router.get("/:workSpaceName/:boardId", boardController.showBoardOne);
 
 // 글 수정
-router.put("/:boardId", boardController.editBoard);
+router.put("/:boardId", isMember,boardController.editBoard);
 
 // 글 삭제
-router.delete("/:boardId", boardController.deleteBoard);
+router.delete("/:boardId", isMember,boardController.deleteBoard);
 
 module.exports = router;

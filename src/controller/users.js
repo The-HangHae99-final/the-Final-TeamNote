@@ -368,7 +368,6 @@ async function findUser(req, res, next) {
 
 module.exports = {
   signup,
-  emailFirst,
   login,
   deleteUser,
   all,

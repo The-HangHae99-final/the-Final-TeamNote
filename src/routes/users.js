@@ -10,7 +10,7 @@ router.post('/signup', userController.signup);
 
 router.get('/', userController.all);
 
-router.post('/email', userController.emailFirst);
+// router.post('/email', userController.emailFirst);
 
 router.post('/login', userController.login);
 

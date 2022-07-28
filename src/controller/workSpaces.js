@@ -2,7 +2,7 @@ const workSpace = require('../models/workSpace');
 const member = require('../models/member');
 
 //워크스페이스 생성
-async function createWorkSpace(req, res) {
+async function createWorkSpace(req, res, next) {
   try {
     //#swagger.tags= ['워크 스페이스 API'];
     //#swagger.summary= '전체 워크스페이스 생성 API'
