@@ -1,7 +1,7 @@
-const User = require('../models/user');
-const workSpace = require('../models/workSpace');
-const Inviting = require('../models/inviting');
-const member = require('../models/member');
+const User = require("../models/user");
+const workSpace = require("../models/workSpace");
+const Inviting = require("../models/inviting");
+const member = require("../models/member");
 
 //멤버 추가(개발용)
 async function addMember(req, res) {
@@ -56,8 +56,9 @@ async function deleteMember(req, res) {
 //멤버 조회
 async function getMemberList(req, res) {
   try {
-    const { workSpaceName } = req.params;
-    const memberList = await member.find({ workSpace: workSpaceName });
+    const memberList = await member.find({
+      workSpace: req.params.workSpaceName,
+    });
     return res.status(200).json({
       result: memberList,
       success: true,
@@ -120,8 +121,19 @@ async function leaveWorkSpace(req, res) {
       });
     }
 
-    await member.deleteOne({ memberEmail: userEmail });
-    return res.status(200).json({ success: true, message: "탈퇴 성공" });
+    const deletedMember = await member.findOneAndDelete({
+      memberEmail: userEmail,
+      workSpace: targetWorkSpace.name,
+    });
+    if (deletedMember) {
+      return res
+        .status(200)
+        .json({ deletedMember, success: true, message: "탈퇴 성공" });
+
+    } 
+    // else {
+    //   return res.status(400).json({ success: false, message: "탈퇴 실패" });
+    // }
   } catch (err) {
     return res.status(400).json({ success: false, message: "탈퇴 에러" });
   }
@@ -131,7 +143,7 @@ async function leaveWorkSpace(req, res) {
 async function inviteMember(req, res) {
   try {
     const inviter = res.locals.User.userName;
-    console.log('inviter: ', inviter);
+    console.log("inviter: ", inviter);
     const { userEmail, workSpaceName } = req.body;
     const { existMember } = res.locals;
     const { existUser } = res.locals;
@@ -148,7 +160,11 @@ async function inviteMember(req, res) {
         .json({ success: false, message: "이미 워크스페이스 멤버입니다." });
     }
     if (existUser) {
-      const invitedUser = await Inviting.create({ userEmail, workSpaceName, inviter });
+      const invitedUser = await Inviting.create({
+        userEmail,
+        workSpaceName,
+        inviter,
+      });
       return res.status(201).json({
         result: invitedUser,
         success: true,
@@ -192,9 +208,9 @@ async function acceptInviting(req, res, next) {
   try {
     const user = res.locals.User;
     const existWorkSpace = res.locals.workSpace;
-    console.log('초대수락에서 나오는 워크스페이스여부: ', existWorkSpace);
+    console.log("초대수락에서 나오는 워크스페이스여부: ", existWorkSpace);
     const { existMember } = res.locals;
-    console.log('초대수락에서 나오는 멤버여부: ', existMember);
+    console.log("초대수락에서 나오는 멤버여부: ", existMember);
 
     if (!existMember) {
       const createdMember = await member.create({
@@ -204,9 +220,10 @@ async function acceptInviting(req, res, next) {
       });
       res.locals.createdMember = createdMember;
       next();
-    }
-    else{
-      return res.status(400).json({ success: false, message: "이미 멤버로 존재합니다." });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "이미 멤버로 존재합니다." });
     }
   } catch (err) {
     console.log("err: ", err);

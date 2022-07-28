@@ -2,12 +2,21 @@ const workSpace = require('../models/workSpace');
 const member = require('../models/member');
 
 //워크스페이스 생성
-async function createWorkSpace(req, res) {
+async function createWorkSpace(req, res, next) {
   try {
     const existWorkSpace = res.locals.workSpace;
     console.log('넥스트 받아올수 있을까요.: ', existWorkSpace);
     const user = res.locals.User;
+    console.log('유저 이메일 값을 꺼내볼게요: ', user.userEmail);
     const { workSpaceName } = req.body;
+    console.log('바디값으로 받았어요.: ', workSpaceName);
+    const ownerEmail = workSpaceName.split('+')[0]
+    console.log('ownerEmail: ', ownerEmail);
+    
+    if(ownerEmail !== user.userEmail){return res
+      .status(400)
+      .send({ errorMessage: '워크스페이스 이름 값을 전달하는 과정에서 오류 발생하였음.' });}
+
     //만든이가 다른경우 워크스페이스 이름 중복가능을 위함
     if (existWorkSpace) {
       return res
@@ -18,19 +27,20 @@ async function createWorkSpace(req, res) {
         owner: user.userEmail,
         name: workSpaceName,
       });
-      await member.create({
+      const addedOwner = await member.create({
         memberEmail: user.userEmail,
         memberName: user.userName,
         workSpace: workSpaceName,
       });
-      return res.status(201).json(createdWorkSpace);
+      return res.json({ createdWorkSpace, addedOwner });
     }
   } catch (err) {
-    console.log(err);
-    res.status(400).send({
-      errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
-      err,
-    });
+    next(err)
+    // console.log(err);
+    // res.status(400).send({
+    //   errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
+    //   error,
+    // });
   }
 }
 

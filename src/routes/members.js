@@ -15,7 +15,7 @@ router.post(
 );
 
 //멤버 목록 조회
-router.get("/lists/:workSpaceName", isMember, memberController.getMemberList);
+router.get("/lists/:workSpaceName", memberController.getMemberList);
 
 //멤버 삭제
 router.delete(
@@ -27,7 +27,7 @@ router.delete(
 );
 
 //워크스페이스 탈퇴하기
-router.delete("/leaving",isMember,memberController.leaveWorkSpace);
+router.delete("/leaving", isMember, memberController.leaveWorkSpace);
 
 //본인 속한 워크스페이스 목록 조회
 router.get("/spaceLists", memberController.showMyWorkSpaceList);
