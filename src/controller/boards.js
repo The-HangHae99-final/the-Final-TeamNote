@@ -72,7 +72,7 @@ async function showBoards(req, res, next) {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 전체 조회 API'
     //##swagger.description='-'
-    const { workSpaceName } = req.body;
+    const { workSpaceName } = req.params;
     const boards = await Board.find({ workSpaceName }).sort('-boardId');
 
     if (!workSpaceName) {
@@ -106,6 +106,7 @@ async function showBoardOne(req, res, next) {
     //#swagger.summary= '공지글 한개 조회 API'
     //##swagger.description='-'
     const boardId = Number(req.params.boardId);
+    
     const existsBoard = await Board.find({ boardId });
     if (!existsBoard.length) {
       return res

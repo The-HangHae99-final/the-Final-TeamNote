@@ -20,10 +20,10 @@ const manitoRouter = require("./manito");
 
 router.use("/users", userRouter);
 router.use("/members", authMiddleware, memberRouter);
-router.use("/posts", authMiddleware, isMember, postsRouter);
+router.use("/posts", authMiddleware, postsRouter);
 router.use("/messages", authMiddleware, isMember, messageRouter);
 router.use("/work-spaces", authMiddleware, workSpaceRouter);
-router.use("/boards", authMiddleware, isMember, boardRouter);
+router.use("/boards", authMiddleware, boardRouter);
 router.use("/tasks", authMiddleware, isMember, taskRouter);
 router.use("/team-tasks", authMiddleware, isMember, teamTasksRouter);
 router.use("/manito", manitoRouter);
