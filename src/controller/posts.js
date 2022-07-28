@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 글 작성 API
-// router.post('/post', upload.single('image')
+// router.post('/posts', upload.single('image')
 async function createPost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -56,20 +56,20 @@ async function createPost(req, res, next) {
 }
 
 // 일반 글 전체 조회
-// router.post('/post/all', authMiddleware, isMember, postController.postAllView);
+// router.post('/posts', authMiddleware, isMember, postController.postAllView);
 async function showPosts(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
     const { workSpaceName } = req.body;
-    const posts = await Post.findOne({ workSpaceName }).sort('-postId');
-    res.status(200).send({ posts, message: '공지 조회에 성공 했습니다.' });
+    const posts = await Post.find({ workSpaceName }).sort('-postId');
+    res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: '공지 조회에 예상치 못한 에러가 발생 했습니다.',
+      message: '게시물 조회에 예상치 못한 에러가 발생 했습니다.',
       errorMessage: error.message,
     });
   }
@@ -77,7 +77,7 @@ async function showPosts(req, res, next) {
 
 // 글 상세 조회 API
 // 파라미터 값 받아야함
-// router.get('/post/:postId', authMiddleware, isMember, postController.postView);
+// router.get('/posts/:postId', authMiddleware, isMember, postController.postView);
 async function showPostDetail(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -114,7 +114,7 @@ async function showPostDetail(req, res, next) {
 }
 
 // 글 수정
-// router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
+// router.put('/posts/:postId', authMiddleware, isMember, postController.postEdit);
 async function editPost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
