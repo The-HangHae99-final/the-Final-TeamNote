@@ -10,7 +10,7 @@ const { upload } = require("../controller/util/aws-s3");
 router.post("/", upload.single("img"), postController.createPost);
 
 // 글 전체 조회(임시)
-router.get("/", postController.showPosts);
+router.post("/list", postController.showPosts);
 
 // 글 상세 조회
 router.get("/:postId", postController.showPostDetail);
