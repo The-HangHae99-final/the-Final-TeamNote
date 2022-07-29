@@ -84,6 +84,7 @@ async function showPostDetail(req, res, next) {
     //#swagger.summary= '일반게시글 특정 글 조회 API'
     //#swagger.description='-'
     const postId = Number(req.params.postId);
+    const { workSpaceName } = req.body;
     const existsPost = await Post.find({ postId });
 
     if (!postId) {
