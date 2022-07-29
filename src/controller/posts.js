@@ -19,7 +19,7 @@ async function createPost(req, res, next) {
     const { title, desc, label, assignees, workSpaceName, category } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
-    const maxpostId = await Post.findOne().sort({
+    const maxpostId = await Post.find().sort({
       postId: -1,
     });
     // console.log(maxpostId)
@@ -62,7 +62,7 @@ async function showPosts(req, res, next) {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
-    const {workSpaceName} = req.params;
+    const { workSpaceName } = req.body;
     const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
