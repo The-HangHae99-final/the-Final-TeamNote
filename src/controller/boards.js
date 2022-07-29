@@ -18,7 +18,7 @@ async function createBoard(req, res, next) {
     //##swagger.description='-'
     const image = req.file.location;
     const { userName } = res.locals.User;
-    const { title, content, workSpaceName } = req.body;
+    const { content, workSpaceName } = req.body;
     const maxboardId = await Board.findOne().sort({
       boardId: -1,
     });
@@ -27,7 +27,7 @@ async function createBoard(req, res, next) {
     if (maxboardId) {
       boardId = maxboardId.boardId + 1;
     }
-    if (!userName || !boardId || title || content || workSpaceName) {
+    if (!userName || !boardId || content || workSpaceName) {
       res.status(400).send({
         success: false,
         errorMessage: '필요한 항목을 모두 입력해주세요.',
@@ -45,7 +45,6 @@ async function createBoard(req, res, next) {
       boardId,
       workSpaceName,
       userName,
-      title,
       content,
       createdTime,
     });
@@ -147,7 +146,7 @@ async function editBoard(req, res, next) {
     const boardId = Number(req.params.boardId);
     const [existBoard] = await Board.find({ boardId });
     const { user } = res.locals;
-    const { title, content } = req.body;
+    const { content } = req.body;
 
     if (!boardId) {
       res
@@ -164,13 +163,13 @@ async function editBoard(req, res, next) {
         .status(401)
         .json({ success: false, message: '작성자가 아닙니다.' });
     }
-    if (!title || !content) {
+    if (!content) {
       return res
         .status(400)
         .json({ success: false, message: '빈값을 채워주세요' });
     }
 
-    await Board.updateOne({ boardId }, { $set: { title, content } });
+    await Board.updateOne({ boardId }, { $set: { content } });
     return res.status(200).json({
       result: await Board.findOne({ boardId }),
       success: true,
