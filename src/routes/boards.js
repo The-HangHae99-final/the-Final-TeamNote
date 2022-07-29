@@ -29,7 +29,7 @@ const upload = multer({
   }),
 });
 //글 작성
-router.post("/", upload.single("img"), isMember,boardController.createBoard);
+router.post("/", isMember,boardController.createBoard);
 
 // 글 전체 조회(임시)
 router.get("/:workSpaceName", boardController.showBoards);

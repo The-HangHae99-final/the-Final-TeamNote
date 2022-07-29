@@ -1,5 +1,5 @@
-const Board = require('../models/board');
-const boardComment = require('../models/boardComment');
+const Board = require("../models/board");
+const boardComment = require("../models/boardComment");
 
 //공지 글 작성하기
 // /board/:workSpaceName
@@ -16,48 +16,53 @@ async function createBoard(req, res, next) {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 등록 API'
     //##swagger.description='-'
-    const image = req.file.location;
+    // const image = req.file.location;
     const { userName } = res.locals.User;
     const { content, workSpaceName } = req.body;
+    const createdTime = new Date();
+
     const maxboardId = await Board.findOne().sort({
       boardId: -1,
     });
 
     let boardId = 1;
+    
     if (maxboardId) {
       boardId = maxboardId.boardId + 1;
     }
-    if (!userName || !boardId || content || workSpaceName) {
+    console.log('boardId: ', boardId);
+    if (!userName || !content || !workSpaceName) 
+    {
       res.status(400).send({
         success: false,
-        errorMessage: '필요한 항목을 모두 입력해주세요.',
+        errorMessage: "필요한 항목을 전부 입력해주세요.",
       });
     }
-    if (!image) {
-      res
-        .status(400)
-        .send({ success: false, errorMessage: '이미지가 없습니다.' });
-    }
-
-    const createdTime = new Date();
-    const createdBoard = await Board.create({
-      image,
+    // if (!image) {
+    //   res
+    //     .status(400)
+    //     .send({ success: false, errorMessage: '이미지가 없습니다.' });
+    // }
+    else{
+      const createdBoard = await Board.create({
+      // image,
       boardId,
       workSpaceName,
       userName,
       content,
       createdTime,
     });
-    return res.json({
+    return res.status(201).json({
       result: createdBoard,
       success: true,
-      message: '게시물 작성 성공',
-    });
+      message: "게시물 작성 성공",
+    });}
+    
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: '요청한 데이터 형식이 올바르지 않습니다.',
+      message: "요청한 데이터 형식이 올바르지 않습니다.",
       errorMessage: error.message,
     });
   }
@@ -71,21 +76,21 @@ async function showBoards(req, res, next) {
     //#swagger.tags= ['공지글 API'];
     //#swagger.summary= '공지글 전체 조회 API'
     //##swagger.description='-'
-    const {workSpaceName} = req.params;
-    const boards = await Board.find({ workSpaceName }).sort('-boardId');
+    const { workSpaceName } = req.params;
+    const boards = await Board.find({ workSpaceName }).sort("-boardId");
 
     if (!workSpaceName) {
       res
         .status(400)
-        .send({ success: false, message: '워크 스페이스 네임이 없습니다.' });
+        .send({ success: false, message: "워크 스페이스 네임이 없습니다." });
     }
 
-    res.send({ boards, message: '공지 조회에 성공 했습니다.' });
+    res.send({ boards, message: "공지 조회에 성공 했습니다." });
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
-      Message: '공지 조회에 실패 했습니다.',
+      Message: "공지 조회에 실패 했습니다.",
       errorMessage: error.message,
     });
   }
@@ -109,12 +114,12 @@ async function showBoardOne(req, res, next) {
     if (!existsBoard.length) {
       return res
         .status(400)
-        .json({ success: false, errorMessage: '찾는 게시물이 없습니다.' });
+        .json({ success: false, errorMessage: "찾는 게시물이 없습니다." });
     }
     if (!boardId) {
       res
         .status(400)
-        .send({ success: false, message: '공지 아이디가 없습니다.' });
+        .send({ success: false, message: "공지 아이디가 없습니다." });
     }
 
     const existsComment = await boardComment.find({ boardId }).sort({
@@ -125,7 +130,7 @@ async function showBoardOne(req, res, next) {
     console.log(err);
     res.status(400).send({
       success: false,
-      Message: '요청한 데이터 형식이 올바르지 않습니다.',
+      Message: "요청한 데이터 형식이 올바르지 않습니다.",
       errorMessage: err.message,
     });
   }
@@ -151,34 +156,34 @@ async function editBoard(req, res, next) {
     if (!boardId) {
       res
         .status(400)
-        .send({ success: false, message: '공지 아이디가 없습니다.' });
+        .send({ success: false, message: "공지 아이디가 없습니다." });
     }
 
     if (!user) {
     }
-    res.status(400).send({ success: false, message: '유저 정보가 없습니다.' });
+    res.status(400).send({ success: false, message: "유저 정보가 없습니다." });
 
     if (user.userName !== existBoard.userName) {
       return res
         .status(401)
-        .json({ success: false, message: '작성자가 아닙니다.' });
+        .json({ success: false, message: "작성자가 아닙니다." });
     }
     if (!content) {
       return res
         .status(400)
-        .json({ success: false, message: '빈값을 채워주세요' });
+        .json({ success: false, message: "빈값을 채워주세요" });
     }
 
     await Board.updateOne({ boardId }, { $set: { content } });
     return res.status(200).json({
       result: await Board.findOne({ boardId }),
       success: true,
-      message: '게시글 수정 성공',
+      message: "게시글 수정 성공",
     });
   } catch (err) {
     return res.status(400).json({
       success: false,
-      message: '게시글 수정 에러',
+      message: "게시글 수정 에러",
       errorMessage: err.message,
     });
   }
@@ -198,25 +203,25 @@ async function deleteBoard(req, res, next) {
     if (!boardId) {
       res
         .status(400)
-        .send({ success: false, message: '공지 아이디가 없습니다.' });
+        .send({ success: false, message: "공지 아이디가 없습니다." });
     }
 
     if (!userName) {
     }
-    res.status(400).send({ success: false, message: '유저 이름이 없습니다.' });
+    res.status(400).send({ success: false, message: "유저 이름이 없습니다." });
 
     if (userName !== targetBoard.userName) {
       return res.status(401).json({
         success: false,
-        message: '작성자가 아닙니다.',
+        message: "작성자가 아닙니다.",
       });
     }
     await Board.deleteOne({ boardId });
-    return res.json({ success: true, message: '게시글 삭제 성공' });
+    return res.json({ success: true, message: "게시글 삭제 성공" });
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: '게시글 삭제 실패',
+      message: "게시글 삭제 실패",
       errorMessage: error.message,
     });
   }

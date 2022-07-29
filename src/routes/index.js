@@ -29,7 +29,7 @@ router.use("/team-tasks", authMiddleware, isMember, teamTasksRouter);
 router.use("/manito", manitoRouter);
 router.use("/", kakaoRouter);
 router.use("/", naverRouter);
-router.use("/posts", authMiddleware, isMember, postCommentRouter);
-router.use("/boards", authMiddleware, isMember, boardCommentRouter);
+router.use("/post-comments", authMiddleware, isMember, postCommentRouter);
+router.use("/board-comments", authMiddleware, isMember, boardCommentRouter);
 
 module.exports = router;
