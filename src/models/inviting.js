@@ -7,6 +7,10 @@ const invitingSchema = new mongoose.Schema({
   userEmail: {
     type: String,
     required: true,
+  },
+  inviter: {
+    type: String,
+    required: true
   }
 });
 

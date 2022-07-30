@@ -10,10 +10,9 @@ router.post('/signup', userController.signup);
 
 router.get('/', userController.all);
 
-router.post('/email', userController.emailFirst);
+// router.post('/email', userController.emailFirst);
 
-router.post('/password', userController.passwordSecond);
-
+router.post('/login', userController.login);
 
 router.delete('/:userEmail', userController.deleteUser);
 

@@ -8,5 +8,5 @@ const MypageSchema = new mongoose.Schema({
   },
 });
 
-const Mypage =  mongoose.model('mypage', MypageSchema);
+const Mypage = mongoose.model('mypage', MypageSchema);
 module.exports = Mypage;

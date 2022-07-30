@@ -1,5 +1,4 @@
-
-const Message = require('../model/message');
+const Message = require('../models/message');
 
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
@@ -24,7 +23,6 @@ const upload = multer({
     },
   }),
 });
-
 
 // 메시지 수정
 // api/message/:_id
@@ -77,12 +75,12 @@ async function deleteMessage(req, res) {
     const targetMessage = await Message.findById(messageId);
 
     if (!targetMessage.length) {
-      return res.status(400).json({
+      return res.status(409).json({
         success: false,
         message: '해당 메시지가 존재하지 않습니다.',
       });
     } else if (targetMessage[0].author !== author) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message: '본인만 삭제 가능 합니다.',
       });
@@ -121,9 +119,11 @@ async function showMessage(req, res) {
   }
 }
 
-
 async function postImage(req, res, next) {
   try {
+    //#swagger.tags= ['메세지 API'];
+    //#swagger.summary= '메세지 사진 업로드 API'
+    //#swagger.description='-'
     console.log('경로 정보입니다.', req.file.location);
     console.log('req.body정보', req.body.title);
     res.json({ success: true, message: '이미지 업로드에 성공하였습니다.' });
@@ -135,7 +135,6 @@ async function postImage(req, res, next) {
     });
   }
 }
-
 
 module.exports = {
   editMessage,

@@ -1,4 +1,4 @@
-const TeamTask = require('../model/teamTask');
+const TeamTask = require('../models/teamTask');
 const moment = require('moment');
 const urlencode = require('urlencode');
 

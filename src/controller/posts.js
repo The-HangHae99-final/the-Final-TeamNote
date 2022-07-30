@@ -1,5 +1,5 @@
-const Post = require('../model/post');
-const postComment = require('../model/postComment');
+const Post = require('../models/post');
+const postComment = require('../models/postComment');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const multer = require('multer');
@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 글 작성 API
-// router.post('/post', upload.single('image')
+// router.post('/posts', upload.single('image')
 async function createPost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -19,7 +19,7 @@ async function createPost(req, res, next) {
     const { title, desc, label, assignees, workSpaceName, category } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
-    const maxpostId = await Post.findOne().sort({
+    const maxpostId = await Post.find().sort({
       postId: -1,
     });
     // console.log(maxpostId)
@@ -56,7 +56,7 @@ async function createPost(req, res, next) {
 }
 
 // 일반 글 전체 조회
-// router.post('/post/all', authMiddleware, isMember, postController.postAllView);
+// router.post('/posts', authMiddleware, isMember, postController.postAllView);
 async function showPosts(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -64,12 +64,12 @@ async function showPosts(req, res, next) {
     //##swagger.description='-'
     const { workSpaceName } = req.body;
     const posts = await Post.find({ workSpaceName }).sort('-postId');
-    res.send({ posts, message: '공지 조회에 성공 했습니다.' });
+    res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: '공지 조회에 예상치 못한 에러가 발생 했습니다.',
+      message: '게시물 조회에 예상치 못한 에러가 발생 했습니다.',
       errorMessage: error.message,
     });
   }
@@ -77,13 +77,14 @@ async function showPosts(req, res, next) {
 
 // 글 상세 조회 API
 // 파라미터 값 받아야함
-// router.get('/post/:postId', authMiddleware, isMember, postController.postView);
+// router.get('/posts/:postId', authMiddleware, isMember, postController.postView);
 async function showPostDetail(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
     //#swagger.summary= '일반게시글 특정 글 조회 API'
     //#swagger.description='-'
     const postId = Number(req.params.postId);
+    const { workSpaceName } = req.body;
     const existsPost = await Post.find({ postId });
 
     if (!postId) {
@@ -114,7 +115,7 @@ async function showPostDetail(req, res, next) {
 }
 
 // 글 수정
-// router.put('/post/:postId', authMiddleware, isMember, postController.postEdit);
+// router.put('/posts/:postId', authMiddleware, isMember, postController.postEdit);
 async function editPost(req, res, next) {
   try {
     //#swagger.tags= ['일반 게시글 API'];
@@ -215,6 +216,9 @@ async function deletePost(req, res, next) {
 // image 단일 업로드 API
 async function postImage(req, res, next) {
   try {
+    //#swagger.tags= ['일반 게시글 API'];
+    //#swagger.summary= '일반 게시글 단일 이미지 업로드 API'
+    //#swagger.description='-'
     console.log('경로 정보입니다.', req.file.location);
     console.log('req.body정보', req.body.title);
     res.json({ success: true, message: '이미지 업로드에 성공하였습니다.' });

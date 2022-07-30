@@ -1,5 +1,5 @@
-const Board = require('../model/board');
-const boardComment = require('../model/boardComment');
+const Board = require('../models/board');
+const boardComment = require('../models/boardComment');
 
 //code :102 공지 댓글 작성하기
 //  api/board/:boardId

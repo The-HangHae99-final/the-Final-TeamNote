@@ -9,9 +9,9 @@ const memberSchema = new mongoose.Schema({
     required: true,
   },
   workSpace: {
-      type: String,
-      required: true,
-  }
+    type: String,
+    required: true,
+  },
 });
 
 const member = mongoose.model('member', memberSchema);
