@@ -58,5 +58,4 @@ jobs:
             git config --global --add safe.directory /home/ubuntu/the-Final-TeamNote
             git pull origin main
             docker-compose down
-            sudo docker image prune -f
             docker-compose up -d --build
