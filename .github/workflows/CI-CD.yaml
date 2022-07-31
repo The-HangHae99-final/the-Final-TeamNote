@@ -26,12 +26,12 @@ jobs:
       - name: Generate Environment Variables File for Production
         run: |
           echo "YOUR_CLIENT_ID=$YOUR_CLIENT_ID" >> .env.production
-          echo "SECRET_KEY=$SECRET_KEY" >> .env
+          echo "SECRET_KEY=$SECRET_KEY" >> .env.production
           echo "YOUR_CLIENT_SECRET=$YOUR_CLIENT_SECRET" >> .env.production
-          echo "PORT=$PORT" >> .env
-          echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env
+          echo "PORT=$PORT" >> .env.production
+          echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env.production
           echo "SECRETACCESSKEY=$SECRETACCESSKEY" >> .env.production
-          echo "PASSWORD=$PASSWORD" >> .env
+          echo "PASSWORD=$PASSWORD" >> .env.production
           echo "NAVER_SECRET=$NAVER_SECRET" >> .env.production
           echo "NAVER_ID=$NAVER_ID" >> .env.production
           echo "DB_NAME=$DB_NAME" >> .env.production
