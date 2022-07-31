@@ -1,4 +1,4 @@
-name: ci-cd-pipeline.
+name: ci-cd-pipeline
 on:
   push:
     branches: [main]
@@ -57,9 +57,7 @@ jobs:
 #           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-team:latest
 #       - name: Image digest
 #         run: echo ${{ steps.docker_build.outputs.digest }}
-  
-  
-  dockerPush_AND_deploy:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -73,11 +71,8 @@ jobs:
           script: |
             cd /home/ubuntu/the-Final-TeamNote
             git config --global --add safe.directory /home/ubuntu/the-Final-TeamNote
-            git pull origin main      
+            git pull origin main
             docker rm -f $(docker ps -qa)
-            docker rmi -f $(docker images -q) 
+            docker rmi -f $(docker images -q) 
             docker buildx build --push --platform linux/amd64 --tag hayeonkimm/docker-team .
             docker-compose up -d --build
-
- 
-
