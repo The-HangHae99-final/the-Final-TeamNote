@@ -73,27 +73,11 @@ jobs:
           script: |
             cd /home/ubuntu/the-Final-TeamNote
             git config --global --add safe.directory /home/ubuntu/the-Final-TeamNote
-            git pull origin main
-            
-            
-            echo "YOUR_CLIENT_ID=$YOUR_CLIENT_ID" >> .env
-            echo "SECRET_KEY=$SECRET_KEY" >> .env
-            echo "YOUR_CLIENT_SECRET=$YOUR_CLIENT_SECRET" >> .env
-            echo "PORT=$PORT" >> .env
-            echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env
-            echo "secretAccessKey=$SECRETACCESSKEY" >> .env
-            echo "password=$PASSWORD" >> .env
-            echo "NAVER_SECRET=$NAVER_SECRET" >> .env
-            echo "NAVER_ID=$NAVER_ID" >> .env
-            echo "DB_NAME=$DB_NAME" >> .env
-            echo "COOKIE_SECRET=$COOKIE_SECRET" >> .env
-            echo "client_id=$CLIENT_ID" >> .env
-            echo "accessKeyId=$ACCESSKEYID" >> .env
-            
-            
+            git pull origin main      
             docker rm -f $(docker ps -qa)
             docker rmi -f $(docker images -q) 
+            docker buildx build --push --platform linux/amd64 --tag hayeonkimm/docker-team .
             docker-compose up -d --build
-#           docker buildx build --push --platform linux/amd64 --tag hayeonkimm/docker-team .
+
  
 
