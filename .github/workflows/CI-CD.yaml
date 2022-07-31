@@ -45,7 +45,7 @@ jobs:
         
         
   deploy:
-    needs: build
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
