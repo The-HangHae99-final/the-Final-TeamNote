@@ -6,7 +6,7 @@ const request = require('supertest');
 const app = require('../../app');
 const httpMocks = require('node-mocks-http');
 const userData = require('../data/user.json');
-const User = require('../../src/model/user');
+const User = require('../../src/models/user');
 const userEmail = 'test@test.com';
 User.find = jest.fn();
 User.findById = jest.fn();
@@ -61,24 +61,14 @@ describe('test 회원가입 API ', () => {
 
 //===============로그인======================
 describe('test 로그인 API', () => {
-  it('should have a getProducts function', () => {
-    expect(typeof userController.emailFirst).toBe('function');
-  });
-
-  it('should emailFirst 는 응답값으로 object 값을 반환한다.', async () => {
-    User.find.mockReturnValue(userData);
-    await userController.emailFirst(req, res, next);
-    expect(typeof res._getData()).toBe('object');
-  });
-
-  describe('should passwordSecond는 함수여야 한다.', () => {
+  describe('should login은  함수여야 한다.', () => {
     it('should have a getProducts function', () => {
-      expect(typeof userController.passwordSecond).toBe('function');
+      expect(typeof userController.login).toBe('function');
     });
 
     it('should 응답값으로 object 값을 반환한다.', async () => {
       User.find.mockReturnValue(userData);
-      await userController.passwordSecond(req, res, next);
+      await userController.login(req, res, next);
       expect(typeof res._getData()).toBe('object');
     });
   });

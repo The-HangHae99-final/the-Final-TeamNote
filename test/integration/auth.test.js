@@ -42,39 +42,25 @@ describe('POST /api/signup 회원가입', function () {
     );
   });
 });
-//===============이메일======================
-
-// expect(res.body).toEqual('Post not found');
-describe('POST /api/email', function () {
-  test('이메일 조건이 맞다면 통과', async () => {
-    const emailInvalid = await request(app).post('/api/users/email').send({
-      userEmail: 'email@email.com',
-    });
-    expect(emailInvalid.body.message).toBe('존재하는 유저입니다.');
-  });
-  test('이메일이 없다면 에러 발생', async () => {
-    const emailInvalid = await request(app).post('/api/users/email').send({
-      userEmail: 'email119@email.com',
-    });
-    expect(emailInvalid.body.errorMessage).toBe('존재하지 않는 유저입니다.');
-  });
-});
 
 //===============최종 로그인======================
 
-describe('POST /api/password', function () {
+describe('POST /api/login', function () {
   test('이메일 비밀번호 맞다면 통과', async () => {
-    const loginInvalid = await request(app).post('/api/users/password').send({
-      userEmail: 'email@email.com',
-      password: '123456',
+    const loginInvalid = await request(app).post('/api/users/login').send({
+      userEmail: 'geguri10@aaa.com',
+      password: '123123',
     });
+    console.log(loginInvalid.body, '--------z');
     expect(loginInvalid.body.message).toBe('로그인에 성공하였습니다.');
   });
   test('이메일이 없다면 에러 발생', async () => {
     const loginInvalid = await request(app)
-      .post('/api/users/password')
-      .send({});
-    console.log(loginInvalid.body);
-    expect(loginInvalid.body.errorMessage).toBe('일치하는 이메일이 없습니다.');
+      .post('/api/users/login')
+      .send({ userEmaill: '', password: '123123' });
+    console.log(loginInvalid.body, '----0');
+    expect(loginInvalid.body.errorMessage).toBe(
+      '이메일 또는 비밀번호가 입력되지 않았습니다.'
+    );
   });
 });

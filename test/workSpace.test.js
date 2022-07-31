@@ -1,5 +1,5 @@
 const workSpaceController = require('../src/controller/workSpaces');
-const workSpace = require('../src/schemas/workSpace');
+const workSpace = require('../src/models/workSpace');
 const httpMocks = require('node-mocks-http');
 const newWorkSpace = require('./data/workSpace.json');
 const workSpaceList = require('./data/workSpaceList.json');
@@ -42,7 +42,7 @@ describe('workSpace Controller Create', () => {
   it('should return json body in res', async () => {
     workSpace.create.mockReturnValue(newWorkSpace);
     await workSpaceController.create(req, res, next);
-    expect(res._getJSONData()).toStrictEqual(newWorkSpace);
+    expect(res._getData()).toStrictEqual(newWorkSpace);
   });
   // it("should handle erros", async () => {
   //   const errorMessage = { message: "요청한 데이터 형식이 올바르지 않습니다." };

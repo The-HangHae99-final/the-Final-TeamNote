@@ -6,19 +6,23 @@ const io = socketIo(http, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST'],
+    credentials: true,
+    transports: ['websocket', 'polling'],
   },
+  allowEIO3: true,
 });
+
 const chatspace = io.of('/chat');
 chatspace.on('connection', (socket) => {
   console.log(`User Connected: ${socket.id}`); //연결에 사용되는 소켓 정보
 
-  socket.on("join_room", async (room) => {
-      socket.join(room);
-      console.log("room: ", `${room}에 입장.`);
-    
-      const chat_list = await Message.find({ room });
-      socket.emit("chat_list", chat_list);
-    });
+  socket.on('join_room', async (room) => {
+    socket.join(room);
+    console.log('room: ', `${room}에 입장.`);
+
+    const chat_list = await Message.find({ room });
+    socket.emit('chat_list', chat_list);
+  });
 
   socket.on('send_message', async (messageData) => {
     const messages = new Message(messageData);

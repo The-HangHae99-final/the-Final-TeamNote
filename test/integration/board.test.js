@@ -1,7 +1,7 @@
 const dotenv = require('dotenv').config();
 const request = require('supertest');
 const app = require('../../app');
-const url = 'https://0jun.shop';
+const url = 'http://43.200.170.45/';
 
 const TOKEN =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
@@ -83,17 +83,19 @@ describe('POST /api/boards 일반 게시물 작성', function () {
       .expect(200, done);
   });
 
-  test('로그인 하였지만, 누락됐을때', async () => {
+  test('로그인 하였지만, 토큰이 만료되었을때', async () => {
     const boardValid = await request(app)
       .post('/api/boards')
       .set('Authorization', `Bearer ${TOKEN}`)
       .send({
         workSpaceName: 'test@test.com+124124',
       });
-    expect(boardValid.body.errorMessage).toBe(400);
+    expect(boardValid.body.errorMessage).toBe(
+      '로그인이 필요합니다. -----------그외-----------'
+    );
   });
   test('로그인 안하고 글 쓰려고 하면 에러발생', async () => {
-    const boardVaild = await request(app).post('/api/boards').send({
+    const boardValid = await request(app).post('/api/boards').send({
       title: '123',
       workSpaceName: '123',
       image: '123',
