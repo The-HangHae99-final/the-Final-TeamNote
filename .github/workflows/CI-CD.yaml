@@ -56,5 +56,6 @@ jobs:
           script: |
             cd /home/ubuntu/the-Final-TeamNote
             git config --global --add safe.directory /home/ubuntu/the-Final-TeamNote
+            git pull origin main
             docker-compose down
-            docker-compose up -d
+            docker-compose up -d --build
