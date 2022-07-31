@@ -30,7 +30,6 @@ const client_id = process.env.client_id;
 const KAKAO_REDIRECT_URL =
   'http://teamnote-dev.s3-website.ap-northeast-2.amazonaws.com/api/oauth/login/kakao/callback';
 
-//teamnote-dev.s3-website.ap-northeast-2.amazonaws.com/api/oauth/login/kakao/callback
 // post- '/auth/login/kakao/callback'
 // 프론트에게 인가코드 받고, 엑세스 토큰 발급받아 프론트에게 다시 넘겨주기.
 function kakao_callback(req, res, next) {
