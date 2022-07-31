@@ -57,7 +57,7 @@ jobs:
 #           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-team:latest
 #       - name: Image digest
 #         run: echo ${{ steps.docker_build.outputs.digest }}
-  deploy:
+  dockerPush_AND_deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
