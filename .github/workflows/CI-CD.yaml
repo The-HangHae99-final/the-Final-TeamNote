@@ -42,8 +42,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-memo:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-        
-        
   deploy:
     needs: build-image
     runs-on: ubuntu-latest
