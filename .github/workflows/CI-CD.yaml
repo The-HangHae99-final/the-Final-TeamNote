@@ -41,23 +41,12 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-team:latest
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}      
-  cd-pipeline:
+        run: echo ${{ steps.docker_build.outputs.digest }}
+  deploy:
     needs: build-image
-    name: continuos deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
-          source: "docker-compose.yaml"
-          target: "/home/ubuntu/the-Final-TeamNote/"
-      - name: executing remote ssh commands using password
+      - name: Deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -65,10 +54,8 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-            "cd /the-Final-TeamNote/"
-            "docker-compose pull && docker-compose up -d"            
-            
-            
-            
-            
-            
+            cd /home/ubuntu/the-Final-TeamNote
+            git config --global --add safe.directory /home/ubuntu/the-Final-TeamNote
+            git pull origin main
+            docker-compose up -d --build
+            docker image prune -f
