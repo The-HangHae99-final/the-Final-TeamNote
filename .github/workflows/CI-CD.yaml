@@ -1,4 +1,4 @@
-name: ci-pipeline
+name: ci/cd-pipeline
 on:
   push:
     branches: [main]
