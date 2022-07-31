@@ -1,4 +1,4 @@
-name: Node.js CICD
+name: Node.js CD
 
 on:
   push:
