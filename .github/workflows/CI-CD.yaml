@@ -64,8 +64,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
-          script: 
-            -"cd /home/ubuntu/the-Final-TeamNote/"
+          script: |
+            "cd /home/ubuntu/the-Final-TeamNote/"
             "docker-compose pull && docker-compose up -d"            
             
             
