@@ -160,7 +160,7 @@ async function signup(req, res, next) {
 // }
 
 // 이메일과 비밀번호를 body값으로 받고 로그인
-// router.post('/users/password', userController.passwordSecond);
+// router.post('/users/login', userController.login);
 async function login(req, res, next) {
   try {
     //#swagger.tags= ['로그인 API'];
@@ -176,9 +176,7 @@ async function login(req, res, next) {
         success: false,
         errorMessage: '이메일 또는 비밀번호가 입력되지 않았습니다.',
       });
-    }
-
-    if (!userFind) {
+    } else if (!userFind) {
       res
         .status(400)
         .send({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
@@ -215,11 +213,6 @@ async function login(req, res, next) {
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
     console.log('error----' + error);
-    res.status(400).send({
-      success: false,
-      errorMessage: error.message,
-      message: '예상치 못한 이유로 로그인에 실패 하였습니다.',
-    });
   }
 }
 

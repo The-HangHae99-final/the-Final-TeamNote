@@ -25,7 +25,7 @@ async function createPost(req, res, next) {
     // console.log(maxpostId)
     let postId = 1;
     if (maxpostId) {
-      postId = Number(maxpostId.postId) + 1;
+      postId = maxpostId.postId + 1;
     }
 
     const createdPost = await Post.create({

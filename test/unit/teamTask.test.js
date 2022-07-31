@@ -2,9 +2,11 @@ const teamTaskController = require('../../src/controller/teamTasks');
 const request = require('supertest');
 const app = require('../../app');
 const httpMocks = require('node-mocks-http');
-const teamTasks = require('../../src/model/teamTask');
+const teamTasks = require('../../src/models/teamTask');
 const boardData = require('../data/board.json');
 const userEmail = 'test@test.com';
+const locals = require('../data/locals.json');
+
 teamTasks.findOne = jest.fn();
 teamTasks.find = jest.fn();
 teamTasks.findById = jest.fn();
@@ -17,6 +19,7 @@ beforeEach(() => {
   req = httpMocks.createRequest();
   res = httpMocks.createResponse();
   next = jest.fn();
+  res.locals.user = locals;
 });
 
 //===============팀 일정 생성하기======================
@@ -100,6 +103,7 @@ describe('test 글 삭제 API', () => {
   });
   it('deleteTeamTask의 실패 결과값은 string을 반환해야 한다.', async () => {
     req.params.boardId = 1;
+
     await teamTaskController.deleteTeamTask(req, res, next);
     console.log('-----', res._getData());
     expect(typeof res._getData()).toBe('string');
