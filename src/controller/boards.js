@@ -28,7 +28,7 @@ async function createBoard(req, res, next) {
     let boardId = 1;
 
     if (maxboardId) {
-      boardId = maxboardId.boardId + 1;
+      boardId = Number(maxboardId.boardId) + 1;
     }
     console.log('boardId: ', boardId);
     if (!userName || !content || !workSpaceName) {
