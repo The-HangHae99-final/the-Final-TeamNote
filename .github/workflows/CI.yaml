@@ -1,7 +1,9 @@
 name: ci-pipeline
 on:
   push:
-    branches: [main, hayeon]
+    branches: [main]
+  pull_request:
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
