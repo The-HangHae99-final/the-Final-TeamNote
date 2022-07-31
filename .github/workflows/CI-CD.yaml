@@ -61,3 +61,4 @@ jobs:
             docker rmi -f $(docker images -q) 
             docker-compose up -d --build
             docker image prune -f
+            -v /home/ubuntu/the-Final-TeamNote/.env:/the-Final-TeamNote/.env \
