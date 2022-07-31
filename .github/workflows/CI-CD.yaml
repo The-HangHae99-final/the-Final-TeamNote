@@ -11,6 +11,7 @@ jobs:
       matrix:
         node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -21,6 +22,23 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
 #       - run: npm test
+
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "YOUR_CLIENT_ID=$YOUR_CLIENT_ID" >> .env
+          echo "SECRET_KEY=$SECRET_KEY" >> .env
+          echo "YOUR_CLIENT_SECRET=$YOUR_CLIENT_SECRET" >> .env
+          echo "PORT=$PORT" >> .env
+          echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env
+          echo "SECRETACCESSKEY=$SECRETACCESSKEY" >> .env
+          echo "PASSWORD=$PASSWORD" >> .env
+          echo "NAVER_SECRET=$NAVER_SECRET" >> .env
+          echo "NAVER_ID=$NAVER_ID" >> .env
+          echo "DB_NAME=$DB_NAME" >> .env
+          echo "COOKIE_SECRET=$COOKIE_SECRET" >> .env
+          echo "CLIENT_ID=$CLIENT_ID" >> .env
+          echo "ACCESSKEYID=$ACCESSKEYID" >> .env
+
   build-image:
     needs: build
     runs-on: ubuntu-latest
