@@ -1,0 +1,27 @@
+name: Node.js CICD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/ubuntu/the-Final-TeamNote
+            git config --global --add safe.directory /home/ubuntu/the-Final-TeamNote
+            docker pull hayeonkimm/docker-team:latest
+            docker-compose down
+            docker-compose up -d
+            
