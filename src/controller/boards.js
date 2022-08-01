@@ -21,7 +21,7 @@ async function createBoard(req, res, next) {
     const { content, workSpaceName } = req.body;
     const createdTime = new Date();
 
-    const maxboardId = await Board.find().sort({
+    const maxboardId = await Board.findOne().sort({
       boardId: -1,
     });
 
