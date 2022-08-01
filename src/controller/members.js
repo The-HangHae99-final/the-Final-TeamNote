@@ -65,7 +65,7 @@ async function getMemberList(req, res) {
     //#swagger.tags= ['워크 스페이스 멤버 API'];
     //#swagger.summary= '멤버 조회 API'
     //#swagger.description='-'
-    const { workSpaceName } = req.params;
+    const {workSpaceName} = req.params;
     const memberList = await member.find({ workSpace: workSpaceName });
     return res.status(200).json({
       result: memberList,

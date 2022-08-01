@@ -45,7 +45,6 @@ async function createPost(req, res, next) {
       success: true,
       message: '게시물 작성 성공',
     });
-    res.json({ result: true });
   } catch (error) {
     res.send({
       success: false,
