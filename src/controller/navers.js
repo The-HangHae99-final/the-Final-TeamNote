@@ -129,7 +129,7 @@ async function naver_parsing(req, res) {
 
     // 리프레시 토큰 생성
 
-    const token = jwt.sign({ userEmail }, jwtSecret, {
+    let token = jwt.sign({ userEmail }, jwtSecret, {
       expiresIn: '1h',
     });
 
