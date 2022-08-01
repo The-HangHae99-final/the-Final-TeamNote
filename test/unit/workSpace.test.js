@@ -59,7 +59,7 @@ describe("워크스페이스 생성", () => {
     };
     workSpace.create.mockReturnValue(createdWorkSpace, addedOwner);
     await workSpaceController.createWorkSpace(req, res, next);
-    expect(res._getJSONData()).toStrictEqual(createdWorkSpace, addedOwner);
+    expect(res._getJSONData()).toStrictEqual({createdWorkSpace}, {addedOwner});
   });
 });
 

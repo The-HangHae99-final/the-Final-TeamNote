@@ -22,7 +22,7 @@ async function createWorkSpace(req, res, next) {
       memberName: user.userName,
       workSpace: workSpaceName,
     });
-    return res.status(201).json(createdWorkSpace, addedOwner);
+    return res.status(201).json({createdWorkSpace, addedOwner});
   } catch (err) {
     console.log(err);
     res.status(400).send({
