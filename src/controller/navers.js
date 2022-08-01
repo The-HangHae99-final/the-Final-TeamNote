@@ -122,7 +122,6 @@ async function naver_parsing(req, res) {
       'user_info-----------------------------------------',
       user_info
     );
-    const _user = user_info.user_id;
     const userEmail = user_info.user_email;
     const userName = user_info.user_name;
     const double = await User.findOne({ userEmail });
