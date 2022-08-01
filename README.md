@@ -1,6 +1,6 @@
 # 💻 TEAM NOTE - Backend
 
-## 🏠 [Home Page Link](https://www.antsori.com)
+## 🏠 [Home Page Link](https://teamnote.co.kr)
 
 #
 
