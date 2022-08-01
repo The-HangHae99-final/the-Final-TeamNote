@@ -133,30 +133,18 @@ async function naver_parsing(req, res) {
       expiresIn: '1h',
     });
 
-    const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: '14d',
-    });
-
     if (!double) {
-      const social = new User({ userName, userEmail, site, refresh_token });
+      // 이메일 인증하기
+      const social = new User({ userEmail, userName, site }); // auth는 false 디폴트
+      // 저장하기
       social.save();
-      res.send('저장에 성공하였습니다.');
-    } else if (double.userName == userName) {
-      //이름까지 같다면 통과, 리프레시 토큰만 대체
-      await double.update({ refresh_token }, { $: { userEmail } });
-      res
-        .status(200)
-        .json({ token, success: true, message: '리프레시 토큰 대체 성공' });
+      res.send({ token });
     } else {
-      // 랜덤난수 생성
-      min = Math.ceil(111111);
-      max = Math.floor(999999);
-      const number = Math.floor(Math.random() * (max - min)) + min;
-      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
-
-      userEmail = userEmail + number;
-      const social = new User({ userName, userEmail, site, refresh_token });
-      social.save();
+      double.userName == userName;
+      // 닉네임이 같다면 통과.
+      // 만약 디비에 user의 email이 있다면,
+      // 기존에서 리프레시 토큰만 대체하기
+      res.send({ token });
     }
   } catch (error) {
     res.status(400).send({

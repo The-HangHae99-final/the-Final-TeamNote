@@ -129,7 +129,7 @@ async function kakao_parsing(req, res) {
 
     // userName로 토큰값 만들기
 
-    var token = jwt.sign({ userEmail }, jwtSecret, {
+    let token = jwt.sign({ userEmail }, jwtSecret, {
       expiresIn: '1h',
     });
 
