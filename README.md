@@ -212,10 +212,9 @@ Share your task ~! Share your Idea !
 
 <br>
 
-## 🧱 백엔드 아키텍처
+## 🧱 서비스 아키텍처
 
-![architecture](https://user-images.githubusercontent.com/86486778/144619935-592eb1c7-ce70-4d73-9daa-93415f29626e.png)
-
+![스크린샷 2022-08-01 오후 7 04 14](https://user-images.githubusercontent.com/85288036/182125010-ce7aed0f-3075-47b9-86ec-f40d42bccd11.png)
 <br>
 
 ## 🧾 Serverside Flow Chart
