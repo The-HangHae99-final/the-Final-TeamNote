@@ -74,5 +74,4 @@ jobs:
             git pull origin main
             docker rm -f $(docker ps -qa)
             docker rmi -f $(docker images -q) 
-            docker buildx build --push --platform linux/amd64 --tag hayeonkimm/docker-memo .
             docker-compose up -d --build
