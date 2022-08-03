@@ -19,8 +19,10 @@ async function createPost(req, res, next) {
     const { title, desc, label, assignees, workSpaceName, category } = req.body;
     const createdTime = new Date();
     console.log(createdTime);
-    let postId;
-    const maxpostId = await Post.findOne().sort({
+
+    let postId = 1;
+
+    const maxpostId = await Post.find().sort({
       postId: -1,
     });
     if (maxpostId) {

@@ -21,13 +21,13 @@ async function createBoard(req, res, next) {
     const { content, workSpaceName } = req.body;
     const createdTime = new Date();
 
+    let boardId = 1;
+
     const maxboardId = await Board.findOne().sort({
       boardId: -1,
     });
 
-    let boardId = 1;
-
-    if (maxboardId) {
+    if (maxboardId.boardId) {
       boardId = Number(maxboardId.boardId) + 1;
     }
     console.log('boardId: ', boardId);
