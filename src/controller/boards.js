@@ -27,7 +27,7 @@ async function createBoard(req, res, next) {
       boardId: -1,
     });
 
-    if (maxboardId.boardId) {
+    if (maxboardId) {
       boardId = Number(maxboardId.boardId) + 1;
     }
     console.log('boardId: ', boardId);

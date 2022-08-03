@@ -65,7 +65,7 @@ async function showPosts(req, res, next) {
     //##swagger.description='-'
     const { workSpaceName } = decodeURIComponent(req.params);
     // const { workSpaceName } = req.params;
-    
+    ///주석추가하깈ㅋㅋㅋㅋ
     const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
