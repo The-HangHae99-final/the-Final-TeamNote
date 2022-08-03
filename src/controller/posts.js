@@ -20,13 +20,18 @@ async function createPost(req, res, next) {
     const createdTime = new Date();
     console.log(createdTime);
 
-    console.log('maxpost------', maxpostId);
-    console.log('maxpostId.postId-------', maxpostId.postId);
     let postId = 1;
 
     const maxpostId = await Post.find().sort({
       postId: -1,
     });
+
+    console.log('maxpost------', maxpostId);
+    console.log('maxpostId.postId-------', maxpostId.postId);
+
+    if (!maxpostId.length) {
+      postId = 1;
+    }
 
     if (maxpostId.postId) {
       postId = Number(maxpostId.postId) + 1;
