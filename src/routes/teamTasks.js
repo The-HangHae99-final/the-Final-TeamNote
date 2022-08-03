@@ -6,7 +6,7 @@ const taskController = require('../controller/teamTasks');
 router.post('/', taskController.createTeamTask);
 
 // 팀 전체 일정 조회
-router.get('/', taskController.showTeamTasks);
+router.post('/lists', taskController.showTeamTasks);
 
 // 팀 일정 상세 조회
 router.get('/:taskId', taskController.showTeamTaskDetail);
