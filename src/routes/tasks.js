@@ -8,7 +8,7 @@ const isMember = require('../middlewares/isMember');
 router.post('/',  isMember,taskController.createTask);
 
 // 전체 일정 조회
-router.get('/all/lists/:workSpaceName', taskController.showTasks);
+router.get('/all/lists', taskController.showTasks);
 
 // 일정 상세 조회
 router.get('/:taskId', taskController.showTaskDetail);
