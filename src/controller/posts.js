@@ -25,6 +25,8 @@ async function createPost(req, res, next) {
     });
     if (maxpostId) {
       postId = Number(maxpostId.postId) + 1;
+    } else {
+      postId = 1;
     }
     const createdPost = await Post.create({
       // image, 우선 주석처리
