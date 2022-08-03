@@ -13,7 +13,7 @@ const io = socketIo(http, {
   allowEIO3: true,
 });
 
-const timestamp = io.of("/");
+const timestamp = io.of("/:workSpaceName");
 timestamp.on("connection", (socket, userEmail, inTime) => {
   const connectionTime = outTime.getTime() - inTime.getTime();
   console.log(

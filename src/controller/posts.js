@@ -30,6 +30,7 @@ async function createPost(req, res, next) {
     } else {
       postId = 1;
     }
+
     const createdPost = await Post.create({
       // image, 우선 주석처리
       postId,
