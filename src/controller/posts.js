@@ -24,7 +24,7 @@ async function createPost(req, res, next) {
     console.log('maxpostId.postId-------', maxpostId.postId);
     let postId = 1;
 
-    const maxpostId = await Post.findOne().sort({
+    const maxpostId = await Post.find().sort({
       postId: -1,
     });
 
@@ -68,7 +68,7 @@ async function showPosts(req, res, next) {
     //##swagger.description='-'
     const { workSpaceName } = decodeURIComponent(req.params);
 
-    const posts = await Post.find({ workSpaceName }).sort('-postId');
+    const posts = await Post.findOne({ workSpaceName }).sort('-postId');
     res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
