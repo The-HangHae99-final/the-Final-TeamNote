@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "teamnote.shop",
+  "host": "43.200.170.45",
   "basePath": "/api",
   "schemes": ["https"],
   "paths": {
