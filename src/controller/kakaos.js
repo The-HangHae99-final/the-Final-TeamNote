@@ -1,10 +1,10 @@
 // const Acess_ = require('../models/access_token');
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const axios = require('axios');
 const { request } = require('express');
 const jwt = require('jsonwebtoken');
-var User = require('../models/user');
+const User = require('../models/user');
 const jwtSecret = process.env.SECRET_KEY;
 const { smtpTransport } = require('./util/email');
 
@@ -17,13 +17,8 @@ const { smtpTransport } = require('./util/email');
 // 클라이언트가 받고 데이터를 파싱해서 다시 보낸다.post_3  // 데이터 파싱문제!!
 // 백엔드가 받아서 DB에 저장한다.
 
-var generateRandom = function (min, max) {
-  var ranNum = Math.floor(Math.random() * (max - min + 1)) + min;
-  return ranNum;
-};
 //로직
-var express = require('express');
-var router = express.Router();
+
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
