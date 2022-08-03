@@ -1,6 +1,7 @@
 const http = require('./app');
 const socketIo = require('socket.io');
 const Message = require('./src/models/message');
+const timeStamp = require('./src/models/timeStamp');
 
 const io = socketIo(http, {
   cors: {
@@ -11,6 +12,18 @@ const io = socketIo(http, {
   },
   allowEIO3: true,
 });
+
+const timestamp = io.of('/');
+timestamp.on('connection', (socket, userEmail, inTime)=> {
+  const connectionTime = outTime.getTime() - inTime.getTime() ;
+  console.log(`유저가 접속하였다: ${userEmail}, ${socket.id}, 현재시각${inTime}`);
+  
+  socket.on('disconnect', async (socket, userEmail, outTime) => {
+    console.log(`유저가 나갔다: ${userEmail}, ${socket.id}, 현재시각${outTime}`);
+  });
+  const timeData = await timeStamp.create({userEmail, connectionTime});
+  console.log('timeData: ', timeData);
+})
 
 const chatspace = io.of('/chat');
 chatspace.on('connection', (socket) => {

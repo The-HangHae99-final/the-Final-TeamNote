@@ -1,12 +1,12 @@
 const dotenv = require('dotenv').config();
 const axios = require('axios');
 const { request } = require('express');
-var User = require('../models/user');
+const User = require('../models/user');
 
 //로직
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
