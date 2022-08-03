@@ -13,18 +13,18 @@ services:
 
   app-1:
     container_name: node_server_1
-    image: hayeonkimm/docker-team:latest
+    build: .
     ports:
       - 3000
 
   app-2:
     container_name: node_server_2
-    image: hayeonkimm/docker-team:latest
+    build : .
     ports:
       - 3000
 
   app-3:
     container_name: node_server_3
-    image: hayeonkimm/docker-team:latest
+    build: .
     ports:
       - 3000
