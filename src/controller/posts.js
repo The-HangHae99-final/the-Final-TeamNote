@@ -24,12 +24,14 @@ async function createPost(req, res, next) {
     console.log('maxpostId.postId-------', maxpostId.postId);
     let postId = 1;
 
-    const maxpostId = await Board.findOne().sort({
+    const maxpostId = await Post.findOne().sort({
       postId: -1,
     });
 
     if (maxpostId.postId) {
       postId = Number(maxpostId.postId) + 1;
+    } else {
+      postId = 1;
     }
     const createdPost = await Post.create({
       // image, 우선 주석처리
