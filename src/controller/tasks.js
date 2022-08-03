@@ -49,6 +49,7 @@ async function showTasks(req, res, next) {
     //#swagger.summary= '개인 일정 전체조회 API'
     //#swagger.description='-'
     const { userEmail } = res.locals.User;
+    const { workSpaceName } = req.body;
 
     const tasks = await Task.find({ userEmail }).sort('-taskId');
     // console.log('tasks: ', tasks[0].userEmail);
