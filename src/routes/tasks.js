@@ -6,7 +6,7 @@ const taskController = require('../controller/tasks');
 router.post('/', taskController.createTask);
 
 // 전체 일정 조회
-router.post('/tasks/lists', taskController.showTasks);
+router.post('/all/lists', taskController.showTasks);
 
 // 일정 상세 조회
 router.get('/:taskId', taskController.showTaskDetail);
