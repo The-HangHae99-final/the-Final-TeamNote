@@ -23,6 +23,8 @@ async function createPost(req, res, next) {
     const maxpostId = await Post.findOne().sort({
       postId: -1,
     });
+    console.log('maxpost------', maxpostId);
+    console.log('maxpostId.postId-------', maxpostId.postId);
     if (maxpostId.postId) {
       postId = Number(maxpostId.postId) + 1;
     }
