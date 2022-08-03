@@ -23,13 +23,11 @@ async function createPost(req, res, next) {
     const maxpostId = await Post.findOne().sort({
       postId: -1,
     });
-    console.log('maxpost', maxpostId);
-    if (maxpostId.postId) {
-      postId = maxpostId.postId + 1;
+    if (maxpostId) {
+      postId = Number(maxpostId.postId) + 1;
     } else {
       postId = 1;
     }
-
     const createdPost = await Post.create({
       // image, 우선 주석처리
       postId,
@@ -42,15 +40,15 @@ async function createPost(req, res, next) {
       assignees,
       category,
     });
-    return res.json({
+    return res.status(200).json({
       result: createdPost,
       success: true,
       message: '게시물 작성 성공',
     });
   } catch (error) {
-    res.send({
+    res.status(400).send({
       success: false,
-      errorMessage: error.message,
+      // errorMessage: error.message,
       message: '게시물 작성에 예상치 못한 에러가 발생했습니다.',
     });
   }
@@ -64,6 +62,7 @@ async function showPosts(req, res, next) {
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
     const { workSpaceName } = decodeURIComponent(req.params);
+    // const { workSpaceName } = req.params;
     
     const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
