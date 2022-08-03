@@ -1,5 +1,5 @@
 const workSpaceController = require('../server/controller/workSpaces');
-const workSpaceSchema = require('../server/schemas/workSpace');
+const workSpaceSchema = require('../server/models/workSpace');
 const httpMocks = require('node-mocks-http');
 const newWorkSpace = require('./data/workSpace.json');
 

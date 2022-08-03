@@ -28,7 +28,8 @@ const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
 const KAKAO_REDIRECT_URL =
-  'http://localhost:3000/api/oauth/login/kakao/callback';
+  'http://teamnote-dev.s3-website.ap-northeast-2.amazonaws.com/api/oauth/login/kakao/callback';
+
 // post- '/auth/login/kakao/callback'
 // 프론트에게 인가코드 받고, 엑세스 토큰 발급받아 프론트에게 다시 넘겨주기.
 function kakao_callback(req, res, next) {
@@ -128,7 +129,7 @@ async function kakao_parsing(req, res) {
 
     // userName로 토큰값 만들기
 
-    var token = jwt.sign({ userEmail }, jwtSecret, {
+    let token = jwt.sign({ userEmail }, jwtSecret, {
       expiresIn: '1h',
     });
 

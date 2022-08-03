@@ -1,19 +1,21 @@
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 dotenv.config();
-var axios = require("axios");
-var request = require("request");
-var User = require("../models/user");
-var express = require("express");
+var axios = require('axios');
+var request = require('request');
+var User = require('../models/user');
+var express = require('express');
 var app = express();
 var router = express.Router();
 var client_id = process.env.YOUR_CLIENT_ID;
 var client_secret = process.env.YOUR_CLIENT_SECRET;
-var state = "teamnote";
-var jwt = require("jsonwebtoken");
+var state = 'teamnote';
+var jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
-var redirectURI = encodeURI("https://0jun.shop/auth/login/callback");
+var redirectURI = encodeURI(
+  'http://teamnote-dev.s3-website.ap-northeast-2.amazonaws.com/api/auth/login/naver/callback'
+);
 // var server_url = 'http://52.78.168.151:3000';
-var request = require("request");
+var request = require('request');
 
 // 프론트에게서 인가코드를 받는다 post_1
 // 서버에서 인가코드를 가지고 카톡에게서 토큰을 받는다.
@@ -32,29 +34,29 @@ function naver(req, res) {
     //#swagger.summary= '네이버 콜백 API'
     //#swagger.description='-'
     var code = req.body.code;
-    console.log("code:", code);
-    var state = "teamnote";
-    console.log("state:", state);
+    console.log('code:', code);
+    var state = 'teamnote';
+    console.log('state:', state);
     api_url =
-      "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=" +
+      'https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=' +
       client_id +
-      "&client_secret=" +
+      '&client_secret=' +
       client_secret +
-      "&code=" +
+      '&code=' +
       code +
-      "&state=" +
+      '&state=' +
       state;
     var options = {
       url: api_url,
       headers: {
-        "X-Naver-Client-Id": client_id,
-        "X-Naver-Client-Secret": client_secret,
+        'X-Naver-Client-Id': client_id,
+        'X-Naver-Client-Secret': client_secret,
       },
     };
     // 액세스 토큰 프론트에게 다시 건네주기
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+        res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
         res.end(body);
       } else {
         res.status(response.statusCode).end();
@@ -64,7 +66,7 @@ function naver(req, res) {
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: "오류가 발생했습니다.",
+      message: '오류가 발생했습니다.',
     });
   }
 }
@@ -76,24 +78,24 @@ function naver_member(req, res) {
     //#swagger.tags= ['네이버 API'];
     //#swagger.summary= '네이버 정보요청 API'
     //#swagger.description='-'
-    var api_url = "https://openapi.naver.com/v1/nid/me";
-    var request = require("request");
+    var api_url = 'https://openapi.naver.com/v1/nid/me';
+    var request = require('request');
     var token = req.body.token;
-    console.log("---------------------토큰", token);
-    var header = "Bearer " + token; // Bearer 다음에 공백 추가
+    console.log('---------------------토큰', token);
+    var header = 'Bearer ' + token; // Bearer 다음에 공백 추가
     var options = {
       url: api_url,
       headers: { Authorization: header }, // 헤더 중요
     };
     request.get(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
+        res.writeHead(200, { 'Content-Type': 'text/json;charset=utf-8' });
         res.end(body);
       } else {
-        console.log("error");
+        console.log('error');
         if (response != null) {
           res.status(response.statusCode).end();
-          console.log("error = " + response.statusCode);
+          console.log('error = ' + response.statusCode);
         }
       }
     });
@@ -101,7 +103,7 @@ function naver_member(req, res) {
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: "에러가 발생했습니다",
+      message: '에러가 발생했습니다',
     });
     console.log(err);
   }
@@ -117,52 +119,39 @@ async function naver_parsing(req, res) {
     const site = 2; //naver
     const user_info = req.body;
     console.log(
-      "user_info-----------------------------------------",
+      'user_info-----------------------------------------',
       user_info
     );
-    const _user = user_info.user_id;
     const userEmail = user_info.user_email;
     const userName = user_info.user_name;
     const double = await User.findOne({ userEmail });
 
     // 리프레시 토큰 생성
 
-    const token = jwt.sign({ userEmail }, jwtSecret, {
-      expiresIn: "1h",
-    });
-
-    const refresh_token = jwt.sign({}, jwtSecret, {
-      expiresIn: "14d",
+    let token = jwt.sign({ userEmail }, jwtSecret, {
+      expiresIn: '1h',
     });
 
     if (!double) {
-      const social = new User({ userName, userEmail, site, refresh_token });
+      // 이메일 인증하기
+      const social = new User({ userEmail, userName, site }); // auth는 false 디폴트
+      // 저장하기
       social.save();
-      res.send("저장에 성공하였습니다.");
-    } else if (double.userName == userName) {
-      //이름까지 같다면 통과, 리프레시 토큰만 대체
-      await double.update({ refresh_token }, { $: { userEmail } });
-      res
-        .status(200)
-        .json({ token, success: true, message: "리프레시 토큰 대체 성공" });
+      res.send({ token });
     } else {
-      // 랜덤난수 생성
-      min = Math.ceil(111111);
-      max = Math.floor(999999);
-      const number = Math.floor(Math.random() * (max - min)) + min;
-      //기존에 이메일이 존재하지만, 이름이 틀리다면, email에 표시하고 가입시키고 통과.
-
-      userEmail = userEmail + number;
-      const social = new User({ userName, userEmail, site, refresh_token });
-      social.save();
+      double.userName == userName;
+      // 닉네임이 같다면 통과.
+      // 만약 디비에 user의 email이 있다면,
+      // 기존에서 리프레시 토큰만 대체하기
+      res.send({ token });
     }
   } catch (error) {
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: "에러가 발생했습니다.",
+      message: '에러가 발생했습니다.',
     });
-    console.log("error =" + err);
+    console.log('error =' + err);
   }
 }
 
