@@ -43,7 +43,7 @@ app.use('/api', Router);
 
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-  res.send('실전 파이널 프로젝트.');
+  res.send('실전 파이널 프로젝트-----');
 });
 app.get('/api', (req, res) => {
   res.send('실전 파이널 프로젝트 서버 /api');
