@@ -23,13 +23,9 @@ async function createPost(req, res, next) {
     const maxpostId = await Post.findOne().sort({
       postId: -1,
     });
-    console.log('maxpost', maxpostId);
-    if (maxpostId.postId) {
-      postId = maxpostId.postId + 1;
-    } else {
-      postId = 1;
+    if (maxpostId) {
+      postId = Number(maxpostId.postId) + 1;
     }
-
     const createdPost = await Post.create({
       // image, 우선 주석처리
       postId,
@@ -64,7 +60,7 @@ async function showPosts(req, res, next) {
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
     const { workSpaceName } = decodeURIComponent(req.params);
-    
+
     const posts = await Post.find({ workSpaceName }).sort('-postId');
     res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
