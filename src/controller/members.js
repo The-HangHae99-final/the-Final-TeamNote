@@ -153,18 +153,10 @@ async function leaveWorkSpace(req, res) {
 async function inviteMember(req, res) {
   try {
     const inviter = res.locals.User.userName;
-<<<<<<< HEAD
-    console.log('inviter: ', inviter);
-=======
     console.log("inviter: ", inviter);
->>>>>>> 82819db2b742eb38d27fa34aa0d151366f2a594a
     const { userEmail, workSpaceName } = req.body;
     console.log("workSpaceName: ", workSpaceName);
     const { existMember } = res.locals;
-<<<<<<< HEAD
-    const { existUser } = res.locals;
-=======
->>>>>>> 82819db2b742eb38d27fa34aa0d151366f2a594a
     const existInviting = await Inviting.findOne({ userEmail, workSpaceName });
 
     if (existInviting) {
