@@ -28,7 +28,7 @@ const KAKAO_OAUTH_TOKEN_API_URL = 'https://kauth.kakao.com/oauth/token';
 const KAKAO_GRANT_TYPE = 'authorization_code';
 const client_id = process.env.client_id;
 const KAKAO_REDIRECT_URL =
-  'https://teamnote.co.kr/api/oauth/login/kakao/callback';
+  'http://54.180.80.38:3010/api/oauth/login/kakao/callback';
 
 // post- '/auth/login/kakao/callback'
 // 프론트에게 인가코드 받고, 엑세스 토큰 발급받아 프론트에게 다시 넘겨주기.
