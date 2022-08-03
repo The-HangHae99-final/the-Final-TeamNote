@@ -21,7 +21,7 @@ const redirectURI = encodeURI(
   'http://localhost:3000/api/auth/login/naver/callback'
 );
 // const server_url = 'http://52.78.168.151:3000';
-const request = require('request');
+// var request = require('request');
 router.post('/naver', naverController.naver);
 
 router.post('/member', naverController.naver_member);

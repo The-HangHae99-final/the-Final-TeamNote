@@ -11,7 +11,7 @@ const isMember = require('../middlewares/isMember');
 router.post('/', upload.single('image'), isMember, postController.createPost);
 
 // 글 전체 조회
-router.post('/list', postController.showPosts);
+router.get('/list/:workSpaceName', postController.showPosts);
 
 // 글 상세 조회
 router.get('/:workSpaceName/:postId', postController.showPostDetail);

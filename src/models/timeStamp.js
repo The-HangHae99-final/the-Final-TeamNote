@@ -10,5 +10,5 @@ const timeStampSchema = new mongoose.Schema({
   },
 });
 
-const timeStamp = mongoose.model("timeStamp", msgSchema);
+const timeStamp = mongoose.model("timeStamp", timeStampSchema);
 module.exports = timeStamp;
