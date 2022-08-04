@@ -11,6 +11,7 @@ const { error } = require('winston');
 const ejs = require('ejs');
 const path = require('path');
 const { info } = require('console');
+const member = require('../models/member');
 let appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -412,6 +413,7 @@ async function myPage(req, res, next) {
       { userEmail },
       { $set: { profile_image: image } }
     );
+    await member.updateOne( {userEmail}, { $set: {profile_image: image}} )
     const findUser = await User.findOne({ userEmail });
 
     return res.status(200).json({
