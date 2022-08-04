@@ -4,6 +4,8 @@ const Message = require("./src/models/message");
 const timeStamp = require("./src/models/timeStamp");
 
 const io = socketIo(http, {
+  pingInterval: 10000,
+  pingTimeout: 5000,
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
