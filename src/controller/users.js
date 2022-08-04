@@ -40,7 +40,8 @@ async function signup(req, res, next) {
     //#swagger.tags= ['회원가입 API'];
     //#swagger.summary= '회원가입 API'
     //#swagger.description='-'
-    let profile_image = '';
+    const profile_image =
+      'https://user-images.githubusercontent.com/85288036/182856054-28299fde-3326-46b9-a1e8-faa43b54ef2d.png';
     const { userEmail, userName, password, confirmPassword } =
       await usersSchema.validateAsync(req.body);
     // 비밀번호와 확인 비밀번호가 틀린 경우
@@ -88,7 +89,7 @@ async function signup(req, res, next) {
       userName,
       password: hashPassword,
       site,
-      image,
+      profile_image,
     });
 
     // 가입 축하  이메일 발송 기능
@@ -413,7 +414,6 @@ async function myPage(req, res, next) {
     );
     const findUser = await User.findOne({ userEmail });
 
-    console.log('updateimage -----', updatedImage);
     return res.status(200).json({
       updatedImage,
       findUser,
