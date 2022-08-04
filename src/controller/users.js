@@ -40,7 +40,7 @@ async function signup(req, res, next) {
     //#swagger.tags= ['회원가입 API'];
     //#swagger.summary= '회원가입 API'
     //#swagger.description='-'
-    const profile_image =
+    let profile_image =
       'https://user-images.githubusercontent.com/85288036/182856054-28299fde-3326-46b9-a1e8-faa43b54ef2d.png';
     const { userEmail, userName, password, confirmPassword } =
       await usersSchema.validateAsync(req.body);
@@ -429,6 +429,17 @@ async function myPage(req, res, next) {
     });
   }
 }
+
+async function allUser(req, res, next) {
+  try {
+    const All = await User.find({});
+
+    res.status(200).send(All);
+  } catch (error) {
+    res.status(400).send(error.message);
+    console.log(error);
+  }
+}
 module.exports = {
   signup,
   login,
@@ -438,4 +449,5 @@ module.exports = {
   mailing,
   findUser,
   myPage,
+  allUser,
 };
