@@ -18,7 +18,7 @@ const client_id = process.env.YOUR_CLIENT_ID;
 const client_secret = process.env.YOUR_CLIENT_SECRET;
 const state = 'teamnote';
 const redirectURI = encodeURI(
-  'http://localhost:3000/api/auth/login/naver/callback'
+  'http://teamnote-dev.s3-website.ap-northeast-2.amazonaws.com/api/auth/login/naver/callback'
 );
 // const server_url = 'http://52.78.168.151:3000';
 // var request = require('request');
