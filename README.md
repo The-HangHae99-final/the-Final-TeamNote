@@ -50,14 +50,14 @@ Share your task ~! Share your Idea !
 
 <table>
    <tr>
-    <td align="center"><b><a href="https://github.com/horang-e">김하연</a></b></td>
+    <td align="center" ><b><a href="https://github.com/horang-e">김하연</a></b></td>
     <td align="center"><b><a href="https://github.com/appreciate87">전영준</a></b></td>
      <td align="center"><b><a href="https://github.com/sojin0106">이형섭</a></b></td>
   </tr>
   <tr>
-     <td align="center"><a href="https://github.com/hayeonkimm"><img src="https://user-images.githubusercontent.com/105115805/182905584-e387b6d5-d48f-459c-a92b-8af68ee7a175.jpeg" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/jyj9784"><img src="https://user-images.githubusercontent.com/105115805/182905519-359fd892-e3a6-4d91-94cc-5dbebdc0773b.jpeg?v=4" width="100px" /></a></td>
-     <td align="center"><a href="https://github.com/vennydev"><img src="https://user-images.githubusercontent.com/105115805/182900945-8c414eb4-0d50-4741-8d61-38bf3f1bfeca.JPG?v=4" width="100px" /></a></td>
+     <td align="center"><a href="https://github.com/hayeonkimm"><img src="https://user-images.githubusercontent.com/105115805/182905584-e387b6d5-d48f-459c-a92b-8af68ee7a175.jpeg" width="200px" /></a></td>
+     <td align="center"><a href="https://github.com/jyj9784"><img src="https://user-images.githubusercontent.com/105115805/182905519-359fd892-e3a6-4d91-94cc-5dbebdc0773b.jpeg?v=4" width="200px" /></a></td>
+     <td align="center"><a href="https://github.com/vennydev"><img src="https://user-images.githubusercontent.com/105115805/182900945-8c414eb4-0d50-4741-8d61-38bf3f1bfeca.JPG?v=4" width="200px" /></a></td>
   
     
   </tr>
