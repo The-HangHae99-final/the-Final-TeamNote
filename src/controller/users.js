@@ -41,7 +41,7 @@ async function signup(req, res, next) {
     //#swagger.tags= ['회원가입 API'];
     //#swagger.summary= '회원가입 API'
     //#swagger.description='-'
-    const profile_image =
+    let profile_image =
       'https://user-images.githubusercontent.com/85288036/182856054-28299fde-3326-46b9-a1e8-faa43b54ef2d.png';
     const { userEmail, userName, password, confirmPassword } =
       await usersSchema.validateAsync(req.body);
@@ -247,21 +247,6 @@ async function deleteUser(req, res) {
   }
 }
 
-//가입된 유저 확인
-// router.get('/users', userController.all);
-async function all(req, res) {
-  try {
-    //#swagger.tags= ['회원 확인용 API'];
-    //#swagger.summary= '회원 확인용 API'
-    //#swagger.description='-'
-
-    const userAll = await User.find({});
-    res.status(200).send({ userAll: userAll, success: true });
-  } catch (error) {
-    res.status(400).send({ errorMessage: error.message, success: false });
-  }
-}
-
 //유저 검색기능
 // router.get('/users/search', userController.searchUser);
 async function searchUser(req, res) {
@@ -431,13 +416,24 @@ async function myPage(req, res, next) {
     });
   }
 }
+
+async function allUser(req, res, next) {
+  try {
+    const All = await User.find({});
+
+    res.status(200).send(All);
+  } catch (error) {
+    res.status(400).send(error.message);
+    console.log(error);
+  }
+}
 module.exports = {
   signup,
   login,
   deleteUser,
-  all,
   searchUser,
   mailing,
   findUser,
   myPage,
+  allUser,
 };
