@@ -22,6 +22,13 @@ async function createPost(req, res, next) {
     let postId;
 
     const maxpostId = await Post.find().sort({postId: -1});
+    if (!userName || !title || !workSpaceName || !label || !assignees || !desc ) 
+    {
+      res.status(400).send({
+        success: false,
+        errorMessage: '필요한 항목을 전부 입력해주세요.',
+      });
+    }
     if (maxpostId.length) {
       postId = Number(maxpostId[0].postId) + 1;
     } else {
