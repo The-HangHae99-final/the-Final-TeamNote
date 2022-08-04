@@ -10,6 +10,7 @@ const { response } = require('express');
 const { error } = require('winston');
 const ejs = require('ejs');
 const path = require('path');
+const { info } = require('console');
 let appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -359,6 +360,59 @@ async function findUser(req, res, next) {
   }
 }
 
+async function myPage(req, res) {
+  try {
+    const { userEmail } = res.locals.User;
+    const { image_number } = req.body;
+
+    let profile_image = '';
+
+    if (!image_number) {
+      return res
+        .status(400)
+        .json({ message: '이미지 숫자를 입력해주세요', success: false });
+    }
+
+    if (image_number) {
+      if (image_number == 1) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821554-c8fa080c-be3f-41bf-a11c-9563bdf6834a.png';
+      }
+      if (image_number == 2) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821565-7338e6ac-d18e-4c85-8f69-76ad0baf7ced.png';
+      }
+      if (image_number == 3) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821570-b312a17a-8267-43a5-95c2-f034cc70eeea.png';
+      }
+      if (image_number == 4) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821574-c3245d4e-c558-40eb-a2a5-1581f54bd29c.png';
+      }
+      if (image_number == 5) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821581-27c938cb-b55a-46cb-8060-99aad141150e.png';
+      }
+      if (image_number == 6) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821586-8cf063aa-bf90-46f9-aff0-1ab15c49e181.png';
+      }
+      if (image_number == 7) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821590-b5df015b-89cf-4a12-be65-745cd064b7d0.png';
+      }
+      if (image_number == 8) {
+        profile_image =
+          'https://user-images.githubusercontent.com/85288036/182821593-06648c45-8009-4014-9dfa-15083bb4c31b.png';
+      }
+    }
+    await User.updateOne({ userEmail }, { $set: { profile_image } });
+  } catch (error) {
+    console.log(error);
+    res.send(400).json({ message: '예상치 못한 에러가 발생했습니다.' });
+  }
+}
 module.exports = {
   signup,
   login,
@@ -367,4 +421,5 @@ module.exports = {
   searchUser,
   mailing,
   findUser,
+  myPage,
 };

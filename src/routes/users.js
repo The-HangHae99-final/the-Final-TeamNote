@@ -20,4 +20,6 @@ router.get('/search', userController.searchUser);
 
 router.post('/mailing', userController.mailing);
 
+router.post('/mypage', userController.myPage);
+
 module.exports = router;

@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
   site: {
     type: String,
   },
+
+  prefile_image: {
+    type: String,
+  },
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User;
