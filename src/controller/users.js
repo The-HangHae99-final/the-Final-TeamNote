@@ -1,16 +1,16 @@
-const dotenv = require('dotenv').config();
-const User = require('../models/user');
-const Bcrypt = require('bcrypt');
-const Joi = require('joi');
-const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv").config();
+const User = require("../models/user");
+const Bcrypt = require("bcrypt");
+const Joi = require("joi");
+const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.SECRET_KEY;
-const nodemailer = require('nodemailer');
-const validator = require('email-validator');
-const { response } = require('express');
-const { error } = require('winston');
-const ejs = require('ejs');
-const path = require('path');
-const { info } = require('console');
+const nodemailer = require("nodemailer");
+const validator = require("email-validator");
+const { response } = require("express");
+const { error } = require("winston");
+const ejs = require("ejs");
+const path = require("path");
+const { info } = require("console");
 let appDir = path.dirname(require.main.filename);
 const usersSchema = Joi.object({
   userEmail: Joi.string().required(),
@@ -20,11 +20,11 @@ const usersSchema = Joi.object({
 });
 
 const transporter = nodemailer.createTransport({
-  service: 'naver', // 메일 이용할 서비스
-  host: 'smtp.naver.com', // SMTP 서버명
+  service: "naver", // 메일 이용할 서비스
+  host: "smtp.naver.com", // SMTP 서버명
   port: 587, // SMTP 포트
   auth: {
-    user: 'hanghae99@naver.com', // 사용자 이메일
+    user: "hanghae99@naver.com", // 사용자 이메일
     pass: process.env.password, // 사용자 패스워드
   },
 });
@@ -45,21 +45,21 @@ async function signup(req, res, next) {
     // 비밀번호와 확인 비밀번호가 틀린 경우
     if (password !== confirmPassword) {
       return res.status(400).send({
-        errorMessage: '비밀번호가 일치하지 않습니다.',
+        errorMessage: "비밀번호가 일치하지 않습니다.",
       });
     }
     // 비밀번호가 5글자 이하인 경우
     if (password.length <= 5) {
       return res.status(400).send({
         success: false,
-        errorMessage: '비밀번호는 6글자 이상으로 입력해주세요.',
+        errorMessage: "비밀번호는 6글자 이상으로 입력해주세요.",
       });
     }
     // userName의 length가 6글자 이상인 경우.
     if (userName.length >= 6) {
       return res.status(400).send({
         success: false,
-        errorMessage: '닉네임은 5글자 이내로 입력해주세요.',
+        errorMessage: "닉네임은 5글자 이내로 입력해주세요.",
       });
     }
     // email validator 라이브러리로 이메일 검사.
@@ -67,7 +67,7 @@ async function signup(req, res, next) {
       console.log(!validator.validate(userEmail));
       return res
         .status(400)
-        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
+        .send({ success: false, errorMessage: "이메일 형식이 틀렸습니다." });
     }
 
     // 가입하고자 하는 이메일이 존재하는 경우
@@ -75,7 +75,7 @@ async function signup(req, res, next) {
 
     if (exitstUsers) {
       return res.status(400).send({
-        errorMessage: '중복된 이메일이 존재합니다.',
+        errorMessage: "중복된 이메일이 존재합니다.",
       });
     }
     // 비밀번호 해시화
@@ -91,7 +91,7 @@ async function signup(req, res, next) {
 
     // 가입 축하  이메일 발송 기능
     let mailOptions = {
-      from: 'hanghae99@naver.com', // 메일 발신자
+      from: "hanghae99@naver.com", // 메일 발신자
       to: req.body.userEmail, // 메일 수신자
 
       // 회원가입 완료하고 축하 메시지 전송할 시
@@ -117,7 +117,7 @@ async function signup(req, res, next) {
     res.status(201).json({
       createdUser,
       success: true,
-      message: '회원가입을 성공하였습니다',
+      message: "회원가입을 성공하였습니다",
     });
   } catch (error) {
     res.status(401).send({
@@ -168,19 +168,19 @@ async function login(req, res, next) {
     //#swagger.summary= '로그인 패스워드 API'
     //#swagger.description='-'
     const { userEmail, password } = req.body;
-    console.log('userEmail,password', userEmail, password);
+    console.log("userEmail,password", userEmail, password);
     const userFind = await User.findOne({ userEmail });
     let validPassword;
 
     if (!userEmail || !password) {
       res.status(400).send({
         success: false,
-        errorMessage: '이메일 또는 비밀번호가 입력되지 않았습니다.',
+        errorMessage: "이메일 또는 비밀번호가 입력되지 않았습니다.",
       });
     } else if (!userFind) {
       res
         .status(400)
-        .send({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
+        .send({ success: false, errorMessage: "일치하는 이메일이 없습니다." });
     }
 
     // 유저가 DB에 존재하고,
@@ -190,17 +190,17 @@ async function login(req, res, next) {
       if (validPassword) {
         //jwt token화
         const token = jwt.sign({ userEmail }, jwtSecret, {
-          expiresIn: '30m',
+          expiresIn: "30m",
         });
 
         // 리프레시 토큰 생성
         const refresh_token = jwt.sign({}, jwtSecret, {
-          expiresIn: '1d',
+          expiresIn: "1d",
         });
         await userFind.update({ refresh_token }, { $where: { userEmail } });
         res.status(200).send({
           success: true,
-          message: '로그인에 성공하였습니다.',
+          message: "로그인에 성공하였습니다.",
           token,
           userEmail: userEmail,
           userName: userFind.userName,
@@ -208,12 +208,12 @@ async function login(req, res, next) {
       } else {
         res
           .status(400)
-          .send({ success: false, errorMessage: '비밀번호가 틀렸습니다.' });
+          .send({ success: false, errorMessage: "비밀번호가 틀렸습니다." });
       }
     }
   } catch (error) {
     // 에러가 뜰 경우 잡아서 리턴한다.
-    console.log('error----' + error);
+    console.log("error----" + error);
   }
 }
 
@@ -228,17 +228,17 @@ async function deleteUser(req, res) {
     if (!userEmail) {
       res.status(404).json({
         success: false,
-        errorMessage: '입력된 유저 이메일 값이 없습니다.',
+        errorMessage: "입력된 유저 이메일 값이 없습니다.",
       });
     }
     await User.deleteOne({ userEmail });
-    res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
+    res.status(200).send({ success: "탈퇴에 성공하였습니다." });
   } catch {
     console.log(error);
     res.status(400).send({
       succss: false,
       errorMessage: error.message,
-      message: '예상치 못한 에러가 발생했습니다.',
+      message: "예상치 못한 에러가 발생했습니다.",
     });
   }
 }
@@ -272,7 +272,7 @@ async function searchUser(req, res) {
     if (!userEmail) {
       res.status(404).json({
         success: false,
-        errorMessage: '입력된 유저 이메일 값이 없습니다.',
+        errorMessage: "입력된 유저 이메일 값이 없습니다.",
       });
     }
 
@@ -285,14 +285,14 @@ async function searchUser(req, res) {
     } else {
       res
         .status(400)
-        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+        .send({ success: false, errorMessage: "존재하지 않는 유저입니다." });
     }
   } catch {
     console.log(error);
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: '예상치 못한 에러가 발생했습니다.',
+      message: "예상치 못한 에러가 발생했습니다.",
     });
   }
 }
@@ -311,7 +311,7 @@ async function mailing(req, res) {
 
   // 메일 옵션
   let mailOptions = {
-    from: 'hanghae99@naver.com', // 메일 발신자
+    from: "hanghae99@naver.com", // 메일 발신자
     to: userEmail, // 메일 수신자
 
     // 회원가입 완료하고 축하 메시지 전송할 시
@@ -329,7 +329,7 @@ async function mailing(req, res) {
     if (error) {
       console.log(error);
     } else {
-      console.log('이메일이 성공적으로 발송되었습니다!');
+      console.log("이메일이 성공적으로 발송되었습니다!");
     }
   });
   res.send({ success: true, number: number }); //인증번호 인증기능.
@@ -348,14 +348,14 @@ async function findUser(req, res, next) {
     } else {
       res
         .status(400)
-        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+        .send({ success: false, errorMessage: "존재하지 않는 유저입니다." });
     }
   } catch {
     console.log(error);
     res.status(400).send({
       success: false,
       errorMessage: error.message,
-      message: '유저검색 에러가 발생했습니다.',
+      message: "유저검색 에러가 발생했습니다.",
     });
   }
 }
@@ -365,55 +365,54 @@ async function myPage(req, res, next) {
     const { userEmail } = res.locals.User;
     const { image_number } = req.body;
 
-    let profile_image = '';
+    let profile_image = "";
 
     if (!image_number) {
       return res
         .status(400)
-        .json({ message: '이미지 숫자를 입력해주세요', success: false });
+        .json({ message: "이미지 숫자를 입력해주세요", success: false });
     }
 
-    if (image_number) {
-      if (image_number == 1) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821554-c8fa080c-be3f-41bf-a11c-9563bdf6834a.png';
-      }
-      if (image_number == 2) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821565-7338e6ac-d18e-4c85-8f69-76ad0baf7ced.png';
-      }
-      if (image_number == 3) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821570-b312a17a-8267-43a5-95c2-f034cc70eeea.png';
-      }
-      if (image_number == 4) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821574-c3245d4e-c558-40eb-a2a5-1581f54bd29c.png';
-      }
-      if (image_number == 5) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821581-27c938cb-b55a-46cb-8060-99aad141150e.png';
-      }
-      if (image_number == 6) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821586-8cf063aa-bf90-46f9-aff0-1ab15c49e181.png';
-      }
-      if (image_number == 7) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821590-b5df015b-89cf-4a12-be65-745cd064b7d0.png';
-      }
-      if (image_number == 8) {
-        profile_image =
-          'https://user-images.githubusercontent.com/85288036/182821593-06648c45-8009-4014-9dfa-15083bb4c31b.png';
-      }
+    if (image_number == 1) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821554-c8fa080c-be3f-41bf-a11c-9563bdf6834a.png";
     }
-    await User.updateOne({ userEmail }, { $set: { profile_image } });
+    if (image_number == 2) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821565-7338e6ac-d18e-4c85-8f69-76ad0baf7ced.png";
+    }
+    if (image_number == 3) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821570-b312a17a-8267-43a5-95c2-f034cc70eeea.png";
+    }
+    if (image_number == 4) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821574-c3245d4e-c558-40eb-a2a5-1581f54bd29c.png";
+    }
+    if (image_number == 5) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821581-27c938cb-b55a-46cb-8060-99aad141150e.png";
+    }
+    if (image_number == 6) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821586-8cf063aa-bf90-46f9-aff0-1ab15c49e181.png";
+    }
+    if (image_number == 7) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821590-b5df015b-89cf-4a12-be65-745cd064b7d0.png";
+    }
+    if (image_number == 8) {
+      profile_image =
+        "https://user-images.githubusercontent.com/85288036/182821593-06648c45-8009-4014-9dfa-15083bb4c31b.png";
+    }
+    const updatedImage = await User.updateOne({ userEmail }, { $set: { profile_image } });
+    return res.status(200).json({updatedImage, success: "true", message: "이미지 수정에 성공했습니다."})
   } catch (error) {
     console.log(error);
-    res.send(400).json({
-      success: 'false',
-      message: '예상치 못한 에러가 발생했습니다.',
-      errorMessage: error.message,
+    res.status(400).json({
+      success: "false",
+      message: "예상치 못한 에러가 발생했습니다.",
+      // errorMessage: error.message,
     });
   }
 }

@@ -1,4 +1,6 @@
 const dotenv = require('dotenv');
+const authMiddleware = require('../middlewares/authMiddleware');
+
 
 dotenv.config();
 const express = require('express');
@@ -18,6 +20,6 @@ router.get('/search', userController.searchUser);
 
 router.post('/mailing', userController.mailing);
 
-router.patch('/mypage/profile', userController.myPage);
+router.patch('/mypage/profile', authMiddleware, userController.myPage);
 
 module.exports = router;
