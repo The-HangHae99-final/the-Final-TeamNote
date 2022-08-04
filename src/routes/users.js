@@ -10,8 +10,6 @@ router.post('/signup', userController.signup);
 
 router.get('/', userController.all);
 
-// router.post('/email', userController.emailFirst);
-
 router.post('/login', userController.login);
 
 router.delete('/:userEmail', userController.deleteUser);
@@ -20,6 +18,6 @@ router.get('/search', userController.searchUser);
 
 router.post('/mailing', userController.mailing);
 
-router.post('/mypage', userController.myPage);
+router.patch('/mypage/profile', userController.myPage);
 
 module.exports = router;

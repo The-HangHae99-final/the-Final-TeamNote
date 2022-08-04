@@ -360,7 +360,7 @@ async function findUser(req, res, next) {
   }
 }
 
-async function myPage(req, res) {
+async function myPage(req, res, next) {
   try {
     const { userEmail } = res.locals.User;
     const { image_number } = req.body;
@@ -410,7 +410,11 @@ async function myPage(req, res) {
     await User.updateOne({ userEmail }, { $set: { profile_image } });
   } catch (error) {
     console.log(error);
-    res.send(400).json({ message: '예상치 못한 에러가 발생했습니다.' });
+    res.send(400).json({
+      success: 'false',
+      message: '예상치 못한 에러가 발생했습니다.',
+      errorMessage: error.message,
+    });
   }
 }
 module.exports = {
