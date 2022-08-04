@@ -24,6 +24,7 @@ async function createWorkSpace(req, res, next) {
       memberEmail: user.userEmail,
       memberName: user.userName,
       workSpace: workSpaceName,
+      profile_image: user.profile_image
     });
     return res.status(201).json({createdWorkSpace, addedOwner});
   } catch (err) {
