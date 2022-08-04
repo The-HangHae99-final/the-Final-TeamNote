@@ -246,21 +246,6 @@ async function deleteUser(req, res) {
   }
 }
 
-//가입된 유저 확인
-// router.get('/users', userController.all);
-async function all(req, res) {
-  try {
-    //#swagger.tags= ['회원 확인용 API'];
-    //#swagger.summary= '회원 확인용 API'
-    //#swagger.description='-'
-
-    const userAll = await User.find({});
-    res.status(200).send({ userAll: userAll, success: true });
-  } catch (error) {
-    res.status(400).send({ errorMessage: error.message, success: false });
-  }
-}
-
 //유저 검색기능
 // router.get('/users/search', userController.searchUser);
 async function searchUser(req, res) {
@@ -444,7 +429,6 @@ module.exports = {
   signup,
   login,
   deleteUser,
-  all,
   searchUser,
   mailing,
   findUser,
