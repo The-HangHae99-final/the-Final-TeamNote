@@ -227,6 +227,7 @@ async function acceptInviting(req, res, next) {
       memberEmail: user.userEmail,
       memberName: user.userName,
       workSpace: workSpaceName,
+      profile_image: user.profile_image
     });
     res.locals.createdMember = createdMember;
     next();
