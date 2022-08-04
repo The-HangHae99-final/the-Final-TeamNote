@@ -8,6 +8,10 @@ const timeStampSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  workSpaceName: {
+      type: String,
+      required: true
+  }
 });
 
 const timeStamp = mongoose.model("timeStamp", timeStampSchema);

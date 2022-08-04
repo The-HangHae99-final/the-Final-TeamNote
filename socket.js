@@ -16,17 +16,17 @@ const io = socketIo(http, {
 });
 
 const timestamp = io.of("/:workSpaceName");
-timestamp.on("connection", (socket, userEmail, inTime) => {
+timestamp.on("connection", (socket, userEmail, workSpaceName, inTime) => {
   const connectionTime = outTime.getTime() - inTime.getTime();
   console.log(
-    `유저가 접속하였다: ${userEmail}, ${socket.id}, 현재시각${inTime}`
+    `유저가 접속하였다: ${userEmail}님이 ${workSpaceName}으로 접속.  socket.id = ${socket.id},이고 현재시각${inTime}`
   );
 
   socket.on("disconnect", async (socket, userEmail, outTime) => {
     console.log(
-      `유저가 나갔다: ${userEmail}, ${socket.id}, 현재시각${outTime}`
+      `유저가 나갔다: ${userEmail}님이 ${workSpaceName}의 접속해제.  socket.id = ${socket.id},이고 현재시각${inTime}`
     );
-    const timeData = await timeStamp.create({ userEmail, connectionTime });
+    const timeData = await timeStamp.create({ userEmail, connectionTime, workSpaceName });
     console.log("timeData: ", timeData);
   });
 });
