@@ -119,5 +119,6 @@ Share your task ~! Share your Idea !
 <br>
 
 ## 🕹️ 주요 기능
+[주요기능 링크로 이동](https://www.notion.so/895d24d57bd74af392272ebb446b12c5)
 
 
