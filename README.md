@@ -38,6 +38,8 @@
 
 Share your task ~! Share your Idea !
 
+**팀노트 팀노션** :  https://sprout-dress-47a.notion.site/1-SA-269179d67de145ab9a6a1135fdb5e297
+
 <br>
 
 ## 🗓 프로젝트 기간
@@ -46,7 +48,7 @@ Share your task ~! Share your Idea !
 
 <br>
 
-###  팀 멤버
+##  팀 구성
 
 <table>
    <tr>
@@ -59,6 +61,7 @@ Share your task ~! Share your Idea !
      <td align="center"><a href="https://github.com/jyj9784"><img src="https://user-images.githubusercontent.com/105115805/182905519-359fd892-e3a6-4d91-94cc-5dbebdc0773b.jpeg?v=4" width="200px" /></a></td>
      <td align="center"><a href="https://github.com/vennydev"><img src="https://user-images.githubusercontent.com/105115805/182900945-8c414eb4-0d50-4741-8d61-38bf3f1bfeca.JPG?v=4" width="200px" /></a></td>
   
+
     
   </tr>
   <tr>
