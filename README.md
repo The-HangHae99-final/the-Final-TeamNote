@@ -4,7 +4,7 @@
 
 #
 
-## 소개 영상 [youtube]
+## 소개 영상 [youtube](https://www.youtube.com/watch?v=VMzN9LHbCxg)
 
 <hr>
 <br>
