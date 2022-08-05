@@ -46,81 +46,39 @@ Share your task ~! Share your Idea !
 
 <br>
 
-## 🧑‍💻 팀 구성
-
-[팀 소개 페이지](https://crawling-health-e0d.notion.site/be6df84bde484ca883f54739be96eb8f)
+###  팀 멤버
 
 <table>
+   <tr>
+    <td align="center" ><b><a href="https://github.com/horang-e">김하연</a></b></td>
+    <td align="center"><b><a href="https://github.com/appreciate87">전영준</a></b></td>
+     <td align="center"><b><a href="https://github.com/sojin0106">이형섭</a></b></td>
+  </tr>
   <tr>
-  <td colspan='2' align="center">
-  Backend
-  </td>
-  <td colspan='2' align="center">
-  Frontend
-  </td>
-  <td colspan='2' align="center">
-  Designer
-  </td>
+     <td align="center"><a href="https://github.com/hayeonkimm"><img src="https://user-images.githubusercontent.com/105115805/182905584-e387b6d5-d48f-459c-a92b-8af68ee7a175.jpeg" width="200px" /></a></td>
+     <td align="center"><a href="https://github.com/jyj9784"><img src="https://user-images.githubusercontent.com/105115805/182905519-359fd892-e3a6-4d91-94cc-5dbebdc0773b.jpeg?v=4" width="200px" /></a></td>
+     <td align="center"><a href="https://github.com/vennydev"><img src="https://user-images.githubusercontent.com/105115805/182900945-8c414eb4-0d50-4741-8d61-38bf3f1bfeca.JPG?v=4" width="200px" /></a></td>
+  
+    
+  </tr>
   <tr>
-  <td align="center"><img src="" width="60px;" alt=""/>
-    </td>
-    <td align="center" >
-    <b>김하연</b></a><br>
-    <a href="https://github.com/hayeonkimm">Github</a>
-    <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
-    </td>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4cd551ad-0c09-4ef8-8027-b9e3d47a79e8%2FUntitled.png?table=block&id=493a20f5-e908-4ef8-b07d-710d2f42f3f9&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br />
-    <a href="https://github.com/gabmin" >Github</a>
-    <br><img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/><br>
-    </td>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd266d37c-2c38-4f03-b50f-c7908dabf868%2FUntitled.png?table=block&id=ebb3a525-c75c-4f30-974a-629f8818f109&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br />
-    </td>
-    <tr>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2f229f59-5b48-4501-b9d8-44395fa066ab%2FUntitled.png?table=block&id=65bb4f7a-a244-4ba9-85e9-1886dc98432b&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br /> 
-    <a href="https://github.com/Yunjaejo">Github</a>
-    <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
-    </td>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F651ce4da-3dd7-4845-8207-bcb564eb641d%2FUntitled.png?table=block&id=9973b5b1-8ec8-4d30-a7da-64d453e1da16&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br /> 
-    <a href="https://github.com/larisms">Github</a>
-    <br><img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/><br>
-    </td>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fcd2c4a8c-5a95-41e0-9053-9897e4c95a1b%2FUntitled.png?table=block&id=d4cdb94a-8915-455e-af65-6f98d33dc665&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br /> 
-    </td>
-    </tr>
-    <tr>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd36d536e-0432-4cb0-96ef-9a1c3a1889d5%2FUntitled.png?table=block&id=8b7efded-cc3e-45e9-a950-724957fe55cd&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br /> 
-    <a href="https://github.com/changchanghwang">Github</a>
-    <br><img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/><br>
-    </td>
-    <td align="center"><img src="https://crawling-health-e0d.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F828d0f28-79c9-407a-83da-6ba55ce7fbe4%2FUntitled.png?table=block&id=3d63dc23-b006-47f5-8191-65e9cc1350d8&spaceId=e0735ea4-78ca-47db-be31-3e9c8641e938&width=260&UserName=&cache=v2" width="60px;" alt=""/>
-    </td>
-    <td align="center">
-    <b></b></a><br /> 
-    <a href="https://github.com/calvin9150">Github</a>
-    <br><img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/><br>
-    </td>
-    <td colspan='2'></td>
-    </tr>
+     <td align="center"><b>(L)Backend</b></td>
+     <td align="center"><b>Backend</b></td>
+     <td align="center"><b>(VL)Frontend</b></td>
+  </tr>
 </table>
 
+<br/>
+<br/>
+
+
+| 이름       | 포지션       | 담당 기능 구현          |
+| ---------- | ------------ | ------------------------------ |
+| **김하연** | `백엔드` | 담당 기능 |
+| **전영준** | `백엔드` | 담당 기능 |
+| **이형섭** | `프론트엔드` | 담당 기능 |
+
+<br>
 <br>
 
 ## 🛠 기술스택 ([WHY?](https://sprout-dress-47a.notion.site/2d490dffed3f486ca5af157a68a64970))
