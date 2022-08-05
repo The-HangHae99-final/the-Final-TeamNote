@@ -115,17 +115,9 @@ Share your task ~! Share your Idea !
 
 
 ## 🧱 서비스 아키텍처
-
-![스크린샷 2022-08-01 오후 7 04 14](https://user-images.githubusercontent.com/85288036/182125010-ce7aed0f-3075-47b9-86ec-f40d42bccd11.png)
+![KakaoTalk_Image_2022-08-05-13-20-44](https://user-images.githubusercontent.com/85288036/183002295-8399cd10-d969-4a8e-9788-76b067b92750.png)
 <br>
-
 
 ## 🕹️ 주요 기능
 
-<!--
-
-
-<hr>
-
-<br>
 
