@@ -12,7 +12,7 @@ var state = 'teamnote';
 var jwt = require('jsonwebtoken');
 const jwtSecret = process.env.SECRET_KEY;
 var redirectURI = encodeURI(
-  'https://teamnote.co.kr/api/auth/login/naver/callback'
+  'http://teamnote-dev.s3-website.ap-northeast-2.amazonaws.com/api/auth/login/naver/callback'
 );
 // var server_url = 'http://52.78.168.151:3000';
 var request = require('request');
