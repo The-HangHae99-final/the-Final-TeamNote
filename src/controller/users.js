@@ -398,7 +398,7 @@ async function myPage(req, res, next) {
       { userEmail },
       { $set: { profile_image: image } }
     );
-    await member.updateOne( {userEmail}, { $set: {profile_image: image}} )
+    await member.updateMany( {userEmail}, { $set: {profile_image: image}} )
     const findUser = await User.findOne({ userEmail });
 
     return res.status(200).json({
