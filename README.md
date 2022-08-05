@@ -112,6 +112,14 @@ Share your task ~! Share your Idea !
 
 <br>
 
+
+
+## 🧱 서비스 아키텍처
+
+![스크린샷 2022-08-01 오후 7 04 14](https://user-images.githubusercontent.com/85288036/182125010-ce7aed0f-3075-47b9-86ec-f40d42bccd11.png)
+<br>
+
+
 ## 🕹️ 주요 기능
 
 <!--
@@ -121,47 +129,3 @@ Share your task ~! Share your Idea !
 
 <br>
 
-## 🧱 서비스 아키텍처
-
-![스크린샷 2022-08-01 오후 7 04 14](https://user-images.githubusercontent.com/85288036/182125010-ce7aed0f-3075-47b9-86ec-f40d42bccd11.png)
-<br>
-
-
-
-<br>
-
-## 📂 [Project Notion](https://crawling-health-e0d.notion.site/Project-3b911ebdb6114fb7be4b54956a9579dd)
-
-<br>
-
-## ✍ Code Convention
-
-- api url : dash case
-- models : camel case
-- file : dash case
-- 변수 : lower case camel case
-- function: camel case, 동사+명사
-
-<br>
-
-## 🐱 Git Rule
-
-<br>
-
-## 최종 성과
-
-<img src="https://user-images.githubusercontent.com/86486778/144451851-c3a4a905-f7ab-4003-8028-6ccf611ae58e.png" width="300px">
-<img src ="https://user-images.githubusercontent.com/86486778/144452071-7ad6e083-e561-4eeb-8647-89ede8ac650e.png" width="300px" height="200px">
-
-<img src="https://user-images.githubusercontent.com/86486778/144451657-7d34f9fa-27b1-4b5d-8a96-a541c363e9ad.png" width="300px">
-
-- redis hyperloglog를 이용한 일일 방문자 집계
-- 광고 게시 5일간 방문자 수 총 1197명, 투표참여 수 1214회
-- 121개의 게시글 작성
-- 설문조사시 높은 만족도
-
-#### 시간적 여유가 부족한 개인투자자들이 의견을 나눌 수 있는 쉽고 간편한 투표 커뮤니티라는 기획이 적중하여 만들어낸 결과라고 생각
-
-<br>
-
-## ❗트러블 슈팅
