@@ -121,4 +121,17 @@ Share your task ~! Share your Idea !
 ## 🕹️ 주요 기능
 [주요기능 링크로 이동](https://www.notion.so/895d24d57bd74af392272ebb446b12c5)
 
+## 🏃🏻 트러블 슈팅 FE
+
+![image](https://user-images.githubusercontent.com/81404404/183003661-9f50a6a3-7ec4-4b03-a6bf-0b6f21f10c88.png)
+
+## 🏃🏻 트러블 슈팅 BE
+
+![image](https://user-images.githubusercontent.com/81404404/183003931-90146180-eaee-4c6c-a3e1-7c00efab4f38.png)
+
+
+![image](https://user-images.githubusercontent.com/81404404/183003989-16e89b62-ea8c-4c25-b682-4dcd98295dd4.png)
+
+
+
 
