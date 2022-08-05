@@ -109,7 +109,6 @@ Share your task ~! Share your Idea !
 | helmet               |  HTTP 헤더 보안  |
 | jest                 |   테스트 코드    |
 | jsonwebtoken         |   서명 암호화    |
-| moment               | 날짜 라이브러리  |
 | morgan               |  Http Log 기록   |
 | swagger--ui--express |    API 문서화    |
 
