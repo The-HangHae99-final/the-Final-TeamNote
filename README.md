@@ -1,5 +1,9 @@
 # 💻 TEAM NOTE - Backend
 
+![스크린샷 2022-07-29 오후 6 15 45](https://user-images.githubusercontent.com/85288036/183274103-5f266ac6-ad66-4bad-a100-6d61ef90eb3f.png)
+
+
+
 ## 🏠 [Home Page Link](https://teamnote.co.kr)
 
 #
