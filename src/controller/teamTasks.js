@@ -9,7 +9,6 @@ async function createTeamTask(req, res, next) {
     //#swagger.summary= '팀 알정 생성 API'
     //#swagger.description='-'
 
-    const { userEmail } = res.locals.User;
     const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
     const maxTaskId = await TeamTask.findOne({ workSpaceName }).sort('-taskId');
     let taskId = 1;
@@ -22,7 +21,6 @@ async function createTeamTask(req, res, next) {
       endDate,
       title,
       desc,
-      userEmail,
       workSpaceName,
       color,
     });
@@ -107,9 +105,8 @@ async function editTeamTask(req, res, next) {
     //#swagger.summary= '일정 수정 API 이것은 바디값으로 workSpaceName이 들어갑니다.'
     //#swagger.description='-'
     const taskId = Number(req.params.taskId);
-    const [existTask] = await TeamTask.find({ taskId, workSpaceName });
-    console.log('existTask: ', existTask);
-    const { userEmail } = res.locals.User;
+    // const [existTask] = await TeamTask.find({ taskId, workSpaceName });
+    // console.log('existTask: ', existTask);
     const { startDate, endDate, title, desc, color, workSpaceName } = req.body;
 
     if (!startDate || !endDate || !title) {

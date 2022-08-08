@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config();
 const request = require('supertest');
 const app = require('../../app');
 const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU4NDE0MjMwLCJleHAiOjE2NTg0MTc4MzB9.LsZQD_J7yhZ-CDcWBMrBDJprqQoE15mCZyudDeZu67o';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjU5OTY0MjAzLCJleHAiOjE2NTk5NjYwMDN9.Rqp4hUcnrcWfUFAeiiAj_CdWxCvmYfHkawValdnDoqo';
 
 //===============회원가입======================
 describe('POST /api/signup 회원가입', function () {
@@ -46,14 +46,14 @@ describe('POST /api/signup 회원가입', function () {
 //===============최종 로그인======================
 
 describe('POST /api/login', function () {
-  test('이메일 비밀번호 맞다면 통과', async () => {
-    const loginInvalid = await request(app).post('/api/users/login').send({
-      userEmail: 'geguri10@aaa.com',
-      password: '123123',
-    });
-    console.log(loginInvalid.body, '--------z');
-    expect(loginInvalid.body.message).toBe('로그인에 성공하였습니다.');
-  });
+  // test('이메일 비밀번호 맞다면 통과', async () => {
+  //   const loginInvalid = await request(app).post('/api/users/login').send({
+  //     userEmail: 'test@test.com',
+  //     password: '123123',
+  //   });
+  //   console.log(loginInvalid.body, '--------z');
+  //   expect(loginInvalid.body.message).toBe('로그인에 성공하였습니다.');
+  // });
   test('이메일이 없다면 에러 발생', async () => {
     const loginInvalid = await request(app)
       .post('/api/users/login')

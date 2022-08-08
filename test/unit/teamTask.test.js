@@ -5,7 +5,7 @@ const httpMocks = require('node-mocks-http');
 const teamTasks = require('../../src/models/teamTask');
 const boardData = require('../data/board.json');
 const userEmail = 'test@test.com';
-const locals = require('../data/locals.json');
+const locals = require('../data/locals.user.json');
 
 teamTasks.findOne = jest.fn();
 teamTasks.find = jest.fn();

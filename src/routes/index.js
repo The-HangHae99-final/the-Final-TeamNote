@@ -28,7 +28,8 @@ router.use('/tasks', authMiddleware, taskRouter);
 router.use(
   '/team-tasks',
 
-  // authMiddleware, isMember,
+  // authMiddleware,
+  // isMember,
   teamTasksRouter
 );
 router.use('/manito', manitoRouter);
