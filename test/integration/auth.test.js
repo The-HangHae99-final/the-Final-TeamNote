@@ -45,7 +45,7 @@ describe('POST /api/signup 회원가입', function () {
 
 //===============최종 로그인======================
 
-describe('POST /api/login', function () {
+describe('POST /api/login', async function () {
   // test('이메일 비밀번호 맞다면 통과', async () => {
   //   const loginInvalid = await request(app).post('/api/users/login').send({
   //     userEmail: 'test@test.com',
@@ -57,7 +57,7 @@ describe('POST /api/login', function () {
   test('이메일이 없다면 에러 발생', async () => {
     const loginInvalid = await request(app)
       .post('/api/users/login')
-      .send({ userEmaill: '', password: '123123' });
+      .send({ userEmail: '', password: '123123' });
     console.log(loginInvalid.body, '----0');
     expect(loginInvalid.body.errorMessage).toBe(
       '이메일 또는 비밀번호가 입력되지 않았습니다.'
