@@ -281,19 +281,25 @@ describe("초대 수락 -> 멤버 생성", () => {
   });
   it("member.create는 다음과 같은 내용을 호출해야한다.", async () => {
     const user = res.locals.User;
+
     await memberController.acceptInviting(req, res, next);
     expect(member.create).toBeCalledWith({
       memberEmail: user.userEmail,
       memberName: user.userName,
       workSpace: workSpaceName,
+      profile_image: user.profile_image
     });
   });
   it("member를 생성하고 next처리한다.", async () => {
+    const user = res.locals.User;
+
     await memberController.acceptInviting(req, res, next);
     expect(member.create).toBeCalledWith({
       memberEmail: localsUser.userEmail,
       memberName: localsUser.userName,
       workSpace: workSpaceName,
+      profile_image: user.profile_image
+
     });
     expect(next);
   });

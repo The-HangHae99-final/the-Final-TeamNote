@@ -1,4 +1,5 @@
 {
     "userEmail": "test@test.com",
-    "userName": "test"
+    "userName": "test",
+    "profile_image": "image"
 }
