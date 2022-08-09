@@ -16,7 +16,7 @@ const upload = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read-write',
     key: function (req, file, cb) {
-      cb(null, `uploads/${Date.now()}_${file.originalname}`);
+      cb(null, `${Date.now()}_${file.originalname}`);
     },
   }),
 });

@@ -8,7 +8,6 @@ const isMember = require('../middlewares/isMember');
 
 //일반 게시글
 //글 작성
-router.post('/', upload.single('image'), isMember, postController.createPost);
 
 // 글 전체 조회
 router.get('/list/:workSpaceName', postController.showPosts);
@@ -24,5 +23,7 @@ router.delete('/:postId', isMember, postController.deletePost);
 
 // 이미지 단일 업로드 router, 보류로 주석처리.
 router.post('/image', upload.single('image'), postController.postImage);
+
+router.post('/file', upload.single('file'), postController.postFile);
 
 module.exports = router;

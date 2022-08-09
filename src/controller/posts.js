@@ -21,9 +21,15 @@ async function createPost(req, res, next) {
 
     let postId;
 
-    const maxpostId = await Post.find().sort({postId: -1});
-    if (!userName || !title || !workSpaceName || !label || !assignees || !desc ) 
-    {
+    const maxpostId = await Post.find().sort({ postId: -1 });
+    if (
+      !userName ||
+      !title ||
+      !workSpaceName ||
+      !label ||
+      !assignees ||
+      !desc
+    ) {
       res.status(400).send({
         success: false,
         errorMessage: '필요한 항목을 전부 입력해주세요.',
@@ -69,8 +75,8 @@ async function showPosts(req, res, next) {
     //#swagger.summary= '게시글 글 전체 조회 API'
     //##swagger.description='-'
     const { workSpaceName } = req.params;
-    
-    const posts = await Post.find({ workSpaceName }).sort({postId: -1});
+
+    const posts = await Post.find({ workSpaceName }).sort({ postId: -1 });
     res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
@@ -238,6 +244,44 @@ async function postImage(req, res, next) {
   }
 }
 
+// app.post('/single/upload', upload.single('file'), (req, res, next) => {
+async function postFile(req, res, next) {
+  try {
+    const {
+      fieldname,
+      originalname,
+      encoding,
+      mimetype,
+      destination,
+      filename,
+      path,
+      size,
+    } = req.file;
+    const { name } = req.body;
+
+    console.log('body 데이터 : ', name);
+    console.log('폼에 정의된 필드명 : ', fieldname);
+    console.log('사용자가 업로드한 파일 명 : ', originalname);
+    console.log('파일의 엔코딩 타입 : ', encoding);
+    console.log('파일의 Mime 타입 : ', mimetype);
+    console.log('파일이 저장된 폴더 : ', destination);
+    console.log('destinatin에 저장된 파일 명 : ', filename);
+    console.log('업로드된 파일의 전체 경로 ', path);
+    console.log('파일의 바이트(byte 사이즈)', size);
+
+    res.json({ success: true, message: '저장에 성공하였습니다.' });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .send({
+        success: false,
+        errorMessage: error.message,
+        message: '저장에 실패했습니다.',
+      });
+  }
+}
+
 module.exports = {
   createPost,
   showPosts,
@@ -245,4 +289,5 @@ module.exports = {
   editPost,
   deletePost,
   postImage,
+  postFile,
 };
