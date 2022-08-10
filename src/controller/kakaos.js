@@ -1,12 +1,8 @@
 // const Acess_ = require('../models/access_token');
-const express = require('express');
-const router = express.Router();
 const axios = require('axios');
-const { request } = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const jwtSecret = process.env.SECRET_KEY;
-const { smtpTransport } = require('./util/email');
 
 // 프론트에게서 인가코드를 받는다 post_1
 // 서버에서 인가코드를 가지고 카톡에게서 토큰을 받는다.

@@ -1,8 +1,5 @@
-const express = require('express');
-const router = express.Router();
 const User = require('../models/user');
 const nodemailer = require('nodemailer');
-const { response } = require('express');
 
 async function manito_(req, res, next) {
   //#swagger.tags= ['마니또 API'];

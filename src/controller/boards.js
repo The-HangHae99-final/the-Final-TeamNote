@@ -32,7 +32,7 @@ async function createBoard(req, res, next) {
     }
     console.log('boardId: ', boardId);
     if (!userName || !content || !workSpaceName) {
-      res.status(400).send({
+      res.status(400).json({
         success: false,
         errorMessage: '필요한 항목을 전부 입력해주세요.',
       });
@@ -40,7 +40,7 @@ async function createBoard(req, res, next) {
     // if (!image) {
     //   res
     //     .status(400)
-    //     .send({ success: false, errorMessage: '이미지가 없습니다.' });
+    //     .json({ success: false, errorMessage: '이미지가 없습니다.' });
     // }
     else {
       const createdBoard = await Board.create({
@@ -59,7 +59,7 @@ async function createBoard(req, res, next) {
     }
   } catch (error) {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       message: '요청한 데이터 형식이 올바르지 않습니다.',
       errorMessage: error.message,
@@ -81,13 +81,13 @@ async function showBoards(req, res, next) {
     if (!workSpaceName) {
       res
         .status(400)
-        .send({ success: false, message: '워크 스페이스 네임이 없습니다.' });
+        .json({ success: false, message: '워크 스페이스 네임이 없습니다.' });
     }
 
-    res.send({ boards, message: '공지 조회에 성공 했습니다.' });
+    res.json({ boards, message: '공지 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       Message: '공지 조회에 실패 했습니다.',
       errorMessage: error.message,
@@ -118,7 +118,7 @@ async function showBoardOne(req, res, next) {
     if (!boardId) {
       res
         .status(400)
-        .send({ success: false, message: '공지 아이디가 없습니다.' });
+        .json({ success: false, message: '공지 아이디가 없습니다.' });
     }
 
     const existsComment = await boardComment.find({ boardId }).sort({
@@ -127,7 +127,7 @@ async function showBoardOne(req, res, next) {
     res.json({ existsBoard, existsComment });
   } catch (err) {
     console.log(err);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       Message: '요청한 데이터 형식이 올바르지 않습니다.',
       errorMessage: err.message,
@@ -155,12 +155,12 @@ async function editBoard(req, res, next) {
     if (!boardId) {
       res
         .status(400)
-        .send({ success: false, message: '공지 아이디가 없습니다.' });
+        .json({ success: false, message: '공지 아이디가 없습니다.' });
     }
 
     if (!user) {
     }
-    res.status(400).send({ success: false, message: '유저 정보가 없습니다.' });
+    res.status(400).json({ success: false, message: '유저 정보가 없습니다.' });
 
     if (user.userName !== existBoard.userName) {
       return res
@@ -202,12 +202,12 @@ async function deleteBoard(req, res, next) {
     if (!boardId) {
       res
         .status(400)
-        .send({ success: false, message: '공지 아이디가 없습니다.' });
+        .json({ success: false, message: '공지 아이디가 없습니다.' });
     }
 
     if (!userName) {
     }
-    res.status(400).send({ success: false, message: '유저 이름이 없습니다.' });
+    res.status(400).json({ success: false, message: '유저 이름이 없습니다.' });
 
     if (userName !== targetBoard.userName) {
       return res.status(401).json({

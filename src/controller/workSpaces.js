@@ -14,7 +14,7 @@ async function createWorkSpace(req, res, next) {
     if (existWorkSpace) {
       return res
         .status(400)
-        .send({ errorMessage: "이미 존재하는 이름입니다." });
+        .json({ errorMessage: "이미 존재하는 이름입니다." });
     }
     const createdWorkSpace = await workSpace.create({
       owner: user.userEmail,
@@ -29,7 +29,7 @@ async function createWorkSpace(req, res, next) {
     return res.status(201).json({createdWorkSpace, addedOwner});
   } catch (err) {
     console.log(err);
-    res.status(400).send({
+    res.status(400).json({
       errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
     });
   }
@@ -49,7 +49,7 @@ async function deleteWorkSpace(req, res) {
     if (deletedWorkSpace) {
       res.status(200).json(deletedWorkSpace, deletedMembers);
     } else {
-      res.status(404).send();
+      res.status(404).json();
     }
   } catch (err) {
     return res

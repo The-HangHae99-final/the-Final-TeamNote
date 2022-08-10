@@ -34,7 +34,7 @@ async function createPostComment(req, res) {
     res.json({ targetPost: createdcomment });
   } catch (err) {
     console.log(err);
-    res.status(400).send({
+    res.status(400).json({
       errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
     });
   }
@@ -98,7 +98,7 @@ async function deletePostComment(req, res) {
     }
   } catch (err) {
     console.log(err);
-    res.status(400).send({
+    res.status(400).json({
       errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
     });
   }

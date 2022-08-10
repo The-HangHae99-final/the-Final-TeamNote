@@ -51,7 +51,7 @@ async function showTeamTasks(req, res, next) {
     if (!workSpaceName) {
       return res
         .status(400)
-        .send({ success: false, message: '워크 스페이스 네임이 없습니다.' });
+        .json({ success: false, message: '워크 스페이스 네임이 없습니다.' });
     }
 
     const tasks = await TeamTask.find({ workSpaceName }).sort('-taskId');

@@ -30,7 +30,7 @@ async function createPost(req, res, next) {
       !assignees ||
       !desc
     ) {
-      res.status(400).send({
+      res.status(400).json({
         success: false,
         errorMessage: '필요한 항목을 전부 입력해주세요.',
       });
@@ -59,7 +59,7 @@ async function createPost(req, res, next) {
       message: '게시물 작성 성공',
     });
   } catch (error) {
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       // errorMessage: error.message,
       message: '게시물 작성에 예상치 못한 에러가 발생했습니다.',
@@ -77,10 +77,10 @@ async function showPosts(req, res, next) {
     const { workSpaceName } = req.params;
 
     const posts = await Post.find({ workSpaceName }).sort({ postId: -1 });
-    res.status(200).send({ posts, message: '게시물 조회에 성공 했습니다.' });
+    res.status(200).json({ posts, message: '게시물 조회에 성공 했습니다.' });
   } catch (error) {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       message: '게시물 조회에 예상치 못한 에러가 발생 했습니다.',
       errorMessage: error.message,
@@ -119,7 +119,7 @@ async function showPostDetail(req, res, next) {
     res.json({ success: true, existsPost, existsComment });
   } catch (error) {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       message: '예상치 못한 에러가 발생했습니다.',
       errorMessage: error.message,
@@ -274,7 +274,7 @@ async function postFile(req, res, next) {
     console.log(error);
     res
       .status(400)
-      .send({
+      .json({
         success: false,
         errorMessage: error.message,
         message: '저장에 실패했습니다.',

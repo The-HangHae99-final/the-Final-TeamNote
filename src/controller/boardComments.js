@@ -34,7 +34,7 @@ async function createBoardComment(req, res) {
     res.json({ targetBoard: createdComment });
   } catch (err) {
     console.log(err);
-    res.status(400).send({
+    res.status(400).json({
       errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
     });
   }
@@ -69,7 +69,7 @@ async function deleteBoardComment(req, res) {
     }
   } catch (err) {
     console.log(err);
-    res.status(400).send({
+    res.status(400).json({
       errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
     });
   }

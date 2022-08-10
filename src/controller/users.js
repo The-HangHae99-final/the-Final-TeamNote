@@ -43,20 +43,20 @@ async function signup(req, res, next) {
       await usersSchema.validateAsync(req.body);
     // 비밀번호와 확인 비밀번호가 틀린 경우
     if (password !== confirmPassword) {
-      return res.status(400).send({
+      return res.status(400).json({
         errorMessage: '비밀번호가 일치하지 않습니다.',
       });
     }
     // 비밀번호가 5글자 이하인 경우
     if (password.length <= 5) {
-      return res.status(400).send({
+      return res.status(400).json({
         success: false,
         errorMessage: '비밀번호는 6글자 이상으로 입력해주세요.',
       });
     }
     // userName의 length가 6글자 이상인 경우.
     if (userName.length >= 6) {
-      return res.status(400).send({
+      return res.status(400).json({
         success: false,
         errorMessage: '닉네임은 5글자 이내로 입력해주세요.',
       });
@@ -66,14 +66,14 @@ async function signup(req, res, next) {
       console.log(!validator.validate(userEmail));
       return res
         .status(400)
-        .send({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
+        .json({ success: false, errorMessage: '이메일 형식이 틀렸습니다.' });
     }
 
     // 가입하고자 하는 이메일이 존재하는 경우
     const exitstUsers = await User.findOne({ userEmail });
 
     if (exitstUsers) {
-      return res.status(400).send({
+      return res.status(400).json({
         errorMessage: '중복된 이메일이 존재합니다.',
       });
     }
@@ -120,7 +120,7 @@ async function signup(req, res, next) {
       message: '회원가입을 성공하였습니다',
     });
   } catch (error) {
-    res.status(401).send({
+    res.status(401).json({
       success: false,
       errorMessage: error.message,
     });
@@ -173,14 +173,14 @@ async function login(req, res, next) {
     let validPassword;
 
     if (!userEmail || !password) {
-      res.status(400).send({
+      res.status(400).json({
         success: false,
         errorMessage: '이메일 또는 비밀번호가 입력되지 않았습니다.',
       });
     } else if (!userFind) {
       res
         .status(400)
-        .send({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
+        .json({ success: false, errorMessage: '일치하는 이메일이 없습니다.' });
     }
 
     // 유저가 DB에 존재하고,
@@ -198,7 +198,7 @@ async function login(req, res, next) {
           expiresIn: '1d',
         });
         await userFind.update({ refresh_token }, { $where: { userEmail } });
-        res.status(200).send({
+        res.status(200).json({
           success: true,
           message: '로그인에 성공하였습니다.',
           token,
@@ -208,7 +208,7 @@ async function login(req, res, next) {
       } else {
         res
           .status(400)
-          .send({ success: false, errorMessage: '비밀번호가 틀렸습니다.' });
+          .json({ success: false, errorMessage: '비밀번호가 틀렸습니다.' });
       }
     }
   } catch (error) {
@@ -232,10 +232,10 @@ async function deleteUser(req, res) {
       });
     }
     await User.deleteOne({ userEmail });
-    res.status(200).send({ success: '탈퇴에 성공하였습니다.' });
+    res.status(200).json({ success: '탈퇴에 성공하였습니다.' });
   } catch {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       succss: false,
       errorMessage: error.message,
       message: '예상치 못한 에러가 발생했습니다.',
@@ -262,7 +262,7 @@ async function searchUser(req, res) {
     }
 
     if (existUser) {
-      res.status(200).send({
+      res.status(200).json({
         success: true,
         email: existUser.userEmail,
         name: existUser.userName,
@@ -270,11 +270,11 @@ async function searchUser(req, res) {
     } else {
       res
         .status(400)
-        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+        .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     }
   } catch {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       errorMessage: error.message,
       message: '예상치 못한 에러가 발생했습니다.',
@@ -317,7 +317,7 @@ async function mailing(req, res) {
       console.log('이메일이 성공적으로 발송되었습니다!');
     }
   });
-  res.send({ success: true, number: number }); //인증번호 인증기능.
+  res.json({ success: true, number: number }); //인증번호 인증기능.
 }
 
 async function findUser(req, res, next) {
@@ -333,11 +333,11 @@ async function findUser(req, res, next) {
     } else {
       res
         .status(400)
-        .send({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
+        .json({ success: false, errorMessage: '존재하지 않는 유저입니다.' });
     }
   } catch {
     console.log(error);
-    res.status(400).send({
+    res.status(400).json({
       success: false,
       errorMessage: error.message,
       message: '유저검색 에러가 발생했습니다.',
@@ -420,9 +420,9 @@ async function allUser(req, res, next) {
   try {
     const All = await User.find({});
 
-    res.status(200).send(All);
+    res.status(200).json(All);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).json(error.message);
     console.log(error);
   }
 }
