@@ -54,7 +54,7 @@ Share your task ~! Share your Idea !
 
 <table>
    <tr>
-    <td align="center" ><b><a href="https://github.com/horang-e">김하연</a></b></td>
+    <td align="center" ><b><a href="https://github.com/hayeonkimm">김하연</a></b></td>
     <td align="center"><b><a href="https://github.com/appreciate87">전영준</a></b></td>
      <td align="center"><b><a href="https://github.com/sojin0106">이형섭</a></b></td>
   </tr>
