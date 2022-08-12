@@ -40,6 +40,8 @@
 
 Share your task ~! Share your Idea !
 
+<br>
+
 **팀노트 팀노션** :  https://sprout-dress-47a.notion.site/1-SA-269179d67de145ab9a6a1135fdb5e297
 
 **팀노트 박람회 팜플렛** : https://leaf-quartz-17c.notion.site/TeamNote-903d74ab1d4b4a4f905bbab0f1c11105
