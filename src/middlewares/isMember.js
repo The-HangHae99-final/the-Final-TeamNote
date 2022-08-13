@@ -4,9 +4,11 @@ const Member = require('../models/member');
 
 module.exports = async (req, res, next) => {
   try {
-    const { workSpaceName } = req.body;
     const { userEmail } = res.locals.User;
-    const existWorkSpace = await workSpace.findOne({ name: workSpaceName });
+    console.log(req.body.workSpaceId);
+    
+    const existWorkSpace = await workSpace.findById(req.body.workSpaceId);
+    console.log('existWorkSpace: ', existWorkSpace);
 
     if (existWorkSpace === null) {
       res.status(400).send({
@@ -23,10 +25,10 @@ module.exports = async (req, res, next) => {
       });
       return;
     } else {
-      workSpace.findOne({ name: workSpaceName }).then((WS) => {
-        res.locals.workSpace = WS;
+      
+        res.locals.workSpace = existWorkSpace;
         next();
-      });
+      
     }
   } catch (error) {
     console.log('member check error', error);

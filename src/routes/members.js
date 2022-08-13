@@ -15,7 +15,7 @@ router.post(
 );
 
 //멤버 목록 조회
-router.get("/lists/:workSpaceName", memberController.getMemberList);
+router.get("/lists/:workSpaceId", memberController.getMemberList);
 
 //멤버 삭제
 router.delete(

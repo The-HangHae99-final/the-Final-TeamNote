@@ -8,7 +8,11 @@ const memberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  workSpace: {
+  workSpaceId: {
+    type: String,
+    required: true,
+  },
+  workSpaceName: {
     type: String,
     required: true,
   },

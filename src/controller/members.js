@@ -9,7 +9,7 @@ async function addMember(req, res) {
     //#swagger.summary= '멤버 추가(개발용) API'
     //#swagger.description='-'
     const existUser = res.locals.existUser;
-    const { workSpaceName } = req.body;
+    const { workSpaceId } = req.body;
     const existMember = res.locals.existMember;
     console.log("existMember: ", existMember);
 
@@ -21,7 +21,7 @@ async function addMember(req, res) {
       const addedMember = await member.create({
         memberEmail: existUser.userEmail,
         memberName: existUser.userName,
-        workSpace: workSpaceName,
+        workSpace: workSpaceId,
       });
       return res.status(201).json({ addedMember });
     }
@@ -58,8 +58,8 @@ async function getMemberList(req, res) {
     //#swagger.tags= ['워크 스페이스 멤버 API'];
     //#swagger.summary= '멤버 조회 API'
     //#swagger.description='-'
-    const {workSpaceName} = req.params;
-    const memberList = await member.find({ workSpace: workSpaceName });
+    const workSpaceId = req.params;
+    const memberList = await member.find(workSpaceId);
     return res.status(200).json({
       result: memberList,
       success: true,
@@ -98,9 +98,9 @@ const searchMember = async (req, res, next) => {
     //#swagger.tags= ['워크 스페이스 멤버 API'];
     //#swagger.summary= '멤버 찾기 API'
     //#swagger.description='-'
-    const { userEmail, workSpaceName } = req.body;
+    const { userEmail, workSpaceId } = req.body;
     const existMember = await member.findOne({
-      workSpace: workSpaceName,
+      workSpace: workSpaceId,
       memberEmail: userEmail,
     });
     console.log('멤버찾기에서 : ', existMember);
@@ -152,13 +152,13 @@ async function leaveWorkSpace(req, res) {
 async function inviteMember(req, res) {
   try {
     const inviter = res.locals.User.userName;
-    console.log("inviter: ", inviter);
-    const { userEmail, workSpaceName } = req.body;
-    console.log("workSpaceName: ", workSpaceName);
+    const { userEmail } = req.body;
     const { existMember } = res.locals;
-    const existInviting = await Inviting.findOne({ userEmail, workSpaceName });
+    const workSpace = res.locals.workSpace
+    const existInviting = await Inviting.find({ userEmail, workSpaceId: workSpace._id });
+    console.log('existInviting: ', existInviting);
 
-    if (existInviting) {
+    if (existInviting.length) {
       return res
         .status(400)
         .json({ success: false, message: "이미 초대한 상대입니다." });
@@ -170,7 +170,7 @@ async function inviteMember(req, res) {
     }
     const invitedUser = await Inviting.create({
       userEmail,
-      workSpaceName,
+      workSpaceId: workSpace._id,
       inviter,
     });
     return res.status(201).json({
@@ -220,12 +220,12 @@ async function acceptInviting(req, res, next) {
     //#swagger.summary= '초대 수락 API'
     //#swagger.description='-'
     const user = res.locals.User;
-    const { workSpaceName } = req.body;
+    const { workSpaceId } = req.body;
 
     const createdMember = await member.create({
       memberEmail: user.userEmail,
       memberName: user.userName,
-      workSpace: workSpaceName,
+      workSpace: workSpaceId,
       profile_image: user.profile_image
     });
     res.locals.createdMember = createdMember;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const invitingSchema = new mongoose.Schema({
-  workSpaceName: {
+  workSpaceId: {
     type: String,
     required: true,
   },

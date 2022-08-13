@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const workSpaceSchema = new mongoose.Schema({
-  name: {
+  workSpaceName: {
     type: String,
     required: true,
   },

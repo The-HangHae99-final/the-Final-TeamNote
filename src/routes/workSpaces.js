@@ -3,7 +3,7 @@ const router = express.Router();
 const workSpaceController = require("../controller/workSpaces");
 const isMember = require("../middlewares/isMember");
 //워크스페이스 생성
-router.post("/",  workSpaceController.searchWorkSpace ,workSpaceController.createWorkSpace);
+router.post("/",  workSpaceController.searchWorkSpace ,workSpaceController.createWorkSpace, workSpaceController.addOwner);
 
 //워크스페이스 삭제
 router.delete("/", isMember ,workSpaceController.deleteWorkSpace);
