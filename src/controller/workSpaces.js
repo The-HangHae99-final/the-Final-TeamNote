@@ -18,41 +18,17 @@ async function createWorkSpace(req, res, next) {
     }
     const createdWorkSpace = await workSpace.create({
       owner: user.userEmail,
-      workSpaceName: workSpaceName,
+      name: workSpaceName,
     });
-    res.locals.createdWorkSpace = createdWorkSpace;
-    next();
-
-    // const addedOwner = await member.create({
-    //   memberEmail: user.userEmail,
-    //   memberName: user.userName,
-    //   workSpace: workSpaceName,
-    //   profile_image: user.profile_image
-    // });
-    // return res.status(201).json({createdWorkSpace, addedOwner});
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({
-      errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
-    });
-  }
-}
-
-async function addOwner(req, res, next) {
-  try {
-    const createdWorkSpace = res.locals.createdWorkSpace;
-    const user = res.locals.User;
-
     const addedOwner = await member.create({
       memberEmail: user.userEmail,
       memberName: user.userName,
-      workSpaceId: createdWorkSpace._id,
-      workSpaceName: createdWorkSpace.workSpaceName,
-      profile_image: user.profile_image,
+      workSpace: workSpaceName,
+      profile_image: user.profile_image
     });
-    return res.status(201).json({ createdWorkSpace, addedOwner });
+    return res.status(201).json({createdWorkSpace, addedOwner});
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     res.status(400).json({
       errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
     });
@@ -62,13 +38,13 @@ async function addOwner(req, res, next) {
 //워크스페이스 삭제
 async function deleteWorkSpace(req, res) {
   try {
-    const { workSpaceId } = req.body;
-
-    const deletedWorkSpace = await workSpace.findByIdAndDelete({
-      workSpace: workSpaceId,
+    const { workSpaceName } = req.body;
+    
+    const deletedWorkSpace = await workSpace.findOneAndDelete({
+      name: workSpaceName,
     });
     const deletedMembers = await member.deleteMany({
-      workSpace: workSpaceId,
+      workSpace: workSpaceName,
     });
     if (deletedWorkSpace) {
       res.status(200).json(deletedWorkSpace, deletedMembers);
@@ -105,22 +81,21 @@ async function showWorkSpaces(req, res) {
 //워크스페이스 검색
 const searchWorkSpace = async (req, res, next) => {
   try {
-    const { workSpaceName } = req.body;
-    console.log("workSpaceName: ", workSpaceName);
-    const existWorkSpace = await workSpace.find({ workSpaceName });
+    const workSpaceName = req.body;
+    const existWorkSpace = await workSpace.findOne({
+      name: workSpaceName.name,
+    });
     console.log("검색 결과: ", existWorkSpace);
-    if (existWorkSpace.length) {
+    if (existWorkSpace) {
       res.locals.workSpace = existWorkSpace;
       next();
-    }
-    else{
+    } else if (existWorkSpace === null) {
       next();
     }
-    
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "워크스페이스 검색 에러",
+      message: '워크스페이스 검색 에러',
     });
   }
 };
@@ -130,5 +105,4 @@ module.exports = {
   deleteWorkSpace,
   showWorkSpaces,
   searchWorkSpace,
-  addOwner,
 };

@@ -8,7 +8,7 @@ const isMember = require('../middlewares/isMember');
 
 //일반 게시글
 //글 작성
-
+router.post('/', postController.createPost);
 // 글 전체 조회
 router.get('/list/:workSpaceName', postController.showPosts);
 
