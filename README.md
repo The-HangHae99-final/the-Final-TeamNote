@@ -60,9 +60,9 @@ Share your task ~! Share your Idea !
 
 <table>
    <tr>
-    <td align="center" ><b><a href="https://github.com/hayeonkimm">김하연</a></b></td>
-    <td align="center"><b><a href="https://github.com/appreciate87">전영준</a></b></td>
-     <td align="center"><b><a href="https://github.com/sojin0106">이형섭</a></b></td>
+    <td align="center"><b><a href="https://github.com/hayeonkimm">김하연</a></b></td>
+    <td align="center"><b><a href="https://github.com/jyj9784">전영준</a></b></td>
+     <td align="center"><b><a href="https://github.com/vennydev">이형섭</a></b></td>
   </tr>
   <tr>
      <td align="center"><a href="https://github.com/hayeonkimm"><img src="https://user-images.githubusercontent.com/105115805/182905584-e387b6d5-d48f-459c-a92b-8af68ee7a175.jpeg" width="200px" /></a></td>
